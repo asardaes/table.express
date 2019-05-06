@@ -1,11 +1,21 @@
 #' Start expression
 #'
-#' Helper to capture a [data.table::data.table-class] and begin building an expression for it.
+#' Start building an expression.
 #'
 #' @export
 #'
-#' @param .DT The data.table.
+#' @param .data Optionally, something to capture for the expression.
+#' @param ... Arguments for the specific methods.
 #'
-start_expr <- function(.DT) {
-    ExprBuilder$new(.DT)
+start_expr <- function(.data, ...) { UseMethod("start_expr") }
+
+#' @rdname start_expr
+#' @export
+#'
+#' @details
+#'
+#' The [data.table::data.table-class] method returns an [ExprBuilder] instance.
+#'
+start_expr.data.table <- function(.data, ...) {
+    ExprBuilder$new(.data)
 }

@@ -2,13 +2,21 @@
 % Please edit documentation in R/start-expr.R
 \name{start_expr}
 \alias{start_expr}
+\alias{start_expr.data.table}
 \title{Start expression}
 \usage{
-start_expr(.DT)
+start_expr(.data, ...)
+
+\method{start_expr}{data.table}(.data, ...)
 }
 \arguments{
-\item{.DT}{The data.table.}
+\item{.data}{Optionally, something to capture for the expression.}
+
+\item{...}{Arguments for the specific methods.}
 }
 \description{
-Helper to capture a \link[data.table:data.table-class]{data.table::data.table} and begin building an expression for it.
+Start building an expression.
+}
+\details{
+The \link[data.table:data.table-class]{data.table::data.table} method returns an \link{ExprBuilder} instance.
 }

@@ -1,23 +1,33 @@
 #' End and evaluate expression
 #'
-#' Helper to evaluate the expression created by [ExprBuilder] and get the resulting
-#' [data.table::data.table-class].
+#' Finish the expression building process and evaluate it.
 #'
+#' @export
+#'
+#' @param .data The expression.
+#' @param ... Arguments for the specific methods.
+#'
+end_expr <- function(.data, ...) { UseMethod("end_expr") }
+
+#' @rdname end_expr
 #' @export
 #' @importFrom rlang caller_env
 #'
-#' @param .expr_builder The [ExprBuilder] instance.
 #' @param .parent_env Optionally, the enclosing environment of the expression's environment.
 #'
-end_expr <- function(.expr_builder, .parent_env) {
-    if (missing(.expr_builder)) {
+#' @details
+#'
+#' The [ExprBuilder] method should return a [data.table::data.table-class].
+#'
+end_expr.ExprBuilder <- function(.data, ..., .parent_env) {
+    if (missing(.data)) {
         force(.parent_env)
-        function(.expr_builder) { .expr_builder$eval(.parent_env) } # nocov
+        function(.data) { .data$eval(.parent_env) } # nocov
     }
     else if (missing(.parent_env)) {
-        .expr_builder$eval(rlang::caller_env())
+        .data$eval(rlang::caller_env())
     }
     else {
-        .expr_builder$eval(.parent_env)
+        .data$eval(.parent_env)
     }
 }

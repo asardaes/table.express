@@ -2,16 +2,23 @@
 % Please edit documentation in R/end-expr.R
 \name{end_expr}
 \alias{end_expr}
+\alias{end_expr.ExprBuilder}
 \title{End and evaluate expression}
 \usage{
-end_expr(.expr_builder, .parent_env)
+end_expr(.data, ...)
+
+\method{end_expr}{ExprBuilder}(.data, ..., .parent_env)
 }
 \arguments{
-\item{.expr_builder}{The \link{ExprBuilder} instance.}
+\item{.data}{The expression.}
+
+\item{...}{Arguments for the specific methods.}
 
 \item{.parent_env}{Optionally, the enclosing environment of the expression's environment.}
 }
 \description{
-Helper to evaluate the expression created by \link{ExprBuilder} and get the resulting
-\link[data.table:data.table-class]{data.table::data.table}.
+Finish the expression building process and evaluate it.
+}
+\details{
+The \link{ExprBuilder} method should return a \link[data.table:data.table-class]{data.table::data.table}.
 }
