@@ -1,0 +1,44 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+language: r
+cache: packages
+sudo: required
+r_build_args: "--compact-vignettes"
+r_packages:
+  - devtools
+r_github_packages:
+  - r-lib/covr
+os:
+  - linux
+r:
+  - release
+  - devel
+env:
+  - COMPILER=gxx
+matrix:
+  fast_finish: true
+  include:
+    - os: osx
+      r: release
+      env: COMPILER=clang
+  allow_failures:
+    - r: devel
+before_install:
+  - |
+    Rscript() {
+      # https://github.com/travis-ci/travis-ci/issues/4190#issuecomment-353342526
+      # https://unix.stackexchange.com/a/109790/219144
+      while sleep 60; do echo "=====[ still running ]====="; tail -n 10 /tmp/rs.out; done &
+      command Rscript "$@" > /tmp/rs.out 2>&1
+      local status=$?
+      kill %1
+      tail -n 50 /tmp/rs.out
+      return $status
+    }
+after_success:
+  - if [[ ("$TRAVIS_R_VERSION" != "devel") && ("$TRAVIS_OS_NAME" == "linux") ]]; then
+      Rscript codecov.R;
+    fi
+notifications:
+  email:
+    on_success: change
+    on_failure: change

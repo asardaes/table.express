@@ -1,0 +1,73 @@
+---
+output:
+    md_document:
+        variant: gfm
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, cache = FALSE, include = FALSE}
+library(knitr)
+library(data.table)
+library(table.express)
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    fig.path = "README-",
+    cache = TRUE
+)
+```
+
+[![Travis-CI Build Status](https://travis-ci.org/asardaes/table.express.svg?branch=master)](https://travis-ci.org/asardaes/table.express)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/asardaes/table.express?branch=master&svg=true)](https://ci.appveyor.com/project/asardaes/table.express)
+[![codecov](https://codecov.io/gh/asardaes/table.express/branch/master/graph/badge.svg)](https://codecov.io/gh/asardaes/table.express)
+
+
+# Table express
+
+Use `dplyr` verbs to build `data.table` expressions.
+
+This is WIP. Feel free to help :)
+
+Aliases also provided to resemble SQL syntax more closely.
+
+Powered mostly by [`rlang`](http://cran.r-project.org/package=rlang).
+
+## Essence
+
+The basic idea is to parse the input from all the verbs and create a single expression that, after evaluation,
+simply delegates all the actual computations to `data.table`,
+letting it handle all optimizations as usual.
+
+```{r essence}
+# the expression is what matters here, input is left empty
+data.table() %>%
+    select(.(col)) %>%
+    where(var == val) %>%
+    order_by(v)
+```
+
+The input `data.table` is alwas assigned in the evaluation's environment as the `.DT_` variable.
+The evaluation environment's enclosing environment should be the one where the input is first captured,
+at least that's the idea.
+
+In many cases character input can also be supported,
+which could be useful for other packages that use `data.table`.
+
+## Examples
+
+```{r example}
+data("mtcars")
+
+as.data.table(mtcars) %>%
+    select(mpg:disp) %>%
+    where(vs == 0L, am == 0L, .collapse = `|`) %>%
+    order_by(mpg, -cyl) %>%
+    eval_expr
+
+as.data.table(mtcars) %>%
+    select("mpg", "cyl", "disp", with = FALSE) %>%
+    where("vs == 0L", "am == 0L", .collapse = `|`, .parse = TRUE) %>%
+    order_by("mpg", "-cyl", .parse = TRUE) %>%
+    eval_expr
+```
