@@ -21,7 +21,6 @@ where <- function(.data, ...) { UseMethod("where") }
 #' @importFrom rlang enquos
 #' @importFrom rlang new_quosure
 #' @importFrom rlang quo_get_expr
-#' @importFrom rlang quo_squash
 #'
 #' @template data-arg
 #' @param ... Clause for subsetting. The `i` inside the `data.table`'s frame. For the `data.table`
@@ -36,19 +35,18 @@ where.ExprBuilder <- function(.data, ..., .collapse = `&`, .parse = FALSE) {
     if (length(clause) == 0L) {
         return(.data)
     }
-    else {
-        if (.parse)
-            first_where <- to_expr(clause[[1L]], .parse = .parse)
-        else
-            first_where <- rlang::quo_squash(clause[[1L]])
 
-        if (length(clause) == 1L) {
-            clause <- first_where
-        }
-        else {
-            .collapse <- rlang::quo_get_expr(rlang::enquo(.collapse))
-            clause <- squash_expr(clause[-1L], first_where, .collapse, .parse = .parse)
-        }
+    first_where <- clause[[1L]]
+    if (.parse) {
+        first_where <- to_expr(first_where, .parse = TRUE)
+    }
+
+    if (length(clause) == 1L) {
+        clause <- first_where
+    }
+    else {
+        .collapse <- rlang::quo_get_expr(rlang::enquo(.collapse))
+        clause <- squash_expr(clause[-1L], first_where, .collapse, .parse = .parse)
     }
 
     .data$where <- rlang::new_quosure(clause, rlang::caller_env())

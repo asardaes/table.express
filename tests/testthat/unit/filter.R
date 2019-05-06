@@ -23,8 +23,11 @@ test_that("The where verb works with simple numeric indices.", {
     expect_identical(ans, DT[-c(1L, 3L)])
 
     i <- 1:2
+
     ans <- DT %>% start_expr %>% where(i) %>% end_expr
-    expect_identical(nrow(ans), 2L)
+    expect_identical(ans, DT[1:2])
+
+    ans <- DT %>% start_expr %>% where(!!i) %>% end_expr
     expect_identical(ans, DT[1:2])
 })
 
@@ -74,7 +77,9 @@ test_that("Computing expressions in filter works.", {
     expect_identical(nrow(ans), 25L)
 
     ans <- DT %>% start_expr %>% filter(vs == i, am == 0L, .collapse = `|`) %>% end_expr
-    expect_identical(nrow(ans), 25L)
+    expect_identical(ans, DT[vs == i | am == 0L])
+
+    ans <- DT %>% start_expr %>% filter(vs == !!i, am == 0L, .collapse = `|`) %>% end_expr
     expect_identical(ans, DT[vs == i | am == 0L])
 })
 
@@ -110,6 +115,5 @@ test_that("Parsing computing expressions in filter works.", {
     expect_identical(nrow(ans), 25L)
 
     ans <- DT %>% start_expr %>% filter("vs == i", "am == 0L", .parse = TRUE, .collapse = `|`) %>% end_expr
-    expect_identical(nrow(ans), 25L)
     expect_identical(ans, DT[vs == i | am == 0L])
 })

@@ -17,6 +17,14 @@ test_that("The arrange verb works for single arguments regardless of the where c
     ans <- DT %>% start_expr %>% where(vs == 0L) %>% arrange(mpg) %>% end_expr
     expect_identical(ans, expected)
 
+    desired_vs <- 0L
+
+    ans <- DT %>% start_expr %>% where(vs == desired_vs) %>% arrange(mpg) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% where(vs == !!desired_vs) %>% arrange(mpg) %>% end_expr
+    expect_identical(ans, expected)
+
     ans <- DT %>%
         start_expr %>%
         where("vs == 0L", .parse = TRUE) %>%

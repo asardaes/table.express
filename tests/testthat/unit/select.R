@@ -9,6 +9,10 @@ test_that("The select verb works with single columns.", {
     ans <- DT %>% start_expr %>% select(mpg) %>% end_expr
     expectations(ans)
 
+    v <- rlang::sym("mpg")
+    ans <- DT %>% start_expr %>% select(!!v) %>% end_expr
+    expectations(ans)
+
     expectations <- function(ans) {
         expect_identical(ncol(ans), 1L)
         expect_identical(ans$mpg, mtcars$mpg)
@@ -46,6 +50,10 @@ test_that("The select verb works with multiple columns.", {
 
     v <- c("mpg", "cyl")
     ans <- DT %>% start_expr %>% select(..v) %>% end_expr
+    expectations(ans)
+
+    v <- rlang::syms(c("mpg", "cyl"))
+    ans <- DT %>% start_expr %>% select(!!!v) %>% end_expr
     expectations(ans)
 })
 

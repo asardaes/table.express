@@ -18,7 +18,6 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #' @export
 #' @importFrom rlang enquos
 #' @importFrom rlang expr
-#' @importFrom rlang quo_squash
 #'
 #' @template data-arg
 #' @param ... The columns to sort by.
@@ -31,6 +30,5 @@ order_by.ExprBuilder <- function(.data, ..., .collapse, .parse = FALSE) {
         base::evalq(where(.data$chain(), order(!!!dots)))
     )
 
-    e <- rlang::quo_squash(e)
     base::eval(e)
 }
