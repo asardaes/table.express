@@ -15,7 +15,3 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
-
-*.R text eol=lf
-*.yml text eol=lf
-*.git* text eol=lf
