@@ -3,7 +3,7 @@
 [![Travis-CI Build
 Status](https://travis-ci.org/asardaes/table.express.svg?branch=master)](https://travis-ci.org/asardaes/table.express)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/asardaes/table.express?branch=master&svg=true)](https://ci.appveyor.com/project/asardaes/table.express)
+status](https://ci.appveyor.com/api/projects/status/bb9606tfe648gajn?svg=true)](https://ci.appveyor.com/project/asardaes/table-express)
 [![codecov](https://codecov.io/gh/asardaes/table.express/branch/master/graph/badge.svg)](https://codecov.io/gh/asardaes/table.express)
 
 # Table express
