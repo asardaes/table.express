@@ -7,7 +7,7 @@ test_that("Constructor only accepts certain data types.", {
 })
 
 test_that("Methods work.", {
-    b <- ExprBuilder$new(DT, environment())
+    b <- ExprBuilder$new(DT)
     e <- capture.output(print(b))
     expect_identical(e, rlang::as_label(b$expr))
 })

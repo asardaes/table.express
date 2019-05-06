@@ -3,12 +3,9 @@
 \name{arrange-table.express}
 \alias{arrange-table.express}
 \alias{arrange.ExprBuilder}
-\alias{arrange.data.table}
 \title{Arrange rows}
 \usage{
 \method{arrange}{ExprBuilder}(.data, ...)
-
-\method{arrange}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}

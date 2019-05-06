@@ -3,12 +3,9 @@
 \name{filter-table.express}
 \alias{filter-table.express}
 \alias{filter.ExprBuilder}
-\alias{filter.data.table}
 \title{Filter rows}
 \usage{
 \method{filter}{ExprBuilder}(.data, ..., .preserve)
-
-\method{filter}{data.table}(.data, ..., .preserve)
 }
 \arguments{
 \item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}

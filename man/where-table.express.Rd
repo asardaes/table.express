@@ -3,13 +3,10 @@
 \name{where-table.express}
 \alias{where-table.express}
 \alias{where.ExprBuilder}
-\alias{where.data.table}
 \title{Where clause}
 \usage{
 \method{where}{ExprBuilder}(.data, ..., .collapse = `&`,
   .parse = FALSE)
-
-\method{where}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}

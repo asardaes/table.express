@@ -26,17 +26,15 @@ as usual.
 ``` r
 # the expression is what matters here, input is left empty
 data.table() %>%
+    start_expr %>%
     select(.(col)) %>%
     where(var == val) %>%
     order_by(v)
-#> base::evalq(.DT_[var == val, .(col), with = TRUE][order(v)], 
-#>     <environment>)
+#> .DT_[var == val, .(col), with = TRUE][order(v)]
 ```
 
 The input `data.table` is alwas assigned in the evaluation’s environment
-as the `.DT_` variable. The evaluation environment’s enclosing
-environment should be the one where the input is first captured, at
-least that’s the idea.
+as the `.DT_` variable.
 
 In many cases character input can also be supported, which could be
 useful for other packages that use `data.table`.
@@ -47,10 +45,11 @@ useful for other packages that use `data.table`.
 data("mtcars")
 
 as.data.table(mtcars) %>%
+    start_expr %>%
     select(mpg:disp) %>%
     where(vs == 0L, am == 0L, .collapse = `|`) %>%
     order_by(mpg, -cyl) %>%
-    eval_expr
+    end_expr
 #>      mpg cyl  disp
 #>  1: 10.4   8 472.0
 #>  2: 10.4   8 460.0
@@ -80,10 +79,11 @@ as.data.table(mtcars) %>%
 #>      mpg cyl  disp
 
 as.data.table(mtcars) %>%
+    start_expr %>%
     select("mpg", "cyl", "disp", with = FALSE) %>%
     where("vs == 0L", "am == 0L", .collapse = `|`, .parse = TRUE) %>%
     order_by("mpg", "-cyl", .parse = TRUE) %>%
-    eval_expr
+    end_expr
 #>      mpg cyl  disp
 #>  1: 10.4   8 472.0
 #>  2: 10.4   8 460.0

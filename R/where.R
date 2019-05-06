@@ -54,11 +54,3 @@ where.ExprBuilder <- function(.data, ..., .collapse = `&`, .parse = FALSE) {
     .data$where <- rlang::new_quosure(clause, rlang::caller_env())
     .data
 }
-
-#' @rdname where-table.express
-#' @export
-#' @importFrom rlang caller_env
-#'
-where.data.table <- function(.data, ...) {
-    where.ExprBuilder(ExprBuilder$new(.data, rlang::caller_env()), ...)
-}

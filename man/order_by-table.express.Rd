@@ -3,12 +3,9 @@
 \name{order_by-table.express}
 \alias{order_by-table.express}
 \alias{order_by.ExprBuilder}
-\alias{order_by.data.table}
 \title{Order by clause}
 \usage{
 \method{order_by}{ExprBuilder}(.data, ..., .collapse, .parse = FALSE)
-
-\method{order_by}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}

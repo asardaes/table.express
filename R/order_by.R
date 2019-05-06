@@ -26,21 +26,11 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #' @param .parse See [where-table.express].
 #'
 order_by.ExprBuilder <- function(.data, ..., .collapse, .parse = FALSE) {
-    next_builder <- if (is.null(.data$where)) .data else chain(.data)
-
     dots <- lapply(rlang::enquos(...), to_expr, .parse = .parse)
     e <- rlang::expr(
-        base::evalq(where(next_builder, order(!!!dots)))
+        base::evalq(where(.data$chain(), order(!!!dots)))
     )
 
     e <- rlang::quo_squash(e)
     base::eval(e)
-}
-
-#' @rdname order_by-table.express
-#' @export
-#' @importFrom rlang caller_env
-#'
-order_by.data.table <- function(.data, ...) {
-    order_by.ExprBuilder(ExprBuilder$new(.data, rlang::caller_env()), ...)
 }

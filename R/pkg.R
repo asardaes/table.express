@@ -7,6 +7,5 @@
 #'
 #' @importFrom rlang !!
 #' @importFrom rlang !!!
-#' @importFrom data.table is.data.table
 #'
 "_PACKAGE"

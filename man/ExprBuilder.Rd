@@ -26,9 +26,9 @@ Build an expression that will be used inside a \link[data.table:data.table-class
 
 
 \describe{
-\item{\code{initialize(DT, caller_env, after)}}{Constructor that receives a
-\link[data.table:data.table-class]{data.table::data.table} in \code{DT} and the caller's environment in \code{caller_env}.Chains
-can be built by passing an existing \code{ExprBuilder} instance in \code{DT}.}
+\item{\code{initialize(DT)}}{Constructor that receives a \link[data.table:data.table-class]{data.table::data.table} in \code{DT}.}
+\item{\code{chain()}}{Start a new expression with the current one as its parent.}
+\item{\code{eval(env)}}{Evaluate the final expression with \code{env} as the enclosing environment.}
 \item{\code{print(...)}}{Prints the built \code{expr}.}
 }
 }

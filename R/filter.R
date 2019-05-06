@@ -18,11 +18,3 @@ dplyr::filter
 filter.ExprBuilder <- function(.data, ..., .preserve) {
     where.ExprBuilder(.data, ...)
 }
-
-#' @rdname filter-table.express
-#' @export
-#' @importFrom rlang caller_env
-#'
-filter.data.table <- function(.data, ..., .preserve) {
-    where.ExprBuilder(ExprBuilder$new(.data, rlang::caller_env()), ...)
-}

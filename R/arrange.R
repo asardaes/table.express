@@ -17,11 +17,3 @@ dplyr::arrange
 arrange.ExprBuilder <- function(.data, ...) {
     order_by.ExprBuilder(.data, ...)
 }
-
-#' @rdname arrange-table.express
-#' @export
-#' @importFrom rlang caller_env
-#'
-arrange.data.table <- function(.data, ...) {
-    order_by.ExprBuilder(ExprBuilder$new(.data, rlang::caller_env()), ...)
-}

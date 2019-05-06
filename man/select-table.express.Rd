@@ -3,12 +3,9 @@
 \name{select-table.express}
 \alias{select-table.express}
 \alias{select.ExprBuilder}
-\alias{select.data.table}
 \title{Select clause}
 \usage{
 \method{select}{ExprBuilder}(.data, ..., with = TRUE)
-
-\method{select}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}

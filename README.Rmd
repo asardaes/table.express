@@ -42,14 +42,13 @@ letting it handle all optimizations as usual.
 ```{r essence}
 # the expression is what matters here, input is left empty
 data.table() %>%
+    start_expr %>%
     select(.(col)) %>%
     where(var == val) %>%
     order_by(v)
 ```
 
 The input `data.table` is alwas assigned in the evaluation's environment as the `.DT_` variable.
-The evaluation environment's enclosing environment should be the one where the input is first captured,
-at least that's the idea.
 
 In many cases character input can also be supported,
 which could be useful for other packages that use `data.table`.
@@ -60,14 +59,16 @@ which could be useful for other packages that use `data.table`.
 data("mtcars")
 
 as.data.table(mtcars) %>%
+    start_expr %>%
     select(mpg:disp) %>%
     where(vs == 0L, am == 0L, .collapse = `|`) %>%
     order_by(mpg, -cyl) %>%
-    eval_expr
+    end_expr
 
 as.data.table(mtcars) %>%
+    start_expr %>%
     select("mpg", "cyl", "disp", with = FALSE) %>%
     where("vs == 0L", "am == 0L", .collapse = `|`, .parse = TRUE) %>%
     order_by("mpg", "-cyl", .parse = TRUE) %>%
-    eval_expr
+    end_expr
 ```

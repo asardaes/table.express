@@ -18,5 +18,5 @@ chain(.data, ...)
 Build a chain of similar objects/operations.
 }
 \details{
-Adds a new frame to the call chain, i.e. another call to \code{\link[base:Extract]{[}}.
+The \link{ExprBuilder} method is equivalent to calling \code{\link[=end_expr]{end_expr()}} and then \code{\link[=start_expr]{start_expr()}} again.
 }

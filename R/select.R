@@ -48,11 +48,3 @@ select.ExprBuilder <- function(.data, ..., with = TRUE) {
 
     .data
 }
-
-#' @rdname select-table.express
-#' @export
-#' @importFrom rlang caller_env
-#'
-select.data.table <- function(.data, ...) {
-    select.ExprBuilder(ExprBuilder$new(.data, rlang::caller_env()), ...)
-}
