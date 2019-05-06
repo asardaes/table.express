@@ -17,5 +17,5 @@ chain <- function(.data, ...) { UseMethod("chain") }
 #' The [ExprBuilder] method is equivalent to calling [end_expr()] and then [start_expr()] again.
 #'
 chain.ExprBuilder <- function(.data, ...) {
-    start_expr(end_expr(.data, ...))
+    start_expr(end_expr(.data, ...), ...)
 }
