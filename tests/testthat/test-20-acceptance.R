@@ -1,3 +1,3 @@
 context("Acceptance tests")
 
-source("acceptance/order-invariance.R", TRUE)
+source("acceptance/test-order-invariance.R", TRUE)
