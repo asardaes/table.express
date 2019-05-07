@@ -16,10 +16,8 @@ where <- function(.data, ...) { UseMethod("where") }
 #' @rdname where-table.express
 #' @name where-table.express
 #' @export
-#' @importFrom rlang caller_env
 #' @importFrom rlang enquo
 #' @importFrom rlang enquos
-#' @importFrom rlang new_quosure
 #' @importFrom rlang quo_get_expr
 #'
 #' @template data-arg
@@ -36,10 +34,7 @@ where.ExprBuilder <- function(.data, ..., .collapse = `&`, .parse = FALSE) {
         return(.data)
     }
 
-    first_where <- clause[[1L]]
-    if (.parse) {
-        first_where <- to_expr(first_where, .parse = TRUE)
-    }
+    first_where <- to_expr(clause[[1L]], .parse = .parse)
 
     if (length(clause) == 1L) {
         clause <- first_where
@@ -49,6 +44,6 @@ where.ExprBuilder <- function(.data, ..., .collapse = `&`, .parse = FALSE) {
         clause <- squash_expr(clause[-1L], first_where, .collapse, .parse = .parse)
     }
 
-    .data$where <- rlang::new_quosure(clause, rlang::caller_env())
+    .data$where <- clause
     .data
 }

@@ -10,11 +10,10 @@ dplyr::select
 #' @rdname select-table.express
 #' @name select-table.express
 #' @export
+#' @importFrom rlang enexprs
 #' @importFrom rlang enquos
 #' @importFrom rlang expr
-#' @importFrom rlang quo_get_env
-#' @importFrom rlang quo_set_env
-#' @importFrom rlang quos
+#' @importFrom rlang exprs
 #'
 #' @template data-arg
 #' @param ... Clause for selectin/computing on columns. The `j` inside the `data.table`'s frame. For
@@ -38,12 +37,10 @@ select.ExprBuilder <- function(.data, ..., with = TRUE) {
         else
             squashed <- rlang::expr(c(!!!clause))
 
-        .data$select <- sapply(rlang::quos(!!squashed, with = !!with),
-                               rlang::quo_set_env,
-                               rlang::quo_get_env(clause[[1L]]))
+        .data$select <- rlang::exprs(!!squashed, with = !!with)
     }
     else {
-        .data$select <- rlang::enquos(..., with = with)
+        .data$select <- rlang::enexprs(..., with = with)
     }
 
     .data
