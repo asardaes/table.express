@@ -3,13 +3,13 @@
 #'
 magrittr::`%>%`
 
-#' @importFrom rlang abort
 #' @importFrom rlang as_name
 #' @importFrom rlang expr
 #' @importFrom rlang is_expression
 #' @importFrom rlang is_missing
 #' @importFrom rlang is_quosure
 #' @importFrom rlang parse_expr
+#' @importFrom rlang quo
 #' @importFrom rlang quo_squash
 #'
 to_expr <- function(obj, .parse = FALSE) {
@@ -24,14 +24,11 @@ to_expr <- function(obj, .parse = FALSE) {
         rlang::quo_squash(obj)
     }
     else {
-        rlang::abort("Could not parse received 'obj' to expression.",
-                     "table.express.invalid_argument_class_error",
-                     obj = obj)
+        rlang::quo(!!obj)
     }
 }
 
 #' @importFrom rlang expr
-#' @importFrom rlang is_quosure
 #' @importFrom rlang quo_squash
 #'
 squash_expr <- function(quosures, init, op, ..., .parse = FALSE) {
@@ -42,8 +39,8 @@ squash_expr <- function(quosures, init, op, ..., .parse = FALSE) {
             new <- to_expr(new, .parse = .parse)
 
         if (is.list(new))
-            rlang::expr((!!op)(!!current, !!!new))
+            rlang::quo_squash(rlang::expr((!!op)(!!current, !!!new)))
         else
-            rlang::expr((!!op)(!!current, !!new))
+            rlang::quo_squash(rlang::expr((!!op)(!!current, !!new)))
     })
 }
