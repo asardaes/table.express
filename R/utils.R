@@ -3,7 +3,6 @@
 #'
 magrittr::`%>%`
 
-#' @importFrom rlang as_name
 #' @importFrom rlang expr
 #' @importFrom rlang is_expression
 #' @importFrom rlang is_missing
@@ -17,7 +16,6 @@ to_expr <- function(obj, .parse = FALSE) {
         rlang::expr()
     }
     else if (.parse) {
-        if (!is.character(obj)) obj <- rlang::as_name(obj)
         rlang::parse_expr(obj)
     }
     else if (rlang::is_quosure(obj) || rlang::is_expression(obj)) {

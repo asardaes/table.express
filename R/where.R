@@ -2,33 +2,27 @@
 #'
 #' Clause for subsetting rows.
 #'
+#' @rdname where-table.express
+#' @name where-table.express
 #' @export
 #'
-#' @param .data Something resembling a `data.frame`.
+#' @param .data The input data.
 #' @param ... Arguments for the specific methods.
 #'
 where <- function(.data, ...) { UseMethod("where") }
 
-#' Where clause
-#'
-#' Clause for subsetting rows of a [data.table::data.table-class].
-#'
 #' @rdname where-table.express
-#' @name where-table.express
 #' @export
+#' @importFrom rlang enexprs
 #' @importFrom rlang enquo
-#' @importFrom rlang enquos
 #' @importFrom rlang quo_get_expr
 #'
-#' @template data-arg
-#' @param ... Clause for subsetting. The `i` inside the `data.table`'s frame. For the `data.table`
-#'   method, this can also extra parameters from the `ExprBuilder` method.
 #' @param .collapse A boolean function which will be used to "concatenate" all conditions in `...`.
 #' @param .parse If you want/need to provide strings in `...`, set this to `TRUE` to call
 #'   [rlang::parse_expr()] on each one.
 #'
 where.ExprBuilder <- function(.data, ..., .collapse = `&`, .parse = FALSE) {
-    clause <- rlang::enquos(...)
+    clause <- rlang::enexprs(...)
 
     if (length(clause) == 0L) {
         return(.data)

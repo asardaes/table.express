@@ -11,7 +11,6 @@ dplyr::select
 #' @name select-table.express
 #' @export
 #' @importFrom rlang enexprs
-#' @importFrom rlang enquos
 #' @importFrom rlang expr
 #' @importFrom rlang exprs
 #'
@@ -29,7 +28,7 @@ dplyr::select
 #' - `c` otherwise
 #'
 select.ExprBuilder <- function(.data, ..., with = TRUE) {
-    clause <- rlang::enquos(...)
+    clause <- rlang::enexprs(...)
 
     if (length(clause) > 1L) {
         if (with)

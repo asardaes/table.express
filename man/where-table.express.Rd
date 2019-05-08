@@ -2,17 +2,19 @@
 % Please edit documentation in R/where.R
 \name{where-table.express}
 \alias{where-table.express}
+\alias{where}
 \alias{where.ExprBuilder}
 \title{Where clause}
 \usage{
+where(.data, ...)
+
 \method{where}{ExprBuilder}(.data, ..., .collapse = `&`,
   .parse = FALSE)
 }
 \arguments{
-\item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
+\item{.data}{The input data.}
 
-\item{...}{Clause for subsetting. The \code{i} inside the \code{data.table}'s frame. For the \code{data.table}
-method, this can also extra parameters from the \code{ExprBuilder} method.}
+\item{...}{Arguments for the specific methods.}
 
 \item{.collapse}{A boolean function which will be used to "concatenate" all conditions in \code{...}.}
 
@@ -20,5 +22,5 @@ method, this can also extra parameters from the \code{ExprBuilder} method.}
 \code{\link[rlang:parse_expr]{rlang::parse_expr()}} on each one.}
 }
 \description{
-Clause for subsetting rows of a \link[data.table:data.table-class]{data.table::data.table}.
+Clause for subsetting rows.
 }

@@ -2,20 +2,23 @@
 % Please edit documentation in R/order_by.R
 \name{order_by-table.express}
 \alias{order_by-table.express}
+\alias{order_by}
 \alias{order_by.ExprBuilder}
 \title{Order by clause}
 \usage{
+order_by(.data, ...)
+
 \method{order_by}{ExprBuilder}(.data, ..., .collapse, .parse = FALSE)
 }
 \arguments{
-\item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
+\item{.data}{The input data.}
 
-\item{...}{The columns to sort by.}
+\item{...}{Arguments for the specific methods.}
 
 \item{.collapse}{Ignored.}
 
 \item{.parse}{See \link{where-table.express}.}
 }
 \description{
-Clause for ordering rows of a \link[data.table:data.table-class]{data.table::data.table}.
+Clause for ordering rows.
 }
