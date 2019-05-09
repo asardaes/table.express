@@ -42,8 +42,6 @@ ExprBuilder <- R6Class(
         },
 
         chain = function() {
-            if (is.null(self$where)) return(self)
-
             other <- ExprBuilder$new(private$.DT)
             private$.insert_child(other)
 
@@ -72,6 +70,10 @@ ExprBuilder <- R6Class(
             private$.process_clause("where", rlang::maybe_missing(value))
         },
 
+        by = function(value) {
+            private$.process_clause("by", rlang::maybe_missing(value))
+        },
+
         expr = function(.DT_) {
             if (!missing(.DT_)) rlang::abort("The 'expr' field is read-only.") # nocov
 
@@ -88,6 +90,7 @@ ExprBuilder <- R6Class(
 
         .select = NULL,
         .where = NULL,
+        .by = NULL,
 
         .process_clause = function(name, value) {
             private_name <- paste0(".", name)
@@ -114,7 +117,12 @@ ExprBuilder <- R6Class(
                 rlang::maybe_missing(q)
             })
 
-            unlist(unname(quosures), recursive = FALSE)
+            to_unname <- names(quosures) %in% c("select", "where")
+            if (any(to_unname)) {
+                names(quosures)[to_unname] <- ""
+            }
+
+            unlist(quosures)
         },
 
         .insert_child = function(other) {
@@ -141,7 +149,8 @@ EBCompanion <- new.env()
 
 EBCompanion$clause_order <- c(
     "where",
-    "select"
+    "select",
+    "by"
 )
 
 # --------------------------------------------------------------------------------------------------

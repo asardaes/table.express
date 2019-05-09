@@ -22,9 +22,17 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #'
 order_by.ExprBuilder <- function(.data, ..., .collapse, .parse = FALSE) {
     dots <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)
-    e <- rlang::expr(
-        base::evalq(where(.data$chain(), order(!!!dots)))
-    )
+
+    if (is.null(.data$where)) {
+        e <- rlang::expr(
+            base::evalq(where(.data, order(!!!dots)))
+        )
+    }
+    else {
+        e <- rlang::expr(
+            base::evalq(where(.data$chain(), order(!!!dots)))
+        )
+    }
 
     base::eval(e)
 }

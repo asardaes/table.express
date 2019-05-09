@@ -2,6 +2,8 @@
 output:
     md_document:
         variant: gfm
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -58,11 +60,22 @@ which could be useful for other packages that use `data.table`.
 ```{r example}
 data("mtcars")
 
+# Equivalent to:
+# as.data.table(mtcars)[
+#     cyl < 8L, mpg:disp][
+#         order(-cyl), .(mean_mpg = mean(mpg), mean_disp = mean(disp)), by = cyl]
 as.data.table(mtcars) %>%
     start_expr %>%
+    
     select(mpg:disp) %>%
-    where(vs == 0L, am == 0L, .collapse = `|`) %>%
-    order_by(mpg, -cyl) %>%
+    where(cyl < 8L) %>%
+    
+    chain %>%
+    
+    select(mean_mpg = mean(mpg), mean_disp = mean(disp)) %>%
+    group_by(cyl) %>%
+    order_by(-cyl) %>%
+    
     end_expr
 
 as.data.table(mtcars) %>%
