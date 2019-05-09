@@ -8,8 +8,10 @@
 #' @importFrom R6 R6Class
 #' @importFrom rlang abort
 #' @importFrom rlang expr
+#' @importFrom rlang is_missing
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
+#' @importFrom rlang warn
 #'
 #' @field where Clause for subsetting. The `i` inside the `data.table`'s frame.
 #' @field select Clause for selectin/computing on columns. The `j` inside the `data.table`'s frame.
@@ -28,9 +30,6 @@
 ExprBuilder <- R6Class(
     "ExprBuilder",
     public = list(
-        where = NULL,
-        select = NULL,
-
         initialize = function(DT) {
             if (data.table::is.data.table(DT))
                 private$.DT <- DT
@@ -65,6 +64,14 @@ ExprBuilder <- R6Class(
         }
     ),
     active = list(
+        select = function(value) {
+            private$.process_clause("select", rlang::maybe_missing(value))
+        },
+
+        where = function(value) {
+            private$.process_clause("where", rlang::maybe_missing(value))
+        },
+
         expr = function(.DT_) {
             if (!missing(.DT_)) rlang::abort("The 'expr' field is read-only.") # nocov
 
@@ -75,8 +82,26 @@ ExprBuilder <- R6Class(
     ),
     private = list(
         .DT = NULL,
+
         .parent = NULL,
         .child = NULL,
+
+        .select = NULL,
+        .where = NULL,
+
+        .process_clause = function(name, value) {
+            private_name <- paste0(".", name)
+            prev_clause <- get(private_name, private, inherits = FALSE)
+            if (rlang::is_missing(value)) return(prev_clause)
+
+            if (!is.null(prev_clause)) {
+                rlang::warn(paste0("Replacing '", name, "' part of the clause"),
+                            "table.express.clause_replacement_warning",
+                            prev_clause = prev_clause)
+            }
+
+            assign(private_name, value, private)
+        },
 
         .unlist_quosures = function() {
             quosures <- mget(EBCompanion$clause_order, self, ifnotfound = list(NULL))

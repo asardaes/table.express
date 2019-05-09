@@ -6,8 +6,18 @@ test_that("Constructor only accepts certain data types.", {
     }
 })
 
-test_that("Methods work.", {
+test_that("Print method works.", {
     b <- ExprBuilder$new(DT)
     e <- capture.output(print(b))
     expect_identical(e, rlang::as_label(b$expr))
+})
+
+test_that("Warning is given when replacing clauses", {
+    b <- ExprBuilder$new(DT)
+
+    b$select <- "hi"
+    expect_warning(b$select <- "bye")
+
+    b$where <- "hi"
+    expect_warning(b$where <- "bye")
 })
