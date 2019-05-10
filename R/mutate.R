@@ -17,7 +17,7 @@ dplyr::mutate
 #' @importFrom rlang quo_squash
 #'
 #' @template data-arg
-#' @param ... Clause for grouping on columns. The `by` inside the `data.table`'s frame.
+#' @param ... Mutation clauses.
 #' @param .parse See [where-table.express].
 #' @param .by_ref Whether to update the data.table by reference or not.
 #'
