@@ -6,7 +6,7 @@
 \title{Add or update columns}
 \usage{
 \method{mutate}{ExprBuilder}(.data, ..., .parse = FALSE,
-  .by_ref = TRUE)
+  .by_ref = TRUE, .unquote_names = TRUE)
 }
 \arguments{
 \item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
@@ -16,6 +16,9 @@
 \item{.parse}{See \link{where-table.express}.}
 
 \item{.by_ref}{Whether to update the data.table by reference or not.}
+
+\item{.unquote_names}{Passed to \code{\link[rlang:enexprs]{rlang::enexprs()}}. Set to \code{FALSE} if you want to pass the single
+\code{\link[data.table:set]{:=}} expression.}
 }
 \description{
 Add or update columns of a \link[data.table:data.table-class]{data.table::data.table}, possibly by reference using

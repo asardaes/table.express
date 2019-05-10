@@ -87,3 +87,27 @@ test_that("Mutating by value with parsing works.", {
     expect_identical(ans$mpg2, DT$mpg * 2)
     expect_identical(ans$disp0.5, DT$disp / 2)
 })
+
+test_that("Mutations with parens expressions work if .unquote_names = FALSE.", {
+    ans <- DT %>% start_expr %>% mutate((c("a", "b")) := .(1, 2), .by_ref = FALSE, .unquote_names = FALSE) %>% end_expr
+    expect_identical(ncol(ans), ncol(DT) + 2L)
+    expect_identical(ans$a, rep(1, nrow(DT)))
+    expect_identical(ans$b, rep(2, nrow(DT)))
+
+    lhs <- c("a", "b")
+    ans <- DT %>% start_expr %>% mutate((lhs) := .(1, 2), .by_ref = FALSE, .unquote_names = FALSE) %>% end_expr
+    expect_identical(ncol(ans), ncol(DT) + 2L)
+    expect_identical(ans$a, rep(1, nrow(DT)))
+    expect_identical(ans$b, rep(2, nrow(DT)))
+
+    ans %>% start_expr %>% mutate((lhs) := NULL, .unquote_names = FALSE) %>% end_expr
+    expect_equal(ans, DT)
+
+    expect_warning({
+        ans <- ans %>% start_expr %>% mutate((lhs) := 1, mpg = 0, .unquote_names = FALSE) %>% end_expr
+    })
+
+    expect_identical(ncol(ans), ncol(DT) + 2L)
+    expect_identical(ans$a, rep(1, nrow(DT)))
+    expect_identical(ans$b, rep(1, nrow(DT)))
+})

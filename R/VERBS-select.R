@@ -41,7 +41,7 @@ select.ExprBuilder <- function(.data, ..., with = TRUE) {
         }
     }
     else if (!with) {
-        clause <- rlang::enexprs(..., with = with)
+        clause$with <- FALSE
     }
 
     .data$select <- clause
