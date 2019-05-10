@@ -111,7 +111,9 @@ ExprBuilder <- R6Class(
             if (rlang::is_missing(value)) return(prev_clause)
 
             if (!is.null(prev_clause)) {
-                rlang::warn(paste0("Replacing '", name, "' part of the clause"),
+                rlang::warn(paste0("Replacing previous '", name, "' clause:",
+                                   "\n\tprev_clause -> ", prev_clause,
+                                   "\n\tnew_clause -> ", value),
                             "table.express.clause_replacement_warning",
                             prev_clause = prev_clause)
             }
