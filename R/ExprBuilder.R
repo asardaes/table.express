@@ -41,6 +41,8 @@ ExprBuilder <- R6Class(
             invisible()
         },
 
+        by_ref = TRUE,
+
         chain = function() {
             other <- ExprBuilder$new(private$.DT)
             private$.insert_child(other)
@@ -79,7 +81,8 @@ ExprBuilder <- R6Class(
 
             root <- EBCompanion$get_root(self)
             quo_chain <- EBCompanion$get_quo_chain(root)
-            squash_expr(quo_chain, rlang::expr(.DT_), rlang::expr(`[`))
+            init <- if (self$by_ref) rlang::expr(.DT_) else rlang::expr(data.table::copy(.DT_))
+            squash_expr(quo_chain, init, rlang::expr(`[`))
         }
     ),
     private = list(
