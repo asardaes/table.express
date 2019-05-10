@@ -28,19 +28,22 @@ dplyr::select
 #' - `c` otherwise
 #'
 select.ExprBuilder <- function(.data, ..., with = TRUE) {
-    clause <- rlang::enexprs(...)
+    clause <- rlang::enexprs(..., .unquote_names = FALSE)
 
     if (length(clause) > 1L) {
-        if (with)
+        if (with) {
             squashed <- rlang::expr(list(!!!clause))
-        else
+            clause <- rlang::exprs(!!squashed)
+        }
+        else {
             squashed <- rlang::expr(c(!!!clause))
-
-        .data$select <- rlang::exprs(!!squashed, with = !!with)
+            clause <- rlang::exprs(!!squashed, with = FALSE)
+        }
     }
-    else {
-        .data$select <- rlang::enexprs(..., with = with)
+    else if (!with) {
+        clause <- rlang::enexprs(..., with = with)
     }
 
+    .data$select <- clause
     .data
 }
