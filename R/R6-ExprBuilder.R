@@ -8,9 +8,11 @@
 #' @importFrom R6 R6Class
 #' @importFrom rlang abort
 #' @importFrom rlang expr
+#' @importFrom rlang is_expression
 #' @importFrom rlang is_missing
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
+#' @importFrom rlang quo
 #' @importFrom rlang warn
 #'
 #' @field where Clause for subsetting. The `i` inside the `data.table`'s frame.
@@ -76,6 +78,13 @@ ExprBuilder <- R6Class(
             private$.process_clause("by", rlang::maybe_missing(value))
         },
 
+        # value should always be a list of 0 or more expressions
+        appends = function(value) {
+            if (missing(value)) return(private$.appends)
+
+            private$.appends <- c(private$.appends, value)
+        },
+
         expr = function(.DT_) {
             if (!missing(.DT_)) rlang::abort("The 'expr' field is read-only.") # nocov
 
@@ -94,6 +103,7 @@ ExprBuilder <- R6Class(
         .select = NULL,
         .where = NULL,
         .by = NULL,
+        .appends = NULL,
 
         .process_clause = function(name, value) {
             private_name <- paste0(".", name)
@@ -125,6 +135,7 @@ ExprBuilder <- R6Class(
                 names(quosures)[to_unname] <- ""
             }
 
+            quosures <- c(quosures, private$.appends)
             unlist(quosures)
         },
 

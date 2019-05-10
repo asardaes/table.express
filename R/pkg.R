@@ -5,6 +5,7 @@
 #'
 #' @author Alexis Sarda-Espinosa
 #'
+#' @importFrom data.table :=
 #' @importFrom rlang !!
 #' @importFrom rlang !!!
 #'

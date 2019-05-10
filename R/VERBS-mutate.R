@@ -11,7 +11,6 @@ dplyr::mutate
 #' @rdname mutate-table.express
 #' @name mutate-table.express
 #' @export
-#' @importFrom data.table :=
 #' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #' @importFrom rlang quo_squash
