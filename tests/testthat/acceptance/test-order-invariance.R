@@ -1,11 +1,12 @@
 context("  Clause order invariance")
 
 test_that("Order of clauses is not important for a single 'query'.", {
-    expected <- DT[vs == 0L & am == 0L, mpg:disp]
+    expected <- DT[vs == 1L | am == 1L, .(mpg = mean(mpg), disp = sd(disp)), by = gear]
 
     clauses <- list(
-        rlang::expr(filter(vs == 0L, am == 0L)),
-        rlang::expr(select(mpg:disp))
+        rlang::expr(filter(vs == 1L, am == 1L, .collapse = `|`)),
+        rlang::expr(select(mpg = mean(mpg), disp = sd(disp))),
+        rlang::expr(group_by(gear))
     )
 
     for (ignored in 1L:50L) {
