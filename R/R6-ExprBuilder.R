@@ -32,6 +32,8 @@
 ExprBuilder <- R6Class(
     "ExprBuilder",
     public = list(
+        by_ref = TRUE,
+
         initialize = function(DT) {
             if (data.table::is.data.table(DT))
                 private$.DT <- DT
@@ -42,8 +44,6 @@ ExprBuilder <- R6Class(
 
             invisible()
         },
-
-        by_ref = TRUE,
 
         chain = function() {
             other <- ExprBuilder$new(private$.DT)
@@ -86,7 +86,7 @@ ExprBuilder <- R6Class(
         },
 
         expr = function(.DT_) {
-            if (!missing(.DT_)) rlang::abort("The 'expr' field is read-only.") # nocov
+            if (!missing(.DT_)) rlang::abort("The 'expr' field is read-only.")
 
             root <- EBCompanion$get_root(self)
             quo_chain <- EBCompanion$get_quo_chain(root)

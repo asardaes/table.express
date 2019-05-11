@@ -21,3 +21,8 @@ test_that("Warning is given when replacing clauses", {
     b$where <- "hi"
     expect_warning(b$where <- "bye")
 })
+
+test_that("The expr field is read only.", {
+    b <- ExprBuilder$new(DT)
+    expect_error(b$expr <- "hi")
+})
