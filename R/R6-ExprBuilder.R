@@ -7,11 +7,12 @@
 #' @importFrom data.table is.data.table
 #' @importFrom R6 R6Class
 #' @importFrom rlang abort
+#' @importFrom rlang as_label
 #' @importFrom rlang expr
 #' @importFrom rlang is_expression
-#' @importFrom rlang is_missing
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
+#' @importFrom rlang parse_expr
 #' @importFrom rlang quo
 #' @importFrom rlang warn
 #'
@@ -45,6 +46,18 @@ ExprBuilder <- R6Class(
             invisible()
         },
 
+        set_select = function(value, chain_if_needed) {
+            private$.process_clause("select", value, chain_if_needed)
+        },
+
+        set_where = function(value, chain_if_needed) {
+            private$.process_clause("where", value, chain_if_needed)
+        },
+
+        set_by = function(value) {
+            private$.process_clause("by", value, FALSE)
+        },
+
         chain = function() {
             other <- ExprBuilder$new(private$.DT)
             private$.insert_child(other)
@@ -66,18 +79,6 @@ ExprBuilder <- R6Class(
         }
     ),
     active = list(
-        select = function(value) {
-            private$.process_clause("select", rlang::maybe_missing(value))
-        },
-
-        where = function(value) {
-            private$.process_clause("where", rlang::maybe_missing(value))
-        },
-
-        by = function(value) {
-            private$.process_clause("by", rlang::maybe_missing(value))
-        },
-
         # value should always be a list of 0 or more expressions
         appends = function(value) {
             if (missing(value)) return(private$.appends)
@@ -105,24 +106,34 @@ ExprBuilder <- R6Class(
         .by = NULL,
         .appends = NULL,
 
-        .process_clause = function(name, value) {
+        .process_clause = function(name, value, chain_if_needed) {
             private_name <- paste0(".", name)
             prev_clause <- get(private_name, private, inherits = FALSE)
-            if (rlang::is_missing(value)) return(prev_clause)
 
             if (!is.null(prev_clause)) {
+                if (chain_if_needed) {
+                    other <- self$chain()
+
+                    expr_set_other <- paste0("other$set_", name, "(value, chain_if_needed)")
+                    expr_set_other <- rlang::parse_expr(expr_set_other)
+                    base::eval(expr_set_other)
+
+                    return(other)
+                }
+
                 rlang::warn(paste0("Replacing previous '", name, "' clause:",
-                                   "\n\tprev_clause -> ", prev_clause,
-                                   "\n\tnew_clause -> ", value),
+                                   "\n\tprev_clause -> ", rlang::as_label(prev_clause),
+                                   "\n\tnew_clause -> ", rlang::as_label(value)),
                             "table.express.clause_replacement_warning",
                             prev_clause = prev_clause)
             }
 
             assign(private_name, value, private)
+            self
         },
 
         .unlist_quosures = function() {
-            quosures <- mget(EBCompanion$clause_order, self, ifnotfound = list(NULL))
+            quosures <- mget(EBCompanion$clause_order, private, ifnotfound = list(NULL))
             until <- Position(Negate(is.null), quosures, right = TRUE)
             if(is.na(until)) until <- 1L
 
@@ -132,7 +143,9 @@ ExprBuilder <- R6Class(
                 rlang::maybe_missing(q)
             })
 
-            to_unname <- names(quosures) %in% c("select", "where")
+            names(quosures) <- sub("^.by$", "by", names(quosures))
+
+            to_unname <- names(quosures) %in% c(".select", ".where")
             if (any(to_unname)) {
                 names(quosures)[to_unname] <- ""
             }
@@ -164,9 +177,9 @@ ExprBuilder <- R6Class(
 EBCompanion <- new.env()
 
 EBCompanion$clause_order <- c(
-    "where",
-    "select",
-    "by"
+    ".where",
+    ".select",
+    ".by"
 )
 
 # --------------------------------------------------------------------------------------------------

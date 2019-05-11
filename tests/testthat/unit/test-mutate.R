@@ -52,7 +52,7 @@ test_that("Mutating by value without parsing works.", {
     expect_identical(ans$ans, ans$mpg * 2)
 
     ans <- ans %>% start_expr %>% mutate(ans = NULL, .by_ref = FALSE) %>% end_expr
-    expect_identical(ans, DT)
+    expect_equal(ans, DT)
 
     ans_name <- "ans"
     ans <- DT %>% start_expr %>% mutate(!!ans_name := mpg * 2, .by_ref = FALSE) %>% end_expr
@@ -71,7 +71,7 @@ test_that("Mutating by value with parsing works.", {
     expect_identical(ans$ans, ans$mpg * 2)
 
     ans <- ans %>% start_expr %>% mutate(ans = "NULL", .parse = TRUE, .by_ref = FALSE) %>% end_expr
-    expect_identical(ans, DT)
+    expect_equal(ans, DT)
 
     ans_name <- "ans"
     ans <- DT %>% start_expr %>% mutate(!!ans_name := "mpg * 2", .parse = TRUE, .by_ref = FALSE) %>% end_expr

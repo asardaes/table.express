@@ -8,7 +8,8 @@
 \usage{
 order_by(.data, ...)
 
-\method{order_by}{ExprBuilder}(.data, ..., .collapse, .parse = FALSE)
+\method{order_by}{ExprBuilder}(.data, ..., .collapse, .parse = FALSE,
+  .chain = TRUE)
 }
 \arguments{
 \item{.data}{The input data.}
@@ -18,6 +19,9 @@ order_by(.data, ...)
 \item{.collapse}{Ignored.}
 
 \item{.parse}{See \link{where-table.express}.}
+
+\item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?}
 }
 \description{
 Clause for ordering rows.

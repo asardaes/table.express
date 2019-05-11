@@ -9,7 +9,7 @@
 where(.data, ...)
 
 \method{where}{ExprBuilder}(.data, ..., .collapse = `&`,
-  .parse = FALSE)
+  .parse = FALSE, .chain = TRUE)
 }
 \arguments{
 \item{.data}{The input data.}
@@ -20,6 +20,9 @@ where(.data, ...)
 
 \item{.parse}{If you want/need to provide strings in \code{...}, set this to \code{TRUE} to call
 \code{\link[rlang:parse_expr]{rlang::parse_expr()}} on each one.}
+
+\item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?}
 }
 \description{
 Clause for subsetting rows.

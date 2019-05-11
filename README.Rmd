@@ -70,8 +70,6 @@ as.data.table(mtcars) %>%
     select(mpg:disp) %>%
     where(cyl < 8L) %>%
     
-    chain %>%
-    
     select(mean_mpg = mean(mpg), mean_disp = mean(disp)) %>%
     group_by(cyl) %>%
     order_by(-cyl) %>%

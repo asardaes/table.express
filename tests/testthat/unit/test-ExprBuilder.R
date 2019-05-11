@@ -15,11 +15,15 @@ test_that("Print method works.", {
 test_that("Warning is given when replacing clauses", {
     b <- ExprBuilder$new(DT)
 
-    b$select <- "hi"
-    expect_warning(b$select <- "bye")
+    expr <- rlang::expr(foo(bar))
+    b$set_select(expr, FALSE)
+    expect_warning(b$set_select(expr, FALSE))
 
-    b$where <- "hi"
-    expect_warning(b$where <- "bye")
+    b$set_where(expr, FALSE)
+    expect_warning(b$set_where(expr, FALSE))
+
+    b$set_by(expr)
+    expect_warning(b$set_by(expr))
 })
 
 test_that("The expr field is read only.", {

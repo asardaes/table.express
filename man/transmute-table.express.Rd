@@ -6,7 +6,7 @@
 \title{Add or adjust columns and keep only them}
 \usage{
 \method{transmute}{ExprBuilder}(.data, ..., .parse = FALSE,
-  .by_ref = FALSE)
+  .by_ref = FALSE, .chain = TRUE)
 }
 \arguments{
 \item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
@@ -16,6 +16,9 @@
 \item{.parse}{See \link{where-table.express}.}
 
 \item{.by_ref}{See \link{mutate-table.express}.}
+
+\item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?}
 }
 \description{
 Add or adjust columns of a \link[data.table:data.table-class]{data.table::data.table}, keeping only the resulting columns.

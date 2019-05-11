@@ -19,6 +19,7 @@ dplyr::select
 #'   the `data.table` method, this can also extra parameters from the `ExprBuilder` method.
 #' @param with Passed to [data.table::data.table-class]'s [`[`][data.table::data.table-package]
 #'   method.
+#' @template chain-arg
 #'
 #' @details
 #'
@@ -27,7 +28,7 @@ dplyr::select
 #' - `list` if `with = TRUE`
 #' - `c` otherwise
 #'
-select.ExprBuilder <- function(.data, ..., with = TRUE) {
+select.ExprBuilder <- function(.data, ..., with = TRUE, .chain = TRUE) {
     clause <- rlang::enexprs(..., .unquote_names = FALSE)
 
     if (length(clause) > 1L) {
@@ -44,6 +45,5 @@ select.ExprBuilder <- function(.data, ..., with = TRUE) {
         clause$with <- FALSE
     }
 
-    .data$select <- clause
-    .data
+    .data$set_select(clause, .chain)
 }

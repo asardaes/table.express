@@ -20,8 +20,9 @@ where <- function(.data, ...) { UseMethod("where") }
 #' @param .collapse A boolean function which will be used to "concatenate" all conditions in `...`.
 #' @param .parse If you want/need to provide strings in `...`, set this to `TRUE` to call
 #'   [rlang::parse_expr()] on each one.
+#' @template chain-arg
 #'
-where.ExprBuilder <- function(.data, ..., .collapse = `&`, .parse = FALSE) {
+where.ExprBuilder <- function(.data, ..., .collapse = `&`, .parse = FALSE, .chain = TRUE) {
     clause <- rlang::enexprs(...)
 
     if (length(clause) == 0L) {
@@ -38,6 +39,5 @@ where.ExprBuilder <- function(.data, ..., .collapse = `&`, .parse = FALSE) {
         clause <- squash_expr(clause[-1L], first_where, .collapse, .parse = .parse)
     }
 
-    .data$where <- clause
-    .data
+    .data$set_where(clause, .chain)
 }

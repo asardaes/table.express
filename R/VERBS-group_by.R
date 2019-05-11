@@ -24,6 +24,5 @@ dplyr::group_by
 #'
 group_by.ExprBuilder <- function(.data, ..., .parse = FALSE) {
     clause <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)
-    .data$by <- rlang::quo_squash(rlang::expr(list(!!!clause)))
-    .data
+    .data$set_by(rlang::quo_squash(rlang::expr(list(!!!clause))))
 }

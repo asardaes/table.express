@@ -19,20 +19,14 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #'
 #' @param .collapse Ignored.
 #' @param .parse See [where-table.express].
+#' @template chain-arg
 #'
-order_by.ExprBuilder <- function(.data, ..., .collapse, .parse = FALSE) {
+order_by.ExprBuilder <- function(.data, ..., .collapse, .parse = FALSE, .chain = TRUE) {
     dots <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)
 
-    if (is.null(.data$where)) {
-        e <- rlang::expr(
-            base::evalq(where(.data, order(!!!dots)))
-        )
-    }
-    else {
-        e <- rlang::expr(
-            base::evalq(where(.data$chain(), order(!!!dots)))
-        )
-    }
+    e <- rlang::expr(
+        base::evalq(where(.data, order(!!!dots), .chain = !!.chain))
+    )
 
     base::eval(e)
 }

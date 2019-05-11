@@ -16,18 +16,16 @@ dplyr::transmute
 #' @param ... Transmutation clauses.
 #' @param .parse See [where-table.express].
 #' @param .by_ref See [mutate-table.express].
+#' @template chain-arg
 #'
 #' @details
 #'
 #' This first calls [mutate] and chains a [select] operation to get only the resulting columns.
 #'
-transmute.ExprBuilder <- function(.data, ..., .parse = FALSE, .by_ref = FALSE) {
+transmute.ExprBuilder <- function(.data, ..., .parse = FALSE, .by_ref = FALSE, .chain = TRUE) {
     cols <- names(rlang::enexprs(..., .named = TRUE))
 
-    . <- NULL
     .data %>%
-        mutate(..., .parse = .parse, .by_ref = .by_ref) %>%
-        { .$chain() } %>%
-        select(!!!cols, with = FALSE) %>%
-        { .$chain() }
+        mutate(..., .parse = .parse, .by_ref = .by_ref, .chain = .chain) %>%
+        select(!!!cols, with = FALSE, .chain = .chain)
 }

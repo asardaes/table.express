@@ -5,7 +5,7 @@
 \alias{select.ExprBuilder}
 \title{Select clause}
 \usage{
-\method{select}{ExprBuilder}(.data, ..., with = TRUE)
+\method{select}{ExprBuilder}(.data, ..., with = TRUE, .chain = TRUE)
 }
 \arguments{
 \item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
@@ -15,6 +15,9 @@ the \code{data.table} method, this can also extra parameters from the \code{Expr
 
 \item{with}{Passed to \link[data.table:data.table-class]{data.table::data.table}'s \code{\link[data.table:data.table-package]{[}}
 method.}
+
+\item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?}
 }
 \description{
 Select or compute over columns of a \link[data.table:data.table-class]{data.table::data.table}.
