@@ -5,7 +5,7 @@
 #' @export
 #'
 #' @param .data The expression.
-#' @param ... Arguments for the specific methods.
+#' @template generic-dots
 #'
 end_expr <- function(.data, ...) { UseMethod("end_expr") }
 
@@ -13,11 +13,12 @@ end_expr <- function(.data, ...) { UseMethod("end_expr") }
 #' @export
 #' @importFrom rlang caller_env
 #'
-#' @param .parent_env Optionally, the enclosing environment of the expression's environment.
+#' @param .parent_env Optionally, the enclosing environment of the expression's evaluation
+#'   environment.
 #'
 #' @details
 #'
-#' The [ExprBuilder] method should return a [data.table::data.table-class].
+#' The [ExprBuilder] method returns a [data.table::data.table-class].
 #'
 end_expr.ExprBuilder <- function(.data, ..., .parent_env) {
     if (missing(.data)) {

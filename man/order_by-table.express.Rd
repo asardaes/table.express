@@ -16,13 +16,17 @@ order_by(.data, ...)
 
 \item{...}{Arguments for the specific methods.}
 
-\item{.collapse}{Ignored.}
+\item{.collapse}{Ignored. See details.}
 
-\item{.parse}{See \link{where-table.express}.}
+\item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
 }
 \description{
 Clause for ordering rows.
+}
+\details{
+The \link{ExprBuilder} method dispatches to \link{where-table.express}, but doesn't forward the \code{.collapse}
+argument.
 }

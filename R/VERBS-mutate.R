@@ -18,7 +18,7 @@ dplyr::mutate
 #'
 #' @template data-arg
 #' @param ... Mutation clauses.
-#' @param .parse See [where-table.express].
+#' @template parse-arg
 #' @param .by_ref Whether to update the data.table by reference or not.
 #' @template chain-arg
 #' @param .unquote_names Passed to [rlang::enexprs()]. Set to `FALSE` if you want to pass the single

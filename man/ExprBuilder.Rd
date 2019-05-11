@@ -14,9 +14,7 @@ Build an expression that will be used inside a \link[data.table:data.table-class
 \section{Fields}{
 
 \describe{
-\item{\code{where}}{Clause for subsetting. The \code{i} inside the \code{data.table}'s frame.}
-
-\item{\code{select}}{Clause for selectin/computing on columns. The \code{j} inside the \code{data.table}'s frame.}
+\item{\code{appends}}{Extra expressions that go at the end.}
 
 \item{\code{expr}}{The final expression that can be evaluated with \code{\link[base:eval]{base::eval()}} or
 \code{\link[rlang:eval_bare]{rlang::eval_bare()}}.}
@@ -27,6 +25,10 @@ Build an expression that will be used inside a \link[data.table:data.table-class
 
 \describe{
 \item{\code{initialize(DT)}}{Constructor that receives a \link[data.table:data.table-class]{data.table::data.table} in \code{DT}.}
+\item{\code{set_select(value, chain_if_needed)}}{Set the select clause expression(s), starting a new
+frame if the current one already has said expression set.}
+\item{\code{set_where(value, chain_if_needed)}}{Like \code{set_select} but for the where clause.}
+\item{\code{set_by(value)}}{Set the by clause expression.}
 \item{\code{chain()}}{Start a new expression with the current one as its parent.}
 \item{\code{eval(env)}}{Evaluate the final expression with \code{env} as the enclosing environment.}
 \item{\code{print(...)}}{Prints the built \code{expr}.}

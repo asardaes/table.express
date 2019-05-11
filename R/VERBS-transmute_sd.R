@@ -6,15 +6,16 @@
 #' @importFrom rlang enexpr
 #' @importFrom rlang enexprs
 #'
-#' @param .data An [ExprBuilder] instance.
+#' @template data-arg
 #' @param .fun The function to apply.
 #' @param ... Further arguments for `.fun`.
-#' @param .parse Whether to apply [rlang::parse_expr()] to `...`.
-#' @param .SDcols See [data.table::data.table].
+#' @template parse-arg
+#' @param .SDcols See [data.table::data.table] and the details.
 #'
 #' @details
 #'
-#' Providing no `.SDcols` would work like [dplyr::transmute_all()].
+#' Providing no `.SDcols` would work like [dplyr::transmute_all()], and specifying them would be
+#' similar to [dplyr::transmute_at()].
 #'
 transmute_sd <- function(.data, .fun, ..., .parse = FALSE, .SDcols) {
     dots <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)

@@ -27,7 +27,7 @@ test_that("The where verb works with simple numeric indices.", {
     ans <- DT %>% start_expr %>% where(i) %>% end_expr
     expect_identical(ans, DT[1:2])
 
-    ans <- DT %>% start_expr %>% where(!!i) %>% end_expr # TODO
+    ans <- DT %>% start_expr %>% where(!!i) %>% end_expr
     expect_identical(ans, DT[1:2])
 })
 

@@ -8,10 +8,10 @@
 \method{arrange}{ExprBuilder}(.data, ...)
 }
 \arguments{
-\item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
+\item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{See \link{order_by-table.express}.}
 }
 \description{
-Aliases for \link{order_by-table.express}.
+Alias for \link{order_by-table.express}.
 }

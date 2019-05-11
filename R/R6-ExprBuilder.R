@@ -9,15 +9,12 @@
 #' @importFrom rlang abort
 #' @importFrom rlang as_label
 #' @importFrom rlang expr
-#' @importFrom rlang is_expression
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
-#' @importFrom rlang quo
 #' @importFrom rlang warn
 #'
-#' @field where Clause for subsetting. The `i` inside the `data.table`'s frame.
-#' @field select Clause for selectin/computing on columns. The `j` inside the `data.table`'s frame.
+#' @field appends Extra expressions that go at the end.
 #' @field expr The final expression that can be evaluated with [base::eval()] or
 #'   [rlang::eval_bare()].
 #'
@@ -25,6 +22,10 @@
 #'
 #' \describe{
 #'   \item{`initialize(DT)`}{Constructor that receives a [data.table::data.table-class] in `DT`.}
+#'   \item{`set_select(value, chain_if_needed)`}{Set the select clause expression(s), starting a new
+#'     frame if the current one already has said expression set.}
+#'   \item{`set_where(value, chain_if_needed)`}{Like `set_select` but for the where clause.}
+#'   \item{`set_by(value)`}{Set the by clause expression.}
 #'   \item{`chain()`}{Start a new expression with the current one as its parent.}
 #'   \item{`eval(env)`}{Evaluate the final expression with `env` as the enclosing environment.}
 #'   \item{`print(...)`}{Prints the built `expr`.}
@@ -61,7 +62,6 @@ ExprBuilder <- R6Class(
         chain = function() {
             other <- ExprBuilder$new(private$.DT)
             private$.insert_child(other)
-
             other
         },
 
@@ -74,7 +74,6 @@ ExprBuilder <- R6Class(
 
         print = function(...) {
             print(self$expr)
-
             invisible(self)
         }
     ),
@@ -82,7 +81,6 @@ ExprBuilder <- R6Class(
         # value should always be a list of 0 or more expressions
         appends = function(value) {
             if (missing(value)) return(private$.appends)
-
             private$.appends <- c(private$.appends, value)
         },
 
@@ -92,7 +90,7 @@ ExprBuilder <- R6Class(
             root <- EBCompanion$get_root(self)
             quo_chain <- EBCompanion$get_quo_chain(root)
             init <- if (self$by_ref) rlang::expr(.DT_) else rlang::expr(data.table::copy(.DT_))
-            squash_expr(quo_chain, init, rlang::expr(`[`))
+            reduce_expr(quo_chain, init, rlang::expr(`[`))
         }
     ),
     private = list(

@@ -8,12 +8,12 @@
 \method{filter}{ExprBuilder}(.data, ..., .preserve)
 }
 \arguments{
-\item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
+\item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{See \link{where-table.express}.}
 
 \item{.preserve}{Ignored.}
 }
 \description{
-Aliases for \link{where-table.express}.
+Alias for \link{where-table.express}.
 }

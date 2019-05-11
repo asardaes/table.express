@@ -3,7 +3,7 @@
 #'
 dplyr::transmute
 
-#' Add or adjust columns and keep only them
+#' Add or adjust columns and keep only the result
 #'
 #' Add or adjust columns of a [data.table::data.table-class], keeping only the resulting columns.
 #'
@@ -14,13 +14,14 @@ dplyr::transmute
 #'
 #' @template data-arg
 #' @param ... Transmutation clauses.
-#' @param .parse See [where-table.express].
+#' @template parse-arg
 #' @param .by_ref See [mutate-table.express].
 #' @template chain-arg
 #'
 #' @details
 #'
-#' This first calls [mutate] and chains a [select] operation to get only the resulting columns.
+#' This first calls [mutate-table.express] and chains a [select-table.express] operation to get only
+#' the resulting columns.
 #'
 transmute.ExprBuilder <- function(.data, ..., .parse = FALSE, .by_ref = FALSE, .chain = TRUE) {
     cols <- names(rlang::enexprs(..., .named = TRUE))

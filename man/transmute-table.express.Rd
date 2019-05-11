@@ -3,17 +3,17 @@
 \name{transmute-table.express}
 \alias{transmute-table.express}
 \alias{transmute.ExprBuilder}
-\title{Add or adjust columns and keep only them}
+\title{Add or adjust columns and keep only the result}
 \usage{
 \method{transmute}{ExprBuilder}(.data, ..., .parse = FALSE,
   .by_ref = FALSE, .chain = TRUE)
 }
 \arguments{
-\item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
+\item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{Transmutation clauses.}
 
-\item{.parse}{See \link{where-table.express}.}
+\item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
 \item{.by_ref}{See \link{mutate-table.express}.}
 
@@ -24,5 +24,6 @@ clause being set already exists?}
 Add or adjust columns of a \link[data.table:data.table-class]{data.table::data.table}, keeping only the resulting columns.
 }
 \details{
-This first calls \link{mutate} and chains a \link{select} operation to get only the resulting columns.
+This first calls \link{mutate-table.express} and chains a \link{select-table.express} operation to get only
+the resulting columns.
 }

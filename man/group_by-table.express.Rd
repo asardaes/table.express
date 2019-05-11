@@ -8,11 +8,11 @@
 \method{group_by}{ExprBuilder}(.data, ..., .parse = FALSE)
 }
 \arguments{
-\item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
+\item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{Clause for grouping on columns. The \code{by} inside the \code{data.table}'s frame.}
 
-\item{.parse}{See \link{where-table.express}.}
+\item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 }
 \description{
 Aggregations for a \link[data.table:data.table-class]{data.table::data.table}.

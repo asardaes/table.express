@@ -7,19 +7,20 @@
 transmute_sd(.data, .fun, ..., .parse = FALSE, .SDcols)
 }
 \arguments{
-\item{.data}{An \link{ExprBuilder} instance.}
+\item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{.fun}{The function to apply.}
 
 \item{...}{Further arguments for \code{.fun}.}
 
-\item{.parse}{Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to \code{...}.}
+\item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
-\item{.SDcols}{See \link[data.table:data.table]{data.table::data.table}.}
+\item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details.}
 }
 \description{
 Like \link{transmute-table.express} but for a single function and maybe specifying \code{.SDcols}.
 }
 \details{
-Providing no \code{.SDcols} would work like \code{\link[dplyr:transmute_all]{dplyr::transmute_all()}}.
+Providing no \code{.SDcols} would work like \code{\link[dplyr:transmute_all]{dplyr::transmute_all()}}, and specifying them would be
+similar to \code{\link[dplyr:transmute_at]{dplyr::transmute_at()}}.
 }

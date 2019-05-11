@@ -9,11 +9,11 @@
   .by_ref = TRUE, .chain = TRUE, .unquote_names = TRUE)
 }
 \arguments{
-\item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
+\item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{Mutation clauses.}
 
-\item{.parse}{See \link{where-table.express}.}
+\item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
 \item{.by_ref}{Whether to update the data.table by reference or not.}
 

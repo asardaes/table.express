@@ -16,7 +16,7 @@ dplyr::group_by
 #'
 #' @template data-arg
 #' @param ... Clause for grouping on columns. The `by` inside the `data.table`'s frame.
-#' @param .parse See [where-table.express].
+#' @template parse-arg
 #'
 #' @details
 #'

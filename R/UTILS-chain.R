@@ -1,11 +1,11 @@
-#' Chain anything
+#' Chain
 #'
 #' Build a chain of similar objects/operations.
 #'
 #' @export
 #'
 #' @param .data Object to be chained.
-#' @param ... Arguments for the specific methods.
+#' @template generic-dots
 #'
 chain <- function(.data, ...) { UseMethod("chain") }
 
@@ -14,8 +14,8 @@ chain <- function(.data, ...) { UseMethod("chain") }
 #'
 #' @details
 #'
-#' The [ExprBuilder] method adds another frame to the query.
+#' The chaining for [ExprBuilder] is equivalent to calling [end_expr()] followed by [start_expr()].
 #'
 chain.ExprBuilder <- function(.data, ...) {
-    .data$chain()
+    start_expr(end_expr.ExprBuilder(.data, ...), ...)
 }

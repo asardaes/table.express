@@ -5,7 +5,7 @@ dplyr::arrange
 
 #' Arrange rows
 #'
-#' Aliases for [order_by-table.express].
+#' Alias for [order_by-table.express].
 #'
 #' @rdname arrange-table.express
 #' @name arrange-table.express

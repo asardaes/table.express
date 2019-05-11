@@ -8,10 +8,9 @@
 \method{select}{ExprBuilder}(.data, ..., with = TRUE, .chain = TRUE)
 }
 \arguments{
-\item{.data}{Either a \link[data.table:data.table-class]{data.table::data.table}, or an instance of \link{ExprBuilder}.}
+\item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{...}{Clause for selectin/computing on columns. The \code{j} inside the \code{data.table}'s frame. For
-the \code{data.table} method, this can also extra parameters from the \code{ExprBuilder} method.}
+\item{...}{Clause for selectin/computing on columns. The \code{j} inside the \code{data.table}'s frame.}
 
 \item{with}{Passed to \link[data.table:data.table-class]{data.table::data.table}'s \code{\link[data.table:data.table-package]{[}}
 method.}
@@ -23,9 +22,9 @@ clause being set already exists?}
 Select or compute over columns of a \link[data.table:data.table-class]{data.table::data.table}.
 }
 \details{
-If the length of \code{...} > 1, everything therein will be wrapped in a call to:
+If \code{length(...) > 1}, everything therein will be wrapped in a call to:
 \itemize{
-\item \code{list} if \code{with = TRUE}
-\item \code{c} otherwise
+\item \code{\link[base:list]{base::list()}} if \code{with = TRUE}
+\item \code{\link[base:c]{base::c()}} otherwise
 }
 }

@@ -18,8 +18,7 @@ where(.data, ...)
 
 \item{.collapse}{A boolean function which will be used to "concatenate" all conditions in \code{...}.}
 
-\item{.parse}{If you want/need to provide strings in \code{...}, set this to \code{TRUE} to call
-\code{\link[rlang:parse_expr]{rlang::parse_expr()}} on each one.}
+\item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}

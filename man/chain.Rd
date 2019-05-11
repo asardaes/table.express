@@ -3,7 +3,7 @@
 \name{chain}
 \alias{chain}
 \alias{chain.ExprBuilder}
-\title{Chain anything}
+\title{Chain}
 \usage{
 chain(.data, ...)
 
@@ -18,5 +18,5 @@ chain(.data, ...)
 Build a chain of similar objects/operations.
 }
 \details{
-The \link{ExprBuilder} method adds another frame to the query.
+The chaining for \link{ExprBuilder} is equivalent to calling \code{\link[=end_expr]{end_expr()}} followed by \code{\link[=start_expr]{start_expr()}}.
 }

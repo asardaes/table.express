@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @param .data The input data.
-#' @param ... Arguments for the specific methods.
+#' @template generic-dots
 #'
 order_by <- function(.data, ...) { UseMethod("order_by") }
 
@@ -17,9 +17,14 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #'
-#' @param .collapse Ignored.
-#' @param .parse See [where-table.express].
+#' @param .collapse Ignored. See details.
+#' @template parse-arg
 #' @template chain-arg
+#'
+#' @details
+#'
+#' The [ExprBuilder] method dispatches to [where-table.express], but doesn't forward the `.collapse`
+#' argument.
 #'
 order_by.ExprBuilder <- function(.data, ..., .collapse, .parse = FALSE, .chain = TRUE) {
     dots <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)

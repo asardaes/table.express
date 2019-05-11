@@ -5,7 +5,7 @@
 #' @export
 #'
 #' @param .data Optionally, something to capture for the expression.
-#' @param ... Arguments for the specific methods.
+#' @template generic-dots
 #'
 start_expr <- function(.data, ...) { UseMethod("start_expr") }
 

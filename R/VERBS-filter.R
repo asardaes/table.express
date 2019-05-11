@@ -5,7 +5,7 @@ dplyr::filter
 
 #' Filter rows
 #'
-#' Aliases for [where-table.express].
+#' Alias for [where-table.express].
 #'
 #' @rdname filter-table.express
 #' @name filter-table.express

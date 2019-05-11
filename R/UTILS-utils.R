@@ -29,7 +29,7 @@ to_expr <- function(obj, .parse = FALSE) {
 #' @importFrom rlang expr
 #' @importFrom rlang quo_squash
 #'
-squash_expr <- function(quosures, init, op, ..., .parse = FALSE) {
+reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
     Reduce(x = quosures, init = init, f = function(current, new) {
         if (is.list(new))
             new <- lapply(new, to_expr, .parse = .parse)

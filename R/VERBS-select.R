@@ -15,18 +15,17 @@ dplyr::select
 #' @importFrom rlang exprs
 #'
 #' @template data-arg
-#' @param ... Clause for selectin/computing on columns. The `j` inside the `data.table`'s frame. For
-#'   the `data.table` method, this can also extra parameters from the `ExprBuilder` method.
+#' @param ... Clause for selectin/computing on columns. The `j` inside the `data.table`'s frame.
 #' @param with Passed to [data.table::data.table-class]'s [`[`][data.table::data.table-package]
 #'   method.
 #' @template chain-arg
 #'
 #' @details
 #'
-#' If the length of `...` > 1, everything therein will be wrapped in a call to:
+#' If `length(...) > 1`, everything therein will be wrapped in a call to:
 #'
-#' - `list` if `with = TRUE`
-#' - `c` otherwise
+#' - [base::list()] if `with = TRUE`
+#' - [base::c()] otherwise
 #'
 select.ExprBuilder <- function(.data, ..., with = TRUE, .chain = TRUE) {
     clause <- rlang::enexprs(..., .unquote_names = FALSE)
