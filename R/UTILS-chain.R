@@ -14,8 +14,8 @@ chain <- function(.data, ...) { UseMethod("chain") }
 #'
 #' @details
 #'
-#' The [ExprBuilder] method is equivalent to calling [end_expr()] and then [start_expr()] again.
+#' The [ExprBuilder] method adds another frame to the query.
 #'
 chain.ExprBuilder <- function(.data, ...) {
-    start_expr(end_expr(.data, ...), ...)
+    .data$chain()
 }
