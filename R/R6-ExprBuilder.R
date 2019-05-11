@@ -4,6 +4,7 @@
 #'
 #' @docType class
 #' @export
+#' @importFrom data.table copy
 #' @importFrom data.table is.data.table
 #' @importFrom R6 R6Class
 #' @importFrom rlang abort
@@ -27,15 +28,14 @@
 #'   \item{`set_where(value, chain_if_needed)`}{Like `set_select` but for the where clause.}
 #'   \item{`set_by(value)`}{Set the by clause expression.}
 #'   \item{`chain()`}{Start a new expression with the current one as its parent.}
-#'   \item{`eval(env)`}{Evaluate the final expression with `env` as the enclosing environment.}
+#'   \item{`eval(parent_env, by_ref)`}{Evaluate the final expression with `parent_env` as the
+#'     enclosing environment. If `by_ref = FALSE`, [data.table::copy()] is called before.}
 #'   \item{`print(...)`}{Prints the built `expr`.}
 #' }
 #'
 ExprBuilder <- R6Class(
     "ExprBuilder",
     public = list(
-        by_ref = TRUE,
-
         initialize = function(DT) {
             if (data.table::is.data.table(DT))
                 private$.DT <- DT
@@ -65,8 +65,9 @@ ExprBuilder <- R6Class(
             other
         },
 
-        eval = function(env) {
-            expr_env <- rlang::new_environment(list(.DT_ = private$.DT), parent = env)
+        eval = function(parent_env, by_ref) {
+            .DT_ <- if (by_ref) private$.DT else data.table::copy(private$.DT)
+            expr_env <- rlang::new_environment(list(.DT_ = .DT_), parent = parent_env)
             final_expr <- self$expr
             final_expr <- rlang::expr(base::evalq(!!final_expr, !!expr_env))
             base::eval(final_expr)
@@ -89,7 +90,7 @@ ExprBuilder <- R6Class(
 
             root <- EBCompanion$get_root(self)
             quo_chain <- EBCompanion$get_quo_chain(root)
-            init <- if (self$by_ref) rlang::expr(.DT_) else rlang::expr(data.table::copy(.DT_))
+            init <- rlang::expr(.DT_)
             reduce_expr(quo_chain, init, rlang::expr(`[`))
         }
     ),

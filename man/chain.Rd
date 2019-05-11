@@ -19,4 +19,5 @@ Build a chain of similar objects/operations.
 }
 \details{
 The chaining for \link{ExprBuilder} is equivalent to calling \code{\link[=end_expr]{end_expr()}} followed by \code{\link[=start_expr]{start_expr()}}.
+The ellipsis (\code{...}) is passed to both functions.
 }

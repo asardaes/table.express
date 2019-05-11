@@ -6,7 +6,7 @@
 \title{Add or adjust columns and keep only the result}
 \usage{
 \method{transmute}{ExprBuilder}(.data, ..., .parse = FALSE,
-  .by_ref = FALSE, .chain = TRUE)
+  .chain = TRUE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -14,8 +14,6 @@
 \item{...}{Transmutation clauses.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
-
-\item{.by_ref}{See \link{mutate-table.express}.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}

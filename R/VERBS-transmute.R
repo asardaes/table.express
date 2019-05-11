@@ -15,7 +15,6 @@ dplyr::transmute
 #' @template data-arg
 #' @param ... Transmutation clauses.
 #' @template parse-arg
-#' @param .by_ref See [mutate-table.express].
 #' @template chain-arg
 #'
 #' @details
@@ -23,10 +22,10 @@ dplyr::transmute
 #' This first calls [mutate-table.express] and chains a [select-table.express] operation to get only
 #' the resulting columns.
 #'
-transmute.ExprBuilder <- function(.data, ..., .parse = FALSE, .by_ref = FALSE, .chain = TRUE) {
+transmute.ExprBuilder <- function(.data, ..., .parse = FALSE, .chain = TRUE) {
     cols <- names(rlang::enexprs(..., .named = TRUE))
 
     .data %>%
-        mutate(..., .parse = .parse, .by_ref = .by_ref, .chain = .chain) %>%
+        mutate(..., .parse = .parse, .chain = .chain) %>%
         select(!!!cols, with = FALSE, .chain = .chain)
 }

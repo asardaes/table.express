@@ -5,8 +5,8 @@
 \alias{mutate.ExprBuilder}
 \title{Add or update columns}
 \usage{
-\method{mutate}{ExprBuilder}(.data, ..., .parse = FALSE,
-  .by_ref = TRUE, .chain = TRUE, .unquote_names = TRUE)
+\method{mutate}{ExprBuilder}(.data, ..., .parse = FALSE, .chain = TRUE,
+  .unquote_names = TRUE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -14,8 +14,6 @@
 \item{...}{Mutation clauses.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
-
-\item{.by_ref}{Whether to update the data.table by reference or not.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}

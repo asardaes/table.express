@@ -19,12 +19,11 @@ dplyr::mutate
 #' @template data-arg
 #' @param ... Mutation clauses.
 #' @template parse-arg
-#' @param .by_ref Whether to update the data.table by reference or not.
 #' @template chain-arg
 #' @param .unquote_names Passed to [rlang::enexprs()]. Set to `FALSE` if you want to pass the single
 #'   [`:=`][data.table::set] expression.
 #'
-mutate.ExprBuilder <- function(.data, ..., .parse = FALSE, .by_ref = TRUE, .chain = TRUE, .unquote_names = TRUE) {
+mutate.ExprBuilder <- function(.data, ..., .parse = FALSE, .chain = TRUE, .unquote_names = TRUE) {
     clauses <- lapply(rlang::enexprs(..., .named = TRUE, .unquote_names = .unquote_names), to_expr, .parse = .parse)
 
     if (.unquote_names) {
@@ -41,6 +40,5 @@ mutate.ExprBuilder <- function(.data, ..., .parse = FALSE, .by_ref = TRUE, .chai
         clause <- clauses[[1L]]
     }
 
-    .data$by_ref <- .by_ref
     .data$set_select(clause, .chain)
 }

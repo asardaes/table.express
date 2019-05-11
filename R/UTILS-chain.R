@@ -15,6 +15,7 @@ chain <- function(.data, ...) { UseMethod("chain") }
 #' @details
 #'
 #' The chaining for [ExprBuilder] is equivalent to calling [end_expr()] followed by [start_expr()].
+#' The ellipsis (`...`) is passed to both functions.
 #'
 chain.ExprBuilder <- function(.data, ...) {
     start_expr(end_expr.ExprBuilder(.data, ...), ...)

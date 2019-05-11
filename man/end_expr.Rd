@@ -7,12 +7,14 @@
 \usage{
 end_expr(.data, ...)
 
-\method{end_expr}{ExprBuilder}(.data, ..., .parent_env)
+\method{end_expr}{ExprBuilder}(.data, ..., .by_ref = FALSE, .parent_env)
 }
 \arguments{
 \item{.data}{The expression.}
 
 \item{...}{Arguments for the specific methods.}
+
+\item{.by_ref}{Whether to update the \code{data.table} by reference or not.}
 
 \item{.parent_env}{Optionally, the enclosing environment of the expression's evaluation
 environment.}
