@@ -9,6 +9,7 @@
 #' @importFrom R6 R6Class
 #' @importFrom rlang abort
 #' @importFrom rlang as_label
+#' @importFrom rlang env_get_list
 #' @importFrom rlang expr
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
@@ -132,7 +133,7 @@ ExprBuilder <- R6Class(
         },
 
         .unlist_quosures = function() {
-            quosures <- mget(EBCompanion$clause_order, private, ifnotfound = list(NULL))
+            quosures <- rlang::env_get_list(private, EBCompanion$clause_order, NULL)
             until <- Position(Negate(is.null), quosures, right = TRUE)
             if(is.na(until)) until <- 1L
 
