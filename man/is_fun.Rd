@@ -12,3 +12,4 @@ is_fun(obj)
 \description{
 Like \code{\link[rlang:is_function]{rlang::is_function()}} but doesn't throw if the input is maybe something to be quoted.
 }
+\keyword{internal}

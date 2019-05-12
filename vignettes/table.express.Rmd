@@ -1,0 +1,10 @@
+---
+title: "Using table.express"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using table.express}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+TBD

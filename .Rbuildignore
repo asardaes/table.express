@@ -11,3 +11,6 @@
 ^README.*
 ^appveyor\.yml$
 ^codecov\.R
+^inst/_pkgdown\.yml$
+^docs$
+^pkgdown$

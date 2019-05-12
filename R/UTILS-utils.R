@@ -53,6 +53,7 @@ reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
 #'
 #' Like [rlang::is_function()] but doesn't throw if the input is maybe something to be quoted.
 #'
+#' @keywords internal
 #' @importFrom rlang is_function
 #'
 #' @param obj Anything really.
