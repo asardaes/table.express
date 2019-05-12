@@ -192,13 +192,22 @@ EBCompanion$clause_order <- c(
 #
 #' @importFrom rlang current_env
 #' @importFrom rlang eval_tidy
+#' @importFrom rlang is_syntactic_literal
 #' @importFrom rlang new_data_mask
+#' @importFrom rlang quo_get_expr
 #'
 EBCompanion$helper_functions <- list(
     .transmute_matching = function(.COL, .COLNAME, .which, .how) {
         data_mask <- rlang::new_data_mask(rlang::current_env())
 
-        condition <- rlang::eval_tidy(.which, data_mask)
+        .which_expr <- rlang::quo_get_expr(.which)
+        if (rlang::is_syntactic_literal(.which_expr)) {
+            condition <- .which_expr
+        }
+        else {
+            condition <- rlang::eval_tidy(.which, data_mask)
+        }
+
         if (is.character(condition)) {
             condition <- .COLNAME %in% condition
         }
