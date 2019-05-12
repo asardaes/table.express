@@ -21,7 +21,7 @@ end_expr <- function(.data, ...) { UseMethod("end_expr") }
 #'
 #' The [ExprBuilder] method returns a [data.table::data.table-class].
 #'
-end_expr.ExprBuilder <- function(.data, ..., .by_ref = FALSE, .parent_env) {
+end_expr.ExprBuilder <- function(.data, ..., .by_ref = TRUE, .parent_env) {
     if (missing(.parent_env)) {
         .data$eval(rlang::caller_env(), .by_ref)
     }

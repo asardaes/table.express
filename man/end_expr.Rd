@@ -7,7 +7,7 @@
 \usage{
 end_expr(.data, ...)
 
-\method{end_expr}{ExprBuilder}(.data, ..., .by_ref = FALSE, .parent_env)
+\method{end_expr}{ExprBuilder}(.data, ..., .by_ref = TRUE, .parent_env)
 }
 \arguments{
 \item{.data}{The expression.}
