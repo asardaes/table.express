@@ -42,7 +42,7 @@ expression that evaluates to something that would be used in place of \code{vars
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-start_expr \%>\%
+    start_expr \%>\%
     transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) \%>\%
     end_expr
 

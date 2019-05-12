@@ -8,5 +8,8 @@
 #' @importFrom data.table :=
 #' @importFrom rlang !!
 #' @importFrom rlang !!!
+#' @importFrom utils globalVariables
 #'
 "_PACKAGE"
+
+utils::globalVariables(c(".SD", ".COL", ".COLNAME"))

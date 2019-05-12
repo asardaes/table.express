@@ -4,7 +4,10 @@ Title: Use dplyr verbs to build data.table expressions
 Description: A set of light-weight bindings that use dplyr verbs to build expressions that can be
     used within a data.table's frame.
 Version: 0.0.1
+Depends:
+    R (>= 3.1.0)
 Imports:
+    utils,
     data.table (>= 1.9.8),
     dplyr,
     magrittr,
@@ -13,7 +16,7 @@ Imports:
 Suggests:
     knitr,
     testthat
-Date: 2019-05-05
+Date: 2019-05-12
 Authors@R: c(
         person("Alexis", "Sarda-Espinosa", role=c("cre", "aut"), email="alexis.sarda@gmail.com")
     )

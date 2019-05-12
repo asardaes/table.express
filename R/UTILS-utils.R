@@ -15,7 +15,7 @@ to_expr <- function(obj, .parse = FALSE) {
     if (rlang::is_missing(obj)) {
         rlang::expr()
     }
-    else if (.parse) {
+    else if (.parse && is.character(obj)) {
         rlang::parse_expr(obj)
     }
     else if (rlang::is_quosure(obj) || rlang::is_expression(obj)) {
@@ -41,4 +41,16 @@ reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
         else
             rlang::quo_squash(rlang::expr((!!op)(!!current, !!new)))
     })
+}
+
+#' is_fun
+#'
+#' Like [rlang::is_function()] but doesn't throw if the input is maybe something to be quoted.
+#'
+#' @importFrom rlang is_function
+#'
+#' @param obj Anything really.
+#'
+is_fun <- function(obj) {
+    isTRUE(try(rlang::is_function(obj), silent = TRUE))
 }

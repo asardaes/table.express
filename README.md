@@ -30,7 +30,7 @@ data.table() %>%
     select(.(col)) %>%
     where(var == val) %>%
     order_by(v)
-#> .DT_[var == val, .(col), with = TRUE][order(v)]
+#> .DT_[var == val, .(col)][order(v)]
 ```
 
 The input `data.table` is alwas assigned in the evaluation’s environment

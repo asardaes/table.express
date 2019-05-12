@@ -8,7 +8,6 @@
 #' @importFrom rlang enexpr
 #' @importFrom rlang enexprs
 #' @importFrom rlang is_call
-#' @importFrom rlang is_function
 #' @importFrom rlang quos
 #' @importFrom rlang zap
 #'
@@ -39,15 +38,14 @@
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#' start_expr %>%
+#'     start_expr %>%
 #'     transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>%
 #'     end_expr
 #'
 transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD), .parse = FALSE) {
-    if (isTRUE(try(rlang::is_function(.how), silent = TRUE))) {
-        dots <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)
+    dots <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)
 
-        .SD <- NULL
+    if (is_fun(.how)) {
         ans <- select(.data, lapply(.SD, !!rlang::enexpr(.how), !!!dots))
 
         if (!missing(.SDcols)) {
@@ -60,7 +58,7 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD), .par
 
         if (rlang::is_call(.how)) {
             .how <- rlang::call_standardise(.how)
-            .how <- rlang::call_modify(.how, ... = rlang::zap(), ...)
+            .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
         }
 
         # just to avoid NOTE

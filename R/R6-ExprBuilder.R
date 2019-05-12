@@ -209,8 +209,28 @@ EBCompanion$helper_functions <- list(
         else {
             NULL
         }
+    },
+
+    # .transmute_matching would not work, eval_tidy would do funny stuff, no idea what data.table does in `:=`()
+    .mutate_matching = function(.COL, .COLNAME, .which, .how) {
+        data_mask <- rlang::new_data_mask(rlang::current_env())
+
+        if (.COLNAME %in% .which) {
+            rlang::eval_tidy(.how, data_mask)
+        }
+        else {
+            NULL
+        }
+    },
+
+    .non_null = function(col_list) {
+        col_list[!sapply(col_list, is.null)]
     }
 )
+
+# for (fun in EBCompanion$helper_functions) {
+#     environment(fun) <- environment()
+# }
 
 # --------------------------------------------------------------------------------------------------
 # get_root
