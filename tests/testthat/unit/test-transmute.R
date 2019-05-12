@@ -32,3 +32,10 @@ test_that("Transmuting by value with parsing works.", {
     expect_identical(ans$mpg2, DT$mpg * 2)
     expect_identical(ans$disp0.5, DT$disp / 2)
 })
+
+test_that("Referencing newly created variables works.", {
+    ans <- DT  %>% transmute(first = mpg * 2, second = first - 2)
+    expect_identical(ncol(ans), 2L)
+    expect_identical(ans$first, DT$mpg * 2)
+    expect_identical(ans$second, DT$mpg * 2 - 2)
+})

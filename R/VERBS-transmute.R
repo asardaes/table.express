@@ -11,6 +11,8 @@ dplyr::transmute
 #' @name transmute-table.express
 #' @export
 #' @importFrom data.table as.data.table
+#' @importFrom rlang as_data_mask
+#' @importFrom rlang call2
 #' @importFrom rlang enexprs
 #' @importFrom rlang eval_tidy
 #'
@@ -32,7 +34,13 @@ dplyr::transmute
 transmute.data.table <- function(.data, ..., .parse = FALSE, .unquote_names = TRUE) {
     stopifnot(.unquote_names)
 
-    lapply(rlang::enexprs(..., .named = TRUE), to_expr, .parse = .parse) %>%
-        lapply(rlang::eval_tidy, data = .data) %>%
-        (data.table::as.data.table)
+    data_mask <- rlang::as_data_mask(.data)
+    expressions <- lapply(rlang::enexprs(..., .named = TRUE), to_expr, .parse = .parse)
+    ans <- Map(expressions, names(expressions), f = function(e, nm) {
+        dots <- list(nm, e)
+        call <- rlang::call2(`<-`, !!!dots)
+        rlang::eval_tidy(call, data = data_mask)
+    })
+
+    data.table::as.data.table(ans)
 }
