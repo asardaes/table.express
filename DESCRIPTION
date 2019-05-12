@@ -9,7 +9,7 @@ Imports:
     dplyr,
     magrittr,
     R6,
-    rlang
+    rlang (>= 0.3.0)
 Suggests:
     knitr,
     testthat

@@ -11,6 +11,7 @@
 #' @importFrom rlang as_label
 #' @importFrom rlang env_get_list
 #' @importFrom rlang expr
+#' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
@@ -68,9 +69,13 @@ ExprBuilder <- R6Class(
 
         eval = function(parent_env, by_ref) {
             .DT_ <- if (by_ref) private$.DT else data.table::copy(private$.DT)
-            expr_env <- rlang::new_environment(list(.DT_ = .DT_), parent = parent_env)
+
+            expr_env <- rlang::new_environment(rlang::list2(.DT_ = .DT_, !!!EBCompanion$helper_functions),
+                                               parent = parent_env)
+
             final_expr <- self$expr
             final_expr <- rlang::expr(base::evalq(!!final_expr, !!expr_env))
+
             base::eval(final_expr)
         },
 
@@ -180,6 +185,31 @@ EBCompanion$clause_order <- c(
     ".where",
     ".select",
     ".by"
+)
+
+# --------------------------------------------------------------------------------------------------
+# helper functions for expression evaluation
+#
+#' @importFrom rlang current_env
+#' @importFrom rlang eval_tidy
+#' @importFrom rlang new_data_mask
+#'
+EBCompanion$helper_functions <- list(
+    .transmute_matching = function(.COL, .COLNAME, .which, .how) {
+        data_mask <- rlang::new_data_mask(rlang::current_env())
+
+        condition <- rlang::eval_tidy(.which, data_mask)
+        if (is.character(condition)) {
+            condition <- .COLNAME %in% condition
+        }
+
+        if (condition) {
+            rlang::eval_tidy(.how, data_mask)
+        }
+        else {
+            NULL
+        }
+    }
 )
 
 # --------------------------------------------------------------------------------------------------

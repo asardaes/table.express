@@ -1,9 +1,12 @@
 context("  Transmute SD")
 
-test_that("Transmuting SD without all columns works.", {
+test_that("Transmuting SD for all columns works.", {
     expected <- DT[, lapply(.SD, mad, low = TRUE)]
 
     ans <- DT %>% start_expr %>% transmute_sd(mad, low = TRUE) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% transmute_sd(mad(.COL, ...), low = TRUE) %>% end_expr
     expect_identical(ans, expected)
 
     arg <- TRUE
@@ -21,6 +24,9 @@ test_that("Transmuting SD with subset of columns works.", {
     ans <- DT %>% start_expr %>% transmute_sd(mad, low = TRUE, .SDcols = sd_cols) %>% end_expr
     expect_identical(ans, expected)
 
+    ans <- DT %>% start_expr %>% transmute_sd(mad(.COL, ...), low = TRUE, .SDcols = sd_cols) %>% end_expr
+    expect_identical(ans, expected)
+
     ans <- DT %>% start_expr %>% transmute_sd(mad, low = TRUE, .SDcols = !!sd_cols) %>% end_expr
     expect_identical(ans, expected)
 
@@ -29,5 +35,15 @@ test_that("Transmuting SD with subset of columns works.", {
     expect_identical(ans, expected)
 
     ans <- DT %>% start_expr %>% transmute_sd(mad, low = !!arg, .SDcols = !!sd_cols) %>% end_expr
+    expect_identical(ans, expected)
+})
+
+test_that("Transmuting SD with dynamic .SDcols works.", {
+    expected <- data.table::copy(DT)[, `:=`(disp = disp * 2, drat = drat * 2)][, .(disp, drat)]
+
+    ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = c("disp", "drat")) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>% end_expr
     expect_identical(ans, expected)
 })

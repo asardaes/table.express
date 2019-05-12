@@ -4,23 +4,46 @@
 \alias{transmute_sd}
 \title{Transmute subset of data}
 \usage{
-transmute_sd(.data, .fun, ..., .parse = FALSE, .SDcols)
+transmute_sd(.data, .how = identity, ..., .SDcols = names(.SD),
+  .parse = FALSE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{.fun}{The function to apply.}
+\item{.how}{The transmuting call.}
 
-\item{...}{Further arguments for \code{.fun}.}
+\item{...}{More arguments for \code{.how} if it is a function or a function-call.}
+
+\item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
-
-\item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details.}
 }
 \description{
-Like \link{transmute-table.express} but for a single function and maybe specifying \code{.SDcols}.
+Like \link{transmute-table.express} but for a single call and maybe specifying \code{.SDcols}.
 }
 \details{
-Providing no \code{.SDcols} would work like \code{\link[dplyr:transmute_all]{dplyr::transmute_all()}}, and specifying them would be
-similar to \code{\link[dplyr:transmute_at]{dplyr::transmute_at()}}.
+Like \link{transmute-table.express}, this function never modifies the input by reference. However,
+this function does operate on \link{ExprBuilder} instances, and adds/chains a \code{select} expression that
+will be evaluated by \link[data.table:data.table]{data.table::data.table}, possibly specifying the helper function
+\code{.transmute_matching}, which is assigned to the final expression's evaluation environment when
+calling \code{\link[=end_expr]{end_expr()}} (i.e., \link{ExprBuilder}'s \code{eval} method).
+
+Said function includes two pronouns that can be used by \code{.how} and \code{.SDcols}:
+\itemize{
+\item \code{.COL}: the actual values of the column.
+\item \code{.COLNAME}: the name of the column currently being evaluated.
+}
+
+Unlike a call like \code{DT[, (vars) := expr]}, \code{.SDcols} can be created dynamically with an
+expression that evaluates to something that would be used in place of \code{vars}. See the examples.
+}
+\examples{
+
+data("mtcars")
+
+data.table::as.data.table(mtcars) \%>\%
+start_expr \%>\%
+    transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) \%>\%
+    end_expr
+
 }
