@@ -3,29 +3,36 @@
 #'
 dplyr::transmute
 
-#' Add or adjust columns and keep only the result
+#' Add columns and keep only the result
 #'
-#' Add or adjust columns of a [data.table::data.table-class], keeping only the resulting columns.
+#' Add columns of a [data.table::data.table-class], keeping only the resulting columns.
 #'
 #' @rdname transmute-table.express
 #' @name transmute-table.express
 #' @export
+#' @importFrom data.table as.data.table
 #' @importFrom rlang enexprs
+#' @importFrom rlang eval_tidy
 #'
-#' @template data-arg
+#' @param .data A [data.table::data.table-class].
 #' @param ... Transmutation clauses.
 #' @template parse-arg
-#' @template chain-arg
+#' @param .unquote_names See details.
 #'
 #' @details
 #'
-#' This first calls [mutate-table.express] and chains a [select-table.express] operation to get only
-#' the resulting columns.
+#' This is more of a convenience helper which never modifies the input by reference. It does *not*
+#' operate on an [ExprBuilder] instance to make it clear that the input data must be an actual
+#' `data.table` and not an expression. It should work like [dplyr::transmute()].
 #'
-transmute.ExprBuilder <- function(.data, ..., .parse = FALSE, .chain = TRUE) {
-    cols <- names(rlang::enexprs(..., .named = TRUE))
+#' The ellipsis is passed to [rlang::enexprs()], and its `.named` argument is set to `TRUE`. Since
+#' the resulting expressions are evaluated with [rlang::eval_tidy()], `.unquote_names` cannot be
+#' `FALSE`, so its value is checked by this function before proceeding.
+#'
+transmute.data.table <- function(.data, ..., .parse = FALSE, .unquote_names = TRUE) {
+    stopifnot(.unquote_names)
 
-    .data %>%
-        mutate(..., .parse = .parse, .chain = .chain) %>%
-        select(!!!cols, with = FALSE, .chain = .chain)
+    lapply(rlang::enexprs(..., .named = TRUE), to_expr, .parse = .parse) %>%
+        lapply(rlang::eval_tidy, data = .data) %>%
+        (data.table::as.data.table)
 }

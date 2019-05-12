@@ -2,26 +2,30 @@
 % Please edit documentation in R/VERBS-transmute.R
 \name{transmute-table.express}
 \alias{transmute-table.express}
-\alias{transmute.ExprBuilder}
-\title{Add or adjust columns and keep only the result}
+\alias{transmute.data.table}
+\title{Add columns and keep only the result}
 \usage{
-\method{transmute}{ExprBuilder}(.data, ..., .parse = FALSE,
-  .chain = TRUE)
+\method{transmute}{data.table}(.data, ..., .parse = FALSE,
+  .unquote_names = TRUE)
 }
 \arguments{
-\item{.data}{An instance of \link{ExprBuilder}.}
+\item{.data}{A \link[data.table:data.table-class]{data.table::data.table}.}
 
 \item{...}{Transmutation clauses.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
-\item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
-clause being set already exists?}
+\item{.unquote_names}{See details.}
 }
 \description{
-Add or adjust columns of a \link[data.table:data.table-class]{data.table::data.table}, keeping only the resulting columns.
+Add columns of a \link[data.table:data.table-class]{data.table::data.table}, keeping only the resulting columns.
 }
 \details{
-This first calls \link{mutate-table.express} and chains a \link{select-table.express} operation to get only
-the resulting columns.
+This is more of a convenience helper which never modifies the input by reference. It does \emph{not}
+operate on an \link{ExprBuilder} instance to make it clear that the input data must be an actual
+\code{data.table} and not an expression. It should work like \code{\link[dplyr:transmute]{dplyr::transmute()}}.
+
+The ellipsis is passed to \code{\link[rlang:enexprs]{rlang::enexprs()}}, and its \code{.named} argument is set to \code{TRUE}. Since
+the resulting expressions are evaluated with \code{\link[rlang:eval_tidy]{rlang::eval_tidy()}}, \code{.unquote_names} cannot be
+\code{FALSE}, so its value is checked by this function before proceeding.
 }
