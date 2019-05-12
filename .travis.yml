@@ -37,11 +37,11 @@ before_install:
     }
 deploy:
   provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github()'
+  script: Rscript -e 'if (grepl("linux", Sys.info()[["sysname"]], ignore.case = TRUE)) pkgdown::deploy_site_github()'
   skip_cleanup: true
   on:
     branch: master
-    condition: $TRAVIS_R_VERSION = release && $TRAVIS_OS_NAME = linux
+    condition: $TRAVIS_R_VERSION = release
 after_success:
   - if [[ ("$TRAVIS_R_VERSION" != "devel") && ("$TRAVIS_OS_NAME" == "linux") ]]; then
       Rscript codecov.R;
