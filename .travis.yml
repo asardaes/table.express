@@ -41,9 +41,9 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
-    condition: $TRAVIS_R_VERSION = release
+    condition: "$TRAVIS_R_VERSION_STRING = release"
 after_success:
-  - if [[ ("$TRAVIS_R_VERSION" != "devel") && ("$TRAVIS_OS_NAME" == "linux") ]]; then
+  - if [[ ("$TRAVIS_R_VERSION_STRING" == "release") && ("$TRAVIS_OS_NAME" == "linux") ]]; then
       Rscript codecov.R;
     fi
 notifications:
