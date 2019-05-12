@@ -112,7 +112,21 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-overview" class="hasAnchor"><a href="#section-overview" class="anchor"></a>Overview</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="table.express-package.html">table.express-package</a></code> </p>
+        </td>
+        <td><p>Bindings to use dplyr's verbs with data.table</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-r-classes" class="hasAnchor"><a href="#section-r-classes" class="anchor"></a>R6 Classes</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -122,7 +136,15 @@
           <p><code><a href="ExprBuilder.html">ExprBuilder</a></code> </p>
         </td>
         <td><p>Frame expression builder</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-verbs" class="hasAnchor"><a href="#section-verbs" class="anchor"></a>Verbs</h2>
+          <p class="section-desc"><p>Data manipulation verbs</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="arrange-table.express.html">arrange(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
@@ -131,27 +153,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="chain.html">chain()</a></code> </p>
-        </td>
-        <td><p>Chain</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="end_expr.html">end_expr()</a></code> </p>
-        </td>
-        <td><p>End and evaluate expression</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="filter-table.express.html">filter(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
         </td>
         <td><p>Filter rows</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="frame_append.html">frame_append()</a></code> </p>
-        </td>
-        <td><p>Append expressions to the frame</p></td>
       </tr><tr>
         
         <td>
@@ -167,12 +171,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="mutate_sd.html">mutate_sd()</a></code> </p>
-        </td>
-        <td><p>Mutate subset of data</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="order_by-table.express.html">order_by()</a></code> </p>
         </td>
         <td><p>Order by clause</p></td>
@@ -185,21 +183,21 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="start_expr.html">start_expr()</a></code> </p>
-        </td>
-        <td><p>Start expression</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="table.express-package.html">table.express-package</a></code> </p>
-        </td>
-        <td><p>Bindings to use dplyr's verbs with data.table</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="transmute-table.express.html">transmute(<i>&lt;data.table&gt;</i>)</a></code> </p>
         </td>
         <td><p>Add columns and keep only the result</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="where-table.express.html">where()</a></code> </p>
+        </td>
+        <td><p>Where clause</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mutate_sd.html">mutate_sd()</a></code> </p>
+        </td>
+        <td><p>Mutate subset of data</p></td>
       </tr><tr>
         
         <td>
@@ -209,9 +207,35 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="where-table.express.html">where()</a></code> </p>
+          <p><code><a href="frame_append.html">frame_append()</a></code> </p>
         </td>
-        <td><p>Where clause</p></td>
+        <td><p>Append expressions to the frame</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-expression-delimiters" class="hasAnchor"><a href="#section-expression-delimiters" class="anchor"></a>Expression Delimiters</h2>
+          <p class="section-desc"><p>Delimiters between expressions and data.tables</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="start_expr.html">start_expr()</a></code> </p>
+        </td>
+        <td><p>Start expression</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="chain.html">chain()</a></code> </p>
+        </td>
+        <td><p>Chain</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="end_expr.html">end_expr()</a></code> </p>
+        </td>
+        <td><p>End and evaluate expression</p></td>
       </tr>
     </tbody>
     </table>
@@ -220,7 +244,10 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-overview">Overview</a></li>
+      <li><a href="#section-r-classes">R6 Classes</a></li>
+      <li><a href="#section-verbs">Verbs</a></li>
+      <li><a href="#section-expression-delimiters">Expression Delimiters</a></li>
     </ul>
   </div>
 </div>
