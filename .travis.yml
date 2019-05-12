@@ -7,6 +7,7 @@ r_packages:
   - devtools
 r_github_packages:
   - r-lib/covr
+  - r-lib/pkgdown
 os:
   - linux
 r:
@@ -34,6 +35,10 @@ before_install:
       tail -n 50 /tmp/rs.out
       return $status
     }
+deploy:
+  provider: script
+  script: Rscript -e 'pkgdown::deploy_site_github()'
+  skip_cleanup: true
 after_success:
   - if [[ ("$TRAVIS_R_VERSION" != "devel") && ("$TRAVIS_OS_NAME" == "linux") ]]; then
       Rscript codecov.R;
