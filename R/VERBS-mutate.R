@@ -11,7 +11,6 @@ dplyr::mutate
 #' @rdname mutate-table.express
 #' @name mutate-table.express
 #' @export
-#' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #' @importFrom rlang quo_squash
 #' @importFrom rlang warn
@@ -24,7 +23,7 @@ dplyr::mutate
 #'   [`:=`][data.table::set] expression.
 #'
 mutate.ExprBuilder <- function(.data, ..., .parse = FALSE, .chain = TRUE, .unquote_names = TRUE) {
-    clauses <- lapply(rlang::enexprs(..., .named = TRUE, .unquote_names = .unquote_names), to_expr, .parse = .parse)
+    clauses <- parse_dots(.parse, ..., .named = TRUE, .unquote_names = .unquote_names)
 
     if (.unquote_names) {
         clause <- rlang::quo_squash(rlang::expr(

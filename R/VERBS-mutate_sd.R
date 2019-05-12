@@ -7,7 +7,6 @@
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
 #' @importFrom rlang enexpr
-#' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang quos
@@ -37,7 +36,7 @@
 mutate_sd <- function(.data, .how = identity, ..., .SDcols, .parse = FALSE) {
     force(.SDcols)
 
-    dots <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)
+    dots <- parse_dots(.parse, ...)
 
     if (is_fun(.how)) {
         .how <- rlang::call2(rlang::enexpr(.how), rlang::expr(.COL), !!!dots)

@@ -10,7 +10,6 @@ dplyr::group_by
 #' @rdname group_by-table.express
 #' @name group_by-table.express
 #' @export
-#' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #' @importFrom rlang quo_squash
 #'
@@ -23,6 +22,6 @@ dplyr::group_by
 #' Everything in `...` will be wrapped in a call to `list`.
 #'
 group_by.ExprBuilder <- function(.data, ..., .parse = FALSE) {
-    clause <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)
+    clause <- parse_dots(.parse, ...)
     .data$set_by(rlang::quo_squash(rlang::expr(list(!!!clause))))
 }

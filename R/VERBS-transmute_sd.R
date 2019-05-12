@@ -6,7 +6,6 @@
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
 #' @importFrom rlang enexpr
-#' @importFrom rlang enexprs
 #' @importFrom rlang is_call
 #' @importFrom rlang quos
 #' @importFrom rlang zap
@@ -43,7 +42,7 @@
 #'     end_expr
 #'
 transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD), .parse = FALSE) {
-    dots <- lapply(rlang::enexprs(...), to_expr, .parse = .parse)
+    dots <- parse_dots(.parse, ...)
 
     if (is_fun(.how)) {
         ans <- select(.data, lapply(.SD, !!rlang::enexpr(.how), !!!dots))

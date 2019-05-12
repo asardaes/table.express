@@ -26,6 +26,12 @@ to_expr <- function(obj, .parse = FALSE) {
     }
 }
 
+#' @importFrom rlang enexprs
+#'
+parse_dots <- function(.parse = FALSE, ..., .named = FALSE, .unquote_names = TRUE) {
+    lapply(rlang::enexprs(..., .named = .named, .unquote_names = .unquote_names), to_expr, .parse = .parse)
+}
+
 #' @importFrom rlang expr
 #' @importFrom rlang quo_squash
 #'
