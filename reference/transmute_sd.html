@@ -113,7 +113,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>transmute_sd</span>(<span class='no'>.data</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>.SD</span>),
-  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,6 +137,11 @@
     <tr>
       <th>.parse</th>
       <td><p>Logical. Whether to apply <code><a href='https://rlang.r-lib.org/reference/parse_expr.html'>rlang::parse_expr()</a></code> to obtain the expressions.</p></td>
+    </tr>
+    <tr>
+      <th>.chain</th>
+      <td><p>Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?</p></td>
     </tr>
     </table>
     

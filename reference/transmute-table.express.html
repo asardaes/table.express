@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add columns and keep only the result — transmute-table.express • table.express</title>
+<title>Alias for select — transmute-table.express • table.express</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -31,9 +31,10 @@
 
 
 
-<meta property="og:title" content="Add columns and keep only the result — transmute-table.express" />
+<meta property="og:title" content="Alias for select — transmute-table.express" />
 
-<meta property="og:description" content="Add columns of a data.table::data.table, keeping only the resulting columns." />
+<meta property="og:description" content="Because of the way data.table and the select-table.express method work, a
+dplyr::transmute() equivalent can be specified as a select clause." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,50 +102,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add columns and keep only the result</h1>
+    <h1>Alias for select</h1>
     
     <div class="hidden name"><code>transmute-table.express.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Add columns of a <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a>, keeping only the resulting columns.</p>
+    <p>Because of the way <code>data.table</code> and the <a href='select-table.express.html'>select-table.express</a> method work, a
+<code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::transmute()</a></code> equivalent can be specified as a <code>select</code> clause.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for data.table</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>.unquote_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>with</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>A <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a>.</p></td>
+      <td><p>An instance of <a href='ExprBuilder.html'>ExprBuilder</a>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Transmutation clauses.</p></td>
+      <td><p>Clause for selectin/computing on columns. The <code>j</code> inside the <code>data.table</code>'s frame.</p></td>
     </tr>
     <tr>
-      <th>.parse</th>
-      <td><p>Logical. Whether to apply <code><a href='https://rlang.r-lib.org/reference/parse_expr.html'>rlang::parse_expr()</a></code> to obtain the expressions.</p></td>
+      <th>with</th>
+      <td><p>Passed to <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a>'s <code><a href='https://rdrr.io/pkg/data.table/man/data.table.html'>[</a></code>
+method.</p></td>
     </tr>
     <tr>
-      <th>.unquote_names</th>
-      <td><p>See details.</p></td>
+      <th>.chain</th>
+      <td><p>Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This is more of a convenience helper which never modifies the input by reference. It does <em>not</em>
-operate on an <a href='ExprBuilder.html'>ExprBuilder</a> instance to make it clear that the input data must be an actual
-<code>data.table</code> and not an expression. It should work like <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::transmute()</a></code>.</p>
-<p>The ellipsis is passed to <code><a href='https://rlang.r-lib.org/reference/quotation.html'>rlang::enexprs()</a></code>, and its <code>.named</code> argument is set to <code>TRUE</code>. Since
-the resulting expressions are evaluated with <code><a href='https://rlang.r-lib.org/reference/eval_tidy.html'>rlang::eval_tidy()</a></code>, <code>.unquote_names</code> cannot be
-<code>FALSE</code>, so its value is checked by this function before proceeding.</p>
+    <p>If <code>length(...) == 1L</code> and the expression is a call to <code>:</code> (e.g. a:c), then it will be taken as
+the single expression for the select clause, otherwise everything therein <code>...</code> will be wrapped
+in a call to:</p><ul>
+<li><p><code><a href='https://rdrr.io/r/base/list.html'>base::list()</a></code> if <code>with = TRUE</code></p></li>
+<li><p><code><a href='https://rdrr.io/r/base/c.html'>base::c()</a></code> otherwise</p></li>
+</ul>
     
 
   </div>
