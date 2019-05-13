@@ -45,7 +45,7 @@ letting it handle all optimizations as usual.
 # the expression is what matters here, input is left empty
 data.table() %>%
     start_expr %>%
-    select(.(col)) %>%
+    select(col) %>%
     where(var == val) %>%
     order_by(v)
 ```

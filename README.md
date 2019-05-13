@@ -27,10 +27,10 @@ as usual.
 # the expression is what matters here, input is left empty
 data.table() %>%
     start_expr %>%
-    select(.(col)) %>%
+    select(col) %>%
     where(var == val) %>%
     order_by(v)
-#> .DT_[var == val, .(col)][order(v)]
+#> .DT_[var == val, list(col)][order(v)]
 ```
 
 The input `data.table` is alwas assigned in the evaluation’s environment

@@ -15,6 +15,7 @@
 #' @param ... More arguments for `.how` if it is a function or a function-call.
 #' @param .SDcols See [data.table::data.table] and the details here.
 #' @template parse-arg
+#' @template chain-arg
 #'
 #' @details
 #'
@@ -41,14 +42,14 @@
 #'     transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>%
 #'     end_expr
 #'
-transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD), .parse = FALSE) {
+transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD), .parse = FALSE, .chain = TRUE) {
     dots <- parse_dots(.parse, ...)
 
     if (is_fun(.how)) {
-        ans <- select(.data, lapply(.SD, !!rlang::enexpr(.how), !!!dots))
+        clause <- rlang::expr(lapply(.SD, !!rlang::enexpr(.how), !!!dots))
 
         if (!missing(.SDcols)) {
-            frame_append(ans, .SDcols = !!rlang::enexpr(.SDcols))
+            frame_append(.data, .SDcols = !!rlang::enexpr(.SDcols))
         }
     }
     else {
@@ -63,12 +64,13 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD), .par
         # just to avoid NOTE
         .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
 
-        ans <- select(.data, Map(.transmute_matching,
-                                 .COL = .SD,
-                                 .COLNAME = names(.SD),
-                                 .which = rlang::quos(!!.which),
-                                 .how = rlang::quos(!!.how)))
+        clause <- rlang::expr(Map(.transmute_matching,
+                                  .COL = .SD,
+                                  .COLNAME = names(.SD),
+                                  .which = rlang::quos(!!.which),
+                                  .how = rlang::quos(!!.how)))
     }
 
-    ans
+    .data$set_select(clause, .chain)
+    .data
 }

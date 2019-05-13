@@ -3,7 +3,7 @@ context("  Group by")
 test_that("The group_by verb works as expected.", {
     expected <- DT[, .(ans = mean(mpg)), by = vs]
 
-    ans <- DT %>% start_expr %>% select(.(ans = mean(mpg))) %>% group_by(vs) %>% end_expr
+    ans <- DT %>% start_expr %>% select(ans = mean(mpg)) %>% group_by(vs) %>% end_expr
     expect_identical(ans, expected)
 
     # TODO: limitation?

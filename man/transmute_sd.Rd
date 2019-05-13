@@ -5,7 +5,7 @@
 \title{Transmute subset of data}
 \usage{
 transmute_sd(.data, .how = identity, ..., .SDcols = names(.SD),
-  .parse = FALSE)
+  .parse = FALSE, .chain = TRUE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -17,6 +17,9 @@ transmute_sd(.data, .how = identity, ..., .SDcols = names(.SD),
 \item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
+
+\item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?}
 }
 \description{
 Like \link{transmute-table.express} but for a single call and maybe specifying \code{.SDcols}.
