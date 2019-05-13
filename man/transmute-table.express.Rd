@@ -2,30 +2,32 @@
 % Please edit documentation in R/VERBS-transmute.R
 \name{transmute-table.express}
 \alias{transmute-table.express}
-\alias{transmute.data.table}
-\title{Add columns and keep only the result}
+\alias{transmute.ExprBuilder}
+\title{Alias for select}
 \usage{
-\method{transmute}{data.table}(.data, ..., .parse = FALSE,
-  .unquote_names = TRUE)
+\method{transmute}{ExprBuilder}(.data, ..., with = TRUE, .chain = TRUE)
 }
 \arguments{
-\item{.data}{A \link[data.table:data.table-class]{data.table::data.table}.}
+\item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{...}{Transmutation clauses.}
+\item{...}{Clause for selectin/computing on columns. The \code{j} inside the \code{data.table}'s frame.}
 
-\item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
+\item{with}{Passed to \link[data.table:data.table-class]{data.table::data.table}'s \code{\link[data.table:data.table-package]{[}}
+method.}
 
-\item{.unquote_names}{See details.}
+\item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?}
 }
 \description{
-Add columns of a \link[data.table:data.table-class]{data.table::data.table}, keeping only the resulting columns.
+Because of the way \code{data.table} and the \link{select-table.express} method work, a
+\code{\link[dplyr:transmute]{dplyr::transmute()}} equivalent can be specified as a \code{select} clause.
 }
 \details{
-This is more of a convenience helper which never modifies the input by reference. It does \emph{not}
-operate on an \link{ExprBuilder} instance to make it clear that the input data must be an actual
-\code{data.table} and not an expression. It should work like \code{\link[dplyr:transmute]{dplyr::transmute()}}.
-
-The ellipsis is passed to \code{\link[rlang:enexprs]{rlang::enexprs()}}, and its \code{.named} argument is set to \code{TRUE}. Since
-the resulting expressions are evaluated with \code{\link[rlang:eval_tidy]{rlang::eval_tidy()}}, \code{.unquote_names} cannot be
-\code{FALSE}, so its value is checked by this function before proceeding.
+If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. a:c), then it will be taken as
+the single expression for the select clause, otherwise everything therein \code{...} will be wrapped
+in a call to:
+\itemize{
+\item \code{\link[base:list]{base::list()}} if \code{with = TRUE}
+\item \code{\link[base:c]{base::c()}} otherwise
+}
 }

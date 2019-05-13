@@ -22,7 +22,9 @@ clause being set already exists?}
 Select or compute over columns of a \link[data.table:data.table-class]{data.table::data.table}.
 }
 \details{
-Everything in \code{...} will be wrapped in a call to:
+If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. a:c), then it will be taken as
+the single expression for the select clause, otherwise everything therein \code{...} will be wrapped
+in a call to:
 \itemize{
 \item \code{\link[base:list]{base::list()}} if \code{with = TRUE}
 \item \code{\link[base:c]{base::c()}} otherwise

@@ -23,7 +23,9 @@ dplyr::select
 #'
 #' @details
 #'
-#' Everything in `...` will be wrapped in a call to:
+#' If `length(...) == 1L` and the expression is a call to `:` (e.g. a:c), then it will be taken as
+#' the single expression for the select clause, otherwise everything therein `...` will be wrapped
+#' in a call to:
 #'
 #' - [base::list()] if `with = TRUE`
 #' - [base::c()] otherwise
