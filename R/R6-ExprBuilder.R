@@ -190,24 +190,18 @@ EBCompanion$clause_order <- c(
 # --------------------------------------------------------------------------------------------------
 # helper functions for expression evaluation
 #
-#' @importFrom rlang current_env
+# beware of https://github.com/r-lib/rlang/issues/774
+#
 #' @importFrom rlang eval_tidy
-#' @importFrom rlang is_syntactic_literal
 #' @importFrom rlang new_data_mask
-#' @importFrom rlang quo_get_expr
+#' @importFrom rlang new_environment
 #'
 EBCompanion$helper_functions <- list(
     .transmute_matching = function(.COL, .COLNAME, .which, .how) {
-        data_mask <- rlang::new_data_mask(rlang::current_env())
+        data_mask <- rlang::new_environment(list(.COL = .COL, .COLNAME = .COLNAME))
+        data_mask <- rlang::new_data_mask(data_mask)
 
-        .which_expr <- rlang::quo_get_expr(.which)
-        if (rlang::is_syntactic_literal(.which_expr)) {
-            condition <- .which_expr
-        }
-        else {
-            condition <- rlang::eval_tidy(.which, data_mask)
-        }
-
+        condition <- rlang::eval_tidy(.which, data_mask)
         if (is.character(condition)) {
             condition <- .COLNAME %in% condition
         }
@@ -220,9 +214,9 @@ EBCompanion$helper_functions <- list(
         }
     },
 
-    # .transmute_matching would not work, eval_tidy would do funny stuff, no idea what data.table does in `:=`()
     .mutate_matching = function(.COL, .COLNAME, .which, .how) {
-        data_mask <- rlang::new_data_mask(rlang::current_env())
+        data_mask <- rlang::new_environment(list(.COL = .COL, .COLNAME = .COLNAME))
+        data_mask <- rlang::new_data_mask(data_mask)
 
         if (.COLNAME %in% .which) {
             rlang::eval_tidy(.how, data_mask)
