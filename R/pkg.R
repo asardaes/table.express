@@ -12,4 +12,4 @@
 #'
 "_PACKAGE"
 
-utils::globalVariables(c(".SD", ".COL", ".COLNAME"))
+utils::globalVariables(c(".SD", ".COL"))

@@ -78,3 +78,35 @@ test_that("Transmuting by value with parsing works.", {
     expect_identical(ans$mpg2, DT$mpg * 2)
     expect_identical(ans$disp0.5, DT$disp / 2)
 })
+
+test_that("Select with tidyselect works.", {
+    expectations <- function(ans, nc) {
+        expect_identical(nrow(ans), nrow(DT))
+        expect_identical(ncol(ans), nc)
+    }
+
+    ans <- DT %>% start_expr %>% select(starts_with("M", T)) %>% end_expr
+    expectations(ans, 1L)
+
+    ans <- DT %>% start_expr %>% select(ends_with("M", T)) %>% end_expr
+    expectations(ans, 1L)
+
+    ans <- DT %>% start_expr %>% select(contains("M", T)) %>% end_expr
+    expectations(ans, 2L)
+
+    ans <- DT %>% start_expr %>% select(matches(".*M.*", T)) %>% end_expr
+    expectations(ans, 2L)
+
+    ans <- DT %>% start_expr %>% select(one_of("mpg", "am")) %>% end_expr
+    expectations(ans, 2L)
+
+    ans <- DT %>% start_expr %>% select(last_col()) %>% end_expr
+    expectations(ans, 1L)
+
+    ans <- DT %>% start_expr %>% select(everything()) %>% end_expr
+    expectations(ans, 11L)
+
+    colnames(DT) <- paste0("var", 0:10)
+    ans <- DT %>% start_expr %>% select(num_range("var", 0:1)) %>% end_expr
+    expectations(ans, 2L)
+})

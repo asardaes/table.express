@@ -12,11 +12,12 @@ Imports:
     dplyr,
     magrittr,
     R6,
-    rlang (>= 0.3.0)
+    rlang (>= 0.3.0),
+    tidyselect
 Suggests:
     knitr,
     testthat
-Date: 2019-05-12
+Date: 2019-05-14
 Authors@R: c(
         person("Alexis", "Sarda-Espinosa", role=c("cre", "aut"), email="alexis.sarda@gmail.com")
     )

@@ -17,6 +17,7 @@
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
 #' @importFrom rlang warn
+#' @importFrom tidyselect vars_select_helpers
 #'
 #' @field appends Extra expressions that go at the end.
 #' @field expr The final expression that can be evaluated with [base::eval()] or
@@ -75,14 +76,15 @@ ExprBuilder <- R6Class(
             dots <- rlang::dots_list(
                 .DT_ = .DT_,
                 !!!EBCompanion$helper_functions,
+                !!!tidyselect::vars_select_helpers,
                 !!!rlang::list2(...),
                 .homonyms = "last"
             )
 
-            expr_env <- rlang::new_environment(dots, parent = parent_env)
+            .expr_env <- rlang::new_environment(dots, parent = parent_env)
 
             final_expr <- self$expr
-            final_expr <- rlang::expr(base::evalq(!!final_expr, !!expr_env))
+            final_expr <- rlang::expr(base::evalq(!!final_expr, .expr_env))
 
             base::eval(final_expr)
         },
@@ -203,13 +205,21 @@ EBCompanion$clause_order <- c(
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang new_data_mask
 #' @importFrom rlang new_environment
+#' @importFrom tidyselect scoped_vars
 #'
 EBCompanion$helper_functions <- list(
-    .transmute_matching = function(.COL, .COLNAME, .which, .how) {
+    .transmute_matching = function(.COL, .COLNAME, .COLNAMES, .which, .how) {
+        tidyselect::scoped_vars(.COLNAMES)
+
         data_mask <- rlang::new_environment(list(.COL = .COL, .COLNAME = .COLNAME))
         data_mask <- rlang::new_data_mask(data_mask)
 
         condition <- rlang::eval_tidy(.which, data_mask)
+
+        if (is.integer(condition)) {
+            condition <- .COLNAMES[condition]
+        }
+
         if (is.character(condition)) {
             condition <- .COLNAME %in% condition
         }
@@ -238,10 +248,6 @@ EBCompanion$helper_functions <- list(
         col_list[!sapply(col_list, is.null)]
     }
 )
-
-# for (fun in EBCompanion$helper_functions) {
-#     environment(fun) <- environment()
-# }
 
 # --------------------------------------------------------------------------------------------------
 # get_root

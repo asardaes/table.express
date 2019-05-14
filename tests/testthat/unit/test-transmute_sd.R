@@ -71,3 +71,13 @@ test_that("Transmuting SD with dynamic .SDcols works.", {
     ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Transmuting SD with tidy selectors works.", {
+    expected <- data.table::copy(DT)[, `:=`(disp = disp * 2, drat = drat * 2)][, .(disp, drat)]
+
+    ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = c("disp", "drat")) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = starts_with("d")) %>% end_expr
+    expect_identical(ans, expected)
+})

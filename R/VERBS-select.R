@@ -11,8 +11,9 @@ dplyr::select
 #' @name select-table.express
 #' @export
 #' @importFrom rlang expr
-#' @importFrom rlang exprs
 #' @importFrom rlang is_call
+#' @importFrom rlang quos
+#' @importFrom tidyselect vars_select_helpers
 #'
 #' @template data-arg
 #' @param ... Clause for selectin/computing on columns. The `j` inside the `data.table`'s frame.
@@ -28,7 +29,20 @@ dplyr::select
 select.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE), .chain = TRUE) {
     clause <- parse_dots(.parse, ...)
 
-    if (length(clause) == 1L && rlang::is_call(clause[[1L]], ":")) {
+    if (length(clause) == 1L && rlang::is_call(clause[[1L]], names(tidyselect::vars_select_helpers))) {
+        # just to avoid NOTE
+        .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
+
+        clause <- rlang::expr(Map(
+            .transmute_matching,
+            .COL = .SD,
+            .COLNAME = names(.SD),
+            .COLNAMES = list(names(.SD)),
+            .which = rlang::quos(!!clause[[1L]]),
+            .how = rlang::quos(.COL)
+        ))
+    }
+    else if (length(clause) == 1L && rlang::is_call(clause[[1L]], ":")) {
         clause <- clause[[1L]]
     }
     else {
@@ -37,3 +51,43 @@ select.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.par
 
     .data$set_select(clause, .chain)
 }
+
+#' @importFrom tidyselect starts_with
+#' @export
+#'
+tidyselect::starts_with
+
+#' @importFrom tidyselect ends_with
+#' @export
+#'
+tidyselect::ends_with
+
+#' @importFrom tidyselect contains
+#' @export
+#'
+tidyselect::contains
+
+#' @importFrom tidyselect matches
+#' @export
+#'
+tidyselect::matches
+
+#' @importFrom tidyselect num_range
+#' @export
+#'
+tidyselect::num_range
+
+#' @importFrom tidyselect one_of
+#' @export
+#'
+tidyselect::one_of
+
+#' @importFrom tidyselect everything
+#' @export
+#'
+tidyselect::everything
+
+#' @importFrom tidyselect last_col
+#' @export
+#'
+tidyselect::last_col

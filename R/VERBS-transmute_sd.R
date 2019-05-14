@@ -46,9 +46,10 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
                          .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
 {
     dots <- parse_dots(.parse, ...)
+    how_expr <- rlang::enexpr(.how)
 
     if (is_fun(.how)) {
-        clause <- rlang::expr(lapply(.SD, !!rlang::enexpr(.how), !!!dots))
+        clause <- rlang::expr(lapply(.SD, !!how_expr, !!!dots))
 
         if (!missing(.SDcols)) {
             frame_append(.data, .SDcols = !!rlang::enexpr(.SDcols))
@@ -56,7 +57,7 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
     }
     else {
         .which <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
-        .how <- to_expr(rlang::enexpr(.how), .parse = .parse)
+        .how <- to_expr(how_expr, .parse = .parse)
 
         if (rlang::is_call(.how)) {
             .how <- rlang::call_standardise(.how)
@@ -66,11 +67,14 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
         # just to avoid NOTE
         .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
 
-        clause <- rlang::expr(Map(.transmute_matching,
-                                  .COL = .SD,
-                                  .COLNAME = names(.SD),
-                                  .which = rlang::quos(!!.which),
-                                  .how = rlang::quos(!!.how)))
+        clause <- rlang::expr(Map(
+            .transmute_matching,
+            .COL = .SD,
+            .COLNAME = names(.SD),
+            .COLNAMES = list(names(.SD)),
+            .which = rlang::quos(!!.which),
+            .how = rlang::quos(!!.how)
+        ))
     }
 
     .data$set_select(clause, .chain)
