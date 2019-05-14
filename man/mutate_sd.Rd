@@ -4,7 +4,8 @@
 \alias{mutate_sd}
 \title{Mutate subset of data}
 \usage{
-mutate_sd(.data, .how = identity, ..., .SDcols, .parse = FALSE)
+mutate_sd(.data, .how = identity, ..., .SDcols,
+  .parse = getOption("table.express.parse", FALSE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

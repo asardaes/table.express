@@ -21,7 +21,9 @@ where <- function(.data, ...) { UseMethod("where") }
 #' @template parse-arg
 #' @template chain-arg
 #'
-where.ExprBuilder <- function(.data, ..., .collapse = `&`, .parse = FALSE, .chain = TRUE) {
+where.ExprBuilder <- function(.data, ..., .collapse = `&`,
+                              .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+{
     clause <- rlang::enexprs(...)
 
     if (length(clause) == 0L) {

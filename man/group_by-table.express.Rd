@@ -5,7 +5,8 @@
 \alias{group_by.ExprBuilder}
 \title{Group by clause}
 \usage{
-\method{group_by}{ExprBuilder}(.data, ..., .parse = FALSE)
+\method{group_by}{ExprBuilder}(.data, ...,
+  .parse = getOption("table.express.parse", FALSE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

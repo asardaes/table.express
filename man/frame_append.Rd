@@ -4,7 +4,8 @@
 \alias{frame_append}
 \title{Append expressions to the frame}
 \usage{
-frame_append(.data, ..., .parse = FALSE)
+frame_append(.data, ..., .parse = getOption("table.express.parse",
+  FALSE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

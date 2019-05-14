@@ -5,7 +5,7 @@
 \title{Transmute subset of data}
 \usage{
 transmute_sd(.data, .how = identity, ..., .SDcols = names(.SD),
-  .parse = FALSE, .chain = TRUE)
+  .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

@@ -25,7 +25,9 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #' The [ExprBuilder] method dispatches to [where-table.express], but doesn't forward the `.collapse`
 #' argument.
 #'
-order_by.ExprBuilder <- function(.data, ..., .collapse, .parse = FALSE, .chain = TRUE) {
+order_by.ExprBuilder <- function(.data, ..., .collapse,
+                                 .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+{
     dots <- parse_dots(.parse, ...)
 
     e <- rlang::expr(

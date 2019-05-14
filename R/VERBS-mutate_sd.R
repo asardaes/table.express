@@ -33,7 +33,7 @@
 #'     mutate_sd(.COL * 2, .SDcols = c("mpg", "cyl")) %>%
 #'     end_expr
 #'
-mutate_sd <- function(.data, .how = identity, ..., .SDcols, .parse = FALSE) {
+mutate_sd <- function(.data, .how = identity, ..., .SDcols, .parse = getOption("table.express.parse", FALSE)) {
     force(.SDcols)
 
     dots <- parse_dots(.parse, ...)
@@ -54,7 +54,7 @@ mutate_sd <- function(.data, .how = identity, ..., .SDcols, .parse = FALSE) {
     .mutate_matching <- EBCompanion$helper_functions$.mutate_matching
     .non_null <- EBCompanion$helper_functions$.non_null
 
-    mutate(.data, .unquote_names = FALSE,
+    mutate(.data, .parse = FALSE, .unquote_names = FALSE,
            !!.SDcols := .non_null(
                Map(.mutate_matching,
                    .COL = .SD,

@@ -8,8 +8,8 @@
 \usage{
 order_by(.data, ...)
 
-\method{order_by}{ExprBuilder}(.data, ..., .collapse, .parse = FALSE,
-  .chain = TRUE)
+\method{order_by}{ExprBuilder}(.data, ..., .collapse,
+  .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
 }
 \arguments{
 \item{.data}{The input data.}

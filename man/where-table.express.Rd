@@ -9,7 +9,7 @@
 where(.data, ...)
 
 \method{where}{ExprBuilder}(.data, ..., .collapse = `&`,
-  .parse = FALSE, .chain = TRUE)
+  .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
 }
 \arguments{
 \item{.data}{The input data.}

@@ -5,7 +5,8 @@
 \alias{select.ExprBuilder}
 \title{Select clause}
 \usage{
-\method{select}{ExprBuilder}(.data, ..., .parse = FALSE, .chain = TRUE)
+\method{select}{ExprBuilder}(.data, ...,
+  .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

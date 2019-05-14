@@ -5,8 +5,8 @@
 \alias{transmute.ExprBuilder}
 \title{Alias for select}
 \usage{
-\method{transmute}{ExprBuilder}(.data, ..., .parse = FALSE,
-  .chain = TRUE)
+\method{transmute}{ExprBuilder}(.data, ...,
+  .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

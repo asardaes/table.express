@@ -42,7 +42,9 @@
 #'     transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>%
 #'     end_expr
 #'
-transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD), .parse = FALSE, .chain = TRUE) {
+transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
+                         .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+{
     dots <- parse_dots(.parse, ...)
 
     if (is_fun(.how)) {

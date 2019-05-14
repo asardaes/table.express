@@ -22,7 +22,9 @@ dplyr::mutate
 #' @param .unquote_names Passed to [rlang::enexprs()]. Set to `FALSE` if you want to pass the single
 #'   [`:=`][data.table::set] expression.
 #'
-mutate.ExprBuilder <- function(.data, ..., .parse = FALSE, .chain = TRUE, .unquote_names = TRUE) {
+mutate.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE),
+                               .chain = TRUE, .unquote_names = TRUE)
+{
     clauses <- parse_dots(.parse, ..., .named = TRUE, .unquote_names = .unquote_names)
 
     if (.unquote_names) {

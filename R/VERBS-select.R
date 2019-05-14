@@ -25,7 +25,7 @@ dplyr::select
 #' the single expression for the select clause, otherwise everything in `...` will be wrapped
 #' in a call to [base::list()].
 #'
-select.ExprBuilder <- function(.data, ..., .parse = FALSE, .chain = TRUE) {
+select.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE), .chain = TRUE) {
     clause <- parse_dots(.parse, ...)
 
     if (length(clause) == 1L && rlang::is_call(clause[[1L]], ":")) {

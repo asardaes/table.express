@@ -5,7 +5,8 @@
 \alias{mutate.ExprBuilder}
 \title{Add or update columns}
 \usage{
-\method{mutate}{ExprBuilder}(.data, ..., .parse = FALSE, .chain = TRUE,
+\method{mutate}{ExprBuilder}(.data, ...,
+  .parse = getOption("table.express.parse", FALSE), .chain = TRUE,
   .unquote_names = TRUE)
 }
 \arguments{
