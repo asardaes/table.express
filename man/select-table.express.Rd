@@ -5,15 +5,14 @@
 \alias{select.ExprBuilder}
 \title{Select clause}
 \usage{
-\method{select}{ExprBuilder}(.data, ..., with = TRUE, .chain = TRUE)
+\method{select}{ExprBuilder}(.data, ..., .parse = FALSE, .chain = TRUE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{Clause for selectin/computing on columns. The \code{j} inside the \code{data.table}'s frame.}
 
-\item{with}{Passed to \link[data.table:data.table-class]{data.table::data.table}'s \code{\link[data.table:data.table-package]{[}}
-method.}
+\item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
@@ -23,10 +22,6 @@ Select or compute over columns of a \link[data.table:data.table-class]{data.tabl
 }
 \details{
 If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. a:c), then it will be taken as
-the single expression for the select clause, otherwise everything therein \code{...} will be wrapped
-in a call to:
-\itemize{
-\item \code{\link[base:list]{base::list()}} if \code{with = TRUE}
-\item \code{\link[base:c]{base::c()}} otherwise
-}
+the single expression for the select clause, otherwise everything in \code{...} will be wrapped
+in a call to \code{\link[base:list]{base::list()}}.
 }

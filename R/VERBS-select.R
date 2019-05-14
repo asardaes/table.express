@@ -10,37 +10,29 @@ dplyr::select
 #' @rdname select-table.express
 #' @name select-table.express
 #' @export
-#' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #' @importFrom rlang exprs
 #' @importFrom rlang is_call
 #'
 #' @template data-arg
 #' @param ... Clause for selectin/computing on columns. The `j` inside the `data.table`'s frame.
-#' @param with Passed to [data.table::data.table-class]'s [`[`][data.table::data.table-package]
-#'   method.
+#' @template parse-arg
 #' @template chain-arg
 #'
 #' @details
 #'
 #' If `length(...) == 1L` and the expression is a call to `:` (e.g. a:c), then it will be taken as
-#' the single expression for the select clause, otherwise everything therein `...` will be wrapped
-#' in a call to:
+#' the single expression for the select clause, otherwise everything in `...` will be wrapped
+#' in a call to [base::list()].
 #'
-#' - [base::list()] if `with = TRUE`
-#' - [base::c()] otherwise
-#'
-select.ExprBuilder <- function(.data, ..., with = TRUE, .chain = TRUE) {
-    clause <- rlang::enexprs(..., .unquote_names = FALSE)
+select.ExprBuilder <- function(.data, ..., .parse = FALSE, .chain = TRUE) {
+    clause <- parse_dots(.parse, ...)
 
     if (length(clause) == 1L && rlang::is_call(clause[[1L]], ":")) {
         clause <- clause[[1L]]
     }
-    else if (with) {
-        clause <- rlang::expr(list(!!!clause))
-    }
     else {
-        clause <- rlang::exprs(c(!!!clause), with = FALSE)
+        clause <- rlang::expr(list(!!!clause))
     }
 
     .data$set_select(clause, .chain)

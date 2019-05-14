@@ -78,7 +78,7 @@ as.data.table(mtcars) %>%
 
 as.data.table(mtcars) %>%
     start_expr %>%
-    select("mpg", "cyl", "disp", with = FALSE) %>%
+    select("mpg:disp", .parse = TRUE) %>%
     where("vs == 0L", "am == 0L", .collapse = `|`, .parse = TRUE) %>%
     order_by("mpg", "-cyl", .parse = TRUE) %>%
     end_expr

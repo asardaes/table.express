@@ -6,10 +6,6 @@ test_that("The group_by verb works as expected.", {
     ans <- DT %>% start_expr %>% select(ans = mean(mpg)) %>% group_by(vs) %>% end_expr
     expect_identical(ans, expected)
 
-    # TODO: limitation?
-    # ans <- DT %>% start_expr %>% select(".(ans = mean(mpg))", with = FALSE) %>% group_by(vs) %>% end_expr
-    # expect_identical(ans, expected)
-
     expected <- DT[, .(mean = mean(mpg), sd = sd(mpg)), by = .(vs, am)]
 
     ans <- DT %>%
