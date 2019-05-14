@@ -22,9 +22,6 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
-
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
@@ -137,8 +134,9 @@ frame if the current one already has said expression set.</p></dd>
 <dt><code>set_where(value, chain_if_needed)</code></dt><dd><p>Like <code>set_select</code> but for the where clause.</p></dd>
 <dt><code>set_by(value)</code></dt><dd><p>Set the by clause expression.</p></dd>
 <dt><code><a href='chain.html'>chain()</a></code></dt><dd><p>Start a new expression with the current one as its parent.</p></dd>
-<dt><code><a href='https://rdrr.io/r/base/eval.html'>eval(parent_env, by_ref)</a></code></dt><dd><p>Evaluate the final expression with <code>parent_env</code> as the
-enclosing environment. If <code>by_ref = FALSE</code>, <code><a href='https://rdrr.io/pkg/data.table/man/copy.html'>data.table::copy()</a></code> is called before.</p></dd>
+<dt><code><a href='https://rdrr.io/r/base/eval.html'>eval(parent_env, by_ref, ...)</a></code></dt><dd><p>Evaluate the final expression with <code>parent_env</code> as the
+enclosing environment. If <code>by_ref = FALSE</code>, <code><a href='https://rdrr.io/pkg/data.table/man/copy.html'>data.table::copy()</a></code> is called before. The
+ellipsis' contents are assigned to the expression's evaluation environment.</p></dd>
 <dt><code><a href='https://rdrr.io/r/base/print.html'>print(...)</a></code></dt><dd><p>Prints the built <code>expr</code>.</p></dd>
 </dl>
     

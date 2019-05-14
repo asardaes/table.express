@@ -22,9 +22,6 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
-
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
@@ -113,7 +110,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>with</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>,
+  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>), <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,9 +125,8 @@
       <td><p>Clause for selectin/computing on columns. The <code>j</code> inside the <code>data.table</code>'s frame.</p></td>
     </tr>
     <tr>
-      <th>with</th>
-      <td><p>Passed to <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a>'s <code><a href='https://rdrr.io/pkg/data.table/man/data.table.html'>[</a></code>
-method.</p></td>
+      <th>.parse</th>
+      <td><p>Logical. Whether to apply <code><a href='https://rlang.r-lib.org/reference/parse_expr.html'>rlang::parse_expr()</a></code> to obtain the expressions.</p></td>
     </tr>
     <tr>
       <th>.chain</th>
@@ -141,11 +138,8 @@ clause being set already exists?</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If <code>length(...) == 1L</code> and the expression is a call to <code>:</code> (e.g. a:c), then it will be taken as
-the single expression for the select clause, otherwise everything therein <code>...</code> will be wrapped
-in a call to:</p><ul>
-<li><p><code><a href='https://rdrr.io/r/base/list.html'>base::list()</a></code> if <code>with = TRUE</code></p></li>
-<li><p><code><a href='https://rdrr.io/r/base/c.html'>base::c()</a></code> otherwise</p></li>
-</ul>
+the single expression for the select clause, otherwise everything in <code>...</code> will be wrapped
+in a call to <code><a href='https://rdrr.io/r/base/list.html'>base::list()</a></code>.</p>
     
 
   </div>
