@@ -3,19 +3,14 @@
 #'
 magrittr::`%>%`
 
-#' @importFrom rlang expr
 #' @importFrom rlang is_expression
-#' @importFrom rlang is_missing
 #' @importFrom rlang is_quosure
 #' @importFrom rlang parse_expr
 #' @importFrom rlang quo
 #' @importFrom rlang quo_squash
 #'
 to_expr <- function(obj, .parse = FALSE) {
-    if (rlang::is_missing(obj)) {
-        rlang::expr()
-    }
-    else if (.parse && is.character(obj)) {
+    if (.parse && is.character(obj)) {
         rlang::parse_expr(obj)
     }
     else if (rlang::is_quosure(obj) || rlang::is_expression(obj)) {
