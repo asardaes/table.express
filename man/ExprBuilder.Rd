@@ -30,8 +30,9 @@ frame if the current one already has said expression set.}
 \item{\code{set_where(value, chain_if_needed)}}{Like \code{set_select} but for the where clause.}
 \item{\code{set_by(value)}}{Set the by clause expression.}
 \item{\code{chain()}}{Start a new expression with the current one as its parent.}
-\item{\code{eval(parent_env, by_ref)}}{Evaluate the final expression with \code{parent_env} as the
-enclosing environment. If \code{by_ref = FALSE}, \code{\link[data.table:copy]{data.table::copy()}} is called before.}
+\item{\code{eval(parent_env, by_ref, ...)}}{Evaluate the final expression with \code{parent_env} as the
+enclosing environment. If \code{by_ref = FALSE}, \code{\link[data.table:copy]{data.table::copy()}} is called before. The
+ellipsis' contents are assigned to the expression's evaluation environment.}
 \item{\code{print(...)}}{Prints the built \code{expr}.}
 }
 }

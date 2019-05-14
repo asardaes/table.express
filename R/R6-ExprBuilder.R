@@ -9,6 +9,7 @@
 #' @importFrom R6 R6Class
 #' @importFrom rlang abort
 #' @importFrom rlang as_label
+#' @importFrom rlang dots_list
 #' @importFrom rlang env_get_list
 #' @importFrom rlang expr
 #' @importFrom rlang list2
@@ -30,8 +31,9 @@
 #'   \item{`set_where(value, chain_if_needed)`}{Like `set_select` but for the where clause.}
 #'   \item{`set_by(value)`}{Set the by clause expression.}
 #'   \item{`chain()`}{Start a new expression with the current one as its parent.}
-#'   \item{`eval(parent_env, by_ref)`}{Evaluate the final expression with `parent_env` as the
-#'     enclosing environment. If `by_ref = FALSE`, [data.table::copy()] is called before.}
+#'   \item{`eval(parent_env, by_ref, ...)`}{Evaluate the final expression with `parent_env` as the
+#'     enclosing environment. If `by_ref = FALSE`, [data.table::copy()] is called before. The
+#'     ellipsis' contents are assigned to the expression's evaluation environment.}
 #'   \item{`print(...)`}{Prints the built `expr`.}
 #' }
 #'
@@ -67,11 +69,17 @@ ExprBuilder <- R6Class(
             other
         },
 
-        eval = function(parent_env, by_ref) {
+        eval = function(parent_env, by_ref, ...) {
             .DT_ <- if (by_ref) private$.DT else data.table::copy(private$.DT)
 
-            expr_env <- rlang::new_environment(rlang::list2(.DT_ = .DT_, !!!EBCompanion$helper_functions),
-                                               parent = parent_env)
+            dots <- rlang::dots_list(
+                .DT_ = .DT_,
+                !!!EBCompanion$helper_functions,
+                !!!rlang::list2(...),
+                .homonyms = "last"
+            )
+
+            expr_env <- rlang::new_environment(dots, parent = parent_env)
 
             final_expr <- self$expr
             final_expr <- rlang::expr(base::evalq(!!final_expr, !!expr_env))

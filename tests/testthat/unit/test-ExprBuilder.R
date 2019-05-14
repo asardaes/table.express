@@ -30,3 +30,9 @@ test_that("The expr field is read only.", {
     b <- ExprBuilder$new(DT)
     expect_error(b$expr <- "hi")
 })
+
+test_that("Overriding values with eval's ellipsis works.", {
+    b <- DT %>% start_expr %>% select(1L)
+    ans <- b$eval(rlang::current_env(), TRUE, .DT_ = NULL)
+    expect_null(ans)
+})
