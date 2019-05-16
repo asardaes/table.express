@@ -144,11 +144,11 @@ clause being set already exists?</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Like <a href='transmute-table.express.html'>transmute-table.express</a>, this function never modifies the input by reference. However,
-this function does operate on <a href='ExprBuilder.html'>ExprBuilder</a> instances, and adds/chains a <code>select</code> expression that
-will be evaluated by <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a>, possibly specifying the helper function
-<code>.transmute_matching</code>, which is assigned to the final expression's evaluation environment when
-calling <code><a href='end_expr.html'>end_expr()</a></code> (i.e., <a href='ExprBuilder.html'>ExprBuilder</a>'s <code>eval</code> method).</p>
+    <p>Like <a href='transmute-table.express.html'>transmute-table.express</a>, this function never modifies the input by reference. This
+function adds/chains a <code>select</code> expression that will be evaluated by <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a>,
+possibly specifying the helper function <code>.transmute_matching</code>, which is assigned to the final
+expression's evaluation environment when calling <code><a href='end_expr.html'>end_expr()</a></code> (i.e., <a href='ExprBuilder.html'>ExprBuilder</a>'s <code>eval</code>
+method).</p>
 <p>Said function includes two pronouns that can be used by <code>.how</code> and <code>.SDcols</code>:</p><ul>
 <li><p><code>.COL</code>: the actual values of the column.</p></li>
 <li><p><code>.COLNAME</code>: the name of the column currently being evaluated.</p></li>

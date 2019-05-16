@@ -75,10 +75,306 @@
 
     
     
-<p>TBD</p>
+<p>The goal of this package is to offer an alternative way of <strong>expressing</strong> common operations with <a href="https://cran.r-project.org/package=data.table"><code>data.table</code></a> without sacrificing the performance optimizations that it offers. The foundation for the data manipulation verbs is the <a href="https://cran.r-project.org/package=dplyr"><code>dplyr</code></a> package, which also advocates the piping operator from the <a href="https://cran.r-project.org/package=magrittr"><code>magrittr</code></a> package. The <a href="http://cran.r-project.org/package=rlang"><code>rlang</code></a> package powers most of this package’s functionality, which means that <a href="https://tidyeval.tidyverse.org/">tidy evaluation</a> can also be supported. There are other resources that provide comprehensive descriptions of these packages, so they will not be explained here.</p>
+<p>Even though using data manipulation verbs can improve expressiveness in some cases, this is not always true, so using the traditional <code>data.table</code> syntax might still be preferable.</p>
+<p>In order to ressemble SQL syntax more closely, a couple of verb aliases are also defined:</p>
+<ul>
+<li>
+<code>where</code>, being equivalent to <code>dplyr</code>’s <code>filter</code>.</li>
+<li>
+<code>order_by</code>, being equivalent to <code>dplyr</code>’s <code>arrange</code>.</li>
+</ul>
+<p>The examples here will be working with the <code>mtcars</code> data:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"mtcars"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">DT &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="st">    </span>as.data.table <span class="op">%T&gt;%</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">    </span>print</a></code></pre></div>
+<pre><code>#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb
+#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+#&gt; ---                                                   
+#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8
+#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+<div id="expression-delimiters" class="section level2">
+<h2 class="hasAnchor">
+<a href="#expression-delimiters" class="anchor"></a>Expression delimiters</h2>
+<p>The foundation for this package is building expressions that are almost entirely delegated to <code>data.table</code>. These expressions are built by <em>parsing</em> the input of the different verbs. In order to explicitly show when an expression is being built and subsequently evaluated, we use 3 delimiters:</p>
+<ul>
+<li><code>start_expr</code></li>
+<li><code>end_expr</code></li>
+<li><code>chain</code></li>
+</ul>
+<p>These also serve as visual reminders that we are not dealing directly with <code>data.table</code>s during the process. We capture the input <code>data.table</code> and start the process with <code>start_expr</code>, and evaluate the final expression with <code>end_expr</code>. Using <code>chain</code> is equivalent to calling <code>end_expr</code> immediately followed by <code>start_expr</code>, and should be seldom needed.</p>
+</div>
+<div id="arranging-rows" class="section level2">
+<h2 class="hasAnchor">
+<a href="#arranging-rows" class="anchor"></a>Arranging rows</h2>
+<p>The <code>arrange</code>/<code>order_by</code> verbs add an expression with <code>order</code> to the frame, and let <code>data.table</code> handle it as usual:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/order_by-table.express.html">order_by</a></span>(mpg, <span class="op">-</span>cyl) <span class="op">%T&gt;%</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">    </span>print <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt; .DT_[order(mpg, -cyl)]</code></pre>
+<pre><code>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+#&gt;  1: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+#&gt;  2: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+#&gt; ---                                                    
+#&gt; 31: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+#&gt; 32: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</code></pre>
+<p>We see here that the built expression includes a <code>.DT_</code> pronoun. When the expression is evaluated, the captured <code>data.table</code> is assigned to the evaluation environment as said pronoun.</p>
+</div>
+<div id="selecting-columns" class="section level2">
+<h2 class="hasAnchor">
+<a href="#selecting-columns" class="anchor"></a>Selecting columns</h2>
+<p>Even though selecting a subset of columns is a common operation, it may be undesirable to do so when working with <code>data.table</code>s because they lead to data copies.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/tracemem.html">tracemem</a></span>(x)</a></code></pre></div>
+<pre><code>#&gt; [1] "&lt;0x1a6d428&gt;"</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">x=</span>x)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">x2 &lt;-<span class="st"> </span>df[, <span class="st">"x"</span>]</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">x2[1L] &lt;-<span class="st"> </span>0L</a></code></pre></div>
+<pre><code>#&gt; tracemem[0x1a6d428 -&gt; 0x4b05580]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; do.call saveRDS withCallingHandlers doTryCatch tryCatchOne tryCatchList doTryCatch tryCatchOne tryCatchList tryCatch</code></pre>
+<p>With this normal data frame, only the last assignment triggered a copy.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">dt &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x=</span>x)</a></code></pre></div>
+<pre><code>#&gt; tracemem[0x1a6d428 -&gt; 0x4b5c638]: data.table eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; do.call saveRDS withCallingHandlers doTryCatch tryCatchOne tryCatchList doTryCatch tryCatchOne tryCatchList tryCatch</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">x3 &lt;-<span class="st"> </span>dt[, x]</a></code></pre></div>
+<pre><code>#&gt; tracemem[0x4b5c638 -&gt; 0x4c1d1a0]: copy [.data.table [ eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; do.call saveRDS withCallingHandlers doTryCatch tryCatchOne tryCatchList doTryCatch tryCatchOne tryCatchList tryCatch</code></pre>
+<p>In this case with <code>data.table</code>, more copies were triggered. Given that <code>data.table</code> supports modification by reference, these copies are necessary.</p>
+<p>With that said, the <code>select</code> verb can be used as usual:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mpg, am) <span class="op">%T&gt;%</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">    </span>print <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt; .DT_[, list(mpg, am)]</code></pre>
+<pre><code>#&gt;      mpg am
+#&gt;  1: 21.0  1
+#&gt;  2: 21.0  1
+#&gt; ---        
+#&gt; 31: 15.0  1
+#&gt; 32: 21.4  1</code></pre>
+<p>To maintain consistency, even single columns are kept as <code>data.table</code>s:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mpg) <span class="op">%T&gt;%</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">    </span>print <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt; .DT_[, list(mpg)]</code></pre>
+<pre><code>#&gt;      mpg
+#&gt;  1: 21.0
+#&gt;  2: 21.0
+#&gt; ---     
+#&gt; 31: 15.0
+#&gt; 32: 21.4</code></pre>
+<p>In the case of single expressions in <code>select</code>, calls to <code>tidyselect</code>’s helpers or to <code>:</code> are handled specially internally:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mpg<span class="op">:</span>cyl) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt;      mpg cyl
+#&gt;  1: 21.0   6
+#&gt;  2: 21.0   6
+#&gt; ---         
+#&gt; 31: 15.0   8
+#&gt; 32: 21.4   4</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/tidyselect/man/select_helpers.html">contains</a></span>(<span class="st">"M"</span>, <span class="dt">ignore.case =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt;      mpg am
+#&gt;  1: 21.0  1
+#&gt;  2: 21.0  1
+#&gt; ---        
+#&gt; 31: 15.0  1
+#&gt; 32: 21.4  1</code></pre>
+<div id="transmuting-columns" class="section level3">
+<h3 class="hasAnchor">
+<a href="#transmuting-columns" class="anchor"></a>Transmuting columns</h3>
+<p>Given the way <code>data.table</code> handles the <code>j</code> part of the “query”, creating and keeping only new columns (like with <code>dplyr</code>’s <code>transmute</code>) can be done with <code>select</code>, so <code>transmute</code> is simply an alias during expression building.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="dt">foo =</span> mpg <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">bar =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(cyl)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt;      foo        bar
+#&gt;  1: 42.0  403.42879
+#&gt;  2: 42.0  403.42879
+#&gt; ---                
+#&gt; 31: 30.0 2980.95799
+#&gt; 32: 42.8   54.59815</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span>(<span class="dt">foo =</span> mpg <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">bar =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(cyl)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt;      foo        bar
+#&gt;  1: 42.0  403.42879
+#&gt;  2: 42.0  403.42879
+#&gt; ---                
+#&gt; 31: 30.0 2980.95799
+#&gt; 32: 42.8   54.59815</code></pre>
+</div>
+</div>
+<div id="mutating-columns" class="section level2">
+<h2 class="hasAnchor">
+<a href="#mutating-columns" class="anchor"></a>Mutating columns</h2>
+<p>The <code>mutate</code> verb build an expression with <code>:=</code> in order to perform assignment by reference by default. This can be avoided by passing <code>.by_ref = FALSE</code> to <code>end_expr</code>, which will use <code><a href="https://rdrr.io/pkg/data.table/man/copy.html">data.table::copy</a></code> before assigning <code>.DT_</code>:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mpg =</span> mpg <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">hp =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(hp))</a></code></pre></div>
+<pre><code>#&gt; .DT_[, `:=`(mpg = mpg/2, hp = log(hp))]</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mpg =</span> mpg <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">hp =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(hp)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/end_expr.html">end_expr</a></span>(<span class="dt">.by_ref =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>{</a>
+<a class="sourceLine" id="cb30-5" data-line-number="5">        <span class="kw"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(.))</a>
+<a class="sourceLine" id="cb30-6" data-line-number="6">    }</a></code></pre></div>
+<pre><code>#&gt;      mpg cyl disp       hp drat    wt  qsec vs am gear carb
+#&gt;  1: 10.5   6  160 4.700480 3.90 2.620 16.46  0  1    4    4
+#&gt;  2: 10.5   6  160 4.700480 3.90 2.875 17.02  0  1    4    4
+#&gt; ---                                                        
+#&gt; 31:  7.5   8  301 5.814131 3.54 3.570 14.60  0  1    5    8
+#&gt; 32: 10.7   4  121 4.691348 4.11 2.780 18.60  1  1    4    2</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(DT)</a></code></pre></div>
+<pre><code>#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb
+#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+#&gt; ---                                                   
+#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8
+#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+<div id="filtering-rows" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filtering-rows" class="anchor"></a>Filtering rows</h2>
+<p>The <code>where</code>/<code>filter</code> verbs work with the <code>i</code> part of the query:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(vs <span class="op">==</span><span class="st"> </span>1L, carb <span class="op">&gt;</span><span class="st"> </span>2L) <span class="op">%T&gt;%</span></a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="st">    </span>print <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-5" data-line-number="5"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt; .DT_[vs == 1L &amp; carb &gt; 2L]</code></pre>
+<pre><code>#&gt;     mpg cyl  disp  hp drat   wt qsec vs am gear carb
+#&gt; 1: 19.2   6 167.6 123 3.92 3.44 18.3  1  0    4    4
+#&gt; 2: 17.8   6 167.6 123 3.92 3.44 18.9  1  0    4    4</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="dt">mean_mpg =</span> <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(mpg)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/where-table.express.html">where</a></span>(vs <span class="op">==</span><span class="st"> </span>1L, carb <span class="op">&gt;</span><span class="st"> </span>2L, <span class="dt">.collapse =</span> <span class="st">`</span><span class="dt">|</span><span class="st">`</span>) <span class="op">%T&gt;%</span></a>
+<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="st">    </span>print <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-6" data-line-number="6"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt; .DT_[vs == 1L | carb &gt; 2L, list(mean_mpg = mean(mpg))]</code></pre>
+<pre><code>#&gt;    mean_mpg
+#&gt; 1: 20.30741</code></pre>
+</div>
+<div id="modifying-subset-of-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#modifying-subset-of-data" class="anchor"></a>Modifying subset of data</h2>
+<p>In order to support functionality similar to <code>data.table</code>’s <code>DT[, lapply(.SD, fun), .SDcols = c("...")]</code> syntax, 2 <code>data.table</code>-specific verbs are provided: <code>mutate_sd</code> and <code>transmute_sd</code>.</p>
+<p>Starting with <code>mutate_sd</code>, one additional feature it provides is that columns in <code>.SDcols</code> are modified by reference, and columns that are not part of <code>.SDcols</code> can still be kept:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/mutate_sd.html">mutate_sd</a></span>(exp, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mpg"</span>, <span class="st">"cyl"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">    </span>end_expr</a>
+<a class="sourceLine" id="cb40-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb40-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(DT)</a></code></pre></div>
+<pre><code>#&gt;            mpg        cyl disp  hp drat    wt  qsec vs am gear carb
+#&gt;  1: 1318815734  403.42879  160 110 3.90 2.620 16.46  0  1    4    4
+#&gt;  2: 1318815734  403.42879  160 110 3.90 2.875 17.02  0  1    4    4
+#&gt; ---                                                                
+#&gt; 31:    3269017 2980.95799  301 335 3.54 3.570 14.60  0  1    5    8
+#&gt; 32: 1967441884   54.59815  121 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+<p>Moreover, <code>mutate_sd</code> supports a special <code>.COL</code> pronoun that symbolizes the column that should be modified, and can be used to express the mutation expression:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/mutate_sd.html">mutate_sd</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(.COL), <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mpg"</span>, <span class="st">"cyl"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="st">    </span>end_expr</a>
+<a class="sourceLine" id="cb42-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb42-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(DT)</a></code></pre></div>
+<pre><code>#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb
+#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+#&gt; ---                                                   
+#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8
+#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+<p>On the other hand, <code>transmute_sd</code> never modifies by reference, and supports special expressions to “build” what is chosen as <code>.SDcols</code>. These expressions can use <code>tidyselect</code> helpers, as well as another special pronoun: <code>.COLNAME</code>:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/transmute_sd.html">transmute_sd</a></span>(.COL <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/pkg/tidyselect/man/select_helpers.html">starts_with</a></span>(<span class="st">"d"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt;     disp drat
+#&gt;  1:  320 7.80
+#&gt;  2:  320 7.80
+#&gt; ---          
+#&gt; 31:  602 7.08
+#&gt; 32:  242 8.22</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/transmute_sd.html">transmute_sd</a></span>(.COL <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span>(<span class="st">"^d"</span>, .COLNAME)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt;     disp drat
+#&gt;  1:  320 7.80
+#&gt;  2:  320 7.80
+#&gt; ---          
+#&gt; 31:  602 7.08
+#&gt; 32:  242 8.22</code></pre>
+</div>
+<div id="data-manipulation-by-group" class="section level2">
+<h2 class="hasAnchor">
+<a href="#data-manipulation-by-group" class="anchor"></a>Data manipulation by group</h2>
+<p>Since <code>data.table</code> already supports this by means of its <code>by</code> parameter, the <code>group_by</code> verb simply parses its input and assigns it accordingly:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(.N) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(gear) <span class="op">%T&gt;%</span></a>
+<a class="sourceLine" id="cb48-5" data-line-number="5"><span class="st">    </span>print <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-6" data-line-number="6"><span class="st">    </span>end_expr</a></code></pre></div>
+<pre><code>#&gt; .DT_[, list(.N), by = list(gear)]</code></pre>
+<pre><code>#&gt;    gear  N
+#&gt; 1:    4 12
+#&gt; 2:    3 15
+#&gt; 3:    5  5</code></pre>
+</div>
+<div id="chaining-expressions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#chaining-expressions" class="anchor"></a>Chaining expressions</h2>
+<p>Naturally, more complex expressions are supported by automatically chaining <code>data.table</code> frames:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="dt">mean_mpg =</span> <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(mpg)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/where-table.express.html">where</a></span>(hp <span class="op">&gt;</span><span class="st"> </span>50L) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(vs, am, gear) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="../reference/order_by-table.express.html">order_by</a></span>(gear, <span class="op">-</span>vs, am) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(mean_mpg <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>) <span class="op">%T&gt;%</span></a>
+<a class="sourceLine" id="cb51-8" data-line-number="8"><span class="st">    </span>print <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-9" data-line-number="9"><span class="st">    </span>end_expr <span class="op">%&gt;%</span><span class="st"> </span>{</a>
+<a class="sourceLine" id="cb51-10" data-line-number="10">        <span class="kw"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(., <span class="dt">nrows =</span> 10L))</a>
+<a class="sourceLine" id="cb51-11" data-line-number="11">    }</a></code></pre></div>
+<pre><code>#&gt; .DT_[hp &gt; 50L, list(mean_mpg = mean(mpg)), by = list(vs, am, 
+#&gt;     gear)][order(gear, -vs, am)][mean_mpg &gt; 20]
+#&gt;    vs am gear mean_mpg
+#&gt; 1:  1  0    3 20.33333
+#&gt; 2:  1  0    4 21.05000
+#&gt; 3:  1  1    4 28.03333
+#&gt; 4:  0  1    4 21.00000
+#&gt; 5:  1  1    5 30.40000</code></pre>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#expression-delimiters">Expression delimiters</a></li>
+      <li><a href="#arranging-rows">Arranging rows</a></li>
+      <li><a href="#selecting-columns">Selecting columns</a></li>
+      <li><a href="#mutating-columns">Mutating columns</a></li>
+      <li><a href="#filtering-rows">Filtering rows</a></li>
+      <li><a href="#modifying-subset-of-data">Modifying subset of data</a></li>
+      <li><a href="#data-manipulation-by-group">Data manipulation by group</a></li>
+      <li><a href="#chaining-expressions">Chaining expressions</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
