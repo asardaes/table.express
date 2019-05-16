@@ -33,8 +33,8 @@ data.table() %>%
 #> .DT_[var == val, list(col)][order(v)]
 ```
 
-The input `data.table` is alwas assigned in the evaluation’s environment
-as the `.DT_` variable.
+The input `data.table` is always assigned in the evaluation’s
+environment as the `.DT_` variable.
 
 In many cases character input can also be supported, which could be
 useful for other packages that use `data.table`.

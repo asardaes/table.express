@@ -19,11 +19,11 @@
 #'
 #' @details
 #'
-#' Like [transmute-table.express], this function never modifies the input by reference. However,
-#' this function does operate on [ExprBuilder] instances, and adds/chains a `select` expression that
-#' will be evaluated by [data.table::data.table], possibly specifying the helper function
-#' `.transmute_matching`, which is assigned to the final expression's evaluation environment when
-#' calling [end_expr()] (i.e., [ExprBuilder]'s `eval` method).
+#' Like [transmute-table.express], this function never modifies the input by reference. This
+#' function adds/chains a `select` expression that will be evaluated by [data.table::data.table],
+#' possibly specifying the helper function `.transmute_matching`, which is assigned to the final
+#' expression's evaluation environment when calling [end_expr()] (i.e., [ExprBuilder]'s `eval`
+#' method).
 #'
 #' Said function includes two pronouns that can be used by `.how` and `.SDcols`:
 #'

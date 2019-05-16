@@ -25,11 +25,11 @@ clause being set already exists?}
 Like \link{transmute-table.express} but for a single call and maybe specifying \code{.SDcols}.
 }
 \details{
-Like \link{transmute-table.express}, this function never modifies the input by reference. However,
-this function does operate on \link{ExprBuilder} instances, and adds/chains a \code{select} expression that
-will be evaluated by \link[data.table:data.table]{data.table::data.table}, possibly specifying the helper function
-\code{.transmute_matching}, which is assigned to the final expression's evaluation environment when
-calling \code{\link[=end_expr]{end_expr()}} (i.e., \link{ExprBuilder}'s \code{eval} method).
+Like \link{transmute-table.express}, this function never modifies the input by reference. This
+function adds/chains a \code{select} expression that will be evaluated by \link[data.table:data.table]{data.table::data.table},
+possibly specifying the helper function \code{.transmute_matching}, which is assigned to the final
+expression's evaluation environment when calling \code{\link[=end_expr]{end_expr()}} (i.e., \link{ExprBuilder}'s \code{eval}
+method).
 
 Said function includes two pronouns that can be used by \code{.how} and \code{.SDcols}:
 \itemize{
