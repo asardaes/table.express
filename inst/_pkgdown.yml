@@ -7,19 +7,19 @@ reference:
     desc: ~
     contents:
       - '`table.express-package`'
-  - title: "R6 Classes"
-    desc: ~
-    contents:
-      - '`ExprBuilder`'
-  - title: "Verbs"
-    desc: "Data manipulation verbs"
-    contents:
-      - ends_with("-table.express")
-      - ends_with("_sd")
-      - '`frame_append`'
   - title: "Expression Delimiters"
     desc: "Delimiters between expressions and data.tables"
     contents:
       - '`start_expr`'
       - '`chain`'
       - '`end_expr`'
+  - title: "Verbs"
+    desc: "Data manipulation verbs"
+    contents:
+      - ends_with("-table.express")
+      - ends_with("_sd")
+      - '`frame_append`'
+  - title: "R6 Classes"
+    desc: ~
+    contents:
+      - '`ExprBuilder`'
