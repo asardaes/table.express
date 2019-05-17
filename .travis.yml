@@ -5,25 +5,32 @@ sudo: required
 r_build_args: "--compact-vignettes"
 r_packages:
   - devtools
-r_github_packages:
-  - r-lib/covr
-  - r-lib/pkgdown
 os:
   - linux
 r:
-  - release
   - devel
 env:
   - COMPILER=gxx
+  - RLANG=release
 matrix:
   fast_finish: true
   include:
+    - os: linux
+      r: release
+      r_github_packages:
+        - r-lib/covr
+        - r-lib/pkgdown
+      deploy:
+        provider: script
+        script: Rscript -e 'pkgdown::deploy_site_github()'
+        skip_cleanup: true
+        on:
+          branch: master
     - os: osx
       r: release
       env: COMPILER=clang
     - os: linux
       r: release
-      env: COMPILER=gxx
       env: RLANG=devel
       r_github_packages:
         - r-lib/rlang
@@ -43,13 +50,6 @@ before_install:
       tail -n 50 /tmp/rs.out
       return $status
     }
-deploy:
-  provider: script
-  script: Rscript -e 'if (grepl("linux", Sys.info()[["sysname"]], ignore.case = TRUE)) pkgdown::deploy_site_github()'
-  skip_cleanup: true
-  on:
-    branch: master
-    condition: "$TRAVIS_R_VERSION_STRING = release"
 after_success:
   - if [[ ("$TRAVIS_R_VERSION_STRING" == "release") && ("$TRAVIS_OS_NAME" == "linux") ]]; then
       Rscript codecov.R;
