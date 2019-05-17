@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bindings to use dplyr's verbs with data.table — table.express-package • table.express</title>
+<title>Filter subset of data — filter_sd • table.express</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -28,10 +28,9 @@
 
 
 
-<meta property="og:title" content="Bindings to use dplyr's verbs with data.table — table.express-package" />
+<meta property="og:title" content="Filter subset of data — filter_sd" />
 
-<meta property="og:description" content="A set of light-weight bindings that map dplyr::dplyr-package verbs to an expression that can be
-used within a data.table::data.table-package's frame." />
+<meta property="og:description" content="Helper to filter rows with the same condition applied to a subset of the data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -99,35 +98,70 @@ used within a data.table::data.table-package's frame." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Bindings to use dplyr's verbs with data.table</h1>
+    <h1>Filter subset of data</h1>
     
-    <div class="hidden name"><code>table.express-package.Rd</code></div>
+    <div class="hidden name"><code>filter_sd.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A set of light-weight bindings that map <a href='https://dplyr.tidyverse.org/reference/dplyr-package.html'>dplyr::dplyr-package</a> verbs to an expression that can be
-used within a <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table-package</a>'s frame.</p>
+    <p>Helper to filter rows with the same condition applied to a subset of the data.</p>
     
     </div>
 
-        
+    <pre class="usage"><span class='fu'>filter_sd</span>(<span class='no'>.data</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.na</span>), <span class='no'>...</span>, <span class='no'>.SDcols</span>, <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`&amp;`</span>,
+  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>), <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>An instance of <a href='ExprBuilder.html'>ExprBuilder</a>.</p></td>
+    </tr>
+    <tr>
+      <th>.how</th>
+      <td><p>The filtering function, function call, or expression.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>More arguments for <code>.how</code> if it is a function or a function-call.</p></td>
+    </tr>
+    <tr>
+      <th>.SDcols</th>
+      <td><p>See <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a> and the details here.</p></td>
+    </tr>
+    <tr>
+      <th>.collapse</th>
+      <td><p>See <a href='where-table.express.html'>where-table.express</a>.</p></td>
+    </tr>
+    <tr>
+      <th>.parse</th>
+      <td><p>Logical. Whether to apply <code><a href='https://rlang.r-lib.org/reference/parse_expr.html'>rlang::parse_expr()</a></code> to obtain the expressions.</p></td>
+    </tr>
+    <tr>
+      <th>.chain</th>
+      <td><p>Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Since this package's functionality is based on the <span class="pkg">rlang</span> package, and it is still evolving,
-breaking changes may be needed in the future.</p>
+    <p>This function adds/chains a <code>where</code> expression that will be evaluated by
+<a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a>. The <code>.how</code> condition is applied to all specified <code>.SDcols</code>, and it
+supports the <code>.COL</code> pronoun.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
           </ul>
 
-    <h2>Author</h2>
-    <p>Alexis Sarda-Espinosa</p>
   </div>
 </div>
 
