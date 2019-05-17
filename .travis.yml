@@ -21,8 +21,16 @@ matrix:
     - os: osx
       r: release
       env: COMPILER=clang
+    - os: linux
+      r: release
+      env: COMPILER=gxx
+      env: RLANG=devel
+      r_github_packages:
+        - r-lib/rlang
   allow_failures:
     - r: devel
+    - r: release
+      env: RLANG=devel
 before_install:
   - |
     Rscript() {
