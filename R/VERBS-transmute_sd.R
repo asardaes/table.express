@@ -6,6 +6,7 @@
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
 #' @importFrom rlang enexpr
+#' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang quos
 #' @importFrom rlang zap

@@ -154,6 +154,16 @@ DT %>%
     end_expr
 ```
 
+Tidy evaluation and the `.parse` argument can also aid in cases where certain parts of the query were computed programmatically:
+
+```{r select-tidy}
+selected <- c("mpg", "am")
+DT %>%
+    start_expr %>%
+    select(!!!selected, .parse = TRUE) %>%
+    end_expr
+```
+
 ### Transmuting columns
 
 Given the way `data.table` handles the `j` part of the "query",
@@ -176,7 +186,7 @@ DT %>%
 
 ## Mutating columns
 
-The `mutate` verb build an expression with `:=` in order to perform assignment by reference by default.
+The `mutate` verb builds an expression with `:=` in order to perform assignment by reference by default.
 This can be avoided by passing `.by_ref = FALSE` to `end_expr`,
 which will use `data.table::copy` before assigning `.DT_`:
 
@@ -214,6 +224,22 @@ DT %>%
     end_expr
 ```
 
+The helper verb `filter_sd` can be used to apply the same conditions to many columns,
+and it can use a special pronoun `.COL` while specifying the expression:
+
+```{r filter-sd}
+DT %>%
+  start_expr %>%
+  filter_sd(`>`, 20, .SDcols = c("mpg", "qsec")) %T>%
+  print %>%
+  end_expr
+
+DT %>%
+  start_expr %>%
+  filter_sd(.COL > 20, .SDcols = c("mpg", "qsec")) %>%
+  end_expr
+```
+
 ## Modifying subset of data
 
 In order to support functionality similar to `data.table`'s `DT[, lapply(.SD, fun), .SDcols = c("...")]` syntax,
@@ -232,7 +258,7 @@ DT %>%
 print(DT)
 ```
 
-Moreover, `mutate_sd` supports a special `.COL` pronoun that symbolizes the column that should be modified,
+Moreover, `mutate_sd` supports the special `.COL` pronoun that symbolizes the column that should be modified,
 and can be used to express the mutation expression:
 
 ```{r mutate-sd-col}

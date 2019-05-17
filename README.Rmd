@@ -28,12 +28,7 @@ knitr::opts_chunk$set(
 # Table express
 
 Use `dplyr` verbs to build `data.table` expressions.
-
-This is WIP. Feel free to help :)
-
-Aliases also provided to resemble SQL syntax more closely.
-
-Powered mostly by [`rlang`](http://cran.r-project.org/package=rlang).
+Check the [vignette](https://asardaes.github.io/table.express/articles/table.express.html) for more information.
 
 ## Essence
 
@@ -54,32 +49,3 @@ The input `data.table` is always assigned in the evaluation's environment as the
 
 In many cases character input can also be supported,
 which could be useful for other packages that use `data.table`.
-
-## Examples
-
-```{r example}
-data("mtcars")
-
-# Equivalent to:
-# as.data.table(mtcars)[
-#     cyl < 8L, mpg:disp][
-#         order(-cyl), .(mean_mpg = mean(mpg), mean_disp = mean(disp)), by = cyl]
-as.data.table(mtcars) %>%
-    start_expr %>%
-    
-    select(mpg:disp) %>%
-    where(cyl < 8L) %>%
-    
-    select(mean_mpg = mean(mpg), mean_disp = mean(disp)) %>%
-    group_by(cyl) %>%
-    order_by(-cyl) %>%
-    
-    end_expr
-
-as.data.table(mtcars) %>%
-    start_expr %>%
-    select("mpg:disp", .parse = TRUE) %>%
-    where("vs == 0L", "am == 0L", .collapse = `|`, .parse = TRUE) %>%
-    order_by("mpg", "-cyl", .parse = TRUE) %>%
-    end_expr
-```
