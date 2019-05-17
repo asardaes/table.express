@@ -3,7 +3,7 @@ title: "Using table.express"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Using table.express}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
 ---
 
