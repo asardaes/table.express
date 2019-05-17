@@ -10,7 +10,6 @@ os:
 r:
   - devel
 env:
-  - COMPILER=gxx
   - RLANG=release
 matrix:
   fast_finish: true
@@ -28,7 +27,6 @@ matrix:
           branch: master
     - os: osx
       r: release
-      env: COMPILER=clang
     - os: linux
       r: release
       env: RLANG=devel
