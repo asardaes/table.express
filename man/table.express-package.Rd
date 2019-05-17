@@ -13,6 +13,15 @@ used within a \link[data.table:data.table-package]{data.table::data.table-packag
 Since this package's functionality is based on the \pkg{rlang} package, and it is still evolving,
 breaking changes may be needed in the future.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://asardaes.github.io/table.express}
+  \item \url{https://github.com/asardaes/table.express}
+  \item Report bugs at \url{https://github.com/asardaes/table.express/issues}
+}
+
+}
 \author{
 Alexis Sarda-Espinosa
 }
