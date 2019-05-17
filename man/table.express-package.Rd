@@ -9,6 +9,10 @@
 A set of light-weight bindings that map \link[dplyr:dplyr-package]{dplyr::dplyr-package} verbs to an expression that can be
 used within a \link[data.table:data.table-package]{data.table::data.table-package}'s frame.
 }
+\details{
+Since this package's functionality is based on the \pkg{rlang} package, and it is still evolving,
+breaking changes may be needed in the future.
+}
 \author{
 Alexis Sarda-Espinosa
 }
