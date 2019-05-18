@@ -8,8 +8,8 @@
 #' @importFrom rlang call_standardise
 #' @importFrom rlang enexpr
 #' @importFrom rlang expr
-#' @importFrom rlang quos
 #' @importFrom rlang sym
+#' @importFrom rlang zap
 #'
 #' @template data-arg
 #' @param .how The filtering function, function call, or expression.

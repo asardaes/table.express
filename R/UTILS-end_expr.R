@@ -7,7 +7,9 @@
 #' @param .data The expression.
 #' @template generic-dots
 #'
-end_expr <- function(.data, ...) { UseMethod("end_expr") }
+end_expr <- function(.data, ...) {
+    UseMethod("end_expr")
+}
 
 #' @rdname end_expr
 #' @export

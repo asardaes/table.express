@@ -11,7 +11,6 @@
 #'
 order_by <- function(.data, ...) { UseMethod("order_by") }
 
-
 #' @rdname order_by-table.express
 #' @export
 #' @importFrom rlang expr

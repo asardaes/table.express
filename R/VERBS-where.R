@@ -9,7 +9,9 @@
 #' @param .data The input data.
 #' @template generic-dots
 #'
-where <- function(.data, ...) { UseMethod("where") }
+where <- function(.data, ...) {
+    UseMethod("where")
+}
 
 #' @rdname where-table.express
 #' @export

@@ -38,7 +38,7 @@
 #'   \item{`print(...)`}{Prints the built `expr`.}
 #' }
 #'
-ExprBuilder <- R6Class(
+ExprBuilder <- R6::R6Class(
     "ExprBuilder",
     public = list(
         initialize = function(DT) {

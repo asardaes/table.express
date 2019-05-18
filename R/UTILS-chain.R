@@ -7,7 +7,9 @@
 #' @param .data Object to be chained.
 #' @template generic-dots
 #'
-chain <- function(.data, ...) { UseMethod("chain") }
+chain <- function(.data, ...) {
+    UseMethod("chain")
+}
 
 #' @rdname chain
 #' @export

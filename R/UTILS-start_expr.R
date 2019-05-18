@@ -7,7 +7,9 @@
 #' @param .data Optionally, something to capture for the expression.
 #' @template generic-dots
 #'
-start_expr <- function(.data, ...) { UseMethod("start_expr") }
+start_expr <- function(.data, ...) {
+    UseMethod("start_expr")
+}
 
 #' @rdname start_expr
 #' @export
