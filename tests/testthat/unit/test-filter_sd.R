@@ -17,6 +17,9 @@ test_that("Filtering SD works for calls.", {
     ans <- DT %>% start_expr %>% filter_sd(.COL > 20, .SDcols = c("mpg", "qsec")) %>% end_expr
     expect_identical(ans, expected)
 
+    ans <- DT %>% start_expr %>% filter_sd(20 < .COL, .SDcols = c("mpg", "qsec")) %>% end_expr
+    expect_identical(ans, expected)
+
     val <- 20
     ans <- DT %>% start_expr %>% filter_sd(.COL > !!val, .SDcols = c("mpg", "qsec")) %>% end_expr
     expect_identical(ans, expected)

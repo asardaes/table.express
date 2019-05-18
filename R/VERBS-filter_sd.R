@@ -3,6 +3,7 @@
 #' Helper to filter rows with the same condition applied to a subset of the data.
 #'
 #' @export
+#' @importFrom rlang as_label
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
 #' @importFrom rlang enexpr
@@ -41,8 +42,12 @@ filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`
     .how <- rlang::call_standardise(.how)
     .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
 
+    which_col <- which(sapply(.how, function(how) { rlang::as_label(how) == ".COL" }))
     clauses <- Map(.col = .SDcols, .how = list(.how), f = function(.col, .how) {
-        .how[[2L]] <- rlang::sym(.col)
+        col_sym <- rlang::sym(.col)
+        for (i in which_col) {
+            .how[[i]] <- col_sym
+        }
         .how
     })
 
