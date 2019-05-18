@@ -12,10 +12,12 @@
 #' @importFrom rlang dots_list
 #' @importFrom rlang env_get_list
 #' @importFrom rlang expr
+#' @importFrom rlang is_syntactic_literal
 #' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
+#' @importFrom rlang quo
 #' @importFrom rlang warn
 #' @importFrom tidyselect vars_select_helpers
 #'
@@ -168,7 +170,13 @@ ExprBuilder <- R6::R6Class(
                 names(quosures)[to_unname] <- ""
             }
 
-            quosures <- c(quosures, private$.appends)
+            # keep possible NULL in extra arguments
+            appends <- lapply(private$.appends, function(app) {
+                if (rlang::is_syntactic_literal(app)) app <- rlang::quo(!!app)
+                app
+            })
+
+            quosures <- c(quosures, appends)
             unlist(quosures)
         },
 

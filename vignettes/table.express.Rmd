@@ -240,6 +240,25 @@ DT %>%
   end_expr
 ```
 
+### Using secondary indices
+
+The `filter_on` verb can be used to build an expression that specifies the `on` argument of the query.
+It accepts key-value pairs where each key is a column in the data,
+and each value is the corresponding value that the column should have to match:
+
+```{r filter-on}
+DT %>%
+  start_expr %>%
+  filter_on(cyl = 6, am = 0) %T>%
+  print %>%
+  end_expr
+
+DT %>%
+  start_expr %>%
+  filter_on(cyl = 6, am = 0, mult = "first") %>%
+  end_expr
+```
+
 ## Modifying subset of data
 
 In order to support functionality similar to `data.table`'s `DT[, lapply(.SD, fun), .SDcols = c("...")]` syntax,
