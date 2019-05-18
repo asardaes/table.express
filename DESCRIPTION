@@ -17,6 +17,7 @@ Imports:
     tidyselect
 Suggests:
     knitr,
+    rmarkdown,
     testthat
 Date: 2019-05-18
 Authors@R: c(
