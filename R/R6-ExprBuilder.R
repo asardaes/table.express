@@ -158,7 +158,10 @@ ExprBuilder <- R6::R6Class(
                 rlang::maybe_missing(q)
             })
 
-            names(quosures) <- sub("^.by$", "by", names(quosures))
+            if (".by" %in% names(quosures)) {
+                which_by <- if (isTRUE(attr(quosures$.by, "key_by"))) "keyby" else "by"
+                names(quosures) <- sub("^.by$", which_by, names(quosures))
+            }
 
             to_unname <- names(quosures) %in% c(".select", ".where")
             if (any(to_unname)) {

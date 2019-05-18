@@ -301,6 +301,17 @@ DT %>%
     end_expr
 ```
 
+The `key_by` verb does the same but sets the key of the result in order to sort:
+
+```{r key-by}
+DT %>%
+    start_expr %>%
+    select(.N) %>%
+    key_by(gear) %T>%
+    print %>%
+    end_expr
+```
+
 ## Chaining expressions
 
 Naturally, more complex expressions are supported by automatically chaining `data.table` frames:
