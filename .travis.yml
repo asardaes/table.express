@@ -5,6 +5,8 @@ sudo: required
 r_build_args: "--compact-vignettes"
 r_packages:
   - devtools
+env:
+  - RLANG=release
 matrix:
   fast_finish: true
   include:
