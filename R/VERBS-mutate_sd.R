@@ -36,13 +36,14 @@
 mutate_sd <- function(.data, .how = identity, ..., .SDcols, .parse = getOption("table.express.parse", FALSE)) {
     force(.SDcols)
 
+    how_expr <- rlang::enexpr(.how)
     dots <- parse_dots(.parse, ...)
 
     if (is_fun(.how)) {
-        .how <- rlang::call2(rlang::enexpr(.how), rlang::expr(.COL), !!!dots)
+        .how <- rlang::call2(how_expr, rlang::expr(.COL), !!!dots)
     }
     else {
-        .how <- to_expr(rlang::enexpr(.how), .parse = .parse)
+        .how <- to_expr(how_expr, .parse = .parse)
 
         if (rlang::is_call(.how)) {
             .how <- rlang::call_standardise(.how)
