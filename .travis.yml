@@ -12,9 +12,13 @@ matrix:
   include:
     - os: linux
       r: release
+      r_packages:
+        - devtools
+        - covr
       r_github_packages:
-        - r-lib/covr
         - r-lib/pkgdown
+      after_success:
+        Rscript codecov.R
       deploy:
         provider: script
         script: Rscript -e 'pkgdown::deploy_site_github()'
@@ -48,10 +52,6 @@ before_install:
       tail -n 50 /tmp/rs.out
       return $status
     }
-after_success:
-  - if [[ ("$TRAVIS_R_VERSION_STRING" == "release") && ("$TRAVIS_OS_NAME" == "linux") ]]; then
-      Rscript codecov.R;
-    fi
 notifications:
   email:
     on_success: change
