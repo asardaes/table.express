@@ -149,8 +149,10 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function works similar to <code><a href='transmute_sd.html'>transmute_sd()</a></code> but keeps all columns and <em>can</em> modify by
-reference, like <a href='mutate-table.express.html'>mutate-table.express</a>. Unlike <code><a href='transmute_sd.html'>transmute_sd()</a></code>, <code>.SDcols</code> <strong>must</strong> be a
-character vector.</p>
+reference, like <a href='mutate-table.express.html'>mutate-table.express</a>.</p>
+<p>Additionally, <code>.SDcols</code> supports <a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a>, with the caveat that the
+expression is evaluated eagerly, i.e. with the currently captured <code>data.table</code>. Consider using
+<code><a href='chain.html'>chain()</a></code> to explicitly capture intermediate results as actual <code>data.table</code>s.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
