@@ -160,6 +160,9 @@ clause being set already exists?</p></td>
     <p>This function adds/chains a <code>where</code> expression that will be evaluated by
 <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a>. The <code>.how</code> condition is applied to all specified <code>.SDcols</code>, and it
 supports the <code>.COL</code> pronoun.</p>
+<p>Additionally, <code>.SDcols</code> supports <a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a>, with the caveat that the
+expression is evaluated eagerly, i.e. with the currently captured <code>data.table</code>. Consider using
+<code><a href='chain.html'>chain()</a></code> to explicitly capture intermediate results as actual <code>data.table</code>s.</p>
     
 
   </div>
