@@ -32,7 +32,8 @@
 #' - `.COLNAME`: the name of the column currently being evaluated.
 #'
 #' Unlike a call like `DT[, (vars) := expr]`, `.SDcols` can be created dynamically with an
-#' expression that evaluates to something that would be used in place of `vars`. See the examples.
+#' expression that evaluates to something that would be used in place of `vars` *without* using the
+#' captured `data.table`. See the examples.
 #'
 #' @examples
 #'

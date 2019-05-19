@@ -57,9 +57,23 @@ is_fun <- function(obj) {
     isTRUE(try(rlang::is_function(obj), silent = TRUE))
 }
 
+#' @importFrom rlang eval_tidy
+#'
+process_sdcols <- function(.data, sdcols_quo) {
+    e <- to_expr(sdcols_quo)
+    if (is_tidyselect_call(e)) {
+        .data$tidy_select(e)
+    }
+    else {
+        rlang::eval_tidy(sdcols_quo)
+    }
+}
+
+# Must be expresssion!
+#
 #' @importFrom rlang is_call
 #' @importFrom tidyselect vars_select_helpers
 #'
-is_tidyselect_call <- function(e) {
-    rlang::is_call(e, names(tidyselect::vars_select_helpers))
+is_tidyselect_call <- function(expression) {
+    rlang::is_call(expression, names(tidyselect::vars_select_helpers))
 }

@@ -358,7 +358,7 @@ DT %>%
 ### Explicit chaining
 
 Some verbs use the captured `data.table` eagerly during expression building,
-like `filter_sd` when `.SDcols` is a `tidyselect` call.
+like `filter_sd` and `mutate_sd` when `.SDcols` is a `tidyselect` call.
 This can lead to unexpected results if we don't keep in mind the expression that is built:
 
 ```{r implicit-chain-filter_sd}

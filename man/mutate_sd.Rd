@@ -23,8 +23,11 @@ Like \link{mutate-table.express} but for a single call and some \code{.SDcols}.
 }
 \details{
 This function works similar to \code{\link[=transmute_sd]{transmute_sd()}} but keeps all columns and \emph{can} modify by
-reference, like \link{mutate-table.express}. Unlike \code{\link[=transmute_sd]{transmute_sd()}}, \code{.SDcols} \strong{must} be a
-character vector.
+reference, like \link{mutate-table.express}.
+
+Additionally, \code{.SDcols} supports \link[tidyselect:select_helpers]{tidyselect::select_helpers}, with the caveat that the
+expression is evaluated eagerly, i.e. with the currently captured \code{data.table}. Consider using
+\code{\link[=chain]{chain()}} to explicitly capture intermediate results as actual \code{data.table}s.
 }
 \examples{
 

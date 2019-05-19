@@ -7,6 +7,7 @@
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
 #' @importFrom rlang enexpr
+#' @importFrom rlang enquo
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang quos
@@ -21,8 +22,9 @@
 #' @details
 #'
 #' This function works similar to [transmute_sd()] but keeps all columns and *can* modify by
-#' reference, like [mutate-table.express]. Unlike [transmute_sd()], `.SDcols` **must** be a
-#' character vector.
+#' reference, like [mutate-table.express].
+#'
+#' @template tidyselect-sdcols
 #'
 #' @examples
 #'
@@ -34,7 +36,7 @@
 #'     end_expr
 #'
 mutate_sd <- function(.data, .how = identity, ..., .SDcols, .parse = getOption("table.express.parse", FALSE)) {
-    force(.SDcols)
+    .SDcols <- process_sdcols(.data, rlang::enquo(.SDcols))
 
     how_expr <- rlang::enexpr(.how)
     dots <- parse_dots(.parse, ...)

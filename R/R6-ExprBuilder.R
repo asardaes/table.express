@@ -79,7 +79,7 @@ ExprBuilder <- R6::R6Class(
 
             is_chain <- !is.null(private$.parent) | !is.null(private$.child)
 
-            if (private$.selected_tidy && is_chain && EBCompanion$chain_select_count(self) > 1L) {
+            if (private$.selected_eagerly && is_chain && EBCompanion$chain_select_count(self) > 1L) {
                 rlang::warn(paste("Current expression chain used 'tidyselect' helpers eagerly,",
                                   "but has more than one 'j' clause.",
                                   "Consider using 'chain' first."))
@@ -102,7 +102,7 @@ ExprBuilder <- R6::R6Class(
         },
 
         tidy_select = function(select_expr) {
-            private$.selected_tidy <- TRUE
+            private$.selected_eagerly <- TRUE
             tidyselect::scoped_vars(names(private$.DT))
             names(private$.DT)[rlang::eval_tidy(select_expr)]
         },
@@ -139,7 +139,7 @@ ExprBuilder <- R6::R6Class(
         .by = NULL,
         .appends = NULL,
 
-        .selected_tidy = FALSE,
+        .selected_eagerly = FALSE,
 
         .process_clause = function(name, value, chain_if_needed) {
             private_name <- paste0(".", name)
