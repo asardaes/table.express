@@ -52,8 +52,8 @@ The examples here will be working with the `mtcars` data:
 data("mtcars")
 
 DT <- mtcars %>%
-    as.data.table %T>%
-    print
+  as.data.table %T>%
+  print
 ```
 
 ## Expression delimiters
@@ -80,10 +80,10 @@ and let `data.table` handle it as usual:
 
 ```{r arrange}
 DT %>%
-    start_expr %>%
-    order_by(mpg, -cyl) %T>%
-    print %>%
-    end_expr
+  start_expr %>%
+  order_by(mpg, -cyl) %T>%
+  print %>%
+  end_expr
 ```
 
 We see here that the built expression includes a `.DT_` pronoun.
@@ -122,10 +122,10 @@ the `select` verb can be used as usual:
 
 ```{r select}
 DT %>%
-    start_expr %>%
-    select(mpg, am) %T>%
-    print %>%
-    end_expr
+  start_expr %>%
+  select(mpg, am) %T>%
+  print %>%
+  end_expr
 ```
 
 To maintain consistency,
@@ -133,10 +133,10 @@ even single columns are kept as `data.table`s:
 
 ```{r select-single}
 DT %>%
-    start_expr %>%
-    select(mpg) %T>%
-    print %>%
-    end_expr
+  start_expr %>%
+  select(mpg) %T>%
+  print %>%
+  end_expr
 ```
 
 In the case of single expressions in `select`,
@@ -144,14 +144,14 @@ calls to `tidyselect`'s helpers or to `:` are handled specially internally:
 
 ```{r select-special}
 DT %>%
-    start_expr %>%
-    select(mpg:cyl) %>%
-    end_expr
+  start_expr %>%
+  select(mpg:cyl) %>%
+  end_expr
 
 DT %>%
-    start_expr %>%
-    select(contains("M", ignore.case = TRUE)) %>%
-    end_expr
+  start_expr %>%
+  select(contains("M", ignore.case = TRUE)) %>%
+  end_expr
 ```
 
 Tidy evaluation and the `.parse` argument can also aid in cases where certain parts of the query were computed programmatically:
@@ -159,9 +159,9 @@ Tidy evaluation and the `.parse` argument can also aid in cases where certain pa
 ```{r select-tidy}
 selected <- c("mpg", "am")
 DT %>%
-    start_expr %>%
-    select(!!!selected, .parse = TRUE) %>%
-    end_expr
+  start_expr %>%
+  select(!!!selected, .parse = TRUE) %>%
+  end_expr
 ```
 
 ### Transmuting columns
@@ -174,14 +174,14 @@ so `transmute` is simply an alias during expression building.
 
 ```{r transmute}
 DT %>%
-    start_expr %>%
-    select(foo = mpg * 2, bar = exp(cyl)) %>%
-    end_expr
+  start_expr %>%
+  select(foo = mpg * 2, bar = exp(cyl)) %>%
+  end_expr
 
 DT %>%
-    start_expr %>%
-    transmute(foo = mpg * 2, bar = exp(cyl)) %>%
-    end_expr
+  start_expr %>%
+  transmute(foo = mpg * 2, bar = exp(cyl)) %>%
+  end_expr
 ```
 
 ## Mutating columns
@@ -192,15 +192,15 @@ which will use `data.table::copy` before assigning `.DT_`:
 
 ```{r mutate}
 DT %>%
-    start_expr %>%
-    mutate(mpg = mpg / 2, hp = log(hp))
+  start_expr %>%
+  mutate(mpg = mpg / 2, hp = log(hp))
 
 DT %>%
-    start_expr %>%
-    mutate(mpg = mpg / 2, hp = log(hp)) %>%
-    end_expr(.by_ref = FALSE) %>% {
-        invisible(print(.))
-    }
+  start_expr %>%
+  mutate(mpg = mpg / 2, hp = log(hp)) %>%
+  end_expr(.by_ref = FALSE) %>% {
+    invisible(print(.))
+  }
 
 print(DT)
 ```
@@ -211,21 +211,23 @@ The `where`/`filter` verbs work with the `i` part of the query:
 
 ```{r filter}
 DT %>%
-    start_expr %>%
-    filter(vs == 1L, carb > 2L) %T>%
-    print %>%
-    end_expr
+  start_expr %>%
+  filter(vs == 1L, carb > 2L) %T>%
+  print %>%
+  end_expr
 
 DT %>%
-    start_expr %>%
-    select(mean_mpg = mean(mpg)) %>%
-    where(vs == 1L, carb > 2L, .collapse = `|`) %T>%
-    print %>%
-    end_expr
+  start_expr %>%
+  select(mean_mpg = mean(mpg)) %>%
+  where(vs == 1L, carb > 2L, .collapse = `|`) %T>%
+  print %>%
+  end_expr
 ```
 
 The helper verb `filter_sd` can be used to apply the same conditions to many columns,
-and it can use a special pronoun `.COL` while specifying the expression:
+and it can use a special pronoun `.COL` while specifying the expression,
+as well as `tidyselect` helpers to choose .SDcols
+(with caveats, see [explicity chaining](#explicit-chaining)):
 
 ```{r filter-sd}
 DT %>%
@@ -238,6 +240,10 @@ DT %>%
   start_expr %>%
   filter_sd(.COL > 20, .SDcols = c("mpg", "qsec")) %>%
   end_expr
+
+DT %>%
+  start_expr %>%
+  filter_sd(.COL > 0, .SDcols = contains("m"))
 ```
 
 ### Using secondary indices
@@ -270,9 +276,9 @@ and columns that are not part of `.SDcols` can still be kept:
 
 ```{r mutate-sd}
 DT %>%
-    start_expr %>%
-    mutate_sd(exp, .SDcols = c("mpg", "cyl")) %>%
-    end_expr
+  start_expr %>%
+  mutate_sd(exp, .SDcols = c("mpg", "cyl")) %>%
+  end_expr
 
 print(DT)
 ```
@@ -282,9 +288,9 @@ and can be used to express the mutation expression:
 
 ```{r mutate-sd-col}
 DT %>%
-    start_expr %>%
-    mutate_sd(log(.COL), .SDcols = c("mpg", "cyl")) %>%
-    end_expr
+  start_expr %>%
+  mutate_sd(log(.COL), .SDcols = c("mpg", "cyl")) %>%
+  end_expr
 
 print(DT)
 ```
@@ -296,14 +302,14 @@ as well as another special pronoun: `.COLNAME`:
 
 ```{r transmute-sd}
 DT %>%
-    start_expr %>%
-    transmute_sd(.COL * 2, .SDcols = starts_with("d")) %>%
-    end_expr
+  start_expr %>%
+  transmute_sd(.COL * 2, .SDcols = starts_with("d")) %>%
+  end_expr
 
 DT %>%
-    start_expr %>%
-    transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>%
-    end_expr
+  start_expr %>%
+  transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>%
+  end_expr
 ```
 
 ## Data manipulation by group
@@ -313,22 +319,22 @@ the `group_by` verb simply parses its input and assigns it accordingly:
 
 ```{r group-by}
 DT %>%
-    start_expr %>%
-    select(.N) %>%
-    group_by(gear) %T>%
-    print %>%
-    end_expr
+  start_expr %>%
+  select(.N) %>%
+  group_by(gear) %T>%
+  print %>%
+  end_expr
 ```
 
 The `key_by` verb does the same but sets the key of the result in order to sort:
 
 ```{r key-by}
 DT %>%
-    start_expr %>%
-    select(.N) %>%
-    key_by(gear) %T>%
-    print %>%
-    end_expr
+  start_expr %>%
+  select(.N) %>%
+  key_by(gear) %T>%
+  print %>%
+  end_expr
 ```
 
 ## Chaining expressions
@@ -337,14 +343,42 @@ Naturally, more complex expressions are supported by automatically chaining `dat
 
 ```{r chaining}
 DT %>%
-    start_expr %>%
-    select(mean_mpg = mean(mpg)) %>%
-    where(hp > 50L) %>%
-    group_by(vs, am, gear) %>%
-    order_by(gear, -vs, am) %>%
-    filter(mean_mpg > 20) %T>%
-    print %>%
-    end_expr %>% {
-        invisible(print(., nrows = 10L))
-    }
+  start_expr %>%
+  select(mean_mpg = mean(mpg)) %>%
+  where(hp > 50L) %>%
+  group_by(vs, am, gear) %>%
+  order_by(gear, -vs, am) %>%
+  filter(mean_mpg > 20) %T>%
+  print %>%
+  end_expr %>% {
+    invisible(print(., nrows = 10L))
+  }
+```
+
+### Explicit chaining
+
+Some verbs use the captured `data.table` eagerly during expression building,
+like `filter_sd` when `.SDcols` is a `tidyselect` call.
+This can lead to unexpected results if we don't keep in mind the expression that is built:
+
+```{r implicit-chain-filter_sd}
+DT %>%
+  start_expr %>%
+  select(mpg:disp) %>%
+  transmute(ans = sqrt(mpg)) %>%
+  filter_sd(.COL > 0, .SDcols = contains("m"))
+```
+
+The `select` gets rid of `am`,
+but `filter_sd` sees the columns of `DT` before any expression has been evaluated.
+Explicit chaining can help in these cases,
+capturing intermediate results:
+
+```{r explicit-chain-filter_sd}
+DT %>%
+  start_expr %>%
+  select(mpg:disp) %>%
+  chain %>%
+  transmute(ans = sqrt(mpg)) %>%
+  filter_sd(.COL > 0, .SDcols = contains("m"))
 ```

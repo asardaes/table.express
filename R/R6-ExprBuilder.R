@@ -11,6 +11,7 @@
 #' @importFrom rlang as_label
 #' @importFrom rlang dots_list
 #' @importFrom rlang env_get_list
+#' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
 #' @importFrom rlang is_syntactic_literal
 #' @importFrom rlang list2
@@ -19,6 +20,7 @@
 #' @importFrom rlang parse_expr
 #' @importFrom rlang quo
 #' @importFrom rlang warn
+#' @importFrom tidyselect scoped_vars
 #' @importFrom tidyselect vars_select_helpers
 #'
 #' @field appends Extra expressions that go at the end.
@@ -75,6 +77,14 @@ ExprBuilder <- R6::R6Class(
         eval = function(parent_env, by_ref, ...) {
             .DT_ <- if (by_ref) private$.DT else data.table::copy(private$.DT)
 
+            is_chain <- !is.null(private$.parent) | !is.null(private$.child)
+
+            if (private$.selected_tidy && is_chain && EBCompanion$chain_select_count(self) > 1L) {
+                rlang::warn(paste("Current expression chain used 'tidyselect' helpers eagerly,",
+                                  "but has more than one 'j' clause.",
+                                  "Consider using 'chain' first."))
+            }
+
             dots <- rlang::dots_list(
                 .DT_ = .DT_,
                 !!!EBCompanion$helper_functions,
@@ -89,6 +99,12 @@ ExprBuilder <- R6::R6Class(
             final_expr <- rlang::expr(base::evalq(!!final_expr, .expr_env))
 
             base::eval(final_expr)
+        },
+
+        tidy_select = function(select_expr) {
+            private$.selected_tidy <- TRUE
+            tidyselect::scoped_vars(names(private$.DT))
+            names(private$.DT)[rlang::eval_tidy(select_expr)]
         },
 
         print = function(...) {
@@ -122,6 +138,8 @@ ExprBuilder <- R6::R6Class(
         .where = NULL,
         .by = NULL,
         .appends = NULL,
+
+        .selected_tidy = FALSE,
 
         .process_clause = function(name, value, chain_if_needed) {
             private_name <- paste0(".", name)
@@ -325,6 +343,26 @@ EBCompanion$set_child <- function(expr_builder, child) {
     if (!is.null(expr_builder)) {
         expr_builder$.__enclos_env__$private$.child <- child
     }
+}
+
+# --------------------------------------------------------------------------------------------------
+# chain_has_select
+#
+EBCompanion$chain_select_count <- function(expr_builder) {
+    .recursion <- function(node, count) {
+        if (!is.null(node$.__enclos_env__$private$.select)) {
+            count <- count + 1L
+        }
+
+        if (!is.null(EBCompanion$get_child(node))) {
+            .recursion(EBCompanion$get_child(node), count)
+        }
+        else {
+            count
+        }
+    }
+
+    .recursion(EBCompanion$get_root(expr_builder), 0L)
 }
 
 lockEnvironment(EBCompanion, TRUE)

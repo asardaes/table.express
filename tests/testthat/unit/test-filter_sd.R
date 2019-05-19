@@ -24,3 +24,10 @@ test_that("Filtering SD works for calls.", {
     ans <- DT %>% start_expr %>% filter_sd(.COL > !!val, .SDcols = c("mpg", "qsec")) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Filtering SD works with tidyselect helpers.", {
+    expected <- DT[mpg > 0 & am > 0]
+
+    ans <- DT %>% start_expr %>% filter_sd(.COL > 0, .SDcols = contains("m")) %>% end_expr
+    expect_identical(expected, ans)
+})

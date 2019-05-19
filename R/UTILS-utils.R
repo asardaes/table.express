@@ -56,3 +56,10 @@ reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
 is_fun <- function(obj) {
     isTRUE(try(rlang::is_function(obj), silent = TRUE))
 }
+
+#' @importFrom rlang is_call
+#' @importFrom tidyselect vars_select_helpers
+#'
+is_tidyselect_call <- function(e) {
+    rlang::is_call(e, names(tidyselect::vars_select_helpers))
+}

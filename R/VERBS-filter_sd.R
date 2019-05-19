@@ -25,10 +25,18 @@
 #' [data.table::data.table]. The `.how` condition is applied to all specified `.SDcols`, and it
 #' supports the `.COL` pronoun.
 #'
+#' Additionally, `.SDcols` supports [tidyselect::select_helpers], with the caveat that the
+#' expression is evaluated eagerly, i.e. with the currently captured `data.table`. Consider using
+#' [chain()] to explicitly capture intermediate results as actual `data.table`s.
+#'
 filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`,
                       .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
 {
-    force(.SDcols)
+    sdcols_expr <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
+    if (is_tidyselect_call(sdcols_expr)) {
+        .SDcols <- .data$tidy_select(sdcols_expr)
+    }
+
     dots <- parse_dots(.parse, ...)
     how_expr <- rlang::enexpr(.how)
 

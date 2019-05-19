@@ -13,7 +13,6 @@ dplyr::select
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang quos
-#' @importFrom tidyselect vars_select_helpers
 #'
 #' @template data-arg
 #' @param ... Clause for selectin/computing on columns. The `j` inside the `data.table`'s frame.
@@ -29,7 +28,7 @@ dplyr::select
 select.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE), .chain = TRUE) {
     clause <- parse_dots(.parse, ...)
 
-    if (length(clause) == 1L && rlang::is_call(clause[[1L]], names(tidyselect::vars_select_helpers))) {
+    if (length(clause) == 1L && is_tidyselect_call(clause[[1L]])) {
         # just to avoid NOTE
         .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
 
