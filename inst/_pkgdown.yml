@@ -20,6 +20,9 @@ reference:
       - ends_with("_sd")
       - '`filter_on`'
       - '`key_by`'
+  - title: "Utilities"
+    desc: ~
+    contents:
       - '`frame_append`'
   - title: "R6 Classes"
     desc: ~
