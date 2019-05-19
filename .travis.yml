@@ -6,7 +6,7 @@ r_build_args: "--compact-vignettes"
 r_packages:
   - devtools
 env:
-  - RLANG=release
+  - DEPS=release
 matrix:
   fast_finish: true
   include:
@@ -31,15 +31,16 @@ matrix:
       r: devel
     - os: linux
       r: release
-      env: RLANG=devel
+      env: DEPS=devel
       r_github_packages:
         - r-lib/rlang
+        - Rdatatable/data.table
   allow_failures:
     - os: linux
       r: devel
     - os: linux
       r: release
-      env: RLANG=devel
+      env: DEPS=devel
 before_install:
   - |
     Rscript() {
