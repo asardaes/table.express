@@ -5,7 +5,8 @@
 \title{Filter subset of data}
 \usage{
 filter_sd(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`,
-  .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+  .parse = getOption("table.express.parse", FALSE),
+  .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

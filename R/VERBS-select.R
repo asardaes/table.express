@@ -25,7 +25,10 @@ dplyr::select
 #' the single expression for the select clause, otherwise everything in `...` will be wrapped
 #' in a call to [base::list()].
 #'
-select.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE), .chain = TRUE) {
+select.ExprBuilder <- function(.data, ...,
+                               .parse = getOption("table.express.parse", FALSE),
+                               .chain = getOption("table.express.chain", TRUE))
+{
     clause <- parse_dots(.parse, ...)
 
     if (length(clause) == 1L && is_tidyselect_call(clause[[1L]])) {

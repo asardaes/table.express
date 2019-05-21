@@ -6,7 +6,8 @@
 \title{Select clause}
 \usage{
 \method{select}{ExprBuilder}(.data, ...,
-  .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+  .parse = getOption("table.express.parse", FALSE),
+  .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

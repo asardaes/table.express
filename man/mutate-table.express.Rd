@@ -5,22 +5,22 @@
 \alias{mutate.ExprBuilder}
 \title{Add or update columns}
 \usage{
-\method{mutate}{ExprBuilder}(.data, ...,
-  .parse = getOption("table.express.parse", FALSE), .chain = TRUE,
-  .unquote_names = TRUE)
+\method{mutate}{ExprBuilder}(.data, ..., .unquote_names = TRUE,
+  .parse = getOption("table.express.parse", FALSE),
+  .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{Mutation clauses.}
 
+\item{.unquote_names}{Passed to \code{\link[rlang:enexprs]{rlang::enexprs()}}. Set to \code{FALSE} if you want to pass the single
+\code{\link[data.table:set]{:=}} expression.}
+
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
-
-\item{.unquote_names}{Passed to \code{\link[rlang:enexprs]{rlang::enexprs()}}. Set to \code{FALSE} if you want to pass the single
-\code{\link[data.table:set]{:=}} expression.}
 }
 \description{
 Add or update columns of a \link[data.table:data.table-class]{data.table::data.table}, possibly by reference using

@@ -45,7 +45,8 @@
 #'     end_expr
 #'
 transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
-                         .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+                         .parse = getOption("table.express.parse", FALSE),
+                         .chain = getOption("table.express.chain", TRUE))
 {
     dots <- parse_dots(.parse, ...)
     how_expr <- rlang::enexpr(.how)
@@ -54,7 +55,7 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
         clause <- rlang::expr(lapply(.SD, !!how_expr, !!!dots))
 
         if (!missing(.SDcols)) {
-            frame_append(.data, .SDcols = !!rlang::enexpr(.SDcols))
+            frame_append(.data, .SDcols = !!rlang::enexpr(.SDcols), .parse = .parse)
         }
     }
     else {

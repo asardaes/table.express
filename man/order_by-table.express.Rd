@@ -9,7 +9,8 @@
 order_by(.data, ...)
 
 \method{order_by}{ExprBuilder}(.data, ..., .collapse,
-  .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+  .parse = getOption("table.express.parse", FALSE),
+  .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{The input data.}

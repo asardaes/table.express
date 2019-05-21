@@ -5,7 +5,7 @@
 \title{Filter with secondary indices}
 \usage{
 filter_on(.data, ..., nomatch = getOption("datatable.nomatch"),
-  mult = "all", .chain = TRUE)
+  mult = "all", .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

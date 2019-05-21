@@ -164,7 +164,7 @@ DT %>%
   end_expr
 ```
 
-### Transmuting columns
+## Transmuting columns
 
 Given the way `data.table` handles the `j` part of the "query",
 creating and keeping only new columns

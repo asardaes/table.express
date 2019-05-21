@@ -29,7 +29,8 @@
 #' @template tidyselect-sdcols
 #'
 filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`,
-                      .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+                      .parse = getOption("table.express.parse", FALSE),
+                      .chain = getOption("table.express.chain", TRUE))
 {
     .SDcols <- process_sdcols(.data, rlang::enquo(.SDcols))
 
@@ -47,6 +48,7 @@ filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`
     .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
 
     which_col <- which(sapply(.how, function(how) { rlang::as_label(how) == ".COL" }))
+
     clauses <- Map(.col = .SDcols, .how = list(.how), f = function(.col, .how) {
         col_sym <- rlang::sym(.col)
         for (i in which_col) {

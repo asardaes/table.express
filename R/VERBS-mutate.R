@@ -17,13 +17,14 @@ dplyr::mutate
 #'
 #' @template data-arg
 #' @param ... Mutation clauses.
-#' @template parse-arg
-#' @template chain-arg
 #' @param .unquote_names Passed to [rlang::enexprs()]. Set to `FALSE` if you want to pass the single
 #'   [`:=`][data.table::set] expression.
+#' @template parse-arg
+#' @template chain-arg
 #'
-mutate.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE),
-                               .chain = TRUE, .unquote_names = TRUE)
+mutate.ExprBuilder <- function(.data, ..., .unquote_names = TRUE,
+                               .parse = getOption("table.express.parse", FALSE),
+                               .chain = getOption("table.express.chain", TRUE))
 {
     clauses <- parse_dots(.parse, ..., .named = TRUE, .unquote_names = .unquote_names)
 

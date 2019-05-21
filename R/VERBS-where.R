@@ -24,7 +24,8 @@ where <- function(.data, ...) {
 #' @template chain-arg
 #'
 where.ExprBuilder <- function(.data, ..., .collapse = `&`,
-                              .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+                              .parse = getOption("table.express.parse", FALSE),
+                              .chain = getOption("table.express.chain", TRUE))
 {
     clause <- rlang::enexprs(...)
 

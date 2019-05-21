@@ -20,7 +20,9 @@
 #'
 #' Thus, all pairs **must** be named.
 #'
-filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult = "all", .chain = TRUE) {
+filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult = "all",
+                      .chain = getOption("table.express.chain", TRUE))
+{
     key_value <- parse_dots(FALSE, ...)
     keys <- names(key_value)
     values <- unname(key_value)

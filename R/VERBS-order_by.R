@@ -13,7 +13,6 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 
 #' @rdname order_by-table.express
 #' @export
-#' @importFrom rlang expr
 #'
 #' @param .collapse Ignored. See details.
 #' @template parse-arg
@@ -25,13 +24,8 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #' argument.
 #'
 order_by.ExprBuilder <- function(.data, ..., .collapse,
-                                 .parse = getOption("table.express.parse", FALSE), .chain = TRUE)
+                                 .parse = getOption("table.express.parse", FALSE),
+                                 .chain = getOption("table.express.chain", TRUE))
 {
-    dots <- parse_dots(.parse, ...)
-
-    e <- rlang::expr(
-        base::evalq(where(.data, order(!!!dots), .chain = !!.chain))
-    )
-
-    base::eval(e)
+    where.ExprBuilder(.data, order(!!!parse_dots(.parse, ...)), .parse = FALSE, .chain = .chain)
 }
