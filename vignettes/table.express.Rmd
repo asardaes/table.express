@@ -70,8 +70,7 @@ we use 3 delimiters:
 These also serve as visual reminders that we are not dealing directly with `data.table`s during the process.
 We capture the input `data.table` and start the process with `start_expr`,
 and evaluate the final expression with `end_expr`.
-Using `chain` is equivalent to calling `end_expr` immediately followed by `start_expr`,
-and should be seldom needed.
+Using `chain` is equivalent to calling `end_expr` immediately followed by `start_expr`.
 
 ## Arranging rows
 
@@ -154,7 +153,7 @@ DT %>%
   end_expr
 ```
 
-Tidy evaluation and the `.parse` argument can also aid in cases where certain parts of the query were computed programmatically:
+Tidy evaluation and the `.parse` argument can also aid in cases where certain parts of the frame were computed programmatically:
 
 ```{r select-tidy}
 selected <- c("mpg", "am")
@@ -166,7 +165,7 @@ DT %>%
 
 ## Transmuting columns
 
-Given the way `data.table` handles the `j` part of the "query",
+Given the way `data.table` handles the `j` part of the frame,
 creating and keeping only new columns
 (like with `dplyr`'s `transmute`)
 can be done with `select`,
@@ -207,7 +206,7 @@ print(DT)
 
 ## Filtering rows
 
-The `where`/`filter` verbs work with the `i` part of the query:
+The `where`/`filter` verbs work with the `i` part of the frame:
 
 ```{r filter}
 DT %>%
@@ -227,7 +226,7 @@ DT %>%
 The helper verb `filter_sd` can be used to apply the same conditions to many columns,
 and it can use a special pronoun `.COL` while specifying the expression,
 as well as `tidyselect` helpers to choose .SDcols
-(with caveats, see [explicity chaining](#explicit-chaining)):
+(with caveats, see [eager verbs](#eager-verbs)):
 
 ```{r filter-sd}
 DT %>%
@@ -248,7 +247,7 @@ DT %>%
 
 ### Using secondary indices
 
-The `filter_on` verb can be used to build an expression that specifies the `on` argument of the query.
+The `filter_on` verb can be used to build an expression that specifies the `on` argument of the frame.
 It accepts key-value pairs where each key is a column in the data,
 and each value is the corresponding value that the column should have to match:
 
@@ -337,9 +336,14 @@ DT %>%
   end_expr
 ```
 
-## Chaining expressions
+## Automatic expression chaining
 
-Naturally, more complex expressions are supported by automatically chaining `data.table` frames:
+A `data.table`'s frame has 3 main elements:
+[`i`, `j`, and `by`](https://github.com/Rdatatable/data.table/wiki).
+By default, the verbs defined in this package automatically start a new chain whenever they want to define one of these elements,
+but the current expression's frame has already specified it;
+otherwise they add to the current frame.
+More complex expressions are thus supported by automatically chaining `data.table` frames:
 
 ```{r chaining}
 DT %>%
@@ -355,13 +359,82 @@ DT %>%
   }
 ```
 
-### Explicit chaining
+If we wanted to be explicit about chaining whenever possible
+(see [below](#explicit-chaining)),
+we could set `options(table.express.chain = FALSE)`,
+which would lead to a warning being shown whenever a part of the query is replaced.
 
-Some verbs use the captured `data.table` eagerly during expression building,
-like `filter_sd` and `mutate_sd` when `.SDcols` is a `tidyselect` call.
+### Verbs' effects in the frame
+
+- Verbs that set `i`:
+  - `arrange`
+  - `filter`
+  - `filter_on`
+  - `filter_sd`
+  - `order_by`
+  - `where`
+- Verbs that set `j`:
+  - `mutate`
+  - `mutate_sd`
+  - `transmute`
+  - `transmute_sd`
+- Verbs for grouping:
+  - `group_by` to specify `by`
+  - `key_by` to specify `keyby`
+
+## Explicit chaining
+
+The automatic chaining mentioned above is not a problem in most situations.
+For example the following chains lead to the same result,
+and therefore have the same semantics:
+
+```{r two-chains-one-semantic}
+DT[mpg > 20, mpg * 2]
+
+DT[mpg > 20][, mpg * 2]
+```
+
+However, thse two chains have different semantics:
+
+```{r two-chains-two-semantics}
+DT[, .(mpg = mpg * 2)][mpg > 40]
+
+DT[mpg > 40, .(mpg = mpg * 2)]
+```
+
+As mentioned [above](#expression-delimiters),
+`chain` can be used to chain expressions by evaluating the current one with `end_expr`,
+and immediately capturing the resulting `data.table` to start building a new expression.
+This can be helpful in situations where automatic chaining can lead to a change in the expression's semantics:
+
+```{r two-exprs-two-semantics}
+DT %>%
+  start_expr %>%
+  transmute(mpg = mpg * 2) %>%
+  filter(mpg > 40) %T>%
+  print %>%
+  end_expr
+
+DT %>%
+  start_expr %>%
+  transmute(mpg = mpg * 2) %>%
+  chain %>%
+  filter(mpg > 40) %>%
+  end_expr
+```
+
+### Eager verbs
+
+In the following cases, the mentioned verbs use the captured `data.table` eagerly during expression building:
+
+- `filter_sd` when `.SDcols` is a `tidyselect` call.
+- `mutate_sd` when `.SDcols` is a `tidyselect` call.
+
 This can lead to unexpected results if we don't keep in mind the expression that is built:
 
 ```{r implicit-chain-filter_sd}
+DT[, mpg:disp]
+
 DT %>%
   start_expr %>%
   select(mpg:disp) %>%
