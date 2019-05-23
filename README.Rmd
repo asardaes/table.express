@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 # Table express
 
-Use `dplyr` verbs to build `data.table` expressions.
+Use `dplyr` verbs, as well as custom ones, to build `data.table` expressions.
 Check the [vignette](https://asardaes.github.io/table.express/articles/table.express.html) for more information.
 
 ## Essence
