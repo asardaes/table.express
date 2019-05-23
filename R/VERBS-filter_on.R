@@ -31,6 +31,15 @@ filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult
         rlang::abort("All arguments in '...' must be named.")
     }
 
-    where(.data, list(!!!values), .parse = FALSE, .chain = .chain) %>%
-        frame_append(on = !!keys, nomatch = !!nomatch, mult = !!mult, .parse = FALSE)
+    ans <- where(.data, list(!!!values), .parse = FALSE, .chain = .chain) %>%
+        frame_append(on = !!keys, .parse = FALSE)
+
+    if (!missing(nomatch)) {
+        frame_append(ans, nomatch = !!nomatch, .parse = FALSE)
+    }
+    if (!missing(mult)) {
+        frame_append(ans, mult = !!mult, .parse = FALSE)
+    }
+
+    ans
 }
