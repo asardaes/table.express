@@ -82,7 +82,7 @@
 
     
     
-<p>The goal of this package is to offer an alternative way of <strong>expressing</strong> common operations with <a href="https://cran.r-project.org/package=data.table"><code>data.table</code></a> without sacrificing the performance optimizations that it offers. The foundation for the data manipulation verbs is the <a href="https://cran.r-project.org/package=dplyr"><code>dplyr</code></a> package, which also advocates the piping operator from the <a href="https://cran.r-project.org/package=magrittr"><code>magrittr</code></a> package. The <a href="http://cran.r-project.org/package=rlang"><code>rlang</code></a> package powers most of this package’s functionality, which means that <a href="https://tidyeval.tidyverse.org/">tidy evaluation</a> can also be supported. There are other resources that provide comprehensive descriptions of these packages, so they will not be explained here.</p>
+<p>The goal of this package is to offer an alternative way of <strong>expressing</strong> common operations with <a href="https://cran.r-project.org/package=data.table"><code>data.table</code></a> without sacrificing the performance optimizations that it offers. The foundation for the data manipulation verbs is the <a href="https://cran.r-project.org/package=dplyr"><code>dplyr</code></a> package, which also advocates the piping operator from the <a href="https://cran.r-project.org/package=magrittr"><code>magrittr</code></a> package. The <a href="https://cran.r-project.org/package=rlang"><code>rlang</code></a> package powers most of this package’s functionality, which means that <a href="https://tidyeval.tidyverse.org/">tidy evaluation</a> can also be supported. There are other resources that provide comprehensive descriptions of these packages, so they will not be explained here.</p>
 <p>Even though using data manipulation verbs can improve expressiveness in some cases, this is not always true, so using the traditional <code>data.table</code> syntax might still be preferable.</p>
 <p>In order to ressemble SQL syntax more closely, a couple of verb aliases are also defined:</p>
 <ul>
@@ -138,16 +138,16 @@
 <p>Even though selecting a subset of columns is a common operation, it may be undesirable to do so when working with <code>data.table</code>s because they lead to data copies.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/tracemem.html">tracemem</a></span>(x)</a></code></pre></div>
-<pre><code>#&gt; [1] "&lt;0x59a73f8&gt;"</code></pre>
+<pre><code>#&gt; [1] "&lt;0x7424cc8&gt;"</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">x=</span>x)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">x2 &lt;-<span class="st"> </span>df[, <span class="st">"x"</span>]</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3">x2[1L] &lt;-<span class="st"> </span>0L</a></code></pre></div>
-<pre><code>#&gt; tracemem[0x59a73f8 -&gt; 0x46e30a0]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; do.call saveRDS withCallingHandlers doTryCatch tryCatchOne tryCatchList doTryCatch tryCatchOne tryCatchList tryCatch</code></pre>
+<pre><code>#&gt; tracemem[0x7424cc8 -&gt; 0x6159198]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; do.call saveRDS withCallingHandlers doTryCatch tryCatchOne tryCatchList doTryCatch tryCatchOne tryCatchList tryCatch</code></pre>
 <p>With this normal data frame, only the last assignment triggered a copy.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">dt &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x=</span>x)</a></code></pre></div>
-<pre><code>#&gt; tracemem[0x59a73f8 -&gt; 0x42e59d8]: data.table eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; do.call saveRDS withCallingHandlers doTryCatch tryCatchOne tryCatchList doTryCatch tryCatchOne tryCatchList tryCatch</code></pre>
+<pre><code>#&gt; tracemem[0x7424cc8 -&gt; 0x49a9b08]: data.table eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; do.call saveRDS withCallingHandlers doTryCatch tryCatchOne tryCatchList doTryCatch tryCatchOne tryCatchList tryCatch</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">x3 &lt;-<span class="st"> </span>dt[, x]</a></code></pre></div>
-<pre><code>#&gt; tracemem[0x42e59d8 -&gt; 0x3292a90]: copy [.data.table [ eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; do.call saveRDS withCallingHandlers doTryCatch tryCatchOne tryCatchList doTryCatch tryCatchOne tryCatchList tryCatch</code></pre>
+<pre><code>#&gt; tracemem[0x49a9b08 -&gt; 0x4984230]: copy [.data.table [ eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; &lt;Anonymous&gt; do.call saveRDS withCallingHandlers doTryCatch tryCatchOne tryCatchList doTryCatch tryCatchOne tryCatchList tryCatch</code></pre>
 <p>In this case with <code>data.table</code>, more copies were triggered. Given that <code>data.table</code> supports modification by reference, these copies are necessary.</p>
 <p>With that said, the <code>select</code> verb can be used as usual:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
@@ -314,8 +314,7 @@
 <a class="sourceLine" id="cb49-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/filter_on.html">filter_on</a></span>(<span class="dt">cyl =</span> <span class="dv">6</span>, <span class="dt">am =</span> <span class="dv">0</span>) <span class="op">%T&gt;%</span></a>
 <a class="sourceLine" id="cb49-4" data-line-number="4"><span class="st">  </span>print <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb49-5" data-line-number="5"><span class="st">  </span>end_expr</a></code></pre></div>
-<pre><code>#&gt; .DT_[list(6, 0), on = c("cyl", "am"), nomatch = NA_integer_, 
-#&gt;     mult = "all"]</code></pre>
+<pre><code>#&gt; .DT_[list(6, 0), on = c("cyl", "am")]</code></pre>
 <pre><code>#&gt;     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #&gt; 1: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
 #&gt; 2: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
@@ -333,7 +332,7 @@
 <h2 class="hasAnchor">
 <a href="#modifying-subset-of-data" class="anchor"></a>Modifying subset of data</h2>
 <p>In order to support functionality similar to <code>data.table</code>’s <code>DT[, lapply(.SD, fun), .SDcols = c("...")]</code> syntax, 2 <code>data.table</code>-specific verbs are provided: <code>mutate_sd</code> and <code>transmute_sd</code>.</p>
-<p>Starting with <code>mutate_sd</code>, one additional feature it provides is that columns in <code>.SDcols</code> are modified by reference, and columns that are not part of <code>.SDcols</code> can still be kept:</p>
+<p>Starting with <code>mutate_sd</code>, it modifies columns in <code>.SDcols</code> by reference, and columns that are not part of <code>.SDcols</code> are still be kept:</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb54-2" data-line-number="2"><span class="st">  </span>start_expr <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb54-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/mutate_sd.html">mutate_sd</a></span>(exp, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mpg"</span>, <span class="st">"cyl"</span>)) <span class="op">%&gt;%</span></a>
@@ -346,7 +345,7 @@
 #&gt; ---                                                                
 #&gt; 31:    3269017 2980.95799  301 335 3.54 3.570 14.60  0  1    5    8
 #&gt; 32: 1967441884   54.59815  121 109 4.11 2.780 18.60  1  1    4    2</code></pre>
-<p>Moreover, <code>mutate_sd</code> supports the special <code>.COL</code> pronoun that symbolizes the column that should be modified, and can be used to express the mutation expression:</p>
+<p>Additionally, <code>mutate_sd</code> supports the special <code>.COL</code> pronoun that symbolizes the column that should be modified, and can be used to express the mutation expression:</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb56-2" data-line-number="2"><span class="st">  </span>start_expr <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb56-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/mutate_sd.html">mutate_sd</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(.COL), <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mpg"</span>, <span class="st">"cyl"</span>)) <span class="op">%&gt;%</span></a>
@@ -476,7 +475,7 @@
 <pre><code>#&gt;  [1] 42.0 42.0 45.6 42.8 48.8 45.6 64.8 60.8 67.8 43.0 54.6 52.0 60.8 42.8</code></pre>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1">DT[mpg <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>][, mpg <span class="op">*</span><span class="st"> </span><span class="dv">2</span>]</a></code></pre></div>
 <pre><code>#&gt;  [1] 42.0 42.0 45.6 42.8 48.8 45.6 64.8 60.8 67.8 43.0 54.6 52.0 60.8 42.8</code></pre>
-<p>However, thse two chains have different semantics:</p>
+<p>However, these two chains have different semantics:</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">DT[, .(<span class="dt">mpg =</span> mpg <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)][mpg <span class="op">&gt;</span><span class="st"> </span><span class="dv">40</span>]</a></code></pre></div>
 <pre><code>#&gt;      mpg
 #&gt;  1: 42.0
@@ -486,7 +485,7 @@
 #&gt; 14: 42.8</code></pre>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1">DT[mpg <span class="op">&gt;</span><span class="st"> </span><span class="dv">40</span>, .(<span class="dt">mpg =</span> mpg <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)]</a></code></pre></div>
 <pre><code>#&gt; Empty data.table (0 rows and 1 cols): mpg</code></pre>
-<p>As mentioned <a href="#expression-delimiters">above</a>, <code>chain</code> can be used to chain expressions by evaluating the current one with <code>end_expr</code>, and immediately capturing the resulting <code>data.table</code> to start building a new expression. This can be helpful in situations where automatic chaining can lead to a change in the expression’s semantics:</p>
+<p>As mentioned <a href="#expression-delimiters">above</a>, <code>chain</code> can be used to chain expressions by evaluating the current one with <code>end_expr</code>, and immediately capturing the resulting <code>data.table</code> to start building a new expression. This can be helpful in situations where automatic chaining (or lack thereof) can lead to a change in the expression’s semantics:</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb78-2" data-line-number="2"><span class="st">  </span>start_expr <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb78-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span>(<span class="dt">mpg =</span> mpg <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
