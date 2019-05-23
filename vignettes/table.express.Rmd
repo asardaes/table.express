@@ -28,7 +28,7 @@ package,
 which also advocates the piping operator from the
 [`magrittr`](https://cran.r-project.org/package=magrittr)
 package.
-The [`rlang`](http://cran.r-project.org/package=rlang)
+The [`rlang`](https://cran.r-project.org/package=rlang)
 package powers most of this package's functionality,
 which means that
 [tidy evaluation](https://tidyeval.tidyverse.org/)
