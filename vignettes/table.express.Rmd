@@ -270,8 +270,8 @@ In order to support functionality similar to `data.table`'s `DT[, lapply(.SD, fu
 2 `data.table`-specific verbs are provided: `mutate_sd` and `transmute_sd`.
 
 Starting with `mutate_sd`,
-one additional feature it provides is that columns in `.SDcols` are modified by reference,
-and columns that are not part of `.SDcols` can still be kept:
+it modifies columns in `.SDcols` by reference,
+and columns that are not part of `.SDcols` are still be kept:
 
 ```{r mutate-sd}
 DT %>%
@@ -282,7 +282,7 @@ DT %>%
 print(DT)
 ```
 
-Moreover, `mutate_sd` supports the special `.COL` pronoun that symbolizes the column that should be modified,
+Additionally, `mutate_sd` supports the special `.COL` pronoun that symbolizes the column that should be modified,
 and can be used to express the mutation expression:
 
 ```{r mutate-sd-col}
@@ -394,7 +394,7 @@ DT[mpg > 20, mpg * 2]
 DT[mpg > 20][, mpg * 2]
 ```
 
-However, thse two chains have different semantics:
+However, these two chains have different semantics:
 
 ```{r two-chains-two-semantics}
 DT[, .(mpg = mpg * 2)][mpg > 40]
@@ -405,7 +405,9 @@ DT[mpg > 40, .(mpg = mpg * 2)]
 As mentioned [above](#expression-delimiters),
 `chain` can be used to chain expressions by evaluating the current one with `end_expr`,
 and immediately capturing the resulting `data.table` to start building a new expression.
-This can be helpful in situations where automatic chaining can lead to a change in the expression's semantics:
+This can be helpful in situations where automatic chaining
+(or lack thereof)
+can lead to a change in the expression's semantics:
 
 ```{r two-exprs-two-semantics}
 DT %>%
