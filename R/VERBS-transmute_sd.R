@@ -3,6 +3,7 @@
 #' Like [transmute-table.express] but for a single call and maybe specifying `.SDcols`.
 #'
 #' @export
+#' @importFrom rlang call2
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
 #' @importFrom rlang enexpr
@@ -52,25 +53,25 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
     how_expr <- rlang::enexpr(.how)
 
     if (is_fun(.how)) {
-        clause <- rlang::expr(lapply(.SD, !!how_expr, !!!dots))
-
-        if (!missing(.SDcols)) {
-            frame_append(.data, .SDcols = !!rlang::enexpr(.SDcols), .parse = .parse)
-        }
+        .how <- rlang::call2(how_expr, rlang::expr(.COL))
     }
     else {
-        .which <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
         .how <- to_expr(how_expr, .parse = .parse)
+    }
 
-        if (rlang::is_call(.how)) {
-            .how <- rlang::call_standardise(.how)
-            .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
-        }
+    .which <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
 
-        # just to avoid NOTE
-        .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
+    if (rlang::is_call(.how)) {
+        .how <- rlang::call_standardise(.how)
+        .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
+    }
 
-        clause <- rlang::expr(Map(
+    # just to avoid NOTE
+    .non_null <- EBCompanion$helper_functions$.non_null
+    .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
+
+    clause <- rlang::expr(
+        .non_null(Map(
             .transmute_matching,
             .COL = .SD,
             .COLNAME = names(.SD),
@@ -78,7 +79,7 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
             .which = rlang::quos(!!.which),
             .how = rlang::quos(!!.how)
         ))
-    }
+    )
 
     .data$set_select(clause, .chain)
     .data
