@@ -10,7 +10,7 @@ mutate_sd(.data, .how = identity, ..., .SDcols,
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{.how}{The transmuting call.}
+\item{.how}{The mutating call.}
 
 \item{...}{More arguments for \code{.how} if it is a function or a function-call.}
 

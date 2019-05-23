@@ -14,7 +14,7 @@
 #' @importFrom rlang zap
 #'
 #' @template data-arg
-#' @param .how The transmuting call.
+#' @param .how The mutating call.
 #' @param ... More arguments for `.how` if it is a function or a function-call.
 #' @param .SDcols See [data.table::data.table] and the details here.
 #' @template parse-arg
@@ -42,15 +42,15 @@ mutate_sd <- function(.data, .how = identity, ..., .SDcols, .parse = getOption("
     dots <- parse_dots(.parse, ...)
 
     if (is_fun(.how)) {
-        .how <- rlang::call2(how_expr, rlang::expr(.COL), !!!dots)
+        .how <- rlang::call2(how_expr, rlang::expr(.COL))
     }
     else {
         .how <- to_expr(how_expr, .parse = .parse)
+    }
 
-        if (rlang::is_call(.how)) {
-            .how <- rlang::call_standardise(.how)
-            .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
-        }
+    if (rlang::is_call(.how)) {
+        .how <- rlang::call_standardise(.how)
+        .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
     }
 
     # just to avoid NOTE
