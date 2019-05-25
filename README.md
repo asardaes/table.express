@@ -8,7 +8,8 @@ status](https://ci.appveyor.com/api/projects/status/bb9606tfe648gajn?svg=true)](
 
 # Table express
 
-Use `dplyr` verbs to build `data.table` expressions. Check the
+Use `dplyr` verbs, as well as custom ones, to build `data.table`
+expressions. Check the
 [vignette](https://asardaes.github.io/table.express/articles/table.express.html)
 for more information.
 

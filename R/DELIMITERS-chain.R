@@ -13,12 +13,15 @@ chain <- function(.data, ...) {
 
 #' @rdname chain
 #' @export
+#' @importFrom rlang caller_env
+#'
+#' @param .parent_env See [end_expr()].
 #'
 #' @details
 #'
 #' The chaining for [ExprBuilder] is equivalent to calling [end_expr()] followed by [start_expr()].
 #' The ellipsis (`...`) is passed to both functions.
 #'
-chain.ExprBuilder <- function(.data, ...) {
-    start_expr(end_expr.ExprBuilder(.data, ...), ...)
+chain.ExprBuilder <- function(.data, ..., .parent_env = rlang::caller_env()) {
+    start_expr(end_expr.ExprBuilder(.data, ..., .parent_env = .parent_env), ...)
 }

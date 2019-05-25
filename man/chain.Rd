@@ -7,12 +7,15 @@
 \usage{
 chain(.data, ...)
 
-\method{chain}{ExprBuilder}(.data, ...)
+\method{chain}{ExprBuilder}(.data, ...,
+  .parent_env = rlang::caller_env())
 }
 \arguments{
 \item{.data}{Object to be chained.}
 
 \item{...}{Arguments for the specific methods.}
+
+\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}.}
 }
 \description{
 Build a chain of similar objects/operations.
