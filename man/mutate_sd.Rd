@@ -5,7 +5,8 @@
 \title{Mutate subset of data}
 \usage{
 mutate_sd(.data, .how = identity, ..., .SDcols,
-  .parse = getOption("table.express.parse", FALSE))
+  .parse = getOption("table.express.parse", FALSE),
+  .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -17,6 +18,9 @@ mutate_sd(.data, .how = identity, ..., .SDcols,
 \item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
+
+\item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?}
 }
 \description{
 Like \link{mutate-table.express} but for a single call and some \code{.SDcols}.

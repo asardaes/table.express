@@ -3,6 +3,7 @@
 #' Like [mutate-table.express] but for a single call and some `.SDcols`.
 #'
 #' @export
+#' @importFrom rlang as_label
 #' @importFrom rlang call2
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
@@ -18,6 +19,7 @@
 #' @param ... More arguments for `.how` if it is a function or a function-call.
 #' @param .SDcols See [data.table::data.table] and the details here.
 #' @template parse-arg
+#' @template chain-arg
 #'
 #' @details
 #'
@@ -35,13 +37,22 @@
 #'     mutate_sd(.COL * 2, .SDcols = c("mpg", "cyl")) %>%
 #'     end_expr
 #'
-mutate_sd <- function(.data, .how = identity, ..., .SDcols, .parse = getOption("table.express.parse", FALSE)) {
+mutate_sd <- function(.data, .how = identity, ..., .SDcols,
+                      .parse = getOption("table.express.parse", FALSE),
+                      .chain = getOption("table.express.chain", TRUE))
+{
     .SDcols <- process_sdcols(.data, rlang::enquo(.SDcols))
 
     how_expr <- rlang::enexpr(.how)
     dots <- parse_dots(.parse, ...)
 
     if (is_fun(.how)) {
+        # needed for call_standardise to see it, apparently...
+        try(silent = TRUE, {
+            fun_name <- rlang::as_label(how_expr)
+            assign(fun_name, match.fun(fun_name))
+        })
+
         .how <- rlang::call2(how_expr, rlang::expr(.COL))
     }
     else {
@@ -57,7 +68,7 @@ mutate_sd <- function(.data, .how = identity, ..., .SDcols, .parse = getOption("
     .mutate_matching <- EBCompanion$helper_functions$.mutate_matching
     .non_null <- EBCompanion$helper_functions$.non_null
 
-    mutate(.data, .parse = FALSE, .unquote_names = FALSE,
+    mutate(.data, .parse = FALSE, .unquote_names = FALSE, .chain = .chain,
            !!.SDcols := .non_null(
                Map(.mutate_matching,
                    .COL = .SD,

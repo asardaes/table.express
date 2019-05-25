@@ -29,4 +29,14 @@ test_that("mutate_sd works with other dplyr verbs as expected.", {
         end_expr(.by_ref = FALSE)
 
     expect_identical(ans, expected)
+
+    foo <- function(x) { (x - mean(x)) / sd(x) }
+    ans <- state %>%
+        start_expr %>%
+        mutate_sd(foo, .SDcols = one_of("population", "income")) %>%
+        where(region == "West") %>%
+        group_by(division) %>%
+        end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
 })
