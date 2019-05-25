@@ -261,16 +261,10 @@ EBCompanion$helper_functions <- list(
         }
     },
 
-    .mutate_matching = function(.COL, .COLNAME, .which, .how) {
-        data_mask <- rlang::new_environment(list(.COL = .COL, .COLNAME = .COLNAME))
+    .mutate_matching = function(.COL, .how) {
+        data_mask <- rlang::new_environment(list(.COL = .COL))
         data_mask <- rlang::new_data_mask(data_mask)
-
-        if (.COLNAME %in% .which) {
-            rlang::eval_tidy(.how, data_mask)
-        }
-        else {
-            NULL
-        }
+        rlang::eval_tidy(.how, data_mask)
     },
 
     .non_null = function(col_list) {

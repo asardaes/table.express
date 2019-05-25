@@ -60,14 +60,8 @@ mutate_sd <- function(.data, .how = identity, ..., .SDcols,
 
     # just to avoid NOTE
     .mutate_matching <- EBCompanion$helper_functions$.mutate_matching
-    .non_null <- EBCompanion$helper_functions$.non_null
 
     mutate(.data, .parse = FALSE, .unquote_names = FALSE, .chain = .chain,
-           !!.SDcols := .non_null(
-               Map(.mutate_matching,
-                   .COL = .SD,
-                   .COLNAME = names(.SD),
-                   .which = list(!!.SDcols),
-                   .how = rlang::quos(!!.how))
-           ))
+           !!.SDcols := Map(.mutate_matching, .COL = .SD, .how = rlang::quos(!!.how))) %>%
+        frame_append(.SDcols = !!.SDcols)
 }
