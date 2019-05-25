@@ -4,12 +4,13 @@
 #'
 #' @export
 #' @importFrom rlang as_label
+#' @importFrom rlang call2
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
 #' @importFrom rlang enexpr
 #' @importFrom rlang enquo
 #' @importFrom rlang expr
-#' @importFrom rlang sym
+#' @importFrom rlang syms
 #' @importFrom rlang zap
 #'
 #' @template data-arg
@@ -38,7 +39,13 @@ filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`
     how_expr <- rlang::enexpr(.how)
 
     if (is_fun(.how)) {
-        .how <- rlang::expr((!!how_expr)(.COL))
+        # needed for call_standardise to see it, apparently...
+        try(silent = TRUE, {
+            fun_name <- rlang::as_label(how_expr)
+            assign(fun_name, match.fun(fun_name))
+        })
+
+        .how <- rlang::call2(how_expr, rlang::expr(.COL))
     }
     else {
         .how <- to_expr(how_expr, .parse = .parse)
@@ -47,15 +54,25 @@ filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`
     .how <- rlang::call_standardise(.how)
     .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
 
-    which_col <- which(sapply(.how, function(how) { rlang::as_label(how) == ".COL" }))
-
-    clauses <- Map(.col = .SDcols, .how = list(.how), f = function(.col, .how) {
-        col_sym <- rlang::sym(.col)
-        for (i in which_col) {
-            .how[[i]] <- col_sym
-        }
-        .how
-    })
+    clauses <- Map(substitue_col_pronoun, list(.how), rlang::syms(.SDcols))
 
     where(.data, !!!clauses, .collapse = !!rlang::enexpr(.collapse), .parse = FALSE, .chain = .chain)
+}
+
+#' @importFrom rlang as_label
+#' @importFrom rlang is_call
+#'
+substitue_col_pronoun <- function(ex, target_sym) {
+    for (i in seq_along(ex)) {
+        sub_ex <- ex[[i]]
+
+        if (rlang::is_call(sub_ex)) {
+            ex[[i]] <- substitue_col_pronoun(sub_ex, target_sym)
+        }
+        else if (rlang::as_label(sub_ex) == ".COL") {
+            ex[[i]] <- target_sym
+        }
+    }
+
+    ex
 }
