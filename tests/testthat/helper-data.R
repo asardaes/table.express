@@ -13,5 +13,5 @@ state <- data.table::data.table(
     population = state.x77[, 1L],
     income = state.x77[, 2L],
     area = state.x77[, 8L],
-    key = c("region", "name")
+    key = c("region", "division")
 )
