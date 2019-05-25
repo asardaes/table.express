@@ -117,3 +117,25 @@ test_that("Parsing computing expressions in filter works.", {
     ans <- DT %>% start_expr %>% filter("vs == i", "am == 0L", .parse = TRUE, .collapse = `|`) %>% end_expr
     expect_identical(ans, DT[vs == i | am == 0L])
 })
+
+test_that("The filter verb works with several values per key for primary keys.", {
+    expected <- state[.(c("South", "West"), c("South Atlantic", "Pacific"))]
+
+    ans <- state %>%
+        start_expr %>%
+        filter(.(c("South", "West"), c("South Atlantic", "Pacific"))) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- state[.(unique(region), c("South Atlantic", "Pacific"))]
+
+    ans <- state %>%
+        start_expr %>%
+        filter(.(unique(region), c("South Atlantic", "Pacific"))) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+})
