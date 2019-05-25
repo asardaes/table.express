@@ -3,6 +3,7 @@
 #' Like [transmute-table.express] but for a single call and maybe specifying `.SDcols`.
 #'
 #' @export
+#' @importFrom rlang as_label
 #' @importFrom rlang call2
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
@@ -53,6 +54,12 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
     how_expr <- rlang::enexpr(.how)
 
     if (is_fun(.how)) {
+        # needed for call_standardise to see it, apparently...
+        try(silent = TRUE, {
+            fun_name <- rlang::as_label(how_expr)
+            assign(fun_name, match.fun(fun_name))
+        })
+
         .how <- rlang::call2(how_expr, rlang::expr(.COL))
     }
     else {
@@ -82,5 +89,4 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
     )
 
     .data$set_select(clause, .chain)
-    .data
 }

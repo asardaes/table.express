@@ -14,4 +14,14 @@ test_that("transmute_sd works with other dplyr verbs as expected.", {
         end_expr
 
     expect_identical(ans, expected)
+
+    foo <- function(x) { floor(x) / ceiling(max(x)) }
+    ans <- DT %>%
+        start_expr %>%
+        transmute_sd(foo, .SDcols = ends_with("t")) %>%
+        where(vs == 0) %>%
+        group_by(gear, carb) %>%
+        end_expr
+
+    expect_identical(ans, expected)
 })
