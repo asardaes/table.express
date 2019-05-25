@@ -131,11 +131,11 @@
     </tr>
     <tr>
       <th>.how</th>
-      <td><p>The filtering function, function call, or expression.</p></td>
+      <td><p>The function or function call that will perform the transformation.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>More arguments for <code>.how</code> if it is a function or a function-call.</p></td>
+      <td><p>Possibly more arguments for <code>.how</code>.</p></td>
     </tr>
     <tr>
       <th>.SDcols</th>
@@ -164,6 +164,9 @@ supports the <code>.COL</code> pronoun.</p>
 <p>Additionally, <code>.SDcols</code> supports <a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a>, with the caveat that the
 expression is evaluated eagerly, i.e. with the currently captured <code>data.table</code>. Consider using
 <code><a href='chain.html'>chain()</a></code> to explicitly capture intermediate results as actual <code>data.table</code>s.</p>
+<p>To see examples, check the
+<a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
+<a href='table.express-package.html'>table.express-package</a> entry.</p>
     
 
   </div>

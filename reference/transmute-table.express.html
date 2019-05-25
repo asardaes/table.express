@@ -134,7 +134,7 @@ dplyr::transmute() equivalent can be specified as a select clause." />
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Clause for selectin/computing on columns. The <code>j</code> inside the <code>data.table</code>'s frame.</p></td>
+      <td><p>Clause for selecting/computing on columns. The <code>j</code> inside the <code>data.table</code>'s frame.</p></td>
     </tr>
     <tr>
       <th>.parse</th>
@@ -149,9 +149,12 @@ clause being set already exists?</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If <code>length(...) == 1L</code> and the expression is a call to <code>:</code> (e.g. a:c), then it will be taken as
-the single expression for the select clause, otherwise everything in <code>...</code> will be wrapped
-in a call to <code><a href='https://rdrr.io/r/base/list.html'>base::list()</a></code>.</p>
+    <p>If <code>length(...) == 1L</code> and the expression is a call to <code>:</code> (e.g. <code>a:c</code>) or
+<a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a>, then it will be taken as the single expression for the select
+clause, otherwise everything in <code>...</code> will be wrapped in a call to <code><a href='https://rdrr.io/r/base/list.html'>base::list()</a></code>.</p>
+<p>To see examples, check the
+<a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
+<a href='table.express-package.html'>table.express-package</a> entry.</p>
     
 
   </div>

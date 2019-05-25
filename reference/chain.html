@@ -121,7 +121,8 @@
     <pre class="usage"><span class='fu'>chain</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ExprBuilder</span>
-<span class='fu'>chain</span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>chain</span>(<span class='no'>.data</span>, <span class='no'>...</span>,
+  <span class='kw'>.parent_env</span> <span class='kw'>=</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/caller_env.html'>caller_env</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,6 +134,10 @@
     <tr>
       <th>...</th>
       <td><p>Arguments for the specific methods.</p></td>
+    </tr>
+    <tr>
+      <th>.parent_env</th>
+      <td><p>See <code><a href='end_expr.html'>end_expr()</a></code>.</p></td>
     </tr>
     </table>
     

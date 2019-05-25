@@ -119,7 +119,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>mutate_sd</span>(<span class='no'>.data</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>, <span class='no'>.SDcols</span>,
-  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>))</pre>
+  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
+  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,11 +131,11 @@
     </tr>
     <tr>
       <th>.how</th>
-      <td><p>The mutating call.</p></td>
+      <td><p>The function or function call that will perform the transformation.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>More arguments for <code>.how</code> if it is a function or a function-call.</p></td>
+      <td><p>Possibly more arguments for <code>.how</code>.</p></td>
     </tr>
     <tr>
       <th>.SDcols</th>
@@ -143,6 +144,11 @@
     <tr>
       <th>.parse</th>
       <td><p>Logical. Whether to apply <code><a href='https://rlang.r-lib.org/reference/parse_expr.html'>rlang::parse_expr()</a></code> to obtain the expressions.</p></td>
+    </tr>
+    <tr>
+      <th>.chain</th>
+      <td><p>Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?</p></td>
     </tr>
     </table>
     
@@ -153,6 +159,9 @@ reference, like <a href='mutate-table.express.html'>mutate-table.express</a>.</p
 <p>Additionally, <code>.SDcols</code> supports <a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a>, with the caveat that the
 expression is evaluated eagerly, i.e. with the currently captured <code>data.table</code>. Consider using
 <code><a href='chain.html'>chain()</a></code> to explicitly capture intermediate results as actual <code>data.table</code>s.</p>
+<p>To see examples, check the
+<a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
+<a href='table.express-package.html'>table.express-package</a> entry.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
