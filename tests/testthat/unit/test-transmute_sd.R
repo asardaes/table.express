@@ -63,12 +63,17 @@ test_that("Transmuting SD with single column works.", {
 })
 
 test_that("Transmuting SD with dynamic .SDcols works.", {
-    expected <- data.table::copy(DT)[, `:=`(disp = disp * 2, drat = drat * 2)][, .(disp, drat)]
+    expected <- DT[, .(disp = disp * 2, drat = drat * 2)]
 
     ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = c("disp", "drat")) %>% end_expr
     expect_identical(ans, expected)
 
     ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>% end_expr
+    expect_identical(ans, expected)
+
+    expected <- DT[, .(drat = drat * 2, wt = wt * 2)]
+
+    ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = any(.COL < 5 & .COL %% 1 != 0)) %>% end_expr
     expect_identical(ans, expected)
 })
 
