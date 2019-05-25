@@ -23,6 +23,8 @@ key_by <- function(.data, ...) {
 #' Everything in `...` will be wrapped in a call to `list`. Its contents work like Clauses for
 #' grouping on columns. The `keyby` inside the [data.table::data.table] frame.
 #'
+#' @template docu-examples
+#'
 key_by.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE)) {
     clause <- parse_dots(.parse, ...)
     clause <- rlang::quo_squash(rlang::expr(list(!!!clause)))

@@ -15,3 +15,8 @@
 \description{
 Alias for \link{order_by-table.express}.
 }
+\details{
+To see examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
+}

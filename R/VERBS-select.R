@@ -15,15 +15,17 @@ dplyr::select
 #' @importFrom rlang quos
 #'
 #' @template data-arg
-#' @param ... Clause for selectin/computing on columns. The `j` inside the `data.table`'s frame.
+#' @param ... Clause for selecting/computing on columns. The `j` inside the `data.table`'s frame.
 #' @template parse-arg
 #' @template chain-arg
 #'
 #' @details
 #'
-#' If `length(...) == 1L` and the expression is a call to `:` (e.g. a:c), then it will be taken as
-#' the single expression for the select clause, otherwise everything in `...` will be wrapped
-#' in a call to [base::list()].
+#' If `length(...) == 1L` and the expression is a call to `:` (e.g. `a:c`) or
+#' [tidyselect::select_helpers], then it will be taken as the single expression for the select
+#' clause, otherwise everything in `...` will be wrapped in a call to [base::list()].
+#'
+#' @template docu-examples
 #'
 select.ExprBuilder <- function(.data, ...,
                                .parse = getOption("table.express.parse", FALSE),

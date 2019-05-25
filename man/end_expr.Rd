@@ -14,9 +14,9 @@ end_expr(.data, ...)
 
 \item{...}{Arguments for the specific methods.}
 
-\item{.by_ref}{Whether to update the \code{data.table} by reference or not.}
+\item{.by_ref}{Whether to use \code{\link[data.table:copy]{data.table::copy()}} before evaluation.}
 
-\item{.parent_env}{Optionally, the enclosing environment of the expression's evaluation
+\item{.parent_env}{Optionally, the \emph{enclosing} environment of the expression's evaluation
 environment.}
 }
 \description{

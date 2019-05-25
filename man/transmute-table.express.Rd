@@ -12,7 +12,7 @@
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{...}{Clause for selectin/computing on columns. The \code{j} inside the \code{data.table}'s frame.}
+\item{...}{Clause for selecting/computing on columns. The \code{j} inside the \code{data.table}'s frame.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
@@ -24,7 +24,11 @@ Because of the way \code{data.table} and the \link{select-table.express} method 
 \code{\link[dplyr:transmute]{dplyr::transmute()}} equivalent can be specified as a \code{select} clause.
 }
 \details{
-If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. a:c), then it will be taken as
-the single expression for the select clause, otherwise everything in \code{...} will be wrapped
-in a call to \code{\link[base:list]{base::list()}}.
+If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. \code{a:c}) or
+\link[tidyselect:select_helpers]{tidyselect::select_helpers}, then it will be taken as the single expression for the select
+clause, otherwise everything in \code{...} will be wrapped in a call to \code{\link[base:list]{base::list()}}.
+
+To see examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
 }

@@ -20,6 +20,8 @@
 #'
 #' Thus, all pairs **must** be named.
 #'
+#' @template docu-examples
+#'
 filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult = "all",
                       .chain = getOption("table.express.chain", TRUE))
 {

@@ -11,9 +11,9 @@ transmute_sd(.data, .how = identity, ..., .SDcols = names(.SD),
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{.how}{The transmuting call.}
+\item{.how}{The function or function call that will perform the transformation.}
 
-\item{...}{More arguments for \code{.how} if it is a function or a function-call.}
+\item{...}{Possibly more arguments for \code{.how}.}
 
 \item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
@@ -40,7 +40,7 @@ Said function includes two pronouns that can be used by \code{.how} and \code{.S
 
 Unlike a call like \code{DT[, (vars) := expr]}, \code{.SDcols} can be created dynamically with an
 expression that evaluates to something that would be used in place of \code{vars} \emph{without} using the
-captured \code{data.table}. See the examples.
+captured \code{data.table}. See the examples here or in \link{table.express-package}.
 }
 \examples{
 

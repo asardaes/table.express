@@ -22,6 +22,8 @@ dplyr::mutate
 #' @template parse-arg
 #' @template chain-arg
 #'
+#' @template docu-examples
+#'
 mutate.ExprBuilder <- function(.data, ..., .unquote_names = TRUE,
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))

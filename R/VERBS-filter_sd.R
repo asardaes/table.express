@@ -14,8 +14,7 @@
 #' @importFrom rlang zap
 #'
 #' @template data-arg
-#' @param .how The filtering function, function call, or expression.
-#' @param ... More arguments for `.how` if it is a function or a function-call.
+#' @template transform-sd-args
 #' @param .SDcols See [data.table::data.table] and the details here.
 #' @param .collapse See [where-table.express].
 #' @template parse-arg
@@ -28,6 +27,7 @@
 #' supports the `.COL` pronoun.
 #'
 #' @template tidyselect-sdcols
+#' @template docu-examples
 #'
 filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`,
                       .parse = getOption("table.express.parse", FALSE),

@@ -23,4 +23,8 @@ Group by and set key of the result.
 \details{
 Everything in \code{...} will be wrapped in a call to \code{list}. Its contents work like Clauses for
 grouping on columns. The \code{keyby} inside the \link[data.table:data.table]{data.table::data.table} frame.
+
+To see examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
 }

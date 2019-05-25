@@ -15,6 +15,8 @@ dplyr::filter
 #' @param ... See [where-table.express].
 #' @param .preserve Ignored.
 #'
+#' @template docu-examples
+#'
 filter.ExprBuilder <- function(.data, ..., .preserve) {
     where.ExprBuilder(.data, ...)
 }

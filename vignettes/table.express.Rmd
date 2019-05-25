@@ -38,7 +38,7 @@ so they will not be explained here.
 
 Even though using data manipulation verbs can improve expressiveness in some cases,
 this is not always true,
-so using the traditional `data.table` syntax might still be preferable.
+so using the traditional `data.table` syntax might still be preferable in many situations.
 
 In order to ressemble SQL syntax more closely,
 a couple of verb aliases are also defined:

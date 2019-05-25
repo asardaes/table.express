@@ -23,6 +23,8 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #' The [ExprBuilder] method dispatches to [where-table.express], but doesn't forward the `.collapse`
 #' argument.
 #'
+#' @template docu-examples
+#'
 order_by.ExprBuilder <- function(.data, ..., .collapse,
                                  .parse = getOption("table.express.parse", FALSE),
                                  .chain = getOption("table.express.chain", TRUE))

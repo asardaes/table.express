@@ -15,8 +15,8 @@ end_expr <- function(.data, ...) {
 #' @export
 #' @importFrom rlang caller_env
 #'
-#' @param .by_ref Whether to update the `data.table` by reference or not.
-#' @param .parent_env Optionally, the enclosing environment of the expression's evaluation
+#' @param .by_ref Whether to use [data.table::copy()] before evaluation.
+#' @param .parent_env Optionally, the *enclosing* environment of the expression's evaluation
 #'   environment.
 #'
 #' @details

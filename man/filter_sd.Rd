@@ -11,9 +11,9 @@ filter_sd(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`,
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{.how}{The filtering function, function call, or expression.}
+\item{.how}{The function or function call that will perform the transformation.}
 
-\item{...}{More arguments for \code{.how} if it is a function or a function-call.}
+\item{...}{Possibly more arguments for \code{.how}.}
 
 \item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
@@ -35,4 +35,8 @@ supports the \code{.COL} pronoun.
 Additionally, \code{.SDcols} supports \link[tidyselect:select_helpers]{tidyselect::select_helpers}, with the caveat that the
 expression is evaluated eagerly, i.e. with the currently captured \code{data.table}. Consider using
 \code{\link[=chain]{chain()}} to explicitly capture intermediate results as actual \code{data.table}s.
+
+To see examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
 }

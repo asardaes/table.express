@@ -30,4 +30,8 @@ Clause for ordering rows.
 \details{
 The \link{ExprBuilder} method dispatches to \link{where-table.express}, but doesn't forward the \code{.collapse}
 argument.
+
+To see examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
 }

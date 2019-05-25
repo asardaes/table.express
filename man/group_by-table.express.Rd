@@ -20,4 +20,8 @@ Aggregations for a \link[data.table:data.table-class]{data.table::data.table}.
 }
 \details{
 Everything in \code{...} will be wrapped in a call to \code{list}.
+
+To see examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
 }

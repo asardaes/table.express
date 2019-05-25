@@ -27,3 +27,8 @@ clause being set already exists?}
 \description{
 Clause for subsetting rows.
 }
+\details{
+To see examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
+}

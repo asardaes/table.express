@@ -14,8 +14,7 @@
 #' @importFrom rlang zap
 #'
 #' @template data-arg
-#' @param .how The transmuting call.
-#' @param ... More arguments for `.how` if it is a function or a function-call.
+#' @template transform-sd-args
 #' @param .SDcols See [data.table::data.table] and the details here.
 #' @template parse-arg
 #' @template chain-arg
@@ -35,7 +34,7 @@
 #'
 #' Unlike a call like `DT[, (vars) := expr]`, `.SDcols` can be created dynamically with an
 #' expression that evaluates to something that would be used in place of `vars` *without* using the
-#' captured `data.table`. See the examples.
+#' captured `data.table`. See the examples here or in [table.express-package].
 #'
 #' @examples
 #'

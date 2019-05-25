@@ -15,8 +15,7 @@
 #' @importFrom rlang zap
 #'
 #' @template data-arg
-#' @param .how The mutating call.
-#' @param ... More arguments for `.how` if it is a function or a function-call.
+#' @template transform-sd-args
 #' @param .SDcols See [data.table::data.table] and the details here.
 #' @template parse-arg
 #' @template chain-arg
@@ -27,6 +26,7 @@
 #' reference, like [mutate-table.express].
 #'
 #' @template tidyselect-sdcols
+#' @template docu-examples
 #'
 #' @examples
 #'

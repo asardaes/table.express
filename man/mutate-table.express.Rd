@@ -26,3 +26,8 @@ clause being set already exists?}
 Add or update columns of a \link[data.table:data.table-class]{data.table::data.table}, possibly by reference using
 \code{\link[data.table:set]{:=}}.
 }
+\details{
+To see examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
+}

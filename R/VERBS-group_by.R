@@ -21,6 +21,8 @@ dplyr::group_by
 #'
 #' Everything in `...` will be wrapped in a call to `list`.
 #'
+#' @template docu-examples
+#'
 group_by.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE)) {
     clause <- parse_dots(.parse, ...)
     .data$set_by(rlang::quo_squash(rlang::expr(list(!!!clause))))

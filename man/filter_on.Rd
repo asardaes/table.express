@@ -30,4 +30,8 @@ The key-value pairs in '...' are processed as follows:
 }
 
 Thus, all pairs \strong{must} be named.
+
+To see examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
 }

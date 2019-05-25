@@ -14,6 +14,8 @@ dplyr::arrange
 #' @template data-arg
 #' @param ... See [order_by-table.express].
 #'
+#' @template docu-examples
+#'
 arrange.ExprBuilder <- function(.data, ...) {
     order_by.ExprBuilder(.data, ...)
 }

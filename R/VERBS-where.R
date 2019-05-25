@@ -23,6 +23,8 @@ where <- function(.data, ...) {
 #' @template parse-arg
 #' @template chain-arg
 #'
+#' @template docu-examples
+#'
 where.ExprBuilder <- function(.data, ..., .collapse = `&`,
                               .parse = getOption("table.express.parse", FALSE),
                               .chain = getOption("table.express.chain", TRUE))
