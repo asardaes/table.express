@@ -40,7 +40,7 @@ Even though using data manipulation verbs can improve expressiveness in some cas
 this is not always true,
 so using the traditional `data.table` syntax might still be preferable in many situations.
 
-In order to ressemble SQL syntax more closely,
+In order to resemble SQL syntax more closely,
 a couple of verb aliases are also defined:
 
 - `where`, being equivalent to `dplyr`'s `filter`.
@@ -225,7 +225,7 @@ DT %>%
 
 The helper verb `filter_sd` can be used to apply the same conditions to many columns,
 and it can use a special pronoun `.COL` while specifying the expression,
-as well as `tidyselect` helpers to choose .SDcols
+as well as `tidyselect` helpers to choose `.SDcols`
 (with caveats, see [eager verbs](#eager-verbs)):
 
 ```{r filter-sd}

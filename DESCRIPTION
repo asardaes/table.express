@@ -20,13 +20,14 @@ Suggests:
     rex,
     rmarkdown,
     testthat
-Date: 2019-05-18
+Date: 2019-05-25
 Authors@R: c(
         person("Alexis", "Sarda-Espinosa", role=c("cre", "aut"), email="alexis.sarda@gmail.com")
     )
 BugReports: https://github.com/asardaes/table.express/issues
 License: MPL-2.0 | file LICENSE
 URL: https://asardaes.github.io/table.express, https://github.com/asardaes/table.express
+Language: en-US
 Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 6.1.1
