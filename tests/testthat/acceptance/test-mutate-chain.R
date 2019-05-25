@@ -21,4 +21,16 @@ test_that("Several mutations in one clause are equivalent to a chain of mutation
         end_expr
 
     expect_identical(ans, expected)
+
+    dt <- data.table::copy(DT)
+    ans <- dt %>%
+        start_expr %>%
+        mutate(foo = mpg - 3) %>%
+        chain %>%
+        mutate(bar = log(disp)) %>%
+        chain %>%
+        mutate(baz = vs + am) %>%
+        end_expr
+
+    expect_identical(ans, expected)
 })

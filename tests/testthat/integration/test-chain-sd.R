@@ -53,4 +53,56 @@ test_that("Chaining *_sd verbs works as expected.", {
         end_expr(.by_ref = FALSE)
 
     expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    sd_cols <- c("gear", "carb")
+    expected <- DT[, lapply(.SD, as.integer), .SDcols = sd_cols
+                   ][gear %% 2 == 0 & carb %% 2 == 0, lapply(.SD, cumsum)]
+
+    ans <- DT %>%
+        start_expr %>%
+        transmute_sd(as.integer, .SDcols = sd_cols) %>%
+        chain %>%
+        filter_sd(.COL %% 2 == 0, .SDcols = sd_cols) %>%
+        transmute_sd(cumsum) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+
+    ans <- DT %>%
+        start_expr %>%
+        transmute_sd(as.integer, .SDcols = sd_cols) %>%
+        filter_sd(.COL %% 2 == 0, .SDcols = sd_cols) %>%
+        transmute_sd(cumsum) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    sd_cols <- c("drat", "wt")
+    expected <- data.table::copy(DT)[, `:=`((sd_cols), lapply(.SD, round)), .SDcols = sd_cols
+                                     ][, `:=`((sd_cols), lapply(.SD, sum)), .SDcols = sd_cols, by = cyl]
+
+    ans <- DT %>%
+        (data.table::copy) %>%
+        start_expr %>%
+        mutate_sd(round, .SDcols = sd_cols) %>%
+        mutate_sd(sum, .SDcols = sd_cols) %>%
+        group_by(cyl) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+
+    ans <- DT %>%
+        (data.table::copy) %>%
+        start_expr %>%
+        mutate_sd(round, .SDcols = sd_cols) %>%
+        chain %>%
+        mutate_sd(sum, .SDcols = sd_cols) %>%
+        group_by(cyl) %>%
+        end_expr
+
+    expect_identical(ans, expected)
 })
