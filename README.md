@@ -1,5 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/table.express)](https://cran.r-project.org/package=table.express)
 [![Travis-CI Build
 Status](https://travis-ci.org/asardaes/table.express.svg?branch=master)](https://travis-ci.org/asardaes/table.express)
 [![AppVeyor Build

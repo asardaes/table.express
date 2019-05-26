@@ -1,5 +1,6 @@
 
-## Initial release
+## Initial release (0.1.0)
+Initial release with single-table verbs.
 
 ## Test environments
 * Local GNU/Linux, R release
