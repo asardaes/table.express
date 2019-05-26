@@ -245,7 +245,7 @@ DT %>%
   filter_sd(.COL > 0, .SDcols = contains("m"))
 ```
 
-### Using secondary indices
+### Using keys or secondary indices
 
 The `filter_on` verb can be used to build an expression that specifies the `on` argument of the frame.
 It accepts key-value pairs where each key is a column in the data,
@@ -271,7 +271,7 @@ In order to support functionality similar to `data.table`'s `DT[, lapply(.SD, fu
 
 Starting with `mutate_sd`,
 it modifies columns in `.SDcols` by reference,
-and columns that are not part of `.SDcols` are still be kept:
+and columns that are not part of `.SDcols` are kept:
 
 ```{r mutate-sd}
 DT %>%
@@ -340,7 +340,7 @@ DT %>%
 
 A `data.table`'s frame has 3 main elements:
 [`i`, `j`, and `by`](https://github.com/Rdatatable/data.table/wiki).
-By default, the verbs defined in this package automatically start a new chain whenever they want to define one of these elements,
+By default, the verbs defined in this package automatically start a new frame whenever they want to define one of these elements,
 but the current expression's frame has already specified it;
 otherwise they add to the current frame.
 More complex expressions are thus supported by automatically chaining `data.table` frames:
