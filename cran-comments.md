@@ -1,6 +1,7 @@
 
-## Initial release (0.1.0)
-Initial release with single-table verbs.
+## Initial release (resubmission of 0.1.0)
+* Initial release with single-table verbs.
+* Removed LICENSE file from package archive.
 
 ## Test environments
 * Local GNU/Linux, R release
