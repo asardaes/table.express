@@ -91,7 +91,7 @@ DT %>%
 DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole
    ][vs == 1 | am == 1, lapply(.SD, scale), .SDcols = names(DT)[sapply(DT, Negate(is.integer))]]
 
-# Alternatives to keep all columns (*copying* non-scaled ones)
+# Alternative to keep all columns (*copying* non-scaled ones)
 scale_non_integers <- function(x) {
     if (is.integer(x)) x else scale(x)
 }
