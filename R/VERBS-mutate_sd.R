@@ -34,8 +34,7 @@
 #'
 #' data.table::as.data.table(mtcars) %>%
 #'     start_expr %>%
-#'     mutate_sd(.COL * 2, .SDcols = c("mpg", "cyl")) %>%
-#'     end_expr
+#'     mutate_sd(.COL * 2, .SDcols = c("mpg", "cyl"))
 #'
 mutate_sd <- function(.data, .how = identity, ..., .SDcols,
                       .parse = getOption("table.express.parse", FALSE),

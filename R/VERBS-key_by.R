@@ -25,6 +25,14 @@ key_by <- function(.data, ...) {
 #'
 #' @template docu-examples
 #'
+#' @examples
+#'
+#' data("mtcars")
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     key_by(cyl, gear)
+#'
 key_by.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE)) {
     clause <- parse_dots(.parse, ...)
     clause <- rlang::quo_squash(rlang::expr(list(!!!clause)))

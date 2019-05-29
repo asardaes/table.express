@@ -23,6 +23,8 @@ end_expr <- function(.data, ...) {
 #'
 #' The [ExprBuilder] method returns a [data.table::data.table-class].
 #'
+#' @template docu-examples
+#'
 end_expr.ExprBuilder <- function(.data, ..., .by_ref = TRUE, .parent_env) {
     if (missing(.parent_env)) {
         .data$eval(rlang::caller_env(), .by_ref)

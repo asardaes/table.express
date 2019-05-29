@@ -27,7 +27,16 @@ If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. \code
 \link[tidyselect:select_helpers]{tidyselect::select_helpers}, then it will be taken as the single expression for the select
 clause, otherwise everything in \code{...} will be wrapped in a call to \code{\link[base:list]{base::list()}}.
 
-To see examples, check the
+To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
+}
+\examples{
+
+data("mtcars")
+
+data.table::as.data.table(mtcars) \%>\%
+    start_expr \%>\%
+    select(mpg:cyl)
+
 }

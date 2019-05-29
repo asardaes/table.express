@@ -24,4 +24,8 @@ Finish the expression building process and evaluate it.
 }
 \details{
 The \link{ExprBuilder} method returns a \link[data.table:data.table-class]{data.table::data.table}.
+
+To see more examples, check the
+\href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
+\link{table.express-package} entry.
 }

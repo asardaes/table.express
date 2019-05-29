@@ -25,6 +25,14 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #'
 #' @template docu-examples
 #'
+#' @examples
+#'
+#' data("mtcars")
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     order_by(-cyl, gear)
+#'
 order_by.ExprBuilder <- function(.data, ..., .collapse,
                                  .parse = getOption("table.express.parse", FALSE),
                                  .chain = getOption("table.express.chain", TRUE))

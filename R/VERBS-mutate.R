@@ -24,6 +24,13 @@ dplyr::mutate
 #'
 #' @template docu-examples
 #'
+#' @examples
+#'
+#' data("mtcars")
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     mutate(mpg_squared = mpg ^ 2)
+#'
 mutate.ExprBuilder <- function(.data, ..., .unquote_names = TRUE,
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))

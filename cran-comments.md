@@ -2,6 +2,7 @@
 ## Initial release (resubmission of 0.1.0)
 * Initial release with single-table verbs.
 * Removed LICENSE file from package archive.
+* Added more examples.
 
 ## Test environments
 * Local GNU/Linux, R release

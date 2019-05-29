@@ -27,7 +27,15 @@ Add or update columns of a \link[data.table:data.table-class]{data.table::data.t
 \code{\link[data.table:set]{:=}}.
 }
 \details{
-To see examples, check the
+To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
+}
+\examples{
+
+data("mtcars")
+data.table::as.data.table(mtcars) \%>\%
+    start_expr \%>\%
+    mutate(mpg_squared = mpg ^ 2)
+
 }

@@ -48,7 +48,6 @@ data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
     start_expr \%>\%
-    transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) \%>\%
-    end_expr
+    transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME))
 
 }

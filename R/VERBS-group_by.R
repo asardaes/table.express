@@ -23,6 +23,14 @@ dplyr::group_by
 #'
 #' @template docu-examples
 #'
+#' @examples
+#'
+#' data("mtcars")
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     group_by(cyl, gear)
+#'
 group_by.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE)) {
     clause <- parse_dots(.parse, ...)
     .data$set_by(rlang::quo_squash(rlang::expr(list(!!!clause))))

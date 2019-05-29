@@ -31,7 +31,16 @@ The key-value pairs in '...' are processed as follows:
 
 Thus, all pairs \strong{must} be named.
 
-To see examples, check the
+To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
+}
+\examples{
+
+data("mtcars")
+
+data.table::as.data.table(mtcars) \%>\%
+    start_expr \%>\%
+    filter_on(cyl = 4, gear = 5)
+
 }

@@ -29,6 +29,14 @@
 #' @template tidyselect-sdcols
 #' @template docu-examples
 #'
+#' @examples
+#'
+#' data("mtcars")
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     filter_sd(.COL == 1, .SDcols = c("vs", "am"))
+#'
 filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`,
                       .parse = getOption("table.express.parse", FALSE),
                       .chain = getOption("table.express.chain", TRUE))

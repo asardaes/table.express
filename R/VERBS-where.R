@@ -25,6 +25,14 @@ where <- function(.data, ...) {
 #'
 #' @template docu-examples
 #'
+#' @examples
+#'
+#' data("mtcars")
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     where(vs == 0, am == 1)
+#'
 where.ExprBuilder <- function(.data, ..., .collapse = `&`,
                               .parse = getOption("table.express.parse", FALSE),
                               .chain = getOption("table.express.chain", TRUE))

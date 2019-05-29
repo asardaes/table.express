@@ -33,7 +33,7 @@ Additionally, \code{.SDcols} supports \link[tidyselect:select_helpers]{tidyselec
 expression is evaluated eagerly, i.e. with the currently captured \code{data.table}. Consider using
 \code{\link[=chain]{chain()}} to explicitly capture intermediate results as actual \code{data.table}s.
 
-To see examples, check the
+To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
 }
@@ -43,7 +43,6 @@ data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
     start_expr \%>\%
-    mutate_sd(.COL * 2, .SDcols = c("mpg", "cyl")) \%>\%
-    end_expr
+    mutate_sd(.COL * 2, .SDcols = c("mpg", "cyl"))
 
 }

@@ -18,7 +18,7 @@
 Alias for \link{where-table.express}.
 }
 \details{
-To see examples, check the
+To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
 }

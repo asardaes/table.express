@@ -22,6 +22,14 @@
 #'
 #' @template docu-examples
 #'
+#' @examples
+#'
+#' data("mtcars")
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     filter_on(cyl = 4, gear = 5)
+#'
 filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult = "all",
                       .chain = getOption("table.express.chain", TRUE))
 {

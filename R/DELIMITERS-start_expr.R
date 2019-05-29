@@ -18,6 +18,8 @@ start_expr <- function(.data, ...) {
 #'
 #' The [data.table::data.table-class] method returns an [ExprBuilder] instance.
 #'
+#' @template docu-examples
+#'
 start_expr.data.table <- function(.data, ...) {
     ExprBuilder$new(.data)
 }

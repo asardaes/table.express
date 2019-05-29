@@ -27,6 +27,14 @@ dplyr::select
 #'
 #' @template docu-examples
 #'
+#' @examples
+#'
+#' data("mtcars")
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     select(mpg:cyl)
+#'
 select.ExprBuilder <- function(.data, ...,
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))

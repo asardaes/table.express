@@ -17,3 +17,10 @@ frame_append(.data, ..., .parse = getOption("table.express.parse",
 \description{
 Add named expressions for the \link[data.table:data.table-class]{data.table::data.table} frame.
 }
+\examples{
+
+data.table::data.table() \%>\%
+    start_expr \%>\%
+    frame_append(anything = "goes")
+
+}

@@ -16,4 +16,12 @@ dplyr::transmute
 #'
 #' @inherit select-table.express details
 #'
+#' @examples
+#'
+#' data("mtcars")
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     transmute(ans = mpg * 2)
+#'
 transmute.ExprBuilder <- select.ExprBuilder

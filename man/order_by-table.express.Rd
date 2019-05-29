@@ -31,7 +31,16 @@ Clause for ordering rows.
 The \link{ExprBuilder} method dispatches to \link{where-table.express}, but doesn't forward the \code{.collapse}
 argument.
 
-To see examples, check the
+To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
+}
+\examples{
+
+data("mtcars")
+
+data.table::as.data.table(mtcars) \%>\%
+    start_expr \%>\%
+    order_by(-cyl, gear)
+
 }

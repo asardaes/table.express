@@ -42,8 +42,7 @@
 #'
 #' data.table::as.data.table(mtcars) %>%
 #'     start_expr %>%
-#'     transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>%
-#'     end_expr
+#'     transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME))
 #'
 transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
                          .parse = getOption("table.express.parse", FALSE),

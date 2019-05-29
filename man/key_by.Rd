@@ -24,7 +24,16 @@ Group by and set key of the result.
 Everything in \code{...} will be wrapped in a call to \code{list}. Its contents work like Clauses for
 grouping on columns. The \code{keyby} inside the \link[data.table:data.table]{data.table::data.table} frame.
 
-To see examples, check the
+To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
+}
+\examples{
+
+data("mtcars")
+
+data.table::as.data.table(mtcars) \%>\%
+    start_expr \%>\%
+    key_by(cyl, gear)
+
 }

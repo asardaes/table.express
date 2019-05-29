@@ -28,7 +28,16 @@ clause being set already exists?}
 Clause for subsetting rows.
 }
 \details{
-To see examples, check the
+To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
+}
+\examples{
+
+data("mtcars")
+
+data.table::as.data.table(mtcars) \%>\%
+    start_expr \%>\%
+    where(vs == 0, am == 1)
+
 }
