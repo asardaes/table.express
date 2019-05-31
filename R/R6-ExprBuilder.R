@@ -46,12 +46,14 @@ ExprBuilder <- R6::R6Class(
     "ExprBuilder",
     public = list(
         initialize = function(DT) {
-            if (data.table::is.data.table(DT))
+            if (data.table::is.data.table(DT)) {
                 private$.DT <- DT
-            else
+            }
+            else {
                 rlang::abort("Received 'DT' is not a data.table.",
                              "table.express.invalid_argument_class_error",
                              DT = DT)
+            }
 
             invisible()
         },
@@ -117,6 +119,7 @@ ExprBuilder <- R6::R6Class(
         appends = function(value) {
             if (missing(value)) return(private$.appends)
             private$.appends <- c(private$.appends, value)
+            invisible()
         },
 
         expr = function(.DT_) {
