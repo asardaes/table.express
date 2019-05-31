@@ -66,7 +66,7 @@ expressions that can be used within a data.table::data.table-package's frame." /
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -471,7 +471,7 @@ evolving, breaking changes may be needed in the future.</p>
 #&gt; 18: -0.63268982 -0.12581378 -0.57580624  0.13007177 -1.33179279
 #&gt; 19: -1.50344887  1.92185962 -0.75162494  1.35644079 -1.76411507
 #&gt; 20: -0.31773442 -0.44084046  0.50108330  0.14540138  0.15731727</div><div class='input'>
-<span class='co'># Alternatives to keep all columns (*copying* non-scaled ones)</span>
+<span class='co'># Alternative to keep all columns (*copying* non-scaled ones)</span>
 <span class='no'>scale_non_integers</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
     <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>is.integer</a></span>(<span class='no'>x</span>)) <span class='no'>x</span> <span class='kw'>else</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span>(<span class='no'>x</span>)
 }

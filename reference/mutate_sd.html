@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -159,7 +159,7 @@ reference, like <a href='mutate-table.express.html'>mutate-table.express</a>.</p
 <p>Additionally, <code>.SDcols</code> supports <a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a>, with the caveat that the
 expression is evaluated eagerly, i.e. with the currently captured <code>data.table</code>. Consider using
 <code><a href='chain.html'>chain()</a></code> to explicitly capture intermediate results as actual <code>data.table</code>s.</p>
-<p>To see examples, check the
+<p>To see more examples, check the
 <a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
 <a href='table.express-package.html'>table.express-package</a> entry.</p>
     
@@ -170,41 +170,8 @@ expression is evaluated eagerly, i.e. with the currently captured <code>data.tab
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>mutate_sd</span>(<span class='no'>.COL</span> * <span class='fl'>2</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mpg"</span>, <span class='st'>"cyl"</span>)) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-#&gt;  1: 42.0  12 160.0 110 3.90 2.620 16.46  0  1    4    4
-#&gt;  2: 42.0  12 160.0 110 3.90 2.875 17.02  0  1    4    4
-#&gt;  3: 45.6   8 108.0  93 3.85 2.320 18.61  1  1    4    1
-#&gt;  4: 42.8  12 258.0 110 3.08 3.215 19.44  1  0    3    1
-#&gt;  5: 37.4  16 360.0 175 3.15 3.440 17.02  0  0    3    2
-#&gt;  6: 36.2  12 225.0 105 2.76 3.460 20.22  1  0    3    1
-#&gt;  7: 28.6  16 360.0 245 3.21 3.570 15.84  0  0    3    4
-#&gt;  8: 48.8   8 146.7  62 3.69 3.190 20.00  1  0    4    2
-#&gt;  9: 45.6   8 140.8  95 3.92 3.150 22.90  1  0    4    2
-#&gt; 10: 38.4  12 167.6 123 3.92 3.440 18.30  1  0    4    4
-#&gt; 11: 35.6  12 167.6 123 3.92 3.440 18.90  1  0    4    4
-#&gt; 12: 32.8  16 275.8 180 3.07 4.070 17.40  0  0    3    3
-#&gt; 13: 34.6  16 275.8 180 3.07 3.730 17.60  0  0    3    3
-#&gt; 14: 30.4  16 275.8 180 3.07 3.780 18.00  0  0    3    3
-#&gt; 15: 20.8  16 472.0 205 2.93 5.250 17.98  0  0    3    4
-#&gt; 16: 20.8  16 460.0 215 3.00 5.424 17.82  0  0    3    4
-#&gt; 17: 29.4  16 440.0 230 3.23 5.345 17.42  0  0    3    4
-#&gt; 18: 64.8   8  78.7  66 4.08 2.200 19.47  1  1    4    1
-#&gt; 19: 60.8   8  75.7  52 4.93 1.615 18.52  1  1    4    2
-#&gt; 20: 67.8   8  71.1  65 4.22 1.835 19.90  1  1    4    1
-#&gt; 21: 43.0   8 120.1  97 3.70 2.465 20.01  1  0    3    1
-#&gt; 22: 31.0  16 318.0 150 2.76 3.520 16.87  0  0    3    2
-#&gt; 23: 30.4  16 304.0 150 3.15 3.435 17.30  0  0    3    2
-#&gt; 24: 26.6  16 350.0 245 3.73 3.840 15.41  0  0    3    4
-#&gt; 25: 38.4  16 400.0 175 3.08 3.845 17.05  0  0    3    2
-#&gt; 26: 54.6   8  79.0  66 4.08 1.935 18.90  1  1    4    1
-#&gt; 27: 52.0   8 120.3  91 4.43 2.140 16.70  0  1    5    2
-#&gt; 28: 60.8   8  95.1 113 3.77 1.513 16.90  1  1    5    2
-#&gt; 29: 31.6  16 351.0 264 4.22 3.170 14.50  0  1    5    4
-#&gt; 30: 39.4  12 145.0 175 3.62 2.770 15.50  0  1    5    6
-#&gt; 31: 30.0  16 301.0 335 3.54 3.570 14.60  0  1    5    8
-#&gt; 32: 42.8   8 121.0 109 4.11 2.780 18.60  1  1    4    2
-#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</div><div class='input'>
+    <span class='fu'>mutate_sd</span>(<span class='no'>.COL</span> * <span class='fl'>2</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mpg"</span>, <span class='st'>"cyl"</span>))</div><div class='output co'>#&gt; .DT_[, `:=`(c("mpg", "cyl"), Map(.mutate_matching, .COL = .SD, 
+#&gt;     .how = rlang::quos(.COL * 2))), .SDcols = c("mpg", "cyl")]</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

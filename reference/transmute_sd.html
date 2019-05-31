@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -174,41 +174,9 @@ captured <code>data.table</code>. See the examples here or in <a href='table.exp
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>transmute_sd</span>(<span class='no'>.COL</span> * <span class='fl'>2</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>"^d"</span>, <span class='no'>.COLNAME</span>)) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;      disp drat
-#&gt;  1: 320.0 7.80
-#&gt;  2: 320.0 7.80
-#&gt;  3: 216.0 7.70
-#&gt;  4: 516.0 6.16
-#&gt;  5: 720.0 6.30
-#&gt;  6: 450.0 5.52
-#&gt;  7: 720.0 6.42
-#&gt;  8: 293.4 7.38
-#&gt;  9: 281.6 7.84
-#&gt; 10: 335.2 7.84
-#&gt; 11: 335.2 7.84
-#&gt; 12: 551.6 6.14
-#&gt; 13: 551.6 6.14
-#&gt; 14: 551.6 6.14
-#&gt; 15: 944.0 5.86
-#&gt; 16: 920.0 6.00
-#&gt; 17: 880.0 6.46
-#&gt; 18: 157.4 8.16
-#&gt; 19: 151.4 9.86
-#&gt; 20: 142.2 8.44
-#&gt; 21: 240.2 7.40
-#&gt; 22: 636.0 5.52
-#&gt; 23: 608.0 6.30
-#&gt; 24: 700.0 7.46
-#&gt; 25: 800.0 6.16
-#&gt; 26: 158.0 8.16
-#&gt; 27: 240.6 8.86
-#&gt; 28: 190.2 7.54
-#&gt; 29: 702.0 8.44
-#&gt; 30: 290.0 7.24
-#&gt; 31: 602.0 7.08
-#&gt; 32: 242.0 8.22
-#&gt;      disp drat</div><div class='input'>
+    <span class='fu'>transmute_sd</span>(<span class='no'>.COL</span> * <span class='fl'>2</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>"^d"</span>, <span class='no'>.COLNAME</span>))</div><div class='output co'>#&gt; .DT_[, .non_null(Map(.transmute_matching, .COL = .SD, .COLNAME = names(.SD), 
+#&gt;     .COLNAMES = list(names(.SD)), .which = rlang::quos(grepl("^d", 
+#&gt;         .COLNAME)), .how = rlang::quos(.COL * 2)))]</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
