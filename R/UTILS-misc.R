@@ -37,15 +37,14 @@ parse_dots <- function(.parse = FALSE, ..., .named = FALSE, .unquote_names = TRU
 #'
 reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
     Reduce(x = quosures, init = init, f = function(current, new) {
-        if (is.list(new))
+        if (is.list(new)) {
             new <- lapply(new, to_expr, .parse = .parse)
-        else
-            new <- to_expr(new, .parse = .parse)
-
-        if (is.list(new))
             rlang::quo_squash(rlang::expr((!!op)(!!current, !!!new)))
-        else
+        }
+        else {
+            new <- to_expr(new, .parse = .parse)
             rlang::quo_squash(rlang::expr((!!op)(!!current, !!new)))
+        }
     })
 }
 
