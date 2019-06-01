@@ -21,7 +21,7 @@ dplyr::select
 #'
 #' @details
 #'
-#' If `length(...) == 1L` and the expression is a call to `:` (e.g. `a:c`) or
+#' If `length(...) == 1L` and the expression is a call to `:` (e.g. `a:c`), a numeric, or a call to
 #' [tidyselect::select_helpers], then it will be taken as the single expression for the select
 #' clause, otherwise everything in `...` will be wrapped in a call to [base::list()].
 #'
@@ -53,8 +53,12 @@ select.ExprBuilder <- function(.data, ...,
                                .chain = getOption("table.express.chain", TRUE))
 {
     clause <- parse_dots(.parse, ...)
+    if (length(clause) == 0L) return(.data)
 
-    if (length(clause) == 1L && is_tidyselect_call(clause[[1L]])) {
+    is_single <- length(clause) == 1L
+    first_clause <- clause[[1L]]
+
+    if (is_single && is_tidyselect_call(first_clause)) {
         # just to avoid NOTE
         .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
 
@@ -67,12 +71,18 @@ select.ExprBuilder <- function(.data, ...,
             .how = rlang::quos(.COL)
         ))
     }
-    else if (length(clause) == 1L && rlang::is_call(clause[[1L]], ":")) {
-        clause <- clause[[1L]]
+    else if (is_single && (evaled_is_num(first_clause) || rlang::is_call(first_clause, ":"))) {
+        clause <- first_clause
     }
     else {
         clause <- rlang::expr(list(!!!clause))
     }
 
     .data$set_select(clause, .chain)
+}
+
+#' @importFrom rlang eval_tidy
+#'
+evaled_is_num <- function(obj) {
+    isTRUE(try(is.numeric(rlang::eval_tidy(obj)), silent = TRUE))
 }

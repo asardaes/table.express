@@ -23,7 +23,7 @@ clause being set already exists?}
 Select or compute over columns of a \link[data.table:data.table-class]{data.table::data.table}.
 }
 \details{
-If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. \code{a:c}) or
+If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. \code{a:c}), a numeric, or a call to
 \link[tidyselect:select_helpers]{tidyselect::select_helpers}, then it will be taken as the single expression for the select
 clause, otherwise everything in \code{...} will be wrapped in a call to \code{\link[base:list]{base::list()}}.
 

@@ -24,7 +24,7 @@ Because of the way \code{data.table} and the \link{select-table.express} method 
 \code{\link[dplyr:transmute]{dplyr::transmute()}} equivalent can be specified as a \code{select} clause.
 }
 \details{
-If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. \code{a:c}) or
+If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. \code{a:c}), a numeric, or a call to
 \link[tidyselect:select_helpers]{tidyselect::select_helpers}, then it will be taken as the single expression for the select
 clause, otherwise everything in \code{...} will be wrapped in a call to \code{\link[base:list]{base::list()}}.
 

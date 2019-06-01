@@ -1,5 +1,10 @@
 context("  Select (a.k.a Transmute)")
 
+test_that("An empty clause is not an error.", {
+    ans <- DT %>% start_expr %>% select() %>% end_expr
+    expect_identical(ans, DT)
+})
+
 test_that("The select verb works with single columns.", {
     expectations <- function(ans) {
         expect_identical(ncol(ans), 1L)
@@ -7,6 +12,9 @@ test_that("The select verb works with single columns.", {
     }
 
     ans <- DT %>% start_expr %>% select(mpg) %>% end_expr
+    expectations(ans)
+
+    ans <- DT %>% start_expr %>% select(1L) %>% end_expr
     expectations(ans)
 
     v <- rlang::sym("mpg")
@@ -32,6 +40,15 @@ test_that("The select verb works with multiple columns.", {
     expectations(ans)
 
     ans <- DT %>% start_expr %>% select(mpg:cyl) %>% end_expr
+    expectations(ans)
+
+    ans <- DT %>% start_expr %>% select(1:2) %>% end_expr
+    expectations(ans)
+
+    ans <- DT %>% start_expr %>% select(1L:2L) %>% end_expr
+    expectations(ans)
+
+    ans <- DT %>% start_expr %>% select(c(1L, 2L)) %>% end_expr
     expectations(ans)
 
     ans <- DT %>% start_expr %>% select("mpg", "cyl", .parse = TRUE) %>% end_expr
