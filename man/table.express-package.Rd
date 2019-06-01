@@ -20,7 +20,7 @@ data("mtcars")
 
 DT <- as.data.table(mtcars)
 
-# ==================================================================================================
+# ====================================================================================
 # Simple dplyr-like transformations
 
 DT \%>\%
@@ -64,7 +64,7 @@ DT \%>\%
     select(ends_with("t")) \%>\%
     end_expr
 
-# ==================================================================================================
+# ====================================================================================
 # Helpers to transform a subset of data
 
 # Like DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole]
@@ -79,7 +79,8 @@ sapply(DT, class)
 # Like DT[, lapply(.SD, fun), .SDcols = ...]
 DT \%>\%
     start_expr \%>\%
-    transmute_sd((.COL - mean(.COL)) / sd(.COL), .SDcols = setdiff(names(DT), whole)) \%>\%
+    transmute_sd((.COL - mean(.COL)) / sd(.COL),
+                 .SDcols = setdiff(names(DT), whole)) \%>\%
     end_expr
 
 # Filter several with the same condition
@@ -105,7 +106,9 @@ DT \%>\%
 
 # The previous is quivalent to
 DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole
-   ][vs == 1 | am == 1, lapply(.SD, scale), .SDcols = names(DT)[sapply(DT, Negate(is.integer))]]
+   ][vs == 1 | am == 1,
+     lapply(.SD, scale),
+     .SDcols = names(DT)[sapply(DT, Negate(is.integer))]]
 
 # Alternative to keep all columns (*copying* non-scaled ones)
 scale_non_integers <- function(x) {
