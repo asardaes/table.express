@@ -93,26 +93,6 @@ the captured `data.table` is assigned to the evaluation environment as said pron
 
 Even though selecting a subset of columns is a common operation,
 it may be undesirable to do so when working with `data.table`s because they lead to data copies.
-
-```{r df-copy}
-x <- 1:2
-tracemem(x)
-
-df <- data.frame(x=x)
-x2 <- df[, "x"]
-x2[1L] <- 0L
-```
-
-With this normal data frame,
-only the last assignment triggered a copy.
-
-```{r dt-copy}
-dt <- data.table(x=x)
-x3 <- dt[, x]
-```
-
-In this case with `data.table`,
-more copies were triggered.
 Given that `data.table` supports modification by reference,
 these copies are necessary.
 

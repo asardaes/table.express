@@ -35,6 +35,19 @@ dplyr::select
 #'     start_expr %>%
 #'     select(mpg:cyl)
 #'
+#' # Keep deep copies in mind
+#' if (capabilities("profmem")) {
+#'     x <- 1:2
+#'     tracemem(x)
+#'
+#'     df <- data.frame(x=x)
+#'     x2 <- df[, "x"]
+#'     x2[1L] <- 0L # copy triggered
+#'
+#'     dt <- data.table::data.table(x=x) # copy triggered
+#'     x3 <- dt[, x] # copy triggered again
+#' }
+#'
 select.ExprBuilder <- function(.data, ...,
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))
