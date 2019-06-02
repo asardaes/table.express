@@ -45,7 +45,7 @@ mutate_sd <- function(.data, .how = identity, ..., .SDcols,
     how_expr <- rlang::enexpr(.how)
     dots <- parse_dots(.parse, ...)
 
-    if (is_fun(.how)) {
+    if (evaled_is_fun(.how)) {
         .how <- rlang::call2(how_expr, rlang::expr(.COL))
     }
     else {

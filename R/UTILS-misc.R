@@ -48,7 +48,7 @@ reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
     })
 }
 
-#' is_fun
+#' evaled_is_fun
 #'
 #' Like [rlang::is_function()] but doesn't throw if the input is maybe something to be quoted.
 #'
@@ -57,7 +57,7 @@ reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
 #'
 #' @param obj Anything really.
 #'
-is_fun <- function(obj) {
+evaled_is_fun <- function(obj) {
     isTRUE(try(rlang::is_function(obj), silent = TRUE))
 }
 
