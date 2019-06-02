@@ -58,7 +58,7 @@ select.ExprBuilder <- function(.data, ...,
             .how = rlang::quos(.COL)
         ))
     }
-    else if (is_single && (evaled_is_num(first_clause) || rlang::is_call(first_clause, ":"))) {
+    else if (is_single && (evaled_is(first_clause, "numeric") || rlang::is_call(first_clause, ":"))) {
         clause <- first_clause
     }
     else {
@@ -66,10 +66,4 @@ select.ExprBuilder <- function(.data, ...,
     }
 
     .data$set_select(clause, .chain)
-}
-
-#' @importFrom rlang eval_tidy
-#'
-evaled_is_num <- function(obj) {
-    isTRUE(try(is.numeric(rlang::eval_tidy(obj)), silent = TRUE))
 }

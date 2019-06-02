@@ -43,10 +43,10 @@ filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`
 {
     .SDcols <- process_sdcols(.data, rlang::enquo(.SDcols))
 
-    dots <- parse_dots(.parse, ...)
     how_expr <- rlang::enexpr(.how)
+    dots <- parse_dots(.parse, ...)
 
-    if (evaled_is_fun(.how)) {
+    if (evaled_is(rlang::enquo(.how), "function")) {
         .how <- rlang::call2(how_expr, rlang::expr(.COL))
     }
     else {

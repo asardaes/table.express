@@ -48,17 +48,17 @@ reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
     })
 }
 
-#' evaled_is_fun
+#' @importFrom methods is
+#' @importFrom rlang eval_tidy
 #'
-#' Like [rlang::is_function()] but doesn't throw if the input is maybe something to be quoted.
-#'
-#' @keywords internal
-#' @importFrom rlang is_function
-#'
-#' @param obj Anything really.
-#'
-evaled_is_fun <- function(obj) {
-    isTRUE(try(rlang::is_function(obj), silent = TRUE))
+evaled_is <- function(obj_quo, classes) {
+    evaled <- try(rlang::eval_tidy(obj_quo), silent = TRUE)
+    if (inherits(evaled, "try-error")) {
+        return(FALSE)
+    }
+
+    ans <- sapply(classes, function(cl) { methods::is(evaled, cl) })
+    any(ans)
 }
 
 #' @importFrom rlang eval_tidy

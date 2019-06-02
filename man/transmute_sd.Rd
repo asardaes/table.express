@@ -4,7 +4,7 @@
 \alias{transmute_sd}
 \title{Transmute subset of data}
 \usage{
-transmute_sd(.data, .how = identity, ..., .SDcols = names(.SD),
+transmute_sd(.data, .how = identity, ..., .SDcols = everything(),
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }

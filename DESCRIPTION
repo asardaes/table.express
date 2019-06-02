@@ -8,6 +8,7 @@ Version: 0.1.0.9000
 Depends:
     R (>= 3.1.0)
 Imports:
+    methods,
     utils,
     data.table (>= 1.9.8),
     dplyr,
@@ -20,7 +21,7 @@ Suggests:
     rex,
     rmarkdown,
     testthat
-Date: 2019-05-31
+Date: 2019-06-02
 Authors@R: c(
         person("Alexis", "Sarda-Espinosa", role=c("cre", "aut"), email="alexis.sarda@gmail.com")
     )

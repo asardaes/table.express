@@ -8,8 +8,8 @@
 #' @importFrom rlang call_standardise
 #' @importFrom rlang caller_env
 #' @importFrom rlang enexpr
+#' @importFrom rlang enquo
 #' @importFrom rlang expr
-#' @importFrom rlang is_call
 #' @importFrom rlang quos
 #' @importFrom rlang zap
 #'
@@ -44,26 +44,35 @@
 #'     start_expr %>%
 #'     transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME))
 #'
-transmute_sd <- function(.data, .how = identity, ..., .SDcols = names(.SD),
+transmute_sd <- function(.data, .how = identity, ..., .SDcols = everything(),
                          .parse = getOption("table.express.parse", FALSE),
                          .chain = getOption("table.express.chain", TRUE))
 {
     dots <- parse_dots(.parse, ...)
-    how_expr <- rlang::enexpr(.how)
+    how_quo <- rlang::enquo(.how)
 
-    if (evaled_is_fun(.how)) {
-        .how <- rlang::call2(how_expr, rlang::expr(.COL))
-    }
-    else {
-        .how <- to_expr(how_expr, .parse = .parse)
-    }
-
+    .how <- to_expr(rlang::enexpr(.how), .parse = .parse)
     .which <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
 
-    if (rlang::is_call(.how)) {
-        .how <- rlang::call_standardise(.how, rlang::caller_env())
-        .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
+    all_sdcols <- identical(.which, rlang::expr(everything()))
+
+    if (evaled_is(how_quo, "function")) {
+        if (all_sdcols || evaled_is(.which, c("numeric", "character"))) {
+            clause <- rlang::expr(lapply(.SD, !!.how, !!!dots))
+            ans <- .data$set_select(clause, .chain)
+
+            if (!all_sdcols) {
+                frame_append(ans, .SDcols = c(!!.which), .parse = FALSE)
+            }
+
+            return(ans)
+        }
+
+        .how <- rlang::call2(.how, rlang::expr(.COL))
     }
+
+    .how <- rlang::call_standardise(.how, rlang::caller_env())
+    .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
 
     # just to avoid NOTE
     .non_null <- EBCompanion$helper_functions$.non_null
