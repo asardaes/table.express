@@ -13,5 +13,3 @@
 ^appveyor\.yml$
 ^codecov\.R
 ^docs$
-^inst/_pkgdown\.yml$
-^pkgdown$

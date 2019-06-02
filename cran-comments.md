@@ -1,5 +1,6 @@
 
 ## Update to version ...
+* Removed code that called tracemem() to avoid error while building vignette.
 
 ## Test environments
 * Local GNU/Linux, R release
