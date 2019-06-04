@@ -66,7 +66,7 @@ dplyr::transmute() equivalent can be specified as a select clause." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@ clause being set already exists?</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If <code>length(...) == 1L</code> and the expression is a call to <code>:</code> (e.g. <code>a:c</code>) or
+    <p>If <code>length(...) == 1L</code> and the expression is a call to <code>:</code> (e.g. <code>a:c</code>), a numeric, or a call to
 <a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a>, then it will be taken as the single expression for the select
 clause, otherwise everything in <code>...</code> will be wrapped in a call to <code><a href='https://rdrr.io/r/base/list.html'>base::list()</a></code>.</p>
 <p>To see more examples, check the

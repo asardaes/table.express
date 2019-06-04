@@ -66,7 +66,7 @@ expressions that can be used within a data.table::data.table-package's frame." /
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -141,7 +141,7 @@ evolving, breaking changes may be needed in the future.</p>
 
 <span class='no'>DT</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>)
 
-<span class='co'># ==================================================================================================</span>
+<span class='co'># ====================================================================================</span>
 <span class='co'># Simple dplyr-like transformations</span>
 
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
@@ -317,7 +317,7 @@ evolving, breaking changes may be needed in the future.</p>
 #&gt; 31: 3.54 3.570
 #&gt; 32: 4.11 2.780
 #&gt;     drat    wt</div><div class='input'>
-<span class='co'># ==================================================================================================</span>
+<span class='co'># ====================================================================================</span>
 <span class='co'># Helpers to transform a subset of data</span>
 
 <span class='co'># Like DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole]</span>
@@ -366,7 +366,8 @@ evolving, breaking changes may be needed in the future.</p>
 <span class='co'># Like DT[, lapply(.SD, fun), .SDcols = ...]</span>
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>((<span class='no'>.COL</span> - <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>.COL</span>)) / <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>.COL</span>), <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/setops.html'>setdiff</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>), <span class='no'>whole</span>)) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>((<span class='no'>.COL</span> - <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>.COL</span>)) / <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>.COL</span>),
+                 <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/setops.html'>setdiff</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>), <span class='no'>whole</span>)) <span class='kw'>%&gt;%</span>
     <span class='no'>end_expr</span></div><div class='output co'>#&gt;             mpg        disp        drat           wt        qsec
 #&gt;  1:  0.15088482 -0.57061982  0.56751369 -0.610399567 -0.77716515
 #&gt;  2:  0.15088482 -0.57061982  0.56751369 -0.349785269 -0.46378082
@@ -450,7 +451,9 @@ evolving, breaking changes may be needed in the future.</p>
 #&gt; 20: -0.31773442 -0.44084046  0.50108330  0.14540138  0.15731727</div><div class='input'>
 <span class='co'># The previous is quivalent to</span>
 <span class='no'>DT</span>[, (<span class='no'>whole</span>) <span class='kw'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>.SD</span>, <span class='no'>as.integer</span>), <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='no'>whole</span>
-   ][<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>.SD</span>, <span class='no'>scale</span>), <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>)[<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>DT</span>, <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.integer</span>))]]</div><div class='output co'>#&gt;             mpg        disp        drat          wt        qsec
+   ][<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>,
+     <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>.SD</span>, <span class='no'>scale</span>),
+     <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>)[<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>DT</span>, <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.integer</span>))]]</div><div class='output co'>#&gt;             mpg        disp        drat          wt        qsec
 #&gt;  1: -0.39184157  0.07107789  0.03955921 -0.09987243 -0.87064903
 #&gt;  2: -0.39184157  0.07107789  0.03955921  0.29103270 -0.60164850
 #&gt;  3: -0.05835938 -0.61147991 -0.07032748 -0.55976081  0.16212085
