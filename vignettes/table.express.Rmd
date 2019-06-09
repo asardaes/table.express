@@ -354,6 +354,7 @@ which would lead to a warning being shown whenever a part of the query is replac
   - `order_by`
   - `where`
 - Verbs that set `j`:
+  - `select`
   - `mutate`
   - `mutate_sd`
   - `transmute`
