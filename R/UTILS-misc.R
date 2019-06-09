@@ -61,18 +61,6 @@ evaled_is <- function(obj_quo, classes) {
     any(ans)
 }
 
-#' @importFrom rlang eval_tidy
-#'
-process_sdcols <- function(.data, sdcols_quo) {
-    e <- to_expr(sdcols_quo)
-    if (is_tidyselect_call(e)) {
-        .data$tidy_select(e)
-    }
-    else {
-        rlang::eval_tidy(sdcols_quo)
-    }
-}
-
 # Must be expresssion!
 #
 #' @importFrom rlang is_call

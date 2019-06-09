@@ -9,16 +9,20 @@
 #' @importFrom R6 R6Class
 #' @importFrom rlang abort
 #' @importFrom rlang as_label
+#' @importFrom rlang as_string
+#' @importFrom rlang call_args
 #' @importFrom rlang dots_list
 #' @importFrom rlang env_get_list
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
+#' @importFrom rlang is_call
 #' @importFrom rlang is_syntactic_literal
 #' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
 #' @importFrom rlang quo
+#' @importFrom rlang quos
 #' @importFrom rlang warn
 #' @importFrom tidyselect scoped_vars
 #' @importFrom tidyselect vars_select_helpers
@@ -45,9 +49,16 @@
 ExprBuilder <- R6::R6Class(
     "ExprBuilder",
     public = list(
-        initialize = function(DT) {
+        initialize = function(DT, SDcols) {
             if (data.table::is.data.table(DT)) {
                 private$.DT <- DT
+
+                if (missing(SDcols)) {
+                    private$.SDcols <- colnames(DT)
+                }
+                else {
+                    private$.SDcols <- SDcols
+                }
             }
             else {
                 rlang::abort("Received 'DT' is not a data.table.",
@@ -71,21 +82,19 @@ ExprBuilder <- R6::R6Class(
         },
 
         chain = function() {
-            other <- ExprBuilder$new(private$.DT)
+            if (is.null(private$.SDcols_next)) {
+                other <- ExprBuilder$new(private$.DT)
+            }
+            else {
+                other <- ExprBuilder$new(private$.DT, private$.SDcols_next)
+            }
+
             private$.insert_child(other)
             other
         },
 
         eval = function(parent_env, by_ref, ...) {
             .DT_ <- if (by_ref) private$.DT else data.table::copy(private$.DT)
-
-            is_chain <- !is.null(private$.parent) | !is.null(private$.child)
-
-            if (private$.selected_eagerly && is_chain && EBCompanion$chain_select_count(self) > 1L) {
-                rlang::warn(paste("Current expression chain used 'tidyselect' helpers eagerly,",
-                                  "but has more than one 'j' clause.",
-                                  "Consider using 'chain' first."))
-            }
 
             dots <- rlang::dots_list(
                 .DT_ = .DT_,
@@ -103,10 +112,66 @@ ExprBuilder <- R6::R6Class(
             base::eval(final_expr)
         },
 
-        tidy_select = function(select_expr) {
-            private$.selected_eagerly <- TRUE
-            tidyselect::scoped_vars(names(private$.DT))
-            names(private$.DT)[rlang::eval_tidy(select_expr)]
+        tidy_select = function(which, update_captured = "no") {
+            update_captured <- match.arg(update_captured, c("no", "union", "replace"))
+            current_sdcols <- private$.SDcols
+            tidyselect::scoped_vars(current_sdcols)
+            names(current_sdcols) <- current_sdcols
+
+            if (rlang::is_call(which, ":")) {
+                which <- sapply(rlang::call_args(which), function(arg) {
+                    if (!is.numeric(arg)) {
+                        arg <- which(current_sdcols == rlang::as_string(arg))
+                    }
+
+                    arg
+                })
+
+                which <- seq(from = which[1L], to = which[2L])
+
+            }
+            else if (EBCompanion$uses_pronoun(which, c(".COL", ".COLNAME"))) {
+                which <- private$.DT[, Map(
+                    EBCompanion$helper_functions$.transmute_matching,
+                    .COL = .SD,
+                    .COLNAME = names(.SD),
+                    .COLNAMES = list(names(.SD)),
+                    .which = list(current_sdcols),
+                    .how = rlang::quos(!!which)
+                )]
+
+                which <- sapply(which, isTRUE)
+            }
+            else {
+                which <- rlang::eval_tidy(which)
+            }
+
+            selected <- current_sdcols[which]
+            if (update_captured != "no" && anyNA(selected)) {
+                selected <- which
+            }
+
+            if (update_captured == "union") {
+                private$.SDcols_next <- unique(c(current_sdcols, selected))
+            }
+            else if (update_captured == "replace") {
+                private$.SDcols_next <- selected
+            }
+
+            unname(selected)
+        },
+
+        check_col_usage = function(e) {
+            if (EBCompanion$uses_pronoun(e, ".COL")) {
+                if (private$.used_col) {
+                    rlang::abort(paste("Current expression already used .COL to select .SDcols,",
+                                       "please use chain() explicitly."))
+                }
+
+                private$.used_col <- TRUE
+            }
+
+            invisible(self)
         },
 
         print = function(...) {
@@ -133,6 +198,8 @@ ExprBuilder <- R6::R6Class(
     ),
     private = list(
         .DT = NULL,
+        .SDcols = NULL,
+        .SDcols_next = NULL,
 
         .parent = NULL,
         .child = NULL,
@@ -142,7 +209,7 @@ ExprBuilder <- R6::R6Class(
         .by = NULL,
         .appends = NULL,
 
-        .selected_eagerly = FALSE,
+        .used_col = FALSE,
 
         .process_clause = function(name, value, chain_if_needed) {
             private_name <- paste0(".", name)
@@ -343,23 +410,22 @@ EBCompanion$set_child <- function(expr_builder, child) {
 }
 
 # --------------------------------------------------------------------------------------------------
-# chain_has_select
+# uses_pronoun
 #
-EBCompanion$chain_select_count <- function(expr_builder) {
-    .recursion <- function(node, count) {
-        if (!is.null(node$.__enclos_env__$private$.select)) {
-            count <- count + 1L
-        }
+#' @importFrom rlang call_args
+#' @importFrom rlang is_call
+#' @importFrom rlang is_quosure
+#' @importFrom rlang quo_get_expr
+#'
+EBCompanion$uses_pronoun <- function(.obj, .pronoun) {
+    .expr <- if (rlang::is_quosure(.obj)) rlang::quo_get_expr(.obj) else .obj
 
-        if (!is.null(EBCompanion$get_child(node))) {
-            .recursion(EBCompanion$get_child(node), count)
-        }
-        else {
-            count
-        }
+    if (rlang::is_call(.expr)) {
+        any(sapply(rlang::call_args(.expr), EBCompanion$uses_pronoun, .pronoun = .pronoun))
     }
-
-    .recursion(EBCompanion$get_root(expr_builder), 0L)
+    else {
+        any(sapply(.pronoun, `==`, .expr))
+    }
 }
 
 lockEnvironment(EBCompanion, TRUE)

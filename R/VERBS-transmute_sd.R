@@ -34,7 +34,8 @@
 #'
 #' Unlike a call like `DT[, (vars) := expr]`, `.SDcols` can be created dynamically with an
 #' expression that evaluates to something that would be used in place of `vars` *without* using the
-#' captured `data.table`. See the examples here or in [table.express-package].
+#' captured `data.table`, maybe using [tidyselect::select_helpers]. See the examples here or in
+#' [table.express-package].
 #'
 #' @examples
 #'
@@ -50,29 +51,32 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = everything(),
 {
     dots <- parse_dots(.parse, ...)
     how_quo <- rlang::enquo(.how)
+    which_quo <- rlang::enquo(.SDcols)
 
-    .how <- to_expr(rlang::enexpr(.how), .parse = .parse)
-    .which <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
+    how <- to_expr(rlang::enexpr(.how), .parse = .parse)
+    which <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
 
-    all_sdcols <- identical(.which, rlang::expr(everything()))
+    all_sdcols <- identical(which, rlang::expr(everything()))
+    .data$check_col_usage(which)
 
     if (evaled_is(how_quo, "function")) {
-        if (all_sdcols || evaled_is(.which, c("numeric", "character"))) {
-            clause <- rlang::expr(lapply(.SD, !!.how, !!!dots))
+        if (all_sdcols || evaled_is(which_quo, c("numeric", "character"))) {
+            clause <- rlang::expr(lapply(.SD, !!how, !!!dots))
             ans <- .data$set_select(clause, .chain)
 
             if (!all_sdcols) {
-                frame_append(ans, .SDcols = c(!!.which), .parse = FALSE)
+                which <- .data$tidy_select(which_quo, "replace")
+                frame_append(ans, .SDcols = c(!!which), .parse = FALSE)
             }
 
             return(ans)
         }
 
-        .how <- rlang::call2(.how, rlang::expr(.COL))
+        how <- rlang::call2(how, rlang::expr(.COL))
     }
 
-    .how <- rlang::call_standardise(.how, rlang::caller_env())
-    .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
+    how <- rlang::call_standardise(how, rlang::caller_env())
+    how <- rlang::call_modify(how, ... = rlang::zap(), !!!dots)
 
     # just to avoid NOTE
     .non_null <- EBCompanion$helper_functions$.non_null
@@ -84,10 +88,12 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = everything(),
             .COL = .SD,
             .COLNAME = names(.SD),
             .COLNAMES = list(names(.SD)),
-            .which = rlang::quos(!!.which),
-            .how = rlang::quos(!!.how)
+            .which = rlang::quos(!!which),
+            .how = rlang::quos(!!how)
         ))
     )
 
-    .data$set_select(clause, .chain)
+    ans <- .data$set_select(clause, .chain)
+    .data$tidy_select(which_quo, "replace")
+    ans
 }

@@ -40,7 +40,8 @@ Said function includes two pronouns that can be used by \code{.how} and \code{.S
 
 Unlike a call like \code{DT[, (vars) := expr]}, \code{.SDcols} can be created dynamically with an
 expression that evaluates to something that would be used in place of \code{vars} \emph{without} using the
-captured \code{data.table}. See the examples here or in \link{table.express-package}.
+captured \code{data.table}, maybe using \link[tidyselect:select_helpers]{tidyselect::select_helpers}. See the examples here or in
+\link{table.express-package}.
 }
 \examples{
 
