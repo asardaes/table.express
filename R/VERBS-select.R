@@ -42,7 +42,7 @@ select.ExprBuilder <- function(.data, ...,
     clause <- parse_dots(.parse, ...)
     if (length(clause) == 0L) return(.data)
 
-    is_single <- length(clause) == 1L
+    is_single <- length(clause) == 1L & !nzchar(names(clause)[1L])
     first_clause <- clause[[1L]]
 
     if (is_single && is_tidyselect_call(first_clause)) {

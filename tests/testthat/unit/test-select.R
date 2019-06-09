@@ -27,6 +27,12 @@ test_that("The select verb works with single columns.", {
     v <- "mpg"
     ans <- DT %>% start_expr %>% select(!!v, .parse = TRUE) %>% end_expr
     expectations(ans)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- DT[, .(mpg = 1:32)]
+    ans <- DT %>% start_expr %>% select(mpg = 1:32) %>% end_expr
+    expect_identical(ans, expected)
 })
 
 test_that("The select verb works with multiple columns.", {
