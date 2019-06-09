@@ -22,6 +22,7 @@
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
 #' @importFrom rlang quo
+#' @importFrom rlang quos
 #' @importFrom rlang warn
 #' @importFrom tidyselect scoped_vars
 #' @importFrom tidyselect vars_select_helpers
@@ -129,6 +130,18 @@ ExprBuilder <- R6::R6Class(
                 which <- seq(from = which[1L], to = which[2L])
 
             }
+            else if (EBCompanion$uses_pronoun(which, c(".COL", ".COLNAME"))) {
+                which <- private$.DT[, Map(
+                    EBCompanion$helper_functions$.transmute_matching,
+                    .COL = .SD,
+                    .COLNAME = names(.SD),
+                    .COLNAMES = list(names(.SD)),
+                    .which = list(current_sdcols),
+                    .how = rlang::quos(!!which)
+                )]
+
+                which <- sapply(which, isTRUE)
+            }
             else {
                 which <- rlang::eval_tidy(which)
             }
@@ -146,6 +159,19 @@ ExprBuilder <- R6::R6Class(
             }
 
             unname(selected)
+        },
+
+        check_col_usage = function(e) {
+            if (EBCompanion$uses_pronoun(e, ".COL")) {
+                if (private$.used_col) {
+                    rlang::abort(paste("Current expression already used .COL to select .SDcols,",
+                                       "please use chain() explicitly."))
+                }
+
+                private$.used_col <- TRUE
+            }
+
+            invisible(self)
         },
 
         print = function(...) {
@@ -182,6 +208,8 @@ ExprBuilder <- R6::R6Class(
         .where = NULL,
         .by = NULL,
         .appends = NULL,
+
+        .used_col = FALSE,
 
         .process_clause = function(name, value, chain_if_needed) {
             private_name <- paste0(".", name)
@@ -378,6 +406,25 @@ EBCompanion$get_child <- function(expr_builder) {
 EBCompanion$set_child <- function(expr_builder, child) {
     if (!is.null(expr_builder)) {
         expr_builder$.__enclos_env__$private$.child <- child
+    }
+}
+
+# --------------------------------------------------------------------------------------------------
+# uses_pronoun
+#
+#' @importFrom rlang call_args
+#' @importFrom rlang is_call
+#' @importFrom rlang is_quosure
+#' @importFrom rlang quo_get_expr
+#'
+EBCompanion$uses_pronoun <- function(.obj, .pronoun) {
+    .expr <- if (rlang::is_quosure(.obj)) rlang::quo_get_expr(.obj) else .obj
+
+    if (rlang::is_call(.expr)) {
+        any(sapply(rlang::call_args(.expr), EBCompanion$uses_pronoun, .pronoun = .pronoun))
+    }
+    else {
+        any(sapply(.pronoun, `==`, .expr))
     }
 }
 
