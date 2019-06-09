@@ -96,6 +96,16 @@ test_that("Transmuting by value with parsing works.", {
     expect_identical(ans$disp0.5, DT$disp / 2)
 })
 
+test_that("Unnamed arguments are handled correctly.", {
+    expected <- DT[, .(mpg * 2)]
+    ans <- DT %>% start_expr %>% select(mpg * 2) %>% end_expr
+    expect_identical(ans, expected)
+
+    expected <- DT[, .(mpg * 2, cyl)]
+    ans <- DT %>% start_expr %>% select(mpg * 2, cyl) %>% end_expr
+    expect_identical(ans, expected)
+})
+
 test_that("Select with tidyselect works.", {
     expectations <- function(ans, nc) {
         expect_identical(nrow(ans), nrow(DT))

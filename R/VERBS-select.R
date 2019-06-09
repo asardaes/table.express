@@ -10,7 +10,7 @@ dplyr::select
 #' @rdname select-table.express
 #' @name select-table.express
 #' @export
-#' @importFrom rlang as_label
+#' @importFrom rlang as_string
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang quos
@@ -70,7 +70,16 @@ select.ExprBuilder <- function(.data, ...,
         which_expr <- names(clauses)
         which_unnamed <- sapply(which_expr, function(cl) { is.null(cl) | !nzchar(cl) })
         if (any(which_unnamed)) {
-            which_expr[which_unnamed] <- sapply(clauses[which_unnamed], rlang::as_label)
+            i <- 0L
+            which_expr[which_unnamed] <- sapply(clauses[which_unnamed], function(cl) {
+                if (rlang::is_call(cl)) {
+                    i <<- i + 1L
+                    paste0("V", i)
+                }
+                else {
+                    rlang::as_string(cl)
+                }
+            })
         }
     }
 
