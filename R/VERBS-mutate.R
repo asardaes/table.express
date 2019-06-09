@@ -11,7 +11,11 @@ dplyr::mutate
 #' @rdname mutate-table.express
 #' @name mutate-table.express
 #' @export
+#' @importFrom rlang call_args
+#' @importFrom rlang enquos
 #' @importFrom rlang expr
+#' @importFrom rlang new_quosure
+#' @importFrom rlang quo_get_env
 #' @importFrom rlang quo_squash
 #' @importFrom rlang warn
 #'
@@ -36,8 +40,10 @@ mutate.ExprBuilder <- function(.data, ..., .unquote_names = TRUE,
                                .chain = getOption("table.express.chain", TRUE))
 {
     clauses <- parse_dots(.parse, ..., .named = TRUE, .unquote_names = .unquote_names)
+    if (length(clauses) == 0L) return(.data)
 
     if (.unquote_names) {
+        which <- names(clauses)
         clause <- rlang::quo_squash(rlang::expr(
             `:=`(!!!clauses)
         ))
@@ -49,7 +55,13 @@ mutate.ExprBuilder <- function(.data, ..., .unquote_names = TRUE,
         }
 
         clause <- clauses[[1L]]
+
+        # seems ugly
+        env <- rlang::quo_get_env(rlang::enquos(..., .unquote_names = FALSE)[[1L]])
+        which <- rlang::new_quosure(rlang::call_args(clause)[[1L]], env)
     }
 
-    .data$set_select(clause, .chain)
+    ans <- .data$set_select(clause, .chain)
+    .data$tidy_select(which, "union")
+    ans
 }

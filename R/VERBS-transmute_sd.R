@@ -34,7 +34,8 @@
 #'
 #' Unlike a call like `DT[, (vars) := expr]`, `.SDcols` can be created dynamically with an
 #' expression that evaluates to something that would be used in place of `vars` *without* using the
-#' captured `data.table`. See the examples here or in [table.express-package].
+#' captured `data.table`, maybe using [tidyselect::select_helpers]. See the examples here or in
+#' [table.express-package].
 #'
 #' @examples
 #'
@@ -89,5 +90,7 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = everything(),
         ))
     )
 
-    .data$set_select(clause, .chain)
+    ans <- .data$set_select(clause, .chain)
+    .data$tidy_select(rlang::enquo(.SDcols), "replace")
+    ans
 }

@@ -10,6 +10,7 @@ dplyr::select
 #' @rdname select-table.express
 #' @name select-table.express
 #' @export
+#' @importFrom rlang as_label
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang quos
@@ -39,11 +40,11 @@ select.ExprBuilder <- function(.data, ...,
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))
 {
-    clause <- parse_dots(.parse, ...)
-    if (length(clause) == 0L) return(.data)
+    clauses <- parse_dots(.parse, ...)
+    if (length(clauses) == 0L) return(.data)
 
-    is_single <- length(clause) == 1L
-    first_clause <- clause[[1L]]
+    is_single <- length(clauses) == 1L
+    first_clause <- clauses[[1L]]
 
     if (is_single && is_tidyselect_call(first_clause)) {
         # just to avoid NOTE
@@ -54,16 +55,26 @@ select.ExprBuilder <- function(.data, ...,
             .COL = .SD,
             .COLNAME = names(.SD),
             .COLNAMES = list(names(.SD)),
-            .which = rlang::quos(!!clause[[1L]]),
+            .which = rlang::quos(!!first_clause),
             .how = rlang::quos(.COL)
         ))
+
+        which_expr <- first_clause
     }
     else if (is_single && (evaled_is(first_clause, "numeric") || rlang::is_call(first_clause, ":"))) {
-        clause <- first_clause
+        clause <- which_expr <- first_clause
     }
     else {
-        clause <- rlang::expr(list(!!!clause))
+        clause <- rlang::expr(list(!!!clauses))
+
+        which_expr <- names(clauses)
+        which_unnamed <- sapply(which_expr, function(cl) { is.null(cl) | !nzchar(cl) })
+        if (any(which_unnamed)) {
+            which_expr[which_unnamed] <- sapply(clauses[which_unnamed], rlang::as_label)
+        }
     }
 
-    .data$set_select(clause, .chain)
+    ans <- .data$set_select(clause, .chain)
+    .data$tidy_select(which_expr, "replace")
+    ans
 }
