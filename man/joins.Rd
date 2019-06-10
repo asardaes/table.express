@@ -38,12 +38,12 @@ rhs <- data.table::data.table(x = c("c", "b"),
 # creates new data.table eagerly
 lhs \%>\%
     start_expr \%>\%
-    left_join(rhs, "x") \%>\%
+    left_join(rhs, x) \%>\%
     end_expr
 
 # would modify lhs by reference lazily
 lhs \%>\%
     start_expr \%>\%
-    left_join(rhs, "x", .adding = c("foo", i.v = "v"))
+    left_join(rhs, x, .adding = c("foo", i.v = "v"))
 
 }

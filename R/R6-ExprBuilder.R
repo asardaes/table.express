@@ -159,7 +159,7 @@ ExprBuilder <- R6::R6Class(
                 dt <- rlang::eval_tidy(dt)
                 DT <- self$eval(parent_env, TRUE)
 
-                join_expr <- rlang::expr(dt[DT, on = c(!!!on)])
+                join_expr <- rlang::expr(dt[DT, on = list(!!!on)])
                 new_dt <- base::eval(join_expr)
 
                 return(ExprBuilder$new(new_dt))
@@ -180,7 +180,7 @@ ExprBuilder <- R6::R6Class(
             dt_cols <- rlang::syms(paste("x", unname(adding), sep = "."))
 
             # https://stackoverflow.com/a/54313203/5793905
-            mutate.ExprBuilder(self, !!lhs := `[`(!!dt, .SD, list(!!!dt_cols), on = c(!!!on)),
+            mutate.ExprBuilder(self, !!lhs := `[`(!!dt, .SD, list(!!!dt_cols), on = list(!!!on)),
                                .unquote_names = FALSE, .parse = FALSE, .chain = TRUE)
         },
 
