@@ -57,7 +57,7 @@ transmute_sd <- function(.data, .how = identity, ..., .SDcols = everything(),
     all_sdcols <- identical(.which, rlang::expr(everything()))
 
     if (evaled_is(how_quo, "function")) {
-        if (all_sdcols || evaled_is(.which, c("numeric", "character"))) {
+        if (all_sdcols || evaled_is(rlang::enquo(.SDcols), c("numeric", "character"))) {
             clause <- rlang::expr(lapply(.SD, !!.how, !!!dots))
             ans <- .data$set_select(clause, .chain)
 
