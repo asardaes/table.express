@@ -28,9 +28,8 @@ clause being set already exists?}
 Helper to filter rows with the same condition applied to a subset of the data.
 }
 \details{
-This function adds/chains a \code{where} expression that will be evaluated by
-\link[data.table:data.table]{data.table::data.table}. The \code{.how} condition is applied to all specified \code{.SDcols}, and it
-supports the \code{.COL} pronoun.
+This function adds/chains an \code{i} expression that will be evaluated by \link[data.table:data.table]{data.table::data.table},
+and it supports the \code{.COL} pronoun. The \code{.how} condition is applied to all \code{.SDcols}.
 
 Additionally, \code{.SDcols} supports \link[tidyselect:select_helpers]{tidyselect::select_helpers}, with the caveat that the
 expression is evaluated eagerly, i.e. with the currently captured \code{data.table}. Consider using
