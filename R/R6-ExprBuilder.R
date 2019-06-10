@@ -13,12 +13,15 @@
 #' @importFrom rlang env_get_list
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
+#' @importFrom rlang is_missing
 #' @importFrom rlang is_syntactic_literal
 #' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
 #' @importFrom rlang quo
+#' @importFrom rlang quo_get_expr
+#' @importFrom rlang syms
 #' @importFrom rlang warn
 #' @importFrom tidyselect scoped_vars
 #' @importFrom tidyselect vars_select_helpers
@@ -74,6 +77,13 @@ ExprBuilder <- R6::R6Class(
             other <- ExprBuilder$new(private$.DT)
             private$.insert_child(other)
             other
+        },
+
+        join = function(type, dt, on, adding, ..., parent_env) {
+            switch(
+                match.arg(type, c("left")),
+                left = private$.left_join(dt, on, adding, parent_env)
+            )
         },
 
         eval = function(parent_env, by_ref, ...) {
@@ -143,6 +153,36 @@ ExprBuilder <- R6::R6Class(
         .appends = NULL,
 
         .selected_eagerly = FALSE,
+
+        .left_join = function(dt, on, adding, parent_env) {
+            if (rlang::is_missing(adding)) {
+                dt <- rlang::eval_tidy(dt)
+                DT <- self$eval(parent_env, TRUE)
+
+                join_expr <- rlang::expr(dt[DT, on = c(!!!on)])
+                new_dt <- base::eval(join_expr)
+
+                return(ExprBuilder$new(new_dt))
+            }
+
+            dt <- rlang::quo_get_expr(dt)
+
+            lhs <- names(adding)
+            zchars <- !nzchar(lhs)
+
+            if (is.null(lhs)) {
+                lhs <- adding
+            }
+            else if (any(zchars)) {
+                lhs[zchars] <- adding[zchars]
+            }
+
+            dt_cols <- rlang::syms(paste("x", unname(adding), sep = "."))
+
+            # https://stackoverflow.com/a/54313203/5793905
+            mutate.ExprBuilder(self, !!lhs := `[`(!!dt, .SD, list(!!!dt_cols), on = c(!!!on)),
+                               .unquote_names = FALSE, .parse = FALSE, .chain = TRUE)
+        },
 
         .process_clause = function(name, value, chain_if_needed) {
             private_name <- paste0(".", name)
