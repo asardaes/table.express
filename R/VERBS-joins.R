@@ -37,6 +37,10 @@ dplyr::left_join
 #' @param x An [ExprBuilder] instance.
 #' @param y A [data.table::data.table-class].
 #' @param ... Expressions for the `on` part of the join.
+#' @param nomatch See [data.table::data.table].
+#' @param mult See [data.table::data.table].
+#' @param roll See [data.table::data.table].
+#' @param rollends See [data.table::data.table].
 #' @param .adding A possibly named character vector specifying which columns from `y` are part of
 #'   the join.
 #'
@@ -46,19 +50,27 @@ dplyr::left_join
 #'
 #' @examples
 #'
-#' # creates new data.table eagerly
+#' # creates new data.table
 #' lhs %>%
 #'     start_expr %>%
 #'     left_join(rhs, x) %>%
 #'     end_expr
 #'
-#' # would modify lhs by reference lazily
+#' # would modify lhs by reference
 #' lhs %>%
 #'     start_expr %>%
-#'     left_join(rhs, x, .adding = c("foo", i.v = "v"))
+#'     left_join(rhs, x, .adding = c("foo", rhs.v = "v"))
 #'
-left_join.ExprBuilder <- function(x, y, ..., .adding) {
+left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .adding) {
     y <- rlang::enquo(y)
     on <- rlang::enexprs(...)
-    x$join("left", y, on, rlang::maybe_missing(.adding), parent_env = rlang::caller_env())
+    adding <- rlang::maybe_missing(.adding)
+    join_extras <- list(
+        nomatch = rlang::maybe_missing(nomatch),
+        mult = rlang::maybe_missing(mult),
+        roll = rlang::maybe_missing(roll),
+        rollends = rlang::maybe_missing(rollends)
+    )
+
+    x$join("left", y, on, adding, join_extras, parent_env = rlang::caller_env())
 }

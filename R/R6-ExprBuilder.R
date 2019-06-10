@@ -79,10 +79,10 @@ ExprBuilder <- R6::R6Class(
             other
         },
 
-        join = function(type, dt, on, adding, ..., parent_env) {
+        join = function(type, dt, on, adding, join_extras, ..., parent_env) {
             switch(
                 match.arg(type, c("left")),
-                left = private$.left_join(dt, on, adding, parent_env)
+                left = private$.left_join(dt, on, adding, join_extras, parent_env)
             )
         },
 
@@ -154,33 +154,25 @@ ExprBuilder <- R6::R6Class(
 
         .selected_eagerly = FALSE,
 
-        .left_join = function(dt, on, adding, parent_env) {
+        .left_join = function(dt, on, adding, join_extras, parent_env) {
+            on <- name_switcheroo(on)
+
             if (rlang::is_missing(adding)) {
                 dt <- rlang::eval_tidy(dt)
-                DT <- self$eval(parent_env, TRUE)
+                DT <- self$eval(parent_env, by_ref = TRUE)
 
-                join_expr <- rlang::expr(dt[DT, on = list(!!!on)])
+                join_expr <- rlang::expr(`[`(dt, DT, on = list(!!!on), !!!join_extras))
                 new_dt <- base::eval(join_expr)
 
                 return(ExprBuilder$new(new_dt))
             }
 
             dt <- rlang::quo_get_expr(dt)
-
-            lhs <- names(adding)
-            zchars <- !nzchar(lhs)
-
-            if (is.null(lhs)) {
-                lhs <- adding
-            }
-            else if (any(zchars)) {
-                lhs[zchars] <- adding[zchars]
-            }
-
+            new_names <- name_switcheroo(adding, named = FALSE, as_sym = FALSE)
             dt_cols <- rlang::syms(paste("x", unname(adding), sep = "."))
 
             # https://stackoverflow.com/a/54313203/5793905
-            mutate.ExprBuilder(self, !!lhs := `[`(!!dt, .SD, list(!!!dt_cols), on = list(!!!on)),
+            mutate.ExprBuilder(self, !!new_names := `[`(!!dt, .SD, list(!!!dt_cols), on = list(!!!on), !!!join_extras),
                                .unquote_names = FALSE, .parse = FALSE, .chain = TRUE)
         },
 

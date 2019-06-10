@@ -6,7 +6,8 @@
 \alias{left_join.ExprBuilder}
 \title{Joining verbs}
 \usage{
-\method{left_join}{ExprBuilder}(x, y, ..., .adding)
+\method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends,
+  .adding)
 }
 \arguments{
 \item{x}{An \link{ExprBuilder} instance.}
@@ -14,6 +15,14 @@
 \item{y}{A \link[data.table:data.table-class]{data.table::data.table}.}
 
 \item{...}{Expressions for the \code{on} part of the join.}
+
+\item{nomatch}{See \link[data.table:data.table]{data.table::data.table}.}
+
+\item{mult}{See \link[data.table:data.table]{data.table::data.table}.}
+
+\item{roll}{See \link[data.table:data.table]{data.table::data.table}.}
+
+\item{rollends}{See \link[data.table:data.table]{data.table::data.table}.}
 
 \item{.adding}{A possibly named character vector specifying which columns from \code{y} are part of
 the join.}
@@ -35,15 +44,15 @@ rhs <- data.table::data.table(x = c("c", "b"),
                               foo = c(4, 2))
 
 
-# creates new data.table eagerly
+# creates new data.table
 lhs \%>\%
     start_expr \%>\%
     left_join(rhs, x) \%>\%
     end_expr
 
-# would modify lhs by reference lazily
+# would modify lhs by reference
 lhs \%>\%
     start_expr \%>\%
-    left_join(rhs, x, .adding = c("foo", i.v = "v"))
+    left_join(rhs, x, .adding = c("foo", rhs.v = "v"))
 
 }
