@@ -1,10 +1,5 @@
 context("  Mutate")
 
-test_that("An empty clause is not an error.", {
-    ans <- DT %>% start_expr %>% mutate() %>% end_expr
-    expect_identical(ans, DT)
-})
-
 test_that("Mutating by reference without parsing works.", {
     dt <- data.table::copy(DT)
 

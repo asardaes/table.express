@@ -29,7 +29,9 @@ Like \link{mutate-table.express} but for a single call and some \code{.SDcols}.
 This function works similar to \code{\link[=transmute_sd]{transmute_sd()}} but keeps all columns and \emph{can} modify by
 reference, like \link{mutate-table.express}.
 
-Additionally, \code{.SDcols} supports \link[tidyselect:select_helpers]{tidyselect::select_helpers}.
+Additionally, \code{.SDcols} supports \link[tidyselect:select_helpers]{tidyselect::select_helpers}, with the caveat that the
+expression is evaluated eagerly, i.e. with the currently captured \code{data.table}. Consider using
+\code{\link[=chain]{chain()}} to explicitly capture intermediate results as actual \code{data.table}s.
 
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the

@@ -41,7 +41,7 @@ DT %>%
     end_expr %>%
     print
 
-# Support for tidyslect helpers
+# Support for tidyslect helpers (with caveats! check 'Eager verbs' in the vignette)
 
 DT %>%
     start_expr %>%

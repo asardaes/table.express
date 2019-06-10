@@ -40,8 +40,7 @@ mutate_sd <- function(.data, .how = identity, ..., .SDcols,
                       .parse = getOption("table.express.parse", FALSE),
                       .chain = getOption("table.express.chain", TRUE))
 {
-    # no update because mutate will do it
-    .SDcols <- .data$tidy_select(rlang::enquo(.SDcols), "no")
+    .SDcols <- process_sdcols(.data, rlang::enquo(.SDcols))
 
     how_expr <- rlang::enexpr(.how)
     dots <- parse_dots(.parse, ...)

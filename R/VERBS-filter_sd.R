@@ -22,8 +22,9 @@
 #'
 #' @details
 #'
-#' This function adds/chains an `i` expression that will be evaluated by [data.table::data.table],
-#' and it supports the `.COL` pronoun. The `.how` condition is applied to all `.SDcols`.
+#' This function adds/chains a `where` expression that will be evaluated by
+#' [data.table::data.table]. The `.how` condition is applied to all specified `.SDcols`, and it
+#' supports the `.COL` pronoun.
 #'
 #' @template tidyselect-sdcols
 #' @template docu-examples
@@ -40,7 +41,7 @@ filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`
                       .parse = getOption("table.express.parse", FALSE),
                       .chain = getOption("table.express.chain", TRUE))
 {
-    .SDcols <- .data$tidy_select(rlang::enquo(.SDcols), "no")
+    .SDcols <- process_sdcols(.data, rlang::enquo(.SDcols))
 
     how_expr <- rlang::enexpr(.how)
     dots <- parse_dots(.parse, ...)

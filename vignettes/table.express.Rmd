@@ -205,7 +205,8 @@ DT %>%
 
 The helper verb `filter_sd` can be used to apply the same conditions to many columns,
 and it can use a special pronoun `.COL` while specifying the expression,
-as well as `tidyselect` helpers to choose `.SDcols`:
+as well as `tidyselect` helpers to choose `.SDcols`
+(with caveats, see [eager verbs](#eager-verbs)):
 
 ```{r filter-sd}
 DT %>%
@@ -274,8 +275,7 @@ print(DT)
 ```
 
 On the other hand, `transmute_sd` never modifies by reference,
-and supports special expressions to "build" what is chosen as `.SDcols`
-(with caveats, see [eager verbs](#eager-verbs)).
+and supports special expressions to "build" what is chosen as `.SDcols`.
 These expressions can use `tidyselect` helpers,
 as well as another special pronoun: `.COLNAME`:
 
@@ -408,25 +408,33 @@ DT %>%
 
 ### Eager verbs
 
-We can use the `.COL` pronoun in `transmute_sd`'s expression for `.SDcols`,
-which can be functionally equivalent to `dplyr`'s `transmute_if`:
+In the following cases, the mentioned verbs use the captured `data.table` eagerly during expression building:
 
-```{r transmute-if}
-# transmute columns with only whole numbers
+- `filter_sd` when `.SDcols` is a `tidyselect` call.
+- `mutate_sd` when `.SDcols` is a `tidyselect` call.
+
+This can lead to unexpected results if we don't keep in mind the expression that is built:
+
+```{r implicit-chain-filter_sd}
+DT[, mpg:disp]
+
 DT %>%
   start_expr %>%
-  transmute_sd(as.integer, .SDcols = all(.COL %% 1 == 0)) %>%
-  end_expr
+  select(mpg:disp) %>%
+  transmute(ans = sqrt(mpg)) %>%
+  filter_sd(.COL > 0, .SDcols = contains("m"))
 ```
 
-However, this specific case is eager,
-so explicit chaining will be required if multiple `transmute_sd` calls want to use `.COL`:
+The `select` gets rid of `am`,
+but `filter_sd` sees the columns of `DT` before any expression has been evaluated.
+Explicit chaining can help in these cases,
+capturing intermediate results:
 
-```{r multiple-transmute-sd}
+```{r explicit-chain-filter_sd}
 DT %>%
   start_expr %>%
-  transmute_sd(as.integer, .SDcols = all(.COL %% 1 == 0)) %>%
+  select(mpg:disp) %>%
   chain %>%
-  transmute_sd(sum, .SDcols = max(.COL) < 4L) %>%
-  end_expr
+  transmute(ans = sqrt(mpg)) %>%
+  filter_sd(.COL > 0, .SDcols = contains("m"))
 ```
