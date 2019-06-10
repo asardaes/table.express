@@ -21,6 +21,7 @@
 #' @importFrom rlang parse_expr
 #' @importFrom rlang quo
 #' @importFrom rlang quo_get_expr
+#' @importFrom rlang sym
 #' @importFrom rlang syms
 #' @importFrom rlang warn
 #' @importFrom tidyselect scoped_vars
@@ -48,7 +49,7 @@
 ExprBuilder <- R6::R6Class(
     "ExprBuilder",
     public = list(
-        initialize = function(DT) {
+        initialize = function(DT, dt_pronouns = list()) {
             if (data.table::is.data.table(DT)) {
                 private$.DT <- DT
             }
@@ -57,6 +58,8 @@ ExprBuilder <- R6::R6Class(
                              "table.express.invalid_argument_class_error",
                              DT = DT)
             }
+
+            private$.dt_pronouns = dt_pronouns
 
             invisible()
         },
@@ -99,6 +102,7 @@ ExprBuilder <- R6::R6Class(
 
             dots <- rlang::dots_list(
                 .DT_ = .DT_,
+                !!!private$.dt_pronouns,
                 !!!EBCompanion$helper_functions,
                 !!!tidyselect::vars_select_helpers,
                 !!!rlang::list2(...),
@@ -134,11 +138,7 @@ ExprBuilder <- R6::R6Class(
 
         expr = function(.DT_) {
             if (!missing(.DT_)) rlang::abort("The 'expr' field is read-only.")
-
-            root <- EBCompanion$get_root(self)
-            quo_chain <- EBCompanion$get_quo_chain(root)
-            init <- rlang::expr(.DT_)
-            reduce_expr(quo_chain, init, rlang::expr(`[`))
+            private$.compute_expr(rlang::expr(.DT_))
         }
     ),
     private = list(
@@ -151,20 +151,31 @@ ExprBuilder <- R6::R6Class(
         .where = NULL,
         .by = NULL,
         .appends = NULL,
+        .dt_pronouns = NULL,
 
         .selected_eagerly = FALSE,
+
+        .compute_expr = function(init) {
+            root <- EBCompanion$get_root(self)
+            quo_chain <- EBCompanion$get_quo_chain(root)
+            reduce_expr(quo_chain, init, rlang::expr(`[`))
+        },
 
         .left_join = function(dt, on, adding, join_extras, parent_env) {
             on <- name_switcheroo(on)
 
             if (rlang::is_missing(adding)) {
                 dt <- rlang::eval_tidy(dt)
-                DT <- self$eval(parent_env, by_ref = TRUE)
 
-                join_expr <- rlang::expr(`[`(dt, DT, on = list(!!!on), !!!join_extras))
-                new_dt <- base::eval(join_expr)
+                dt_pronoun <- paste0(".DT_", length(private$.dt_pronouns))
+                dt_expr <- private$.compute_expr(rlang::sym(dt_pronoun))
+                next_pronouns <- rlang::list2(!!!private$.dt_pronouns, !!dt_pronoun := private$.DT)
 
-                return(ExprBuilder$new(new_dt))
+                ans <- ExprBuilder$new(dt, next_pronouns) %>%
+                    where.ExprBuilder(!!dt_expr) %>%
+                    frame_append(on = list(!!!on), !!!join_extras)
+
+                return(ans)
             }
 
             dt <- rlang::quo_get_expr(dt)
