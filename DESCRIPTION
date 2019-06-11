@@ -34,3 +34,28 @@ LazyData: TRUE
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+Collate: 
+    'DELIMITERS-chain.R'
+    'DELIMITERS-end_expr.R'
+    'DELIMITERS-start_expr.R'
+    'R6-ExprBuilder.R'
+    'UTILS-frame_append.R'
+    'UTILS-misc.R'
+    'UTILS-tidyselect.R'
+    'VERBS-arrange.R'
+    'VERBS-filter.R'
+    'VERBS-filter_on.R'
+    'VERBS-filter_sd.R'
+    'VERBS-group_by.R'
+    'VERBS-joins.R'
+    'VERBS-key_by.R'
+    'VERBS-left_join.R'
+    'VERBS-mutate.R'
+    'VERBS-mutate_join.R'
+    'VERBS-mutate_sd.R'
+    'VERBS-order_by.R'
+    'VERBS-select.R'
+    'VERBS-transmute.R'
+    'VERBS-transmute_sd.R'
+    'VERBS-where.R'
+    'pkg.R'

@@ -13,16 +13,13 @@
 #' @importFrom rlang env_get_list
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
-#' @importFrom rlang is_missing
 #' @importFrom rlang is_syntactic_literal
 #' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
 #' @importFrom rlang quo
-#' @importFrom rlang quo_get_expr
 #' @importFrom rlang sym
-#' @importFrom rlang syms
 #' @importFrom rlang warn
 #' @importFrom tidyselect scoped_vars
 #' @importFrom tidyselect vars_select_helpers
@@ -76,16 +73,23 @@ ExprBuilder <- R6::R6Class(
             private$.process_clause("by", value, FALSE)
         },
 
-        chain = function() {
-            other <- ExprBuilder$new(private$.DT)
-            private$.insert_child(other)
-            other
-        },
-
-        join = function(type, dt, on, adding, join_extras, ..., parent_env) {
+        chain = function(type = "frame", dt) {
+            type <- match.arg(type, c("frame", "pronoun"))
             switch(
-                match.arg(type, c("left")),
-                left = private$.left_join(dt, on, adding, join_extras, parent_env)
+                type,
+                frame = {
+                    other <- ExprBuilder$new(private$.DT)
+                    private$.insert_child(other)
+                    other
+                },
+                pronoun = {
+                    dt_pronoun <- paste0(".DT_", length(private$.dt_pronouns), "_")
+                    dt_expr <- private$.compute_expr(rlang::sym(dt_pronoun))
+                    next_pronouns <- rlang::list2(!!!private$.dt_pronouns, !!dt_pronoun := private$.DT)
+
+                    eb <- ExprBuilder$new(dt, next_pronouns)
+                    where.ExprBuilder(eb, !!dt_expr)
+                }
             )
         },
 
@@ -159,32 +163,6 @@ ExprBuilder <- R6::R6Class(
             root <- EBCompanion$get_root(self)
             quo_chain <- EBCompanion$get_quo_chain(root)
             reduce_expr(quo_chain, init, rlang::expr(`[`))
-        },
-
-        .left_join = function(dt, on, adding, join_extras, parent_env) {
-            on <- name_switcheroo(on)
-
-            if (rlang::is_missing(adding)) {
-                dt <- rlang::eval_tidy(dt)
-
-                dt_pronoun <- paste0(".DT_", length(private$.dt_pronouns))
-                dt_expr <- private$.compute_expr(rlang::sym(dt_pronoun))
-                next_pronouns <- rlang::list2(!!!private$.dt_pronouns, !!dt_pronoun := private$.DT)
-
-                ans <- ExprBuilder$new(dt, next_pronouns) %>%
-                    where.ExprBuilder(!!dt_expr) %>%
-                    frame_append(on = list(!!!on), !!!join_extras)
-
-                return(ans)
-            }
-
-            dt <- rlang::quo_get_expr(dt)
-            new_names <- name_switcheroo(adding, named = FALSE, as_sym = FALSE)
-            dt_cols <- rlang::syms(paste("x", unname(adding), sep = "."))
-
-            # https://stackoverflow.com/a/54313203/5793905
-            mutate.ExprBuilder(self, !!new_names := `[`(!!dt, .SD, list(!!!dt_cols), on = list(!!!on), !!!join_extras),
-                               .unquote_names = FALSE, .parse = FALSE, .chain = TRUE)
         },
 
         .process_clause = function(name, value, chain_if_needed) {

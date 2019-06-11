@@ -81,31 +81,3 @@ process_sdcols <- function(.data, sdcols_quo) {
 is_tidyselect_call <- function(expression) {
     rlang::is_call(expression, names(tidyselect::vars_select_helpers))
 }
-
-#' @importFrom rlang as_string
-#' @importFrom rlang syms
-#'
-name_switcheroo <- function(symbols, named = TRUE, as_sym = TRUE) {
-    chars <- unname(sapply(symbols, rlang::as_string))
-    nms <- names(symbols)
-    empty_names <- !nzchar(nms)
-
-    if (is.null(nms)) {
-        nms <- chars
-    }
-    else if (any(empty_names)) {
-        nms[empty_names] <- chars[empty_names]
-    }
-
-    if (named) {
-        names(nms) <- chars
-        names(nms)[empty_names] <- ""
-    }
-
-    if (as_sym) {
-        rlang::syms(nms)
-    }
-    else {
-        nms
-    }
-}

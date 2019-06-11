@@ -18,59 +18,30 @@
 #'
 NULL
 
-# ==================================================================================================
+#' @importFrom rlang as_string
+#' @importFrom rlang syms
+#'
+name_switcheroo <- function(symbols, named = TRUE, as_sym = TRUE) {
+    chars <- unname(sapply(symbols, rlang::as_string))
+    nms <- names(symbols)
+    empty_names <- !nzchar(nms)
 
-#' @importFrom dplyr left_join
-#' @export
-#'
-dplyr::left_join
+    if (is.null(nms)) {
+        nms <- chars
+    }
+    else if (any(empty_names)) {
+        nms[empty_names] <- chars[empty_names]
+    }
 
-# ==================================================================================================
+    if (named) {
+        names(nms) <- chars
+        names(nms)[empty_names] <- ""
+    }
 
-#' @rdname joins
-#' @export
-#' @importFrom rlang caller_env
-#' @importFrom rlang enexprs
-#' @importFrom rlang enquo
-#' @importFrom rlang maybe_missing
-#'
-#' @param x An [ExprBuilder] instance.
-#' @param y A [data.table::data.table-class].
-#' @param ... Expressions for the `on` part of the join.
-#' @param nomatch See [data.table::data.table].
-#' @param mult See [data.table::data.table].
-#' @param roll See [data.table::data.table].
-#' @param rollends See [data.table::data.table].
-#' @param .adding A possibly named character vector specifying which columns from `y` are part of
-#'   the join.
-#'
-#' @details
-#'
-#' TBD
-#'
-#' @examples
-#'
-#' # creates new data.table
-#' lhs %>%
-#'     start_expr %>%
-#'     left_join(rhs, x) %>%
-#'     end_expr
-#'
-#' # would modify lhs by reference
-#' lhs %>%
-#'     start_expr %>%
-#'     left_join(rhs, x, .adding = c("foo", rhs.v = "v"))
-#'
-left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .adding) {
-    y <- rlang::enquo(y)
-    on <- rlang::enexprs(...)
-    adding <- rlang::maybe_missing(.adding)
-    join_extras <- list(
-        nomatch = rlang::maybe_missing(nomatch),
-        mult = rlang::maybe_missing(mult),
-        roll = rlang::maybe_missing(roll),
-        rollends = rlang::maybe_missing(rollends)
-    )
-
-    x$join("left", y, on, adding, join_extras, parent_env = rlang::caller_env())
+    if (as_sym) {
+        rlang::syms(nms)
+    }
+    else {
+        nms
+    }
 }
