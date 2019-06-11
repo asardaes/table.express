@@ -17,10 +17,6 @@ dplyr::left_join
 #' @param roll See [data.table::data.table].
 #' @param rollends See [data.table::data.table].
 #'
-#' @details
-#'
-#' TBD
-#'
 #' @examples
 #'
 #' # creates new data.table

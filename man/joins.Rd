@@ -34,12 +34,11 @@
 See also \link[dplyr:join]{dplyr::join}.
 }
 \details{
-TBD
-
 The \link{ExprBuilder} method for \code{mutate_join} implements the idiom described in
 \href{https://stackoverflow.com/a/54313203/5793905}{this link}. The columns specified in \code{.SDcols} are
 those that will be added to \code{x} from \code{y}. If the character vector in \code{.SDcols} is named, the
-names are taken as the new column names for the values added to \code{x}.
+names are taken as the new column names for the values added to \code{x}. On the other hand, \code{.SDcols}
+can be specified using \link[tidyselect:select_helpers]{tidyselect::select_helpers}.
 }
 \examples{
 
