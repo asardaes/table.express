@@ -10,8 +10,7 @@
 \usage{
 \method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
 
-\method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, nomatch, mult, roll,
-  rollends)
+\method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, mult, roll, rollends)
 }
 \arguments{
 \item{x}{An \link{ExprBuilder} instance.}

@@ -38,7 +38,7 @@ mutate_join <- function(x, y, ...) {
 #'     start_expr %>%
 #'     mutate_join(rhs, x, .SDcols = c("foo", rhs.v = "v"))
 #'
-mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, nomatch, mult, roll, rollends) {
+mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
     dt <- rlang::enexpr(y)
 
     on <- rlang::enexprs(...)
@@ -53,7 +53,6 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, nomatch, mult, roll, rol
     dt_cols <- rlang::syms(paste("x", unname(.SDcols), sep = "."))
 
     join_extras <- list(
-        nomatch = rlang::maybe_missing(nomatch),
         mult = rlang::maybe_missing(mult),
         roll = rlang::maybe_missing(roll),
         rollends = rlang::maybe_missing(rollends)
