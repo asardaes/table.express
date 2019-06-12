@@ -5,7 +5,7 @@ test_that("Simple mutating join works.", {
 
     ans <- lhs %>%
         start_expr %>%
-        mutate_join(rhs, x, .SDcols = "foo") %>%
+        mutate_join(rhs, "x", .SDcols = "foo") %>%
         end_expr(.by_ref = FALSE)
 
     expect_identical(ans, expected)
@@ -48,7 +48,7 @@ test_that("Rolling, mutating joins work.", {
 
     ans <- paypal %>%
         start_expr %>%
-        mutate_join(website, name, purchase_time = session_start_time, .SDcols = "session_id", roll = Inf, rollends = TRUE) %>%
+        mutate_join(website, name, purchase_time = "session_start_time", .SDcols = "session_id", roll = Inf, rollends = TRUE) %>%
         end_expr(.by_ref = FALSE) %>%
         (data.table::setnames)("purchase_time", "session_start_time") %>%
         (data.table::setcolorder)(names(expected))

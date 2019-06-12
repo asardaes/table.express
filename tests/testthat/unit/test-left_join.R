@@ -5,7 +5,7 @@ test_that("Simple left join works.", {
 
     ans <- lhs %>%
         start_expr %>%
-        left_join(rhs, x) %>%
+        left_join(rhs, "x") %>%
         end_expr
 
     expect_identical(ans, expected)
@@ -49,7 +49,7 @@ test_that("Rolling left joins work.", {
 
     ans <- paypal %>%
         start_expr %>%
-        left_join(website, name, purchase_time = session_start_time, roll = Inf, rollends = TRUE) %>%
+        left_join(website, name, purchase_time = "session_start_time", roll = Inf, rollends = TRUE) %>%
         end_expr
 
     expect_identical(ans, expected)
