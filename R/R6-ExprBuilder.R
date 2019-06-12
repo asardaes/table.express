@@ -364,7 +364,7 @@ EBCompanion$set_child <- function(expr_builder, child) {
 }
 
 # --------------------------------------------------------------------------------------------------
-# chain_has_select
+# chain_select_count
 #
 EBCompanion$chain_select_count <- function(expr_builder) {
     .recursion <- function(node, count) {

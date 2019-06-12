@@ -18,7 +18,8 @@ environment:
   global:
     R_VERSION: release
     R_ARCH: x64
-    NOT_CRAN: 'true'
+    NOT_CRAN: true
+    PKGTYPE: binary
 
 build_script:
   - travis-tool.sh install_deps
