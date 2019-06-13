@@ -19,3 +19,4 @@ source("unit/test-filter_on.R", TRUE)
 
 source("unit/test-left_join.R", TRUE)
 source("unit/test-mutate_join.R", TRUE)
+source("unit/test-semi_join.R", TRUE)

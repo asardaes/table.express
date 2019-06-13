@@ -127,6 +127,11 @@ ExprBuilder <- R6::R6Class(
             names(private$.DT)[rlang::eval_tidy(select_expr)]
         },
 
+        get_newest_pronoun = function() {
+            ans <- names(private$.dt_pronouns)
+            ans[length(ans)]
+        },
+
         print = function(...) {
             print(self$expr)
             invisible(self)
@@ -293,6 +298,17 @@ EBCompanion$helper_functions <- list(
 
     .non_null = function(col_list) {
         col_list[!sapply(col_list, is.null)]
+    },
+
+    .semi_joined_names = function(x, y, on) {
+        ans <- names(x)
+
+        prepend_i <- ans %in% names(y) & !(ans %in% on)
+        if (any(prepend_i)) {
+            ans[prepend_i] <- paste("i", ans[prepend_i], sep = ".")
+        }
+
+        ans
     }
 )
 
