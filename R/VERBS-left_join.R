@@ -12,7 +12,6 @@ dplyr::left_join
 #' @param x An [ExprBuilder] instance.
 #' @param y A [data.table::data.table-class].
 #' @param ... Expressions for the `on` part of the join.
-#' @param nomatch See [data.table::data.table].
 #' @param mult See [data.table::data.table].
 #' @param roll See [data.table::data.table].
 #' @param rollends See [data.table::data.table].
@@ -25,12 +24,11 @@ dplyr::left_join
 #'     left_join(rhs, x) %>%
 #'     end_expr
 #'
-left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
+left_join.ExprBuilder <- function(x, y, ..., mult, roll, rollends) {
     on <- rlang::enexprs(...)
     on <- name_switcheroo(on)
 
     join_extras <- list(
-        nomatch = rlang::maybe_missing(nomatch),
         mult = rlang::maybe_missing(mult),
         roll = rlang::maybe_missing(roll),
         rollends = rlang::maybe_missing(rollends)
