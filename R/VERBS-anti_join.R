@@ -14,7 +14,7 @@ dplyr::anti_join
 #'
 #' rhs %>%
 #'     start_expr %>%
-#'     right_join(lhs, x, v) %>%
+#'     anti_join(lhs, x, v) %>%
 #'     end_expr
 #'
 anti_join.ExprBuilder <- function(x, y, ...) {

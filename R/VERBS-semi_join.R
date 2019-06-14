@@ -19,10 +19,10 @@ dplyr::semi_join
 #'
 #' @examples
 #'
-#' # keep only columns from rhs
-#' rhs %>%
+#' # keep only columns from lhs
+#' lhs %>%
 #'     start_expr %>%
-#'     semi_join(lhs, x) %>%
+#'     semi_join(rhs, x) %>%
 #'     end_expr
 #'
 semi_join.ExprBuilder <- function(x, y, ...) {

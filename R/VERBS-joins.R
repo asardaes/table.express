@@ -4,7 +4,6 @@
 #'
 #' @rdname joins
 #' @name joins
-#' @aliases joins-table.express
 #'
 #' @examples
 #'
