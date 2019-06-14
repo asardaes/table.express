@@ -48,6 +48,7 @@ Collate:
     'VERBS-filter_sd.R'
     'VERBS-group_by.R'
     'VERBS-joins.R'
+    'VERBS-inner_join.R'
     'VERBS-key_by.R'
     'VERBS-left_join.R'
     'VERBS-mutate.R'

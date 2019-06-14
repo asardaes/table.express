@@ -11,17 +11,6 @@ test_that("Simple left join works.", {
     expect_identical(ans, expected)
 })
 
-test_that("Left join with nomatch works.", {
-    expected <- rhs[lhs, on = "x", nomatch = NULL]
-
-    ans <- lhs %>%
-        start_expr %>%
-        left_join(rhs, x, nomatch = NULL) %>%
-        end_expr
-
-    expect_identical(ans, expected)
-})
-
 test_that("Left join with mult works.", {
     expected <- lhs[rhs, on = "x", mult = "first"]
 
@@ -61,6 +50,30 @@ test_that("Rolling left joins work.", {
     ans <- paypal %>%
         start_expr %>%
         left_join(website, name, purchase_time = session_start_time, roll = -Inf, rollends = FALSE) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+})
+
+test_that("Left join with nomatch works, but expects to be combined when it is NULL.", {
+    expected <- rhs[lhs, on = "x", nomatch = NULL]
+
+    expect_warning(
+        ans <- lhs %>%
+            start_expr %>%
+            left_join(rhs, x, nomatch = NULL) %>%
+            end_expr
+    )
+
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- rhs[lhs, on = c("x", "v"), nomatch = NULL, roll = TRUE]
+
+    ans <- lhs %>%
+        start_expr %>%
+        left_join(rhs, x, v, nomatch = NULL, roll = TRUE) %>%
         end_expr
 
     expect_identical(ans, expected)

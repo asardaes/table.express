@@ -7,7 +7,9 @@ dplyr::left_join
 #' @rdname joins
 #' @export
 #' @importFrom rlang enexprs
+#' @importFrom rlang is_missing
 #' @importFrom rlang maybe_missing
+#' @importFrom rlang warn
 #'
 #' @param x An [ExprBuilder] instance.
 #' @param y A [data.table::data.table-class].
@@ -35,6 +37,11 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
         roll = rlang::maybe_missing(roll),
         rollends = rlang::maybe_missing(rollends)
     )
+
+    which_missing <- sapply(join_extras, rlang::is_missing)
+    if (!which_missing[1L] && is.null(join_extras$nomatch) && all(which_missing[-1L])) {
+        rlang::warn("Specifying 'nomatch = NULL' but none of ['mult', 'roll', 'rollends'] is equivalent to an inner join.")
+    }
 
     eb <- x$chain("pronoun", y)
     frame_append(eb, on = list(!!!on), !!!join_extras)
