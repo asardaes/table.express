@@ -1,4 +1,4 @@
-context("  anti_join")
+context("  Anti join")
 
 test_that("Anti join works.", {
     expected <- rhs[!lhs, on = "x"]

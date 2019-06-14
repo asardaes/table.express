@@ -1,4 +1,4 @@
-context("  left_join")
+context("  Left join")
 
 test_that("Simple left join works.", {
     expected <- rhs[lhs, on = "x"]

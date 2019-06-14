@@ -1,4 +1,4 @@
-context("  mutate_join")
+context("  Mutate join")
 
 test_that("Simple mutating join works.", {
     expected <- rhs[lhs, .(x = i.x, y = i.y, v = i.v, foo = x.foo), on = "x"]

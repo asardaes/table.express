@@ -1,4 +1,4 @@
-context("  inner_join")
+context("  Inner join")
 
 test_that("Inner join works.", {
     expected <- lhs[rhs, on = "x", nomatch = NULL]

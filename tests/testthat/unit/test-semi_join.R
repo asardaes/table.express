@@ -1,4 +1,4 @@
-context("  semi_join")
+context("  Semi join")
 
 test_that("Semi join works like in dplyr.", {
     expected <- data.table::setDT(dplyr::semi_join(rhs, lhs, by = "x"))
