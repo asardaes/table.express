@@ -11,6 +11,17 @@ test_that("Simple left join works.", {
     expect_identical(ans, expected)
 })
 
+test_that("Left join with nomatch works.", {
+    expected <- rhs[lhs, on = "x", nomatch = NULL]
+
+    ans <- lhs %>%
+        start_expr %>%
+        left_join(rhs, x, nomatch = NULL) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+})
+
 test_that("Left join with mult works.", {
     expected <- lhs[rhs, on = "x", mult = "first"]
 

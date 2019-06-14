@@ -9,7 +9,7 @@
 \alias{semi_join.ExprBuilder}
 \title{Joining verbs}
 \usage{
-\method{left_join}{ExprBuilder}(x, y, ..., mult, roll, rollends)
+\method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
 
 \method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, mult, roll, rollends)
 
@@ -21,6 +21,8 @@
 \item{y}{A \link[data.table:data.table-class]{data.table::data.table}.}
 
 \item{...}{Expressions for the \code{on} part of the join.}
+
+\item{nomatch}{See \link[data.table:data.table]{data.table::data.table}.}
 
 \item{mult}{See \link[data.table:data.table]{data.table::data.table}.}
 
