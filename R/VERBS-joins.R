@@ -45,3 +45,15 @@ name_switcheroo <- function(symbols, named = TRUE, as_sym = TRUE) {
         nms
     }
 }
+
+#' @importFrom rlang is_missing
+#' @importFrom rlang warn
+#'
+leftright_join <- function(eb, on, join_extras) {
+    which_missing <- sapply(join_extras, rlang::is_missing)
+    if (!which_missing[1L] && is.null(join_extras$nomatch) && all(which_missing[-1L])) {
+        rlang::warn("Specifying 'nomatch = NULL' but none of ['mult', 'roll', 'rollends'] is equivalent to an inner join.")
+    }
+
+    frame_append(eb, on = list(!!!on), !!!join_extras)
+}

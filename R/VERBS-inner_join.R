@@ -8,7 +8,6 @@ dplyr::inner_join
 #' @export
 #' @importFrom rlang enexpr
 #' @importFrom rlang enexprs
-#' @importFrom rlang maybe_missing
 #'
 #' @examples
 #'

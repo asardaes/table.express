@@ -55,6 +55,7 @@ Collate:
     'VERBS-mutate_join.R'
     'VERBS-mutate_sd.R'
     'VERBS-order_by.R'
+    'VERBS-right_join.R'
     'VERBS-select.R'
     'VERBS-semi_join.R'
     'VERBS-transmute.R'
