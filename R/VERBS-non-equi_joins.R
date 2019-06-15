@@ -12,3 +12,29 @@
 #' @param mult See [data.table::data.table].
 #'
 NULL
+
+#' @importFrom rlang abort
+#' @importFrom rlang call2
+#' @importFrom rlang call_args
+#' @importFrom rlang call_name
+#' @importFrom rlang is_call
+#'
+comp_switcheroo <- function(on) {
+    lapply(on, function(e) {
+        if (!rlang::is_call(e)) {
+            return(e)
+        }
+
+        comp <- switch(rlang::call_name(e),
+                       "==" = "==",
+                       "<" = ">",
+                       "<=" = ">=",
+                       ">" = "<",
+                       ">=" = "<=",
+                       # default
+                       rlang::abort("The 'on' expressions must be variables or comparisons."))
+
+        args <- rev(rlang::call_args(e))
+        rlang::call2(comp, !!!args)
+    })
+}

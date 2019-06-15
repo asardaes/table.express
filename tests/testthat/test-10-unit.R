@@ -26,3 +26,4 @@ source("unit/test-anti_join.R", TRUE)
 source("unit/test-full_join.R", TRUE)
 
 source("unit/test-rne_join.R", TRUE)
+source("unit/test-lne_join.R", TRUE)
