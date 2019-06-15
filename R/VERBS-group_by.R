@@ -16,6 +16,7 @@ dplyr::group_by
 #' @template data-arg
 #' @param ... Clause for grouping on columns. The `by` inside the `data.table`'s frame.
 #' @template parse-arg
+#' @template chain-arg
 #'
 #' @details
 #'
@@ -31,7 +32,10 @@ dplyr::group_by
 #'     start_expr %>%
 #'     group_by(cyl, gear)
 #'
-group_by.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE)) {
+group_by.ExprBuilder <- function(.data, ...,
+                                 .parse = getOption("table.express.parse", FALSE),
+                                 .chain = getOption("table.express.chain", TRUE))
+{
     clause <- parse_dots(.parse, ...)
-    .data$set_by(rlang::quo_squash(rlang::expr(list(!!!clause))))
+    .data$set_by(rlang::quo_squash(rlang::expr(list(!!!clause))), .chain)
 }

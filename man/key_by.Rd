@@ -8,7 +8,8 @@
 key_by(.data, ...)
 
 \method{key_by}{ExprBuilder}(.data, ...,
-  .parse = getOption("table.express.parse", FALSE))
+  .parse = getOption("table.express.parse", FALSE),
+  .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{Object to be grouped and subsequently keyed.}
@@ -16,6 +17,9 @@ key_by(.data, ...)
 \item{...}{Arguments for the specific methods.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
+
+\item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?}
 }
 \description{
 Group by and set key of the result.

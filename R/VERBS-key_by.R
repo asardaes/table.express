@@ -17,6 +17,7 @@ key_by <- function(.data, ...) {
 #' @importFrom rlang quo_squash
 #'
 #' @template parse-arg
+#' @template chain-arg
 #'
 #' @details
 #'
@@ -33,9 +34,12 @@ key_by <- function(.data, ...) {
 #'     start_expr %>%
 #'     key_by(cyl, gear)
 #'
-key_by.ExprBuilder <- function(.data, ..., .parse = getOption("table.express.parse", FALSE)) {
+key_by.ExprBuilder <- function(.data, ...,
+                               .parse = getOption("table.express.parse", FALSE),
+                               .chain = getOption("table.express.chain", TRUE))
+{
     clause <- parse_dots(.parse, ...)
     clause <- rlang::quo_squash(rlang::expr(list(!!!clause)))
     attr(clause, "key_by") <- TRUE
-    .data$set_by(clause)
+    .data$set_by(clause, .chain)
 }
