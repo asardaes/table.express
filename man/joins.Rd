@@ -52,7 +52,7 @@ mutate_join(x, y, ...)
 \item{.SDcols}{For \code{mutate_join}. See the details below.}
 }
 \description{
-See also \link[dplyr:join]{dplyr::join}.
+See also \link[dplyr:join]{dplyr::join}. Non-equi joins have their own \link[=non-equi_joins]{documentation entry}.
 }
 \details{
 The \code{full_join} method is really a wrapper for \code{data.table::merge} that specifies \code{all = TRUE}.

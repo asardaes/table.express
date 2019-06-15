@@ -1,6 +1,6 @@
 #' Joining verbs
 #'
-#' See also [dplyr::join].
+#' See also [dplyr::join]. Non-equi joins have their own [documentation entry][non-equi_joins].
 #'
 #' @rdname joins
 #' @name joins
