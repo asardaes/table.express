@@ -85,7 +85,7 @@ ExprBuilder <- R6::R6Class(
                 pronoun = {
                     dt_pronoun <- paste0(".DT_", length(private$.dt_pronouns), "_")
                     dt_expr <- private$.compute_expr(rlang::sym(dt_pronoun))
-                    next_pronouns <- rlang::list2(!!!private$.dt_pronouns, !!dt_pronoun := private$.DT)
+                    next_pronouns <- c(private$.dt_pronouns, rlang::list2(!!dt_pronoun := private$.DT))
 
                     eb <- ExprBuilder$new(dt, next_pronouns)
                     where.ExprBuilder(eb, !!dt_expr)
