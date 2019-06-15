@@ -14,7 +14,6 @@
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
 #' @importFrom rlang is_syntactic_literal
-#' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
@@ -91,7 +90,7 @@ ExprBuilder <- R6::R6Class(
                 .DT_ = .DT_,
                 !!!EBCompanion$helper_functions,
                 !!!tidyselect::vars_select_helpers,
-                !!!rlang::list2(...),
+                ...,
                 .homonyms = "last"
             )
 
