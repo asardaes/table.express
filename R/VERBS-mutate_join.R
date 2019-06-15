@@ -1,12 +1,6 @@
-#' Mutating join
-#'
-#' Mutate columns by considering the columns of another object. See [joins].
-#'
+#' @include VERBS-joins.R
+#' @rdname joins
 #' @export
-#'
-#' @param x In the context of this package, an [ExprBuilder] instance.
-#' @param y In the context of this package, a [data.table::data.table-class].
-#' @template generic-dots
 #'
 mutate_join <- function(x, y, ...) {
     UseMethod("mutate_join")

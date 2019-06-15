@@ -9,14 +9,6 @@ dplyr::left_join
 #' @importFrom rlang enexprs
 #' @importFrom rlang maybe_missing
 #'
-#' @param x An [ExprBuilder] instance.
-#' @param y A [data.table::data.table-class].
-#' @param ... Expressions for the `on` part of the join.
-#' @param nomatch See [data.table::data.table].
-#' @param mult See [data.table::data.table].
-#' @param roll See [data.table::data.table].
-#' @param rollends See [data.table::data.table].
-#'
 #' @examples
 #'
 #' # creates new data.table

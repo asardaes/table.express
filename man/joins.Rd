@@ -8,6 +8,7 @@
 \alias{full_join.ExprBuilder}
 \alias{inner_join.ExprBuilder}
 \alias{left_join.ExprBuilder}
+\alias{mutate_join}
 \alias{mutate_join.ExprBuilder}
 \alias{right_join.ExprBuilder}
 \alias{semi_join.ExprBuilder}
@@ -20,6 +21,8 @@
 \method{inner_join}{ExprBuilder}(x, y, ...)
 
 \method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
+
+mutate_join(x, y, ...)
 
 \method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, mult, roll, rollends)
 

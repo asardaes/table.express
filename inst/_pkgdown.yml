@@ -24,7 +24,6 @@ reference:
     desc: ~
     contents:
       - '`joins`'
-      - '`mutate_join`'
   - title: "Utilities"
     desc: ~
     contents:
