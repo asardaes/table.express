@@ -28,29 +28,18 @@ NULL
 #' @importFrom rlang as_string
 #' @importFrom rlang syms
 #'
-name_switcheroo <- function(symbols, named = TRUE, as_sym = TRUE) {
+name_switcheroo <- function(symbols) {
     chars <- unname(sapply(symbols, rlang::as_string))
     nms <- names(symbols)
     empty_names <- !nzchar(nms)
 
-    if (is.null(nms)) {
-        nms <- chars
-    }
-    else if (any(empty_names)) {
+    if (any(empty_names)) {
         nms[empty_names] <- chars[empty_names]
     }
 
-    if (named) {
-        names(nms) <- chars
-        names(nms)[empty_names] <- ""
-    }
-
-    if (as_sym) {
-        rlang::syms(nms)
-    }
-    else {
-        nms
-    }
+    names(nms) <- chars
+    names(nms)[empty_names] <- ""
+    rlang::syms(nms)
 }
 
 #' @importFrom rlang is_missing

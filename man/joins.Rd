@@ -59,14 +59,28 @@ The \code{full_join} method is really a wrapper for \code{data.table::merge} tha
 The expression in \code{x} gets evaluated, merged with \code{y}, and the result is captured in a new
 \link{ExprBuilder}. Useful in case you want to keep building expressions after the merge.
 
-The \link{ExprBuilder} method for \code{mutate_join} implements the idiom described in
-\href{https://stackoverflow.com/a/54313203/5793905}{this link}. The columns specified in \code{.SDcols} are
-those that will be added to \code{x} from \code{y}. If the character vector in \code{.SDcols} is named, the
-names are taken as the new column names for the values added to \code{x}. On the other hand, \code{.SDcols}
-can be specified using \link[tidyselect:select_helpers]{tidyselect::select_helpers}.
-
 The \code{semi_join} method starts a new \link[=chain]{chain} immediately.
 }
+\section{Mutating joins}{
+
+
+The \link{ExprBuilder} method for \code{mutate_join} implements the idiom described in \href{https://stackoverflow.com/a/54313203/5793905}{this link}. The columns specified in \code{.SDcols} are
+those that will be added to \code{x} from \code{y}. The specification can be done by:
+\itemize{
+\item Using \link[tidyselect:select_helpers]{tidyselect::select_helpers}.
+\item Passing a character vector. If the character is named, the names are taken as the new column
+names for the values added to \code{x}.
+\item A list, using \code{\link[base:list]{base::list()}} or \code{.()}, containing:
+\itemize{
+\item Column names, either as characters or symbols.
+\item Named calls expressing how the column should be summarized before adding it to \code{x}.
+}
+}
+
+The last case mentioned above is useful when the join returns many rows from \code{y} for each row
+in \code{x}, so they can be summarized by adding \code{by = .EACHI} to the frame.
+}
+
 \examples{
 
 lhs <- data.table::data.table(x = rep(c("b", "a", "c"), each = 3),
@@ -101,6 +115,11 @@ lhs \%>\%
 lhs \%>\%
     start_expr \%>\%
     mutate_join(rhs, x, .SDcols = c("foo", rhs.v = "v"))
+
+# would modify rhs by reference, summarizing 'y' before adding it.
+rhs \%>\%
+    start_expr \%>\%
+    mutate_join(lhs, x, .SDcols = .(y = mean(y)))
 
 
 # creates new data.table
