@@ -22,8 +22,8 @@ test_that("Warning is given when replacing clauses", {
     b$set_where(expr, FALSE)
     expect_warning(b$set_where(expr, FALSE))
 
-    b$set_by(expr)
-    expect_warning(b$set_by(expr))
+    b$set_by(expr, FALSE)
+    expect_warning(b$set_by(expr, FALSE))
 })
 
 test_that("The expr field is read only.", {
