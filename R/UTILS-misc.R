@@ -33,19 +33,25 @@ parse_dots <- function(.parse = FALSE, ..., .named = FALSE, .unquote_names = TRU
 }
 
 #' @importFrom rlang expr
+#' @importFrom rlang is_missing
 #' @importFrom rlang quo_squash
 #'
 reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
-    Reduce(x = quosures, init = init, f = function(current, new) {
-        if (is.list(new)) {
-            new <- lapply(new, to_expr, .parse = .parse)
-            rlang::quo_squash(rlang::expr((!!op)(!!current, !!!new)))
-        }
-        else {
-            new <- to_expr(new, .parse = .parse)
-            rlang::quo_squash(rlang::expr((!!op)(!!current, !!new)))
-        }
-    })
+    if (length(quosures) == 1L && lengths(quosures) == 1L && rlang::is_missing(quosures[[1L]][[1L]])) {
+        init
+    }
+    else {
+        Reduce(x = quosures, init = init, f = function(current, new) {
+            if (is.list(new)) {
+                new <- lapply(new, to_expr, .parse = .parse)
+                rlang::quo_squash(rlang::expr((!!op)(!!current, !!!new)))
+            }
+            else {
+                new <- to_expr(new, .parse = .parse)
+                rlang::quo_squash(rlang::expr((!!op)(!!current, !!new)))
+            }
+        })
+    }
 }
 
 #' @importFrom methods is
