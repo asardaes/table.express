@@ -10,6 +10,15 @@ test_that("Semi join works like in dplyr.", {
 
     expect_identical(ans, expected)
 
+    lhs <- data.table::setkey(data.table::copy(lhs), x)
+
+    ans <- rhs %>%
+        start_expr %>%
+        semi_join(lhs) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+
     # ----------------------------------------------------------------------------------------------
 
     expected <- data.table::setDT(dplyr::semi_join(paypal, website, by = c(payment_id = "session_id")))

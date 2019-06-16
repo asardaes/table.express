@@ -17,6 +17,7 @@ mutate_join <- function(x, y, ...) {
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
+#' @importFrom rlang maybe_missing
 #' @importFrom rlang missing_arg
 #' @importFrom rlang new_quosure
 #' @importFrom rlang quo_get_env
@@ -118,12 +119,17 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
     if (!missing(roll)) join_extras$roll <- roll
     if (!missing(rollends)) join_extras$rollends <- rollends
 
+    on_expr <- rlang::missing_arg()
+    if (length(on) > 0L) {
+        on_expr <- rlang::expr(list(!!!on))
+    }
+
     if (.EACHI) {
         rhs_expr <- rlang::expr(`[`(!!dt,
                                     .SD,
                                     list(!!!dt_cols),
                                     by = .EACHI,
-                                    on = list(!!!on),
+                                    on = !!rlang::maybe_missing(on_expr),
                                     !!!join_extras))
 
         dt_cols <- rlang::syms(names(dt_cols))
@@ -135,9 +141,9 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
         rhs_expr <- rlang::expr(`[`(!!dt,
                                     .SD,
                                     list(!!!dt_cols),
-                                    on = list(!!!on),
+                                    on = !!rlang::maybe_missing(on_expr),
                                     !!!join_extras))
     }
 
-    mutate.ExprBuilder(x, !!new_names := !!rhs_expr, .unquote_names = FALSE, .parse = FALSE)
+    mutate.ExprBuilder(x, !!new_names := !!rhs_expr, .ignore_empty = "all", .unquote_names = FALSE, .parse = FALSE)
 }

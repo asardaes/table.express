@@ -16,6 +16,15 @@ test_that("Simple mutating join works.", {
         end_expr(.by_ref = FALSE)
 
     expect_identical(ans, expected)
+
+    rhs <- data.table::setkey(data.table::copy(rhs), x)
+
+    ans <- lhs %>%
+        start_expr %>%
+        mutate_join(rhs, .SDcols = last_col()) %>%
+        end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
 })
 
 test_that("Mutating join with mult works.", {

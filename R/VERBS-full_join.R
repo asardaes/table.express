@@ -23,12 +23,16 @@ full_join.ExprBuilder <- function(x, y, ..., sort = TRUE, allow = TRUE) {
     x <- x$eval(rlang::caller_env(), TRUE)
     on <- sapply(rlang::enexprs(...), rlang::as_string)
 
-    by_x <- names(on)
-    by_y <- unname(on)
-    zchars <- !nzchar(by_x)
+    by_x <- by_y <- NULL
 
-    if (any(zchars)) {
-        by_x[zchars] <- by_y[zchars]
+    if (length(on) > 0L) {
+        by_x <- names(on)
+        by_y <- unname(on)
+        zchars <- !nzchar(by_x)
+
+        if (any(zchars)) {
+            by_x[zchars] <- by_y[zchars]
+        }
     }
 
     ans <- base::merge(x, y, all = TRUE, by.x = by_x, by.y = by_y, sort = sort, allow.cartesian = allow)

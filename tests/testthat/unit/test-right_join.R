@@ -9,6 +9,15 @@ test_that("Simple right join works.", {
         end_expr
 
     expect_identical(ans, expected)
+
+    lhs <- data.table::setkey(data.table::copy(lhs), x)
+
+    ans <- lhs %>%
+        start_expr %>%
+        right_join(rhs) %>%
+        end_expr
+
+    expect_identical(ans, expected)
 })
 
 test_that("Right join with mult works.", {

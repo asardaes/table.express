@@ -22,5 +22,10 @@ anti_join.ExprBuilder <- function(x, y, ...) {
     on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)
 
     x$set_where(y, TRUE)
-    frame_append(x, on = list(!!!on))
+
+    if (length(on) > 0L) {
+        frame_append(x, on = list(!!!on))
+    }
+
+    x
 }

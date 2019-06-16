@@ -37,7 +37,11 @@ semi_join.ExprBuilder <- function(x, y, ...) {
     .DT_ <- y
     .semi_joined_names <- EBCompanion$helper_functions$.semi_joined_names
 
-    frame_append(eb, on = list(!!!on), nomatch = NULL, mult = "first")
+    if (length(on) > 0L) {
+        frame_append(eb, on = list(!!!on))
+    }
+
+    frame_append(eb, nomatch = NULL, mult = "first")
     eb$set_select(rlang::expr(mget(.semi_joined_names(!!new_pronoun, .DT_, !!on_char))))
 
     DT <- end_expr.ExprBuilder(eb, .parent_env = rlang::caller_env())

@@ -23,5 +23,9 @@ lne_join.ExprBuilder <- function(x, y, ..., nomatch, mult) {
         mult = rlang::maybe_missing(mult)
     )
 
-    frame_append(x, on = list(!!!on), !!!join_extras, .ignore_empty = "all")
+    if (length(on) > 0L) {
+        frame_append(x, on = list(!!!on))
+    }
+
+    frame_append(x, !!!join_extras, .ignore_empty = "all")
 }

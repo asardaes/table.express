@@ -22,6 +22,10 @@ rne_join.ExprBuilder <- function(x, y, ..., nomatch, mult) {
         mult = rlang::maybe_missing(mult)
     )
 
+    if (length(on) > 0L) {
+        frame_append(x, on = list(!!!on))
+    }
+
     x$set_where(y, TRUE)
-    frame_append(x, on = list(!!!on), !!!join_extras, .ignore_empty = "all")
+    frame_append(x, !!!join_extras, .ignore_empty = "all")
 }
