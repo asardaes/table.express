@@ -73,7 +73,8 @@ names for the values added to \code{x}.
 \item A list, using \code{\link[base:list]{base::list()}} or \code{.()}, containing:
 \itemize{
 \item Column names, either as characters or symbols.
-\item Named calls expressing how the column should be summarized before adding it to \code{x}.
+\item Named calls expressing how the column should be summarized/modified before adding it to
+\code{x}.
 }
 }
 

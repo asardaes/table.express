@@ -51,5 +51,5 @@ leftright_join <- function(eb, on, join_extras) {
         rlang::warn("Specifying 'nomatch = NULL' but none of ['mult', 'roll', 'rollends'] is equivalent to an inner join.")
     }
 
-    frame_append(eb, on = list(!!!on), !!!join_extras)
+    frame_append(eb, on = list(!!!on), !!!join_extras, .ignore_empty = "all")
 }

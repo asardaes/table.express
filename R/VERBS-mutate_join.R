@@ -17,7 +17,6 @@ mutate_join <- function(x, y, ...) {
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
-#' @importFrom rlang maybe_missing
 #' @importFrom rlang missing_arg
 #' @importFrom rlang new_quosure
 #' @importFrom rlang quo_get_env
@@ -38,7 +37,8 @@ mutate_join <- function(x, y, ...) {
 #'     names for the values added to `x`.
 #'   - A list, using [base::list()] or `.()`, containing:
 #'     - Column names, either as characters or symbols.
-#'     - Named calls expressing how the column should be summarized before adding it to `x`.
+#'     - Named calls expressing how the column should be summarized/modified before adding it to
+#'       `x`.
 #'
 #'   The last case mentioned above is useful when the join returns many rows from `y` for each row
 #'   in `x`, so they can be summarized by adding `by = .EACHI` to the frame.
@@ -113,11 +113,10 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
         names(dt_cols) <- dt_cols_names
     }
 
-    join_extras <- list(
-        mult = rlang::maybe_missing(mult),
-        roll = rlang::maybe_missing(roll),
-        rollends = rlang::maybe_missing(rollends)
-    )
+    join_extras <- list()
+    if (!missing(mult)) join_extras$mult <- mult
+    if (!missing(roll)) join_extras$roll <- roll
+    if (!missing(rollends)) join_extras$rollends <- rollends
 
     if (.EACHI) {
         rhs_expr <- rlang::expr(`[`(!!dt,

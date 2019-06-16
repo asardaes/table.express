@@ -23,5 +23,5 @@ rne_join.ExprBuilder <- function(x, y, ..., nomatch, mult) {
     )
 
     x$set_where(y, TRUE)
-    frame_append(x, on = list(!!!on), !!!join_extras)
+    frame_append(x, on = list(!!!on), !!!join_extras, .ignore_empty = "all")
 }
