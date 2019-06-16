@@ -115,13 +115,16 @@ test_that("The complex flow shown can be expressed with verbs.", {
     dim(sd_cols) <- NULL
     names(sd_cols) <- as.character(outer(types, c("Count", "Mean"), paste0))
     sd_cols <- c(sd_cols, totals = "totals")
+    sd_cols <- lapply(sd_cols, function(sd_col) {
+        col_sym <- rlang::sym(sd_col)
+        rlang::expr(replaceNA(!!col_sym))
+    })
 
     replaceNA <- function(x) { replace(x, is.na(x), 0) }
 
     ans <- cons_ex %>%
         start_expr %>%
-        mutate_join(wide, carId, tripId, .SDcols = sd_cols) %>%
-        mutate_sd(replaceNA, .SDcols = names(sd_cols)) %>%
+        mutate_join(wide, carId, tripId, .SDcols = list(!!!sd_cols)) %>%
         end_expr %>%
         (data.table::setcolorder)(c("carId", "tripId", "begin", "end"))
 
