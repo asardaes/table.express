@@ -14,6 +14,7 @@
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
 #' @importFrom rlang is_syntactic_literal
+#' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
