@@ -93,7 +93,8 @@ test_that("The complex flow shown can be expressed with verbs.", {
 
     aggregated <- cons_ex %>%
         start_expr %>%
-        right_join(alertsEx, carId, begin <= timestamp, end >= timestamp) %>%
+        filter(1L:.N) %>% # just to test another 'i' clause before rne_join
+        rne_join(alertsEx, carId, begin <= timestamp, end >= timestamp) %>%
         select(carId, tripId, type, additionalInfo1) %>%
         chain %>%
         group_by(carId, tripId, type) %>%

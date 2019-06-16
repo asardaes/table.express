@@ -29,6 +29,6 @@ right_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
         rollends = rlang::maybe_missing(rollends)
     )
 
-    x$set_where(y, TRUE)
+    x <- x$set_where(y, TRUE)
     leftright_join(x, on, join_extras)
 }

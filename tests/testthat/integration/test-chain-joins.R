@@ -39,3 +39,71 @@ test_that("Session immediately before a purchase, if any.", {
 
     expect_identical(data.table::setkey(ans, NULL), data.table::setcolorder(expected, names(ans)))
 })
+
+test_that("inner_join before or after a filter", {
+    ans <- website %>%
+        start_expr %>%
+        inner_join(paypal, name) %>%
+        frame_append(allow = TRUE) %>%
+        filter(session_id < 10L, payment_id < 10L) %>%
+        chain %>%
+        mutate_sd(as.POSIXct(round(.COL, "days")), .SDcols = ends_with("time")) %>%
+        end_expr
+
+    ans2 <- website %>%
+        start_expr %>%
+        filter(session_id < 10L) %>%
+        inner_join(paypal, name) %>%
+        frame_append(allow = TRUE) %>%
+        filter(payment_id < 10L) %>%
+        chain %>%
+        mutate_sd(as.POSIXct(round(.COL, "days")), .SDcols = ends_with("time")) %>%
+        end_expr
+
+    expect_identical(ans, ans2)
+})
+
+test_that("anti_join before or after a filter", {
+    ans <- website %>%
+        start_expr %>%
+        anti_join(paypal, name) %>%
+        filter(session_id < 10L) %>%
+        chain %>%
+        mutate_sd(as.POSIXct(round(.COL, "days")), .SDcols = ends_with("time")) %>%
+        end_expr
+
+    ans2 <- website %>%
+        start_expr %>%
+        filter(session_id < 10L) %>%
+        anti_join(paypal, name) %>%
+        chain %>%
+        mutate_sd(as.POSIXct(round(.COL, "days")), .SDcols = ends_with("time")) %>%
+        end_expr
+
+    expect_identical(ans, ans2)
+})
+
+test_that("right_join before or after a filter", {
+    expected <- website[paypal, on = "name", allow = TRUE][session_id < 10L & payment_id < 10L]
+
+    ans <- website %>%
+        start_expr %>%
+        right_join(paypal, name) %>%
+        frame_append(allow = TRUE) %>%
+        filter(session_id < 10L, payment_id < 10L) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+
+    expected <- website[session_id < 10L][paypal, on = "name", allow = TRUE]
+
+    ans <- website %>%
+        start_expr %>%
+        filter(session_id < 10L) %>%
+        right_join(paypal, name) %>%
+        frame_append(allow = TRUE) %>%
+        filter(payment_id < 10L) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+})

@@ -20,8 +20,8 @@ inner_join.ExprBuilder <- function(x, y, ...) {
     y <- rlang::enexpr(y)
     on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)
 
-    where.ExprBuilder(x, !!y) %>%
-        frame_append(nomatch = NULL, mult = "all")
+    x <- x$set_where(y, TRUE)
+    frame_append(x, nomatch = NULL, mult = "all")
 
     if (length(on) > 0L) {
         frame_append(x, on = list(!!!on))
