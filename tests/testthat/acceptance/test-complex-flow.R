@@ -98,7 +98,6 @@ test_that("The complex flow shown can be expressed with verbs.", {
         chain %>%
         group_by(carId, tripId, type) %>%
         transmute(typeCount = .N, typeMean = mean(additionalInfo1)) %>%
-        chain %>%
         group_by(carId, tripId) %>%
         mutate(totals = sum(typeCount)) %>%
         end_expr
