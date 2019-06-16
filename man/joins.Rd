@@ -52,7 +52,8 @@ mutate_join(x, y, ...)
 \item{.SDcols}{For \code{mutate_join}. See the details below.}
 }
 \description{
-See also \link[dplyr:join]{dplyr::join}. Non-equi joins have their own \link[=non-equi_joins]{documentation entry}.
+Two-table joins. Non-equi joins have their own \link[=non-equi_joins]{documentation entry}. Check the
+"Joining verbs" vignette too.
 }
 \details{
 The \code{full_join} method is really a wrapper for \code{data.table::merge} that specifies \code{all = TRUE}.
@@ -136,4 +137,7 @@ lhs \%>\%
     semi_join(rhs, x) \%>\%
     end_expr
 
+}
+\seealso{
+\link{non-equi_joins}, \link[data.table:data.table]{data.table::data.table}, \link[dplyr:join]{dplyr::join}
 }

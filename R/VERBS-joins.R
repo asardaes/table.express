@@ -1,6 +1,7 @@
 #' Joining verbs
 #'
-#' See also [dplyr::join]. Non-equi joins have their own [documentation entry][non-equi_joins].
+#' Two-table joins. Non-equi joins have their own [documentation entry][non-equi_joins]. Check the
+#' "Joining verbs" vignette too.
 #'
 #' @rdname joins
 #' @name joins
@@ -12,6 +13,10 @@
 #' @param mult See [data.table::data.table].
 #' @param roll See [data.table::data.table].
 #' @param rollends See [data.table::data.table].
+#'
+#' @seealso
+#'
+#' [non-equi_joins], [data.table::data.table], [dplyr::join]
 #'
 #' @examples
 #'

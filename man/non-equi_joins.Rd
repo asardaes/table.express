@@ -29,5 +29,15 @@ rne_join(x, y, ...)
 \item{mult}{See \link[data.table:data.table]{data.table::data.table}.}
 }
 \description{
-See also \link[data.table:data.table]{data.table::data.table}.
+Left and right non-equi joins.
+}
+\details{
+Non-equi joins are similar to normal joins but support comparisons (\code{<}, \code{>}, \code{<=}, and \code{>=}) in
+the \code{on} expression. We can loosely divide them into left and right non-equi joins, \code{lne_join}
+and \code{rne_join} respectively. Their differences are the rows in the result, and the values
+returned in a given column that is part of the comparison. Check the "Joining verbs" vignette for
+more information.
+}
+\seealso{
+\link{joins}, \link[data.table:data.table]{data.table::data.table}, \link[dplyr:join]{dplyr::join}
 }

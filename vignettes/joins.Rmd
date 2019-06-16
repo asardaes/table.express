@@ -1,0 +1,22 @@
+---
+title: "Joining verbs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Joining verbs}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library("table.express")
+library("data.table")
+library("magrittr")
+
+# knitr defaults
+knitr::opts_chunk$set(comment = "#>")
+
+options("datatable.print.nrows" = 4L)
+options("datatable.print.topn" = 2L)
+```
+
+WIP

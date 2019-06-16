@@ -46,7 +46,7 @@ a couple of verb aliases are also defined:
 - `where`, being equivalent to `dplyr`'s `filter`.
 - `order_by`, being equivalent to `dplyr`'s `arrange`.
 
-The examples here will be working with the `mtcars` data:
+The examples here will be working with the `mtcars` data to describe single-table verbs:
 
 ```{r mtcars}
 data("mtcars")
