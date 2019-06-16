@@ -33,6 +33,10 @@ test_that("The select verb works with single columns.", {
     expected <- DT[, .(mpg = 1:32)]
     ans <- DT %>% start_expr %>% select(mpg = 1:32) %>% end_expr
     expect_identical(ans, expected)
+
+    expected <- DT[, mpg]
+    ans <- DT %>% start_expr %>% select(mpg, .enlist = FALSE) %>% end_expr
+    expect_identical(ans, expected)
 })
 
 test_that("The select verb works with multiple columns.", {

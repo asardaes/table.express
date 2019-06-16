@@ -16,6 +16,7 @@ dplyr::select
 #'
 #' @template data-arg
 #' @param ... Clause for selecting/computing on columns. The `j` inside the `data.table`'s frame.
+#' @param .enlist Whether to wrap `...` in a list.
 #' @template parse-arg
 #' @template chain-arg
 #'
@@ -23,7 +24,8 @@ dplyr::select
 #'
 #' If `length(...) == 1L` and the expression is a call to `:` (e.g. `a:c`), a numeric, or a call to
 #' [tidyselect::select_helpers], then it will be taken as the single expression for the select
-#' clause, otherwise everything in `...` will be wrapped in a call to [base::list()].
+#' clause, otherwise everything in `...` will be wrapped in a call to [base::list()] by default. Set
+#' `.enlist = FALSE` if you want to specify the `j` expression entirely.
 #'
 #' @template docu-examples
 #'
@@ -35,7 +37,7 @@ dplyr::select
 #'     start_expr %>%
 #'     select(mpg:cyl)
 #'
-select.ExprBuilder <- function(.data, ...,
+select.ExprBuilder <- function(.data, ..., .enlist = TRUE,
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))
 {
@@ -59,6 +61,9 @@ select.ExprBuilder <- function(.data, ...,
         ))
     }
     else if (is_single && (evaled_is(first_clause, "numeric") || rlang::is_call(first_clause, ":"))) {
+        clause <- first_clause
+    }
+    else if (is_single && !.enlist) {
         clause <- first_clause
     }
     else {
