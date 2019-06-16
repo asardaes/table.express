@@ -9,11 +9,11 @@
 \alias{rne_join.ExprBuilder}
 \title{Non-equi joins}
 \usage{
-lne_join(x, y, ...)
+lne_join(x, y, ..., nomatch, mult)
 
 \method{lne_join}{ExprBuilder}(x, y, ..., nomatch, mult)
 
-rne_join(x, y, ...)
+rne_join(x, y, ..., nomatch, mult)
 
 \method{rne_join}{ExprBuilder}(x, y, ..., nomatch, mult)
 }

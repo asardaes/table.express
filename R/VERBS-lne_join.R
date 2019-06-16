@@ -2,7 +2,7 @@
 #' @rdname non-equi_joins
 #' @export
 #'
-lne_join <- function(x, y, ...) {
+lne_join <- function(x, y, ..., nomatch, mult) {
     UseMethod("lne_join")
 }
 
