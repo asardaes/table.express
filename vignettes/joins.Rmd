@@ -1,8 +1,8 @@
 ---
-title: "Joining verbs"
+title: "Joining verbs for data.table"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Joining verbs}
+  %\VignetteIndexEntry{Joining verbs for data.table}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,13 +10,400 @@ vignette: >
 ```{r setup, include=FALSE}
 library("table.express")
 library("data.table")
-library("magrittr")
 
 # knitr defaults
 knitr::opts_chunk$set(comment = "#>")
-
-options("datatable.print.nrows" = 4L)
-options("datatable.print.topn" = 2L)
 ```
 
-WIP
+Almost all joins betwen 2 `data.table`s use a notation where one of them is used as `i` in a frame applied to the other,
+and the joining columns are specified with the `on` parameter.
+However, in addition to the "basic" joins,
+`data.table` allows for special cases like
+rolling joins, summarizing while joining, non-equi joins, etc.
+This vignette will describe the notation to apply these joins with verbs defined `table.express`,
+which, like the [single-table verbs](https://asardaes.github.io/table.express/articles/table.express.html),
+build `data.table` expressions.
+
+## Basic joins
+
+We'll consider most of the `dplyr` joining verbs in this section:
+
+- `inner_join`
+- `left_join`
+- `right_join`
+- `anti_join`
+- `semi_join`
+- `full_join`
+
+```{r basic-join-data}
+A <- data.table::data.table(x = rep(c("b", "a", "c"), each = 3),
+                            y = c(1, 3, 6),
+                            v = 1:9)
+
+B <- data.table::data.table(x = c("c", "b"),
+                            v2 = 8:7,
+                            foo = c(4, 2))
+
+A
+B
+```
+
+The methods defined in `table.express` accept the `on` part of the expression in their ellipsis:
+
+```{r inner-join}
+A %>%
+    start_expr %>%
+    inner_join(B, x) %>%
+    end_expr
+
+A %>%
+    start_expr %>%
+    inner_join(B, x, v = v2) %>%
+    end_expr
+```
+
+An important thing to note in the second example above is the order in which the columns are given,
+i.e. that `v` is written before `v2`,
+since the order is relevant for `data.table`.
+We can remember the correct order simply by looking at which `data.table` appears first in the expression,
+and knowing that said `data.table`'s columns must appear first in the `on` expressions.
+In this case, `A` appears before `B`,
+so writing `v2 = v` would not work.
+
+In order to maintain consistency in the ordering just described,
+`left_join` automatically swaps expression elements internally in order to build the expression:
+
+```{r left-join}
+A %>%
+    start_expr %>%
+    left_join(B, x, v = v2) %T>%
+    print %>%
+    end_expr
+```
+
+We can also see an extra `.DT_0_` pronoun in the expression.
+These special `.DT_*_` pronouns hold the different `data.table`s that have entered the expression so far,
+and are automatically assigned to the evaluation's environment.
+In this case, `.DT_` holds `B` and `.DT_0_` holds `A`.
+
+No additional considerations are required to use `right_join` or `anti_join`:
+
+```{r right-and-anti-join}
+A %>%
+    start_expr %>%
+    right_join(B, x, v = v2) %>%
+    end_expr
+
+A %>%
+    start_expr %>%
+    anti_join(B, x, v = v2) %>%
+    end_expr
+```
+
+The `semi_join` verb is semi-eager in the sense that it starts a new expression chain automatically.
+This is because it requires special internal name handling when some columns of both `data.table`s have the same name,
+but are not part of the `on` expression:
+
+```{r semi-join}
+setnames(B, "v2", "v")
+
+A %>%
+    start_expr %>%
+    semi_join(B, x) %>%
+    end_expr
+
+A %>%
+    start_expr %>%
+    left_join(B, x) %>%
+    end_expr
+```
+
+As shown, the `left_join` case renamed `A`'s `v` to `i.v`.
+A `semi_join` is essentially a `left_join` with `nomatch = NULL`,
+`mult = "first"`,
+and where only the left-hand side columns are selected afterwards,
+hence the special handling required.
+
+Finally, `full_join` is basically a wrapper for `merge` specifying `all = TRUE`,
+so it's only useful when more expressions are to be added after the join:
+
+```{r full-join}
+A %>%
+    start_expr %>%
+    full_join(B, x) %>%
+    mutate(foo = 0) %>%
+    where(is.na(foo)) %>%
+    end_expr %>% {
+        invisible(print(.))
+    }
+```
+
+### Expression chaining
+
+Something to keep in mind is that most joins specify `i` and `on` inside the frame,
+so any subsequent verbs that specify `j`, `by`, or `keyby` would not trigger [automatic chaining](https://asardaes.github.io/table.express/articles/table.express.html#automatic-expression-chaining).
+This can be useful if only a subset of the joined columns is desired:
+
+```{r no-chain-after-join}
+A %>%
+    start_expr %>%
+    left_join(B, x) %>%
+    select(x, y, foo) %>%
+    end_expr
+```
+
+But would require explicit chaining for expressions that should be applied to the joined table:
+
+```{r chain-after-join}
+A %>%
+    start_expr %>%
+    left_join(B, x) %>%
+    chain %>%
+    group_by(x) %>%
+    mutate(y = cumsum(y)) %>%
+    end_expr %>% {
+        invisible(print(.))
+    }
+```
+
+## Mutating join
+
+A special `data.table` idiom is described [here as an update join](https://stackoverflow.com/a/54313203/5793905).
+In order to highlight the fact that it modifies the left-hand side table by reference,
+the `mutate_join` verb is defined in `table.express`.
+Said verb accepts the columns to be added in its  `.SDcols` parameter,
+possibly with new names:
+
+```{r basic-mutate-join}
+A %>%
+    start_expr %>%
+    mutate_join(B, x, .SDcols = c("foo", v_from_B = "v")) %>%
+    end_expr
+
+print(A)
+```
+
+A particularity of this idiom is that the number of rows from the resulting join must match the left-hand side exactly or not at all,
+so this won't work (not evaluated here):
+
+```{r invalid-mutate-join, eval=FALSE}
+B %>%
+    start_expr %>%
+    mutate_join(A, x, .SDcols = "y") %>%
+    end_expr
+```
+
+In these cases, we must either use `mult` if appropriate,
+or specify a summarizing expression in `.SDcols`:
+
+```{r summarizing-mutate-join}
+B %>%
+    start_expr %>%
+    mutate_join(A, x, .SDcols = "y", mult = "first") %>%
+    end_expr
+
+print(B)
+
+B %>%
+    start_expr %>%
+    mutate_join(A, x, .SDcols = .(y = mean(y))) %>%
+    end_expr
+
+print(B)
+```
+
+The last example specifies `by = .EACHI` in the joining expression.
+
+## Rolling joins
+
+A nice blog post describing rolling joins can be found at [R-bloggers](https://www.r-bloggers.com/understanding-data-table-rolling-joins/),
+so almost the same `website` and `paypal` tables will be used for the examples below.
+
+```{r rolling-join-data, echo=FALSE}
+website <- data.table::rbindlist(list(
+    data.table::data.table(
+        name = rep("Isabel", 5),
+        session_start_time = as.POSIXct(c("2016-01-01 11:01",
+                                          "2016-01-02 8:59",
+                                          "2016-01-05 18:18",
+                                          "2016-01-07 19:03",
+                                          "2016-01-08 19:01"))
+    ),
+    data.table::data.table(
+        name = "Sally",
+        session_start_time = as.POSIXct("2016-01-03 10:00")
+    ),
+    data.table::data.table(
+        name = rep("Francis", 6),
+        session_start_time = as.POSIXct(c("2016-01-02 13:09",
+                                          "2016-01-03 19:22",
+                                          "2016-01-08 8:44",
+                                          "2016-01-08 20:22",
+                                          "2016-01-10 17:36",
+                                          "2016-01-15 16:56"))
+    ),
+    data.table::data.table(
+        name = rep("Erica", 2),
+        session_start_time = as.POSIXct(c("2016-01-04 19:12",
+                                          "2016-01-04 21:05"))
+    ),
+    data.table::data.table(
+        name = rep("Vivian", 2),
+        session_start_time = as.POSIXct(c("2016-01-01 9:10",
+                                          "2016-01-09 2:15"))
+    )
+))
+
+paypal <- data.table::rbindlist(list(
+    data.table::data.table(
+        name = "Isabel",
+        purchase_time = as.POSIXct("2016-01-08 19:10")
+    ),
+    data.table::data.table(
+        name = rep("Sally", 2),
+        purchase_time = as.POSIXct(c("2016-01-03 10:06",
+                                     "2016-01-03 10:15"))
+    ),
+    data.table::data.table(
+        name = rep("Francis", 3),
+        purchase_time = as.POSIXct(c("2016-01-03 19:28",
+                                     "2016-01-08 20:33",
+                                     "2016-01-10 17:46"))
+    ),
+    data.table::data.table(
+        name = "Erica",
+        purchase_time = as.POSIXct("2016-01-03 08:02")
+    ),
+    data.table::data.table(
+        name = "Mom",
+        purchase_time = as.POSIXct("2015-12-02 17:58")
+    )
+))
+
+data.table::setkey(website, name, session_start_time)
+data.table::setkey(paypal, name, purchase_time)
+
+website[, session_id := .GRP, by = .(name, session_start_time)]
+paypal[, payment_id := .GRP, by = .(name, purchase_time)]
+
+print(website)
+print(paypal)
+```
+
+In contrast to the blog post,
+no `join_time` is added to the tables.
+This is done on purpose in order to show what happens with the columns that are rolled.
+
+Let's use a left rolling join to obtain the `session_id` that immediately preceded a purchase, if any:
+
+```{r rolling-left-join}
+paypal %>%
+    start_expr %>%
+    left_join(website, name, purchase_time = session_start_time, roll = Inf) %>%
+    end_expr
+```
+
+We can see that the rows returned are from the left-hand side (`paypal`),
+and since neither Mom nor Erica visited the website before their purchases,
+their `session_id` ended as `NA`.
+Moreover, the order of the columns in the `on` expressions is the same as [above](#basic-joins).
+The tricky part is that the rolled column ended up with the name from the right-hand side,
+but keeping the values from the left-hand side.
+If we "invert" the join,
+the result is the same,
+but the rolled column's name is now from the expression's left-hand side.
+
+```{r rolling-right-join}
+website %>%
+    start_expr %>%
+    right_join(paypal, name, session_start_time = purchase_time, roll = Inf) %>%
+    end_expr
+```
+
+Note, however, that `roll` stayed equal to `Inf`.
+This is because the column order in the expressions changed,
+but we could understand the rolling expressions as:
+
+- For `left_join`, the rolling column on the left is `purchase_time`,
+  so with `roll = Inf`,
+  the values from `session_start_time` are rolled forward onto `purchase_time` to find a match while joining.
+- For `right_join`, the rolling column on the right is `purchase_time`,
+  so `roll` must stay as `Inf` to keep the same semantics.
+  
+Now let's say we want to keep all the rows from `website` and find the closest `payment_id` that occurred *after* the visit.
+This could be expressed as:
+
+```{r rolling-left-join-2}
+website %>%
+    start_expr %>%
+    left_join(paypal, name, session_start_time = purchase_time, roll = -Inf) %>%
+    end_expr
+```
+
+In order to simplify the meaning of `rollends` a bit,
+we could think of it as missing or being a single `TRUE`/`FALSE`.
+If it's missing, rolling works according to the value of `roll`,
+otherwise:
+
+- When `rollends = TRUE`, the value of `roll` is inverted *only* for those rows that would have no match otherwise.
+- When `rollends = FALSE`, a matching roll will only occur if the column's value falls in a gap with values both before *and* after.
+
+```{r rolling-left-join-rollend}
+website %>%
+    start_expr %>%
+    left_join(paypal, name, session_start_time = purchase_time, roll = -Inf, rollends = TRUE) %>%
+    end_expr
+
+website %>%
+    start_expr %>%
+    left_join(paypal, name, session_start_time = purchase_time, roll = -Inf, rollends = FALSE) %>%
+    end_expr
+```
+
+Vivian's `payment_id`s are always `NA` because she has never purchased anything.
+On the other hand, no one except Francis has visited the website both before and after a purchase.
+
+## Non-equi joins
+
+Non-equi joins are similar to rolling joins,
+but instead of rolling a single row's value,
+they can return several values per row.
+Due to some of the processing performed by `left_join` during parsing,
+different verbs are defined:
+`lne_join` and `rne_join` for left/right non-equi joins.
+
+One particularity of `lne_join` is that it only accepts comparison operators,
+so using single `=` would be incorrect.
+If the values of two columns should be equal and the columns have the same name,
+then writing the column name is the same as using `==`.
+Other than that,
+their expectations are the same as what was explained for rolling joins:
+the order of columns should correspond to the order in which the tables enter the expression,
+and the name of the column that's part of the comparison could change.
+
+Using the same data as before,
+we could find *all* the `session_id`s that preceded a `payment_id`,
+giving "priority" to `paypal`'s rows:
+
+```{r lne-join}
+paypal %>%
+    start_expr %>%
+    # same as name == name, ...
+    lne_join(website, name, purchase_time >= session_start_time) %>%
+    end_expr
+```
+
+Priority above simply means that all rows from `paypal` are returned,
+even if they don't have a match in `website`.
+Even though a column `session_start_time` appears in the result,
+the values contained therein are from `paypal`'s `purchase_time`.
+
+A corresponding right non-equi join would yield the same result,
+expecting only a different order in the columns that are part of the comparisons:
+
+```{r rne-join}
+website %>%
+    start_expr %>%
+    rne_join(paypal, name, session_start_time <= purchase_time) %>%
+    end_expr
+```

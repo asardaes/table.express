@@ -27,7 +27,7 @@ mutate_join <- function(x, y, ...) {
 #'
 #' @param .SDcols For `mutate_join`. See the details below.
 #'
-#' @section Mutating joins:
+#' @section Mutating join:
 #'
 #'   The [ExprBuilder] method for `mutate_join` implements the idiom described in [this
 #'   link](https://stackoverflow.com/a/54313203/5793905). The columns specified in `.SDcols` are

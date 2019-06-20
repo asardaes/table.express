@@ -62,7 +62,7 @@ The expression in \code{x} gets evaluated, merged with \code{y}, and the result 
 
 The \code{semi_join} method starts a new \link[=chain]{chain} immediately.
 }
-\section{Mutating joins}{
+\section{Mutating join}{
 
 
 The \link{ExprBuilder} method for \code{mutate_join} implements the idiom described in \href{https://stackoverflow.com/a/54313203/5793905}{this link}. The columns specified in \code{.SDcols} are

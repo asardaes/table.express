@@ -71,5 +71,5 @@ paypal <- data.table::rbindlist(list(
 data.table::setkey(website, name, session_start_time)
 data.table::setkey(paypal, name, purchase_time)
 
-website[, session_id:=.GRP, by = .(name, session_start_time)]
-paypal[, payment_id:=.GRP, by = .(name, purchase_time)]
+website[, session_id := .GRP, by = .(name, session_start_time)]
+paypal[, payment_id := .GRP, by = .(name, purchase_time)]
