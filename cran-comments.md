@@ -1,6 +1,6 @@
 
 ## Update to version 0.1.1.9000
-
+Added joining verbs for two tables and fixed minor bugs.
 
 ## Test environments
 * Local GNU/Linux, R release

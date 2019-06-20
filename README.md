@@ -32,7 +32,7 @@ data.table() %>%
 ```
 
 The input `data.table` is always assigned in the evaluation’s
-environment as the `.DT_` variable.
+environment as the `.DT_` pronoun
 
 In many cases character input can also be supported, which could be
 useful for other packages that use `data.table`.
