@@ -8,14 +8,16 @@ dplyr::semi_join
 #' @export
 #' @importFrom data.table setnames
 #' @importFrom rlang as_string
-#' @importFrom rlang caller_env
 #' @importFrom rlang enexprs
 #' @importFrom rlang expr
+#' @importFrom rlang maybe_missing
 #' @importFrom rlang sym
+#'
+#' @param .parent_env See [end_expr()].
 #'
 #' @details
 #'
-#' The `semi_join` method starts a new [chain][chain()] immediately.
+#' The `semi_join` method [starts a new expression][chain()] immediately.
 #'
 #' @examples
 #'
@@ -25,7 +27,7 @@ dplyr::semi_join
 #'     semi_join(rhs, x) %>%
 #'     end_expr
 #'
-semi_join.ExprBuilder <- function(x, y, ...) {
+semi_join.ExprBuilder <- function(x, y, ..., .parent_env) {
     on <- rlang::enexprs(...)
     on <- name_switcheroo(on)
     on_char <- sapply(unname(on), rlang::as_string)
@@ -42,9 +44,9 @@ semi_join.ExprBuilder <- function(x, y, ...) {
     }
 
     frame_append(eb, nomatch = NULL, mult = "first")
-    eb$set_select(rlang::expr(mget(.semi_joined_names(!!new_pronoun, .DT_, !!on_char))))
+    eb <- eb$set_select(rlang::expr(mget(.semi_joined_names(!!new_pronoun, .DT_, !!on_char))))
 
-    DT <- end_expr.ExprBuilder(eb, .parent_env = rlang::caller_env())
+    DT <- end_expr.ExprBuilder(eb, .parent_env = rlang::maybe_missing(.parent_env))
     data.table::setnames(DT, sub("^i.", "", names(DT)))
     start_expr.data.table(DT)
 }

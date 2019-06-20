@@ -28,7 +28,7 @@ mutate_join(x, y, ...)
 
 \method{right_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
 
-\method{semi_join}{ExprBuilder}(x, y, ...)
+\method{semi_join}{ExprBuilder}(x, y, ..., .parent_env)
 }
 \arguments{
 \item{x}{An \link{ExprBuilder} instance.}
@@ -50,6 +50,8 @@ mutate_join(x, y, ...)
 \item{rollends}{See \link[data.table:data.table]{data.table::data.table}.}
 
 \item{.SDcols}{For \code{mutate_join}. See the details below.}
+
+\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}.}
 }
 \description{
 Two-table joins. Non-equi joins have their own \link[=non-equi_joins]{documentation entry}. Check the
@@ -60,7 +62,7 @@ The \code{full_join} method is really a wrapper for \code{data.table::merge} tha
 The expression in \code{x} gets evaluated, merged with \code{y}, and the result is captured in a new
 \link{ExprBuilder}. Useful in case you want to keep building expressions after the merge.
 
-The \code{semi_join} method starts a new \link[=chain]{chain} immediately.
+The \code{semi_join} method \link[=chain]{starts a new expression} immediately.
 }
 \section{Mutating join}{
 
