@@ -28,24 +28,32 @@ to_expr <- function(obj, .parse = FALSE) {
 
 #' @importFrom rlang enexprs
 #'
-parse_dots <- function(.parse = FALSE, ..., .named = FALSE, .unquote_names = TRUE) {
-    lapply(rlang::enexprs(..., .named = .named, .unquote_names = .unquote_names), to_expr, .parse = .parse)
+parse_dots <- function(.parse = FALSE, ..., .named = FALSE, .ignore_empty = "trailing", .unquote_names = TRUE) {
+    lapply(rlang::enexprs(..., .named = .named, .ignore_empty = .ignore_empty, .unquote_names = .unquote_names),
+           to_expr,
+           .parse = .parse)
 }
 
 #' @importFrom rlang expr
+#' @importFrom rlang is_missing
 #' @importFrom rlang quo_squash
 #'
 reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
-    Reduce(x = quosures, init = init, f = function(current, new) {
-        if (is.list(new)) {
-            new <- lapply(new, to_expr, .parse = .parse)
-            rlang::quo_squash(rlang::expr((!!op)(!!current, !!!new)))
-        }
-        else {
-            new <- to_expr(new, .parse = .parse)
-            rlang::quo_squash(rlang::expr((!!op)(!!current, !!new)))
-        }
-    })
+    if (length(quosures) == 1L && lengths(quosures) == 1L && rlang::is_missing(quosures[[1L]][[1L]])) {
+        init
+    }
+    else {
+        Reduce(x = quosures, init = init, f = function(current, new) {
+            if (is.list(new)) {
+                new <- lapply(new, to_expr, .parse = .parse)
+                rlang::quo_squash(rlang::expr((!!op)(!!current, !!!new)))
+            }
+            else {
+                new <- to_expr(new, .parse = .parse)
+                rlang::quo_squash(rlang::expr((!!op)(!!current, !!new)))
+            }
+        })
+    }
 }
 
 #' @importFrom methods is

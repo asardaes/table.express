@@ -14,10 +14,12 @@
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
 #' @importFrom rlang is_syntactic_literal
+#' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
 #' @importFrom rlang quo
+#' @importFrom rlang sym
 #' @importFrom rlang warn
 #' @importFrom tidyselect scoped_vars
 #' @importFrom tidyselect vars_select_helpers
@@ -44,7 +46,7 @@
 ExprBuilder <- R6::R6Class(
     "ExprBuilder",
     public = list(
-        initialize = function(DT) {
+        initialize = function(DT, dt_pronouns = list()) {
             if (data.table::is.data.table(DT)) {
                 private$.DT <- DT
             }
@@ -53,6 +55,8 @@ ExprBuilder <- R6::R6Class(
                              "table.express.invalid_argument_class_error",
                              DT = DT)
             }
+
+            private$.dt_pronouns = dt_pronouns
 
             invisible()
         },
@@ -69,10 +73,24 @@ ExprBuilder <- R6::R6Class(
             private$.process_clause("by", value, chain_if_needed)
         },
 
-        chain = function() {
-            other <- ExprBuilder$new(private$.DT)
-            private$.insert_child(other)
-            other
+        chain = function(type = "frame", dt) {
+            type <- match.arg(type, c("frame", "pronoun"))
+            switch(
+                type,
+                frame = {
+                    other <- ExprBuilder$new(private$.DT)
+                    private$.insert_child(other)
+                    other
+                },
+                pronoun = {
+                    dt_pronoun <- paste0(".DT_", length(private$.dt_pronouns), "_")
+                    dt_expr <- private$.compute_expr(rlang::sym(dt_pronoun))
+                    next_pronouns <- c(private$.dt_pronouns, rlang::list2(!!dt_pronoun := private$.DT))
+
+                    eb <- ExprBuilder$new(dt, next_pronouns)
+                    eb$set_where(dt_expr, FALSE)
+                }
+            )
         },
 
         eval = function(parent_env, by_ref, ...) {
@@ -88,6 +106,7 @@ ExprBuilder <- R6::R6Class(
 
             dots <- rlang::dots_list(
                 .DT_ = .DT_,
+                !!!private$.dt_pronouns,
                 !!!EBCompanion$helper_functions,
                 !!!tidyselect::vars_select_helpers,
                 ...,
@@ -108,6 +127,11 @@ ExprBuilder <- R6::R6Class(
             names(private$.DT)[rlang::eval_tidy(select_expr)]
         },
 
+        get_newest_pronoun = function() {
+            ans <- names(private$.dt_pronouns)
+            ans[length(ans)]
+        },
+
         print = function(...) {
             print(self$expr)
             invisible(self)
@@ -123,11 +147,7 @@ ExprBuilder <- R6::R6Class(
 
         expr = function(.DT_) {
             if (!missing(.DT_)) rlang::abort("The 'expr' field is read-only.")
-
-            root <- EBCompanion$get_root(self)
-            quo_chain <- EBCompanion$get_quo_chain(root)
-            init <- rlang::expr(.DT_)
-            reduce_expr(quo_chain, init, rlang::expr(`[`))
+            private$.compute_expr(rlang::expr(.DT_))
         }
     ),
     private = list(
@@ -140,8 +160,15 @@ ExprBuilder <- R6::R6Class(
         .where = NULL,
         .by = NULL,
         .appends = NULL,
+        .dt_pronouns = NULL,
 
         .selected_eagerly = FALSE,
+
+        .compute_expr = function(init) {
+            root <- EBCompanion$get_root(self)
+            quo_chain <- EBCompanion$get_quo_chain(root)
+            reduce_expr(quo_chain, init, rlang::expr(`[`))
+        },
 
         .process_clause = function(name, value, chain_if_needed) {
             private_name <- paste0(".", name)
@@ -271,6 +298,17 @@ EBCompanion$helper_functions <- list(
 
     .non_null = function(col_list) {
         col_list[!sapply(col_list, is.null)]
+    },
+
+    .semi_joined_names = function(x, y, on) {
+        ans <- names(x)
+
+        prepend_i <- ans %in% names(y) & !(ans %in% on)
+        if (any(prepend_i)) {
+            ans[prepend_i] <- paste("i", ans[prepend_i], sep = ".")
+        }
+
+        ans
     }
 )
 

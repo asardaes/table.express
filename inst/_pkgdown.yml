@@ -13,13 +13,18 @@ reference:
       - '`start_expr`'
       - '`chain`'
       - '`end_expr`'
-  - title: "Verbs"
-    desc: "Data manipulation verbs"
+  - title: "Single-Table Verbs"
+    desc: ~
     contents:
       - ends_with("-table.express")
       - ends_with("_sd")
       - '`filter_on`'
       - '`key_by`'
+  - title: "Two-Table Verbs"
+    desc: ~
+    contents:
+      - '`joins`'
+      - '`non-equi_joins`'
   - title: "Utilities"
     desc: ~
     contents:
