@@ -107,3 +107,43 @@ test_that("right_join before or after a filter", {
 
     expect_identical(ans, expected)
 })
+
+test_that("A select clause can be added to the joining frame.", {
+    expected <- lhs[rhs, .(x, foo), on = "x", nomatch = NULL]
+    ans <- lhs %>% start_expr %>% inner_join(rhs, x) %>% select(x, foo)
+    expect_null(ans$.__enclos_env__$private$.parent)
+    expect_null(ans$.__enclos_env__$private$.child)
+    expect_identical(end_expr(ans), expected)
+
+    expected <- lhs[!rhs, .(x, y), on = "x"]
+    ans <- lhs %>% start_expr %>% anti_join(rhs, x) %>% select(x, y)
+    expect_null(ans$.__enclos_env__$private$.parent)
+    expect_null(ans$.__enclos_env__$private$.child)
+    expect_identical(end_expr(ans), expected)
+
+    expected <- rhs[lhs, .(x, foo), on = "x"]
+    ans <- lhs %>% start_expr %>% left_join(rhs, x) %>% select(x, foo)
+    expect_null(ans$.__enclos_env__$private$.parent)
+    expect_null(ans$.__enclos_env__$private$.child)
+    expect_identical(end_expr(ans), expected)
+
+    expected <- lhs[rhs, .(x, foo), on = "x"]
+    ans <- lhs %>% start_expr %>% right_join(rhs, x) %>% select(x, foo)
+    expect_null(ans$.__enclos_env__$private$.parent)
+    expect_null(ans$.__enclos_env__$private$.child)
+    expect_identical(end_expr(ans), expected)
+})
+
+test_that("A filtering clause can be added to a mutating join.", {
+    expected <- data.table::copy(lhs)[x == "c", foo := rhs[.SD, .(x.foo), on = "x"]]
+
+    ans <- lhs %>%
+        start_expr %>%
+        mutate_join(rhs, x, .SDcols = "foo") %>%
+        where(x == "c")
+
+    expect_null(ans$.__enclos_env__$private$.parent)
+    expect_null(ans$.__enclos_env__$private$.child)
+
+    expect_identical(end_expr(ans, .by_ref = FALSE), expected)
+})

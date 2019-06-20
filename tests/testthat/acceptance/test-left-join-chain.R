@@ -12,6 +12,16 @@ test_that("A chain of left joins works.", {
         end_expr
 
     expect_identical(ans, expected)
+
+    # just to test correct pronoun chaining
+    ans <- paypal %>%
+        start_expr %>%
+        lne_join(website[, .(name, session_id)], name == name) %>%
+        frame_append(allow = TRUE) %>%
+        lne_join(website, name, session_id) %>%
+        end_expr
+
+    expect_identical(ans, expected)
 })
 
 # https://stackoverflow.com/q/56565051/5793905
