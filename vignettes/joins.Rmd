@@ -15,7 +15,7 @@ library("data.table")
 knitr::opts_chunk$set(comment = "#>")
 ```
 
-Almost all joins betwen 2 `data.table`s use a notation where one of them is used as `i` in a frame applied to the other,
+Almost all joins between 2 `data.table`s use a notation where one of them is used as `i` in a frame applied to the other,
 and the joining columns are specified with the `on` parameter.
 However, in addition to the "basic" joins,
 `data.table` allows for special cases like
