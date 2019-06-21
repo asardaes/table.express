@@ -32,7 +32,7 @@ NULL
 #' @importFrom rlang is_call
 #'
 comp_switcheroo <- function(on) {
-    lapply(on, function(e) {
+    lapply(unname(on), function(e) {
         if (!rlang::is_call(e)) {
             return(e)
         }
