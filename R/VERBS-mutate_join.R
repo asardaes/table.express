@@ -82,16 +82,7 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
             sd_cols <- rlang::call_args(sd_expr)
         }
 
-        new_names <- names(sd_cols)
-        if (is.null(new_names)) {
-            new_names <- sapply(sd_cols, rlang::as_string)
-        }
-
-        zchars <- !nzchar(new_names)
-        if (any(zchars)) {
-            new_names[zchars] <- sapply(sd_cols[zchars], rlang::as_string)
-        }
-
+        new_names <- sd_cols_names(sd_cols)
         dt_cols_names <- Map(new_names, sd_cols, f = function(new_name, sd_col) {
             sd_quo <- rlang::new_quosure(sd_col, env = sd_env)
 
@@ -145,5 +136,35 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
                                     !!!join_extras))
     }
 
-    mutate.ExprBuilder(x, !!new_names := !!rhs_expr, .ignore_empty = "all", .unquote_names = FALSE, .parse = FALSE)
+    mutate.ExprBuilder(x, !!new_names := !!rhs_expr, .unquote_names = FALSE, .parse = FALSE)
+}
+
+#' @importFrom rlang as_string
+#' @importFrom rlang is_call
+#'
+sd_cols_names <- function(sd_cols) {
+    counter <- 1L
+    possible_defaults <- unname(sapply(sd_cols, function(sd_col) {
+        if (rlang::is_call(sd_col)) {
+            counter <- counter
+            counter <<- counter + 1L
+            paste0("V", counter)
+        }
+        else {
+            rlang::as_string(sd_col)
+        }
+    }))
+
+    new_names <- names(sd_cols)
+
+    if (is.null(new_names)) {
+        new_names <- possible_defaults
+    }
+
+    zchars <- !nzchar(new_names)
+    if (any(zchars)) {
+        new_names[zchars] <- possible_defaults[zchars]
+    }
+
+    new_names
 }

@@ -96,4 +96,24 @@ test_that("Summarizing with mutating join works.", {
         (data.table::setkey)(NULL)
 
     expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- website[paypal,
+                        .(purchase_time = i.purchase_time,
+                          payment_id = i.payment_id,
+                          V1 = min(x.session_start_time),
+                          V2 = sum(x.session_id)),
+                        on = "name",
+                        by = .EACHI]
+
+    data.table::setkey(expected, NULL)
+
+    ans <- paypal %>%
+        start_expr %>%
+        mutate_join(website, name, .SDcols = .(min(session_start_time), sum(session_id))) %>%
+        end_expr(.by_ref = FALSE) %>%
+        (data.table::setkey)(NULL)
+
+    expect_identical(ans, expected)
 })
