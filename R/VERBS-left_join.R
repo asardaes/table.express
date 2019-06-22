@@ -18,8 +18,10 @@ dplyr::left_join
 #'     end_expr
 #'
 left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
-    on <- rlang::enexprs(...)
-    on <- name_switcheroo(on)
+    x <- x$chain("pronoun", y)
+
+    on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)
+    on <- name_comp_switcheroo(on)
 
     join_extras <- list(
         nomatch = rlang::maybe_missing(nomatch),
@@ -28,6 +30,5 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
         rollends = rlang::maybe_missing(rollends)
     )
 
-    eb <- x$chain("pronoun", y)
-    leftright_join(eb, on, join_extras)
+    leftright_join(x, on, join_extras)
 }

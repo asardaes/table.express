@@ -24,7 +24,6 @@ reference:
     desc: ~
     contents:
       - '`joins`'
-      - '`non-equi_joins`'
   - title: "Utilities"
     desc: ~
     contents:

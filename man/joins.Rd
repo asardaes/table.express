@@ -54,8 +54,7 @@ mutate_join(x, y, ...)
 \item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}.}
 }
 \description{
-Two-table joins. Non-equi joins have their own \link[=non-equi_joins]{documentation entry}. Check the
-"Joining verbs" vignette too.
+Two-table joins. Check the "Joining verbs" vignette for more information.
 }
 \details{
 The \code{full_join} method is really a wrapper for \code{data.table::merge} that specifies \code{all = TRUE}.
@@ -141,5 +140,5 @@ lhs \%>\%
 
 }
 \seealso{
-\link{non-equi_joins}, \link[data.table:data.table]{data.table::data.table}, \link[dplyr:join]{dplyr::join}
+\link[data.table:data.table]{data.table::data.table}, \link[dplyr:join]{dplyr::join}
 }

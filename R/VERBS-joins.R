@@ -1,7 +1,6 @@
 #' Joining verbs
 #'
-#' Two-table joins. Non-equi joins have their own [documentation entry][non-equi_joins]. Check the
-#' "Joining verbs" vignette too.
+#' Two-table joins. Check the "Joining verbs" vignette for more information.
 #'
 #' @rdname joins
 #' @name joins
@@ -16,7 +15,7 @@
 #'
 #' @seealso
 #'
-#' [non-equi_joins], [data.table::data.table], [dplyr::join]
+#' [data.table::data.table], [dplyr::join]
 #'
 #' @examples
 #'
@@ -33,9 +32,9 @@ NULL
 #' @importFrom rlang as_string
 #' @importFrom rlang syms
 #'
-name_switcheroo <- function(symbols) {
-    chars <- unname(sapply(symbols, rlang::as_string))
-    nms <- names(symbols)
+name_switcheroo <- function(on) {
+    chars <- unname(sapply(on, rlang::as_string))
+    nms <- names(on)
     empty_names <- !nzchar(nms)
 
     if (any(empty_names)) {
@@ -47,12 +46,59 @@ name_switcheroo <- function(symbols) {
     rlang::syms(nms)
 }
 
+#' @importFrom rlang abort
+#' @importFrom rlang call2
+#' @importFrom rlang call_args
+#' @importFrom rlang call_name
+#'
+comp_switcheroo <- function(on) {
+    lapply(unname(on), function(e) {
+        comp <- switch(rlang::call_name(e),
+                       "==" = "==",
+                       "<" = ">",
+                       "<=" = ">=",
+                       ">" = "<",
+                       ">=" = "<=",
+                       # default
+                       rlang::abort("The 'on' expressions must be variables or comparisons."))
+
+        args <- rev(rlang::call_args(e))
+        rlang::call2(comp, !!!args)
+    })
+}
+
+#' @importFrom rlang is_call
+#'
+name_comp_switcheroo <- function(on) {
+    if (length(on) == 0L) {
+        return(on)
+    }
+
+    calls <- sapply(on, rlang::is_call)
+    non_calls <- !calls
+
+    ans <- structure(rep(list(NULL), length(on)),
+                     names = rep("", length(on)))
+
+    ans[calls] <- comp_switcheroo(on[calls])
+    if (any(non_calls)) {
+        switched_names <- name_switcheroo(on[non_calls])
+        ans[non_calls] <- switched_names
+        names(ans)[non_calls] <- names(switched_names)
+    }
+
+    ans
+}
+
+#' @importFrom rlang is_call
 #' @importFrom rlang is_missing
 #' @importFrom rlang warn
 #'
 leftright_join <- function(eb, on, join_extras) {
+    calls <- sapply(on, rlang::is_call)
     which_missing <- sapply(join_extras, rlang::is_missing)
-    if (!which_missing[1L] && is.null(join_extras$nomatch) && all(which_missing[-1L])) {
+
+    if (!which_missing[1L] && is.null(join_extras$nomatch) && all(which_missing[-1L]) && all(!calls)) {
         rlang::warn("Specifying 'nomatch = NULL' but none of ['mult', 'roll', 'rollends'] is equivalent to an inner join.")
     }
 

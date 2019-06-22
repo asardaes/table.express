@@ -368,18 +368,6 @@ On the other hand, no one except Francis has visited the website both before and
 Non-equi joins are similar to rolling joins,
 but instead of rolling a single row's value,
 they can return several values per row.
-Due to some of the processing performed by `left_join` during parsing,
-different verbs are defined:
-`lne_join` and `rne_join` for left/right non-equi joins.
-
-One particularity of `lne_join` is that it only accepts comparison operators,
-so using single `=` would be incorrect.
-If the values of two columns should be equal and the columns have the same name,
-then writing the column name is the same as using `==`.
-Other than that,
-their expectations are the same as what was explained for rolling joins:
-the order of columns should correspond to the order in which the tables enter the expression,
-and the name of the column that's part of the comparison could change.
 
 Using the same data as before,
 we could find *all* the `session_id`s that preceded a `payment_id`,
@@ -388,8 +376,7 @@ giving "priority" to `paypal`'s rows:
 ```{r lne-join}
 paypal %>%
     start_expr %>%
-    # same as name == name, ...
-    lne_join(website, name, purchase_time >= session_start_time) %>%
+    left_join(website, name, purchase_time >= session_start_time) %>%
     end_expr
 ```
 
@@ -404,6 +391,6 @@ expecting only a different order in the columns that are part of the comparisons
 ```{r rne-join}
 website %>%
     start_expr %>%
-    rne_join(paypal, name, session_start_time <= purchase_time) %>%
+    right_join(paypal, name, session_start_time <= purchase_time) %>%
     end_expr
 ```
