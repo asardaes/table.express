@@ -22,6 +22,18 @@ test_that("Simple left join works.", {
     expect_identical(ans, expected)
 })
 
+test_that("Self left join works.", {
+    expected <- lhs[lhs, on = "x", allow = TRUE]
+
+    ans <- lhs %>%
+        start_expr %>%
+        left_join(, "x") %>%
+        frame_append(allow = TRUE) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+})
+
 test_that("Left join with mult works.", {
     expected <- lhs[rhs, on = "x", mult = "first"]
 

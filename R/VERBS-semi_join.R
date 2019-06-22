@@ -13,8 +13,6 @@ dplyr::semi_join
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang sym
 #'
-#' @param .parent_env See [end_expr()].
-#'
 #' @details
 #'
 #' The `semi_join` method [starts a new expression][chain()] immediately.

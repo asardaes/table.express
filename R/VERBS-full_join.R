@@ -7,11 +7,8 @@ dplyr::full_join
 #' @rdname joins
 #' @export
 #' @importFrom rlang as_string
-#' @importFrom rlang caller_env
 #' @importFrom rlang enexprs
-#'
-#' @param sort Passed to [data.table::merge].
-#' @param allow Passed to [data.table::merge]'s `allow.cartesian`, **but** set to `TRUE` by default.
+#' @importFrom rlang maybe_missing
 #'
 #' @details
 #'
@@ -19,8 +16,12 @@ dplyr::full_join
 #' The expression in `x` gets evaluated, merged with `y`, and the result is captured in a new
 #' [ExprBuilder]. Useful in case you want to keep building expressions after the merge.
 #'
-full_join.ExprBuilder <- function(x, y, ..., sort = TRUE, allow = TRUE) {
-    x <- x$eval(rlang::caller_env(), TRUE)
+full_join.ExprBuilder <- function(x, y, ..., sort = TRUE, allow = TRUE, .parent_env) {
+    x <- end_expr.ExprBuilder(x, .parent_env = rlang::maybe_missing(.parent_env))
+    if (missing(y)) {
+        y <- x
+    }
+
     on <- sapply(rlang::enexprs(...), rlang::as_string)
 
     by_x <- by_y <- NULL

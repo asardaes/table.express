@@ -25,8 +25,6 @@ mutate_join <- function(x, y, ...) {
 #' @importFrom rlang syms
 #' @importFrom tidyselect scoped_vars
 #'
-#' @param .SDcols For `mutate_join`. See the details below.
-#'
 #' @section Mutating join:
 #'
 #'   The [ExprBuilder] method for `mutate_join` implements the idiom described in [this
@@ -56,8 +54,15 @@ mutate_join <- function(x, y, ...) {
 #'     start_expr %>%
 #'     mutate_join(lhs, x, .SDcols = .(y = mean(y)))
 #'
-mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
-    dt <- rlang::enexpr(y)
+mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends, allow = FALSE, .parent_env) {
+    y_missing <- missing(y)
+    if (y_missing) {
+        x <- chain.ExprBuilder(x, .parent_env = rlang::maybe_missing(.parent_env))
+        dt <- rlang::sym(".DT_")
+    }
+    else {
+        dt <- rlang::enexpr(y)
+    }
 
     on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)
     on <- name_comp_switcheroo(on)
@@ -93,7 +98,10 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
                 list(rlang::sym(ans), "")
             }
             else if (!rlang::is_call(sd_col)) {
-                ans <- paste("x", rlang::as_string(sd_col), sep = ".")
+                ans <- rlang::as_string(sd_col)
+                if (!grepl("^\\.", ans)) {
+                    ans <- paste("x",ans, sep = ".")
+                }
                 list(rlang::sym(ans), "")
             }
             else {
@@ -108,9 +116,10 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
     }
 
     join_extras <- list()
-    if (!missing(mult)) join_extras$mult <- mult
-    if (!missing(roll)) join_extras$roll <- roll
+    if (!missing(mult))     join_extras$mult <- mult
+    if (!missing(roll))     join_extras$roll <- roll
     if (!missing(rollends)) join_extras$rollends <- rollends
+    if (!missing(allow))    join_extras$allow.cartesian <- allow
 
     on_expr <- rlang::missing_arg()
     if (length(on) > 0L) {
@@ -138,7 +147,12 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
                                     !!!join_extras))
     }
 
-    mutate.ExprBuilder(x, !!new_names := !!rhs_expr, .unquote_names = FALSE, .parse = FALSE)
+    ans <- mutate.ExprBuilder(x, !!new_names := !!rhs_expr, .unquote_names = FALSE, .parse = FALSE)
+    if (y_missing) {
+        ans <- chain.ExprBuilder(ans, .parent_env = rlang::maybe_missing(.parent_env))
+    }
+
+    ans
 }
 
 #' @importFrom rlang as_string

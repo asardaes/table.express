@@ -395,3 +395,29 @@ website %>%
     right_join(paypal, name, session_start_time <= purchase_time) %>%
     end_expr
 ```
+
+## Self joins
+
+In case a self join were necessary,
+perhaps while using a rolling or non-equi join,
+the way `magrittr`'s pipe handles the `.` outside of nested calls wouldn't allow calling a joining verb with `.` both in `x` and `y`.
+To work around this,
+the following verbs default to an eager self join when `y` is missing:
+
+- `full_join`
+- `left_join`
+- `mutate_join`
+
+As a somewhat contrived example,
+we could add a rolling count of weekly visits per user to the `website` data introduced [above](#rolling-joins):
+
+```{r self-join}
+website %>%
+    start_expr %>%
+    mutate(window_start = session_start_time - as.difftime(7, units = "days")) %>%
+    mutate_join(, name, window_start <= session_start_time, session_start_time >= session_start_time,
+                .SDcols = .(weekly_visits = (.N))) %>%
+    end_expr
+
+print(website)
+```

@@ -15,3 +15,9 @@ test_that("Full join works.", {
     ans <- website %>% start_expr %>% full_join(paypal, "name", session_id = payment_id) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Self full join works.", {
+    expected <- merge(lhs, lhs, by = "x", all = TRUE, allow = TRUE)
+    ans <- lhs %>% start_expr %>% full_join(, x) %>% end_expr
+    expect_identical(ans, expected)
+})

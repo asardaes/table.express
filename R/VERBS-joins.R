@@ -12,6 +12,10 @@
 #' @param mult See [data.table::data.table].
 #' @param roll See [data.table::data.table].
 #' @param rollends See [data.table::data.table].
+#' @param .parent_env See [end_expr()].
+#' @param .SDcols For `mutate_join`. See the details below.
+#' @param sort Passed to [data.table::merge].
+#' @param allow Passed as [`data.table`][data.table::data.table]'s `allow.cartesian`.
 #'
 #' @seealso
 #'

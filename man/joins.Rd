@@ -16,15 +16,18 @@
 \usage{
 \method{anti_join}{ExprBuilder}(x, y, ...)
 
-\method{full_join}{ExprBuilder}(x, y, ..., sort = TRUE, allow = TRUE)
+\method{full_join}{ExprBuilder}(x, y, ..., sort = TRUE, allow = TRUE,
+  .parent_env)
 
 \method{inner_join}{ExprBuilder}(x, y, ...)
 
-\method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
+\method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends,
+  .parent_env)
 
 mutate_join(x, y, ...)
 
-\method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, mult, roll, rollends)
+\method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, mult, roll, rollends,
+  allow = FALSE, .parent_env)
 
 \method{right_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
 
@@ -39,7 +42,9 @@ mutate_join(x, y, ...)
 
 \item{sort}{Passed to \link[data.table:merge]{data.table::merge}.}
 
-\item{allow}{Passed to \link[data.table:merge]{data.table::merge}'s \code{allow.cartesian}, \strong{but} set to \code{TRUE} by default.}
+\item{allow}{Passed as \code{\link[data.table:data.table]{data.table}}'s \code{allow.cartesian}.}
+
+\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}.}
 
 \item{nomatch}{See \link[data.table:data.table]{data.table::data.table}.}
 
@@ -50,8 +55,6 @@ mutate_join(x, y, ...)
 \item{rollends}{See \link[data.table:data.table]{data.table::data.table}.}
 
 \item{.SDcols}{For \code{mutate_join}. See the details below.}
-
-\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}.}
 }
 \description{
 Two-table joins. Check the "Joining verbs" vignette for more information.

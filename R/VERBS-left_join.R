@@ -17,7 +17,11 @@ dplyr::left_join
 #'     left_join(rhs, x) %>%
 #'     end_expr
 #'
-left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
+left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .parent_env) {
+    if (missing(y)) {
+        y <- end_expr.ExprBuilder(x, .parent_env = rlang::maybe_missing(.parent_env))
+    }
+
     x <- x$chain("pronoun", y)
 
     on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)

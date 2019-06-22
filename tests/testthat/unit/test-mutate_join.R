@@ -32,7 +32,7 @@ test_that("Mutating join with mult works.", {
 
     ans <- rhs %>%
         start_expr %>%
-        mutate_join(lhs, x, .SDcols = y, mult = "first") %>%
+        mutate_join(lhs, x, .SDcols = y, mult = "first", allow = FALSE) %>%
         end_expr(.by_ref = FALSE)
 
     expect_identical(ans, expected)
@@ -118,6 +118,21 @@ test_that("Summarizing with mutating join works.", {
     expect_identical(ans, expected)
 })
 
+test_that("Summarizing with mutating self join works.", {
+    expected <- data.table::copy(paypal)[, min_pt := paypal[paypal, on = "name", by = .EACHI,
+                                                            list(min_pt = min(purchase_time))
+                                                            ][, .(min_pt)]
+                                         ]
+
+    ans <- paypal %>%
+        (data.table::copy) %>%
+        start_expr %>%
+        mutate_join(, name, .SDcols = .(min_pt = min(purchase_time))) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+})
+
 # https://stackoverflow.com/q/56710801/5793905
 test_that("Muating non-equi join works.", {
     df <- read.table(header = TRUE, text = '
@@ -151,12 +166,7 @@ User  Stamp          activity   Score
         start_expr %>%
         mutate(Stamp = as.POSIXct(Stamp)) %>%
         mutate(window_start = Stamp - as.difftime(8, unit="days")) %>%
-        end_expr
-
-    ans <- ans %>%
-        start_expr %>%
-        mutate_join(ans,
-                    User, Stamp > Stamp, Stamp >= window_start,
+        mutate_join(, User, Stamp > Stamp, Stamp >= window_start,
                     .SDcols = .(proportion_walk = mean(activity == "Walk"),
                                 mean_score = mean(Score))) %>%
         end_expr
