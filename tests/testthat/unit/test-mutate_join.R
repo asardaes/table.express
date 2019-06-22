@@ -117,3 +117,49 @@ test_that("Summarizing with mutating join works.", {
 
     expect_identical(ans, expected)
 })
+
+# https://stackoverflow.com/q/56710801/5793905
+test_that("Muating non-equi join works.", {
+    df <- read.table(header = TRUE, text = '
+User  Stamp          activity   Score
+1     2019-06-20     "Car"      4500
+1     2019-06-18     "Car"      600
+1     2019-06-15     "Walk"     650
+1     2019-06-21     "Ride"     790
+2     2019-06-21     "Car"      800
+2     2019-06-23     "Car"      500
+3     2019-06-11     "Walk"     900
+4     2019-06-15     "Walk"     200
+4     2019-06-12     "Walk"     900')
+
+    expected <- data.table::as.data.table(df)
+    expected[, Stamp := as.POSIXct(Stamp)]
+    expected[, window_start := Stamp - as.difftime(8, unit = "days")]
+
+    expected[, `:=`(
+        c("proportion_walk", "mean_score"),
+        expected[expected,
+                 .(proportion_walk = mean(activity == "Walk"), mean_score = mean(Score)),
+                 # assuming shown lhs is the only one with window_start...
+                 on = .(User, window_start <= Stamp, Stamp < Stamp),
+                 by = .EACHI
+                 ][, .(proportion_walk, mean_score)]
+    )]
+
+    ans <- df %>%
+        (data.table::as.data.table) %>%
+        start_expr %>%
+        mutate(Stamp = as.POSIXct(Stamp)) %>%
+        mutate(window_start = Stamp - as.difftime(8, unit="days")) %>%
+        end_expr
+
+    ans <- ans %>%
+        start_expr %>%
+        mutate_join(ans,
+                    User, Stamp > Stamp, Stamp >= window_start,
+                    .SDcols = .(proportion_walk = mean(activity == "Walk"),
+                                mean_score = mean(Score))) %>%
+        end_expr
+
+    expect_identical(expected, ans)
+})

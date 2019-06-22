@@ -58,7 +58,9 @@ mutate_join <- function(x, y, ...) {
 #'
 mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends) {
     dt <- rlang::enexpr(y)
-    on <- name_switcheroo(rlang::enexprs(...))
+
+    on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)
+    on <- name_comp_switcheroo(on)
 
     sd_expr <- rlang::enexpr(.SDcols)
     sd_quo <- rlang::enquo(.SDcols)
