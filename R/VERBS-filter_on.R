@@ -4,11 +4,14 @@
 #'
 #' @export
 #' @importFrom rlang abort
+#' @importFrom rlang expr
 #'
 #' @template data-arg
 #' @param ... Key-value pairs, see details.
 #' @param nomatch See [data.table::data.table].
 #' @param mult See [data.table::data.table].
+#' @param .negate Whether to negate the expression and search only for rows that don't contain the
+#'   given values.
 #' @template chain-arg
 #'
 #' @details
@@ -30,7 +33,7 @@
 #'     start_expr %>%
 #'     filter_on(cyl = 4, gear = 5)
 #'
-filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult = "all",
+filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult = "all", .negate = FALSE,
                       .chain = getOption("table.express.chain", TRUE))
 {
     key_value <- parse_dots(FALSE, ...)
@@ -41,7 +44,12 @@ filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult
         rlang::abort("All arguments in '...' must be named.")
     }
 
-    ans <- where(.data, list(!!!values), .parse = FALSE, .chain = .chain) %>%
+    clause <- rlang::expr(list(!!!values))
+    if (.negate) {
+        clause <- rlang::expr(`!`(`!!`(clause)))
+    }
+
+    ans <- .data$set_where(clause, .chain) %>%
         frame_append(on = !!keys, .parse = FALSE)
 
     if (!missing(nomatch)) {

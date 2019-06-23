@@ -24,6 +24,12 @@ test_that("The filter_on verb works as expected.", {
     expect_identical(nrow(ans), 0L)
 })
 
+test_that("The filter_on semantics can be negated.", {
+    expected <- DT[!list(0), on = "am"]
+    ans <- DT %>% start_expr %>% filter_on(am = 0, .negate = TRUE) %>% end_expr
+    expect_identical(ans, expected)
+})
+
 test_that("The filter_on verb works for several values per key.", {
     expected <- state[.(c("South", "West"), c("South Atlantic", "Pacific"))]
 
