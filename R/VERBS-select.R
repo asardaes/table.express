@@ -51,7 +51,7 @@ select.ExprBuilder <- function(.data, ...,
         }
     }
     else {
-    # avoid NOTE
+        # avoid NOTE
         .select_matching <- EBCompanion$helper_functions$.select_matching
         clause <- rlang::expr(.select_matching(.SD, !!!clauses))
     }
