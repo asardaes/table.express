@@ -33,6 +33,6 @@ test_that("The expr field is read only.", {
 
 test_that("Overriding values with eval's ellipsis works.", {
     b <- DT %>% start_expr %>% select(1L)
-    ans <- b$eval(rlang::current_env(), TRUE, .DT_ = NULL)
-    expect_null(ans)
+    ans <- b$eval(rlang::current_env(), TRUE, .DT_ = DT[, -1L])
+    expect_identical(ans, DT[, .(cyl)])
 })

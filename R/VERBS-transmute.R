@@ -3,18 +3,25 @@
 #'
 dplyr::transmute
 
-#' Alias for select
+#' Compute new columns
 #'
-#' Because of the way `data.table` and the [select-table.express] method work, a
-#' [dplyr::transmute()] equivalent can be specified as a `select` clause.
+#' Compute and keep only new columns.
 #'
 #' @rdname transmute-table.express
 #' @name transmute-table.express
 #' @export
+#' @importFrom rlang expr
 #'
-#' @inheritParams select-table.express
+#' @template data-arg
+#' @param ... Clauses for transmuting columns. For `j` inside the `data.table`'s frame.
+#' @template parse-arg
+#' @template chain-arg
 #'
-#' @inherit select-table.express details
+#' @details
+#'
+#' Everything in `...` is wrapped in a call to `list`.
+#'
+#' @template docu-examples
 #'
 #' @examples
 #'
@@ -24,4 +31,12 @@ dplyr::transmute
 #'     start_expr %>%
 #'     transmute(ans = mpg * 2)
 #'
-transmute.ExprBuilder <- select.ExprBuilder
+transmute.ExprBuilder <- function(.data, ...,
+                                  .parse = getOption("table.express.parse", FALSE),
+                                  .chain = getOption("table.express.chain", TRUE))
+{
+    clauses <- parse_dots(.parse, ...)
+    if (length(clauses) == 0L) return(.data)
+
+    .data$set_select(rlang::expr(list(!!!clauses)), .chain)
+}

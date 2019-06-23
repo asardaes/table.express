@@ -260,12 +260,69 @@ EBCompanion$clause_order <- c(
 #
 # beware of https://github.com/r-lib/rlang/issues/774
 #
+#' @importFrom rlang as_string
 #' @importFrom rlang eval_tidy
+#' @importFrom rlang enexprs
+#' @importFrom rlang expr
+#' @importFrom rlang is_call
 #' @importFrom rlang new_data_mask
 #' @importFrom rlang new_environment
 #' @importFrom tidyselect scoped_vars
 #'
 EBCompanion$helper_functions <- list(
+    .select_matching = function(.SD, ...) {
+        tidyselect::scoped_vars(names(.SD))
+        .clauses <- rlang::enexprs(...)
+
+        .ans <- list()
+        for (.i in seq_along(.clauses)) {
+            .clause <- .clauses[[.i]]
+            .name <- names(.clauses[.i])
+            .empty_name <- is.null(.name) | !nzchar(.name)
+
+            if (is_tidyselect_call(.clause)) {
+                .clause <- base::eval(.clause)
+            }
+
+            if (.empty_name && (is.numeric(.clause) || rlang::is_call(.clause, ":"))) {
+                .expr <- rlang::expr(base::evalq(.SD[, !!.clause]))
+                .sub_ans <- as.list(base::eval(.expr))
+            }
+            else {
+                # .new_vars <- names(.ans)
+                # if (is.null(.new_vars)) {
+                #     .new_vars <- list()
+                # }
+                # else {
+                #     .new_vars <- .ans[nzchar(.new_vars)]
+                # }
+
+                .sub_ans <- eval.parent(.clause)
+
+                if (is.list(.sub_ans)) {
+                    .sub_ans <- as.list(.sub_ans)
+                }
+                else {
+                    .sub_ans <- list(.sub_ans)
+                }
+
+                if (.empty_name) {
+                    try(silent = TRUE, {
+                        .name <- rlang::as_string(.clause)
+                    })
+                }
+
+                if (!is.null(.name) && nzchar(.name) && length(.name) == length(.sub_ans)) {
+                    names(.sub_ans) <- .name
+                }
+            }
+
+            .ans <- c(.ans, .sub_ans)
+        }
+
+        .ans
+    },
+
     .transmute_matching = function(.COL, .COLNAME, .COLNAMES, .which, .how) {
         tidyselect::scoped_vars(.COLNAMES)
 

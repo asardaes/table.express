@@ -54,7 +54,7 @@ test_that("Recursive left joining works.", {
 
         next_dt <- dt %>%
             left_join(expanded[[current]], !!current) %>%
-            select(c(!!harmonize_call, mget(!!not_current)), .enlist = FALSE) %>%
+            select(c(!!harmonize_call, mget(!!not_current))) %>%
             frame_append(.SDcols = c(!!current, "all"), allow = TRUE)
 
         expand_recursively(next_dt, next_cols, penv)

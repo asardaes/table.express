@@ -12,8 +12,8 @@ test_that("Order of clauses is not important for a single 'query'.", {
     for (ignored in 1L:50L) {
         clauses_shuffled <- sample(clauses)
         expr_clauses <- c(list(rlang::expr(start_expr)), clauses_shuffled, list(rlang::expr(end_expr)))
-        e <- reduce_expr(expr_clauses, rlang::expr(DT), rlang::expr(`%>%`))
+        e <- table.express:::reduce_expr(expr_clauses, rlang::expr(DT), rlang::expr(`%>%`))
         ans <- rlang::eval_tidy(e)
-        expect_identical(ans, expected)
+        expect_equal(ans, expected)
     }
 })

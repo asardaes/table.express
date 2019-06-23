@@ -7,6 +7,7 @@ source("unit/test-end_expr.R", TRUE)
 source("unit/test-frame_append.R", TRUE)
 
 source("unit/test-select.R", TRUE)
+source("unit/test-transmute.R", TRUE)
 source("unit/test-filter.R", TRUE)
 source("unit/test-arrange.R", TRUE)
 source("unit/test-group_by.R", TRUE)

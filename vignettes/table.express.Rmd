@@ -117,13 +117,12 @@ DT %>%
   end_expr
 ```
 
-In the case of single expressions in `select`,
-calls to `tidyselect`'s helpers or to `:` are handled specially internally:
+Calls to `tidyselect`'s helpers or to `:` are handled specially internally:
 
 ```{r select-special}
 DT %>%
   start_expr %>%
-  select(mpg:cyl) %>%
+  select(mpg:disp, gear:carb) %>%
   end_expr
 
 DT %>%
@@ -144,23 +143,20 @@ DT %>%
 
 ## Transmuting columns
 
-Given the way `data.table` handles the `j` part of the frame,
-creating and keeping only new columns
-(like with `dplyr`'s `transmute`)
-can be done with `select`,
-so `transmute` is simply an alias during expression building.
+The `transmute` verb simply wraps everything in its ellipsis in a call to `list` and assigns the expression to the frame's `j`.
 
 ```{r transmute}
 DT %>%
   start_expr %>%
-  select(foo = mpg * 2, bar = exp(cyl)) %>%
-  end_expr
-
-DT %>%
-  start_expr %>%
-  transmute(foo = mpg * 2, bar = exp(cyl)) %>%
+  transmute(foo = mpg * 2, bar = exp(cyl)) %T>%
+  print %>%
   end_expr
 ```
+
+Even though `select` can be used for the same
+(given the way `data.table` handles `j`),
+the simplicity of `transmute`'s internals makes it preferable when no `tidyselect` helpers are needed,
+since it avoids extra function calls and can reduce overhead significantly in special circumstances.
 
 ## Mutating columns
 

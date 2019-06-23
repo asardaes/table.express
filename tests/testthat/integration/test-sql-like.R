@@ -89,7 +89,7 @@ test_that("Special symbols can be used as usual.", {
 
     ans <- state %>%
         start_expr %>%
-        select(.I[which.min(center_y)]) %>%
+        transmute(.I[which.min(center_y)]) %>%
         group_by(region, division) %>%
         order_by(region) %>%
         end_expr
@@ -145,7 +145,7 @@ test_that("Complex chains are correctly expressed and evaluated.", {
         group_by(division) %>%
         order_by(region) %>%
         chain %>%
-        select(min(center_x), max(center_y)) %>%
+        transmute(min(center_x), max(center_y)) %>%
         where(abs(center_x) > 85, abs(center_y) > 40) %>%
         key_by(group_id) %>%
 

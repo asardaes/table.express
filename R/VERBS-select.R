@@ -5,27 +5,22 @@ dplyr::select
 
 #' Select clause
 #'
-#' Select or compute over columns of a [data.table::data.table-class].
+#' Select columns of a [data.table::data.table-class].
 #'
 #' @rdname select-table.express
 #' @name select-table.express
 #' @export
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
-#' @importFrom rlang quos
 #'
 #' @template data-arg
-#' @param ... Clause for selecting/computing on columns. The `j` inside the `data.table`'s frame.
-#' @param .enlist Whether to wrap `...` in a list.
+#' @param ... Clause for selecting columns. For `j` inside the `data.table`'s frame.
 #' @template parse-arg
 #' @template chain-arg
 #'
 #' @details
 #'
-#' If `length(...) == 1L` and the expression is a call to `:` (e.g. `a:c`), a numeric, or a call to
-#' [tidyselect::select_helpers], then it will be taken as the single expression for the select
-#' clause, otherwise everything in `...` will be wrapped in a call to [base::list()] by default. Set
-#' `.enlist = FALSE` if you want to specify the `j` expression entirely.
+#' The expressions in `...` support [tidyselect::select_helpers].
 #'
 #' @template docu-examples
 #'
@@ -37,38 +32,41 @@ dplyr::select
 #'     start_expr %>%
 #'     select(mpg:cyl)
 #'
-select.ExprBuilder <- function(.data, ..., .enlist = TRUE,
+select.ExprBuilder <- function(.data, ...,
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))
 {
-    clause <- parse_dots(.parse, ...)
-    if (length(clause) == 0L) return(.data)
+    clauses <- parse_dots(.parse, ...)
+    if (length(clauses) == 0L) return(.data)
 
-    is_single <- length(clause) == 1L & !nzchar(names(clause)[1L])
-    first_clause <- clause[[1L]]
+    non_calls <- !sapply(clauses, rlang::is_call)
+    nums <- sapply(clauses, is_num) & !nzchar(names(clauses))
 
-    if (is_single && is_tidyselect_call(first_clause)) {
-        # just to avoid NOTE
-        .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
-
-        clause <- rlang::expr(Map(
-            .transmute_matching,
-            .COL = .SD,
-            .COLNAME = names(.SD),
-            .COLNAMES = list(names(.SD)),
-            .which = rlang::quos(!!clause[[1L]]),
-            .how = rlang::quos(.COL)
-        ))
-    }
-    else if (is_single && (evaled_is(first_clause, "numeric") || rlang::is_call(first_clause, ":"))) {
-        clause <- first_clause
-    }
-    else if (is_single && !.enlist) {
-        clause <- first_clause
+    if (all(non_calls | nums)) {
+        if (all(nums)) {
+            clause <- rlang::expr(c(!!!clauses))
+        }
+        else {
+            clause <- rlang::expr(list(!!!clauses))
+        }
     }
     else {
-        clause <- rlang::expr(list(!!!clause))
+    # avoid NOTE
+        .select_matching <- EBCompanion$helper_functions$.select_matching
+        clause <- rlang::expr(.select_matching(.SD, !!!clauses))
     }
 
     .data$set_select(clause, .chain)
+}
+
+#' @importFrom rlang call_args
+#' @importFrom rlang is_call
+#'
+is_num <- function(e) {
+    if (rlang::is_call(e, ":") && all(sapply(rlang::call_args(e), is.numeric))) {
+        TRUE
+    }
+    else {
+        is.numeric(e)
+    }
 }

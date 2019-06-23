@@ -5,16 +5,14 @@
 \alias{select.ExprBuilder}
 \title{Select clause}
 \usage{
-\method{select}{ExprBuilder}(.data, ..., .enlist = TRUE,
+\method{select}{ExprBuilder}(.data, ...,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{...}{Clause for selecting/computing on columns. The \code{j} inside the \code{data.table}'s frame.}
-
-\item{.enlist}{Whether to wrap \code{...} in a list.}
+\item{...}{Clause for selecting columns. For \code{j} inside the \code{data.table}'s frame.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
@@ -22,13 +20,10 @@
 clause being set already exists?}
 }
 \description{
-Select or compute over columns of a \link[data.table:data.table-class]{data.table::data.table}.
+Select columns of a \link[data.table:data.table-class]{data.table::data.table}.
 }
 \details{
-If \code{length(...) == 1L} and the expression is a call to \code{:} (e.g. \code{a:c}), a numeric, or a call to
-\link[tidyselect:select_helpers]{tidyselect::select_helpers}, then it will be taken as the single expression for the select
-clause, otherwise everything in \code{...} will be wrapped in a call to \code{\link[base:list]{base::list()}} by default. Set
-\code{.enlist = FALSE} if you want to specify the \code{j} expression entirely.
+The expressions in \code{...} support \link[tidyselect:select_helpers]{tidyselect::select_helpers}.
 
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
