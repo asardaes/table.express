@@ -93,7 +93,8 @@ the captured `data.table` is assigned to the evaluation environment as said pron
 Even though selecting a subset of columns is a common operation,
 it may be undesirable to do so when working with `data.table`s because they lead to data copies.
 Given that `data.table` supports modification by reference,
-these copies are necessary.
+these copies are necessary,
+but it might be preferable to use mutation verbs to remove columns that are not of interest.
 
 With that said,
 the `select` verb can be used as usual:
@@ -255,6 +256,17 @@ DT %>%
   end_expr
 
 print(DT)
+```
+
+It would also be possible to remove several columns with `mutate_sd`:
+
+```{r mutate-sd-rm}
+DT %>%
+  start_expr %>%
+  mutate_sd(NULL, .SDcols = c("mpg", "cyl")) %>%
+  end_expr(.by_ref = FALSE) %>% {
+    invisible(print(.))
+  }
 ```
 
 Additionally, `mutate_sd` supports the special `.COL` pronoun that symbolizes the column that should be modified,
