@@ -1,6 +1,7 @@
 #' Frame expression builder
 #'
-#' Build an expression that will be used inside a [data.table::data.table-class]'s frame.
+#' Build an expression that will be used inside a [data.table::data.table-class]'s frame. This
+#' shouldn't be used directly.
 #'
 #' @docType class
 #' @export
@@ -31,15 +32,21 @@
 #' @section Methods:
 #'
 #' \describe{
-#'   \item{`initialize(DT)`}{Constructor that receives a [data.table::data.table-class] in `DT`.}
+#'   \item{`initialize(DT, dt_pronouns = list())`}{Constructor that receives a
+#'     [data.table::data.table-class] in `DT`. The `dt_pronouns` parameter is used internally when
+#'     chaining for joins.}
 #'   \item{`set_select(value, chain_if_needed)`}{Set the select clause expression(s), starting a new
 #'     frame if the current one already has said expression set.}
 #'   \item{`set_where(value, chain_if_needed)`}{Like `set_select` but for the where clause.}
 #'   \item{`set_by(value, chain_if_needed)`}{Set the by clause expression.}
-#'   \item{`chain()`}{Start a new expression with the current one as its parent.}
+#'   \item{`chain(type = "frame", dt)`}{By default, start a new expression with the current one as
+#'     its parent. If `type = "pronoun"`, `dt` is used to start a new expression that joins the
+#'     current one.}
 #'   \item{`eval(parent_env, by_ref, ...)`}{Evaluate the final expression with `parent_env` as the
 #'     enclosing environment. If `by_ref = FALSE`, [data.table::copy()] is called before. The
 #'     ellipsis' contents are assigned to the expression's evaluation environment.}
+#'   \item{`tidy_select(select_expr)`}{Evaluate a `tidyselect` call using the currently captured
+#'     table.}
 #'   \item{`print(...)`}{Prints the built `expr`.}
 #' }
 #'

@@ -9,7 +9,8 @@
 ExprBuilder
 }
 \description{
-Build an expression that will be used inside a \link[data.table:data.table-class]{data.table::data.table}'s frame.
+Build an expression that will be used inside a \link[data.table:data.table-class]{data.table::data.table}'s frame. This
+shouldn't be used directly.
 }
 \section{Fields}{
 
@@ -24,15 +25,21 @@ Build an expression that will be used inside a \link[data.table:data.table-class
 
 
 \describe{
-\item{\code{initialize(DT)}}{Constructor that receives a \link[data.table:data.table-class]{data.table::data.table} in \code{DT}.}
+\item{\code{initialize(DT, dt_pronouns = list())}}{Constructor that receives a
+\link[data.table:data.table-class]{data.table::data.table} in \code{DT}. The \code{dt_pronouns} parameter is used internally when
+chaining for joins.}
 \item{\code{set_select(value, chain_if_needed)}}{Set the select clause expression(s), starting a new
 frame if the current one already has said expression set.}
 \item{\code{set_where(value, chain_if_needed)}}{Like \code{set_select} but for the where clause.}
 \item{\code{set_by(value, chain_if_needed)}}{Set the by clause expression.}
-\item{\code{chain()}}{Start a new expression with the current one as its parent.}
+\item{\code{chain(type = "frame", dt)}}{By default, start a new expression with the current one as
+its parent. If \code{type = "pronoun"}, \code{dt} is used to start a new expression that joins the
+current one.}
 \item{\code{eval(parent_env, by_ref, ...)}}{Evaluate the final expression with \code{parent_env} as the
 enclosing environment. If \code{by_ref = FALSE}, \code{\link[data.table:copy]{data.table::copy()}} is called before. The
 ellipsis' contents are assigned to the expression's evaluation environment.}
+\item{\code{tidy_select(select_expr)}}{Evaluate a \code{tidyselect} call using the currently captured
+table.}
 \item{\code{print(...)}}{Prints the built \code{expr}.}
 }
 }
