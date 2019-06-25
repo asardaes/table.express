@@ -167,6 +167,10 @@ A %>%
     }
 ```
 
+This is particularly important if the selection expressions call any function,
+e.g. `tidyselect` helpers or even `:` with non-numerics,
+because `data.table` does not support that kind of syntax for `j` in the same frame as a join.
+
 ## Mutating join
 
 A special `data.table` idiom is described [here as an update join](https://stackoverflow.com/a/54313203/5793905).

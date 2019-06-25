@@ -91,10 +91,17 @@ the captured `data.table` is assigned to the evaluation environment as said pron
 ## Selecting columns
 
 Even though selecting a subset of columns is a common operation,
-it may be undesirable to do so when working with `data.table`s because they lead to data copies.
+it may be undesirable to do so when working with `data.table`s because they *always* lead to **deep** data copies.
 Given that `data.table` supports modification by reference,
-these copies are necessary,
-but it might be preferable to use mutation verbs to remove columns that are not of interest.
+these copies are necessary.
+For example, the following would require copying all columns between `mpg` and `disp`,
+since any of them could be modified by reference afterwards.
+
+```{r select-deep-copy, eval = FALSE}
+DT[, mpg:disp][, cyl := as.integer(cyl)]
+```
+
+Therefore, it might be preferable to use mutation verbs to remove columns that are not of interest.
 
 With that said,
 the `select` verb can be used as usual:
