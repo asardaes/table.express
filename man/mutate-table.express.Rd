@@ -5,14 +5,17 @@
 \alias{mutate.ExprBuilder}
 \title{Add or update columns}
 \usage{
-\method{mutate}{ExprBuilder}(.data, ..., .unquote_names = TRUE,
-  .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+\method{mutate}{ExprBuilder}(.data, ..., .sequential = FALSE,
+  .unquote_names = TRUE, .parse = getOption("table.express.parse",
+  FALSE), .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{Mutation clauses.}
+
+\item{.sequential}{If \code{TRUE}, each expression in \code{...} is assigned to a separate frame in order
+to enable usage of newly created columns.}
 
 \item{.unquote_names}{Passed to \code{\link[rlang:enexprs]{rlang::enexprs()}}. Set to \code{FALSE} if you want to pass the single
 \code{\link[data.table:set]{:=}} expression.}

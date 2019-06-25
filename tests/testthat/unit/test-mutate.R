@@ -1,5 +1,10 @@
 context("  Mutate")
 
+test_that("Empty clauses are not an error.", {
+    ans <- DT %>% start_expr %>% mutate %>% end_expr
+    expect_identical(ans, DT)
+})
+
 test_that("Mutating by reference without parsing works.", {
     dt <- data.table::copy(DT)
 
@@ -110,4 +115,15 @@ test_that("Mutations with parens expressions work if .unquote_names = FALSE.", {
     expect_identical(ncol(ans), ncol(DT) + 2L)
     expect_identical(ans$a, rep(1, nrow(DT)))
     expect_identical(ans$b, rep(1, nrow(DT)))
+})
+
+test_that("Newly created columns can be used if .sequential = TRUE.", {
+    expected <- data.table::copy(DT)[, x := mpg * 2][, y := x / 2]
+
+    ans <- DT %>%
+        start_expr %>%
+        mutate(x = mpg * 2, y = x / 2, .sequential = TRUE) %>%
+        end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
 })

@@ -17,6 +17,8 @@ dplyr::mutate
 #'
 #' @template data-arg
 #' @param ... Mutation clauses.
+#' @param .sequential If `TRUE`, each expression in `...` is assigned to a separate frame in order
+#'   to enable usage of newly created columns.
 #' @param .unquote_names Passed to [rlang::enexprs()]. Set to `FALSE` if you want to pass the single
 #'   [`:=`][data.table::set] expression.
 #' @template parse-arg
@@ -31,11 +33,24 @@ dplyr::mutate
 #'     start_expr %>%
 #'     mutate(mpg_squared = mpg ^ 2)
 #'
-mutate.ExprBuilder <- function(.data, ..., .unquote_names = TRUE,
+mutate.ExprBuilder <- function(.data, ..., .sequential = FALSE, .unquote_names = TRUE,
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))
 {
     clauses <- parse_dots(.parse, ..., .named = TRUE, .unquote_names = .unquote_names)
+
+    if (length(clauses) == 0L) {
+        return(.data)
+    }
+    else if (.sequential && .unquote_names) {
+        for (i in seq_along(clauses)) {
+            # keep as list with name
+            clause <- clauses[i]
+            .data <- mutate.ExprBuilder(.data, !!!clause, .sequential = FALSE, .parse = FALSE, .chain = TRUE)
+        }
+
+        return(.data)
+    }
 
     if (.unquote_names) {
         clause <- rlang::quo_squash(rlang::expr(
