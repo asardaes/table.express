@@ -100,3 +100,16 @@ test_that("Select with tidyselect works.", {
     ans <- DT %>% start_expr %>% select(num_range("var", 0:1)) %>% end_expr
     expectations(ans, 2L)
 })
+
+test_that("Combining tidyselect::everything with other expressions works like in dplyr.", {
+    expected <- data.table::setcolorder(data.table::copy(DT), "carb")
+
+    ans <- DT %>% start_expr %>% select(carb, everything()) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% select(carb, everything(), everything()) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% select(carb, mpg:gear, everything()) %>% end_expr
+    expect_identical(ans, expected)
+})

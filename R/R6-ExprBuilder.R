@@ -261,6 +261,7 @@ EBCompanion$clause_order <- c(
 # beware of https://github.com/r-lib/rlang/issues/774
 #
 #' @importFrom rlang as_string
+#' @importFrom rlang call_name
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang enexprs
 #' @importFrom rlang expr
@@ -281,7 +282,16 @@ EBCompanion$helper_functions <- list(
             .empty_name <- is.null(.name) | !nzchar(.name)
 
             if (is_tidyselect_call(.clause)) {
-                .clause <- base::eval(.clause)
+                if (rlang::call_name(.clause) == "everything") {
+                    .clause <- setdiff(base::eval(.clause), which(names(.SD) %in% names(.ans)))
+
+                    if (length(.clause) == 0L) {
+                        next
+                    }
+                }
+                else {
+                    .clause <- base::eval(.clause)
+                }
             }
 
             if (.empty_name && (is.numeric(.clause) || rlang::is_call(.clause, ":"))) {

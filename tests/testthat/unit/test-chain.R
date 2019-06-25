@@ -5,4 +5,6 @@ test_that("Chaining expression builders works.", {
 
     ans <- DT %>% start_expr %>% where(vs == 0L) %>% chain %>% order_by(mpg) %>% end_expr
     expect_identical(ans, expected)
+
+    data.table::setindex(DT, NULL)
 })
