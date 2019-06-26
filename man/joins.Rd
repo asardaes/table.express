@@ -27,7 +27,7 @@
 mutate_join(x, y, ...)
 
 \method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, mult, roll, rollends,
-  allow = FALSE, .parent_env)
+  allow = FALSE, .by_each = NULL, .parent_env)
 
 \method{right_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
 
@@ -55,6 +55,8 @@ mutate_join(x, y, ...)
 \item{rollends}{See \link[data.table:data.table]{data.table::data.table}.}
 
 \item{.SDcols}{For \code{mutate_join}. See the details below.}
+
+\item{.by_each}{For \code{mutate_join}. See the details below.}
 }
 \description{
 Two-table joins. Check the "Joining verbs" vignette for more information.
@@ -84,7 +86,14 @@ names for the values added to \code{x}.
 }
 
 The last case mentioned above is useful when the join returns many rows from \code{y} for each row
-in \code{x}, so they can be summarized by adding \code{by = .EACHI} to the frame.
+in \code{x}, so they can be summarized while joining. The value of \code{by} in the join depends on what
+is passed to \code{.by_each}:
+\itemize{
+\item If \code{NULL} (the default), \code{by} is set to \code{.EACHI} if a call is detected in any of the
+expressions from the list in \code{.SDcols}
+\item If \code{TRUE}, \code{by} is always set to \code{.EACHI}
+\item If \code{FALSE}, \code{by} is never set to \code{.EACHI}
+}
 }
 
 \examples{

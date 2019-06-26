@@ -173,3 +173,46 @@ User  Stamp          activity   Score
 
     expect_identical(expected, ans)
 })
+
+test_that("mutate_join's .by_each parameter yields the expected results.", {
+    expected <- data.table::copy(rhs)[, N := lhs[.SD, .(.N), on = "x"]]
+
+    ans <- rhs %>%
+        start_expr %>%
+        mutate_join(lhs, x, .SDcols = .(.N)) %>%
+        end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
+
+    ans <- rhs %>%
+        start_expr %>%
+        mutate_join(lhs, x, .SDcols = ".N") %>%
+        end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
+
+    ans <- rhs %>%
+        start_expr %>%
+        mutate_join(lhs, x, .SDcols = .(N = length(.I)), .by_each = FALSE) %>%
+        end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- data.table::copy(rhs)[, N := lhs[.SD, .(.N), on = "x", by = .EACHI][, .(N)]]
+
+    ans <- rhs %>%
+        start_expr %>%
+        mutate_join(lhs, x, .SDcols = .(.N), .by_each = TRUE) %>%
+        end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
+
+    ans <- rhs %>%
+        start_expr %>%
+        mutate_join(lhs, x, .SDcols = .(N = length(.I))) %>%
+        end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
+})

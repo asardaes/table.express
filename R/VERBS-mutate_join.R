@@ -40,7 +40,13 @@ mutate_join <- function(x, y, ...) {
 #'       `x`.
 #'
 #'   The last case mentioned above is useful when the join returns many rows from `y` for each row
-#'   in `x`, so they can be summarized by adding `by = .EACHI` to the frame.
+#'   in `x`, so they can be summarized while joining. The value of `by` in the join depends on what
+#'   is passed to `.by_each`:
+#'
+#'   - If `NULL` (the default), `by` is set to `.EACHI` if a call is detected in any of the
+#'     expressions from the list in `.SDcols`
+#'   - If `TRUE`, `by` is always set to `.EACHI`
+#'   - If `FALSE`, `by` is never set to `.EACHI`
 #'
 #' @examples
 #'
@@ -54,7 +60,9 @@ mutate_join <- function(x, y, ...) {
 #'     start_expr %>%
 #'     mutate_join(lhs, x, .SDcols = .(y = mean(y)))
 #'
-mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends, allow = FALSE, .parent_env) {
+mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends,
+                                    allow = FALSE, .by_each = NULL, .parent_env)
+{
     y_missing <- missing(y)
     if (y_missing) {
         x <- chain.ExprBuilder(x, .parent_env = rlang::maybe_missing(.parent_env))
@@ -90,29 +98,30 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends, al
         }
 
         new_names <- sd_cols_names(sd_cols)
-        dt_cols_names <- Map(new_names, sd_cols, f = function(new_name, sd_col) {
+        dt_cols <- lapply(sd_cols, function(sd_col) {
             sd_quo <- rlang::new_quosure(sd_col, env = sd_env)
 
             if (evaled_is(sd_quo, "character")) {
-                ans <- paste("x", rlang::eval_tidy(sd_quo), sep = ".")
-                list(rlang::sym(ans), "")
+                ans <- rlang::eval_tidy(sd_quo)
+                if (!grepl("^\\.", ans)) {
+                    ans <- paste("x",ans, sep = ".")
+                }
+                rlang::sym(ans)
             }
             else if (!rlang::is_call(sd_col)) {
                 ans <- rlang::as_string(sd_col)
                 if (!grepl("^\\.", ans)) {
                     ans <- paste("x",ans, sep = ".")
                 }
-                list(rlang::sym(ans), "")
+                rlang::sym(ans)
             }
             else {
                 .EACHI <<- TRUE
-                list(sd_col, new_name)
+                sd_col
             }
         })
 
-        dt_cols <- lapply(dt_cols_names, `[[`, 1L)
-        dt_cols_names <- sapply(dt_cols_names, `[[`, 2L)
-        names(dt_cols) <- dt_cols_names
+        names(dt_cols) <- new_names
     }
 
     join_extras <- list()
@@ -126,7 +135,7 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends, al
         on_expr <- rlang::expr(list(!!!on))
     }
 
-    if (.EACHI) {
+    if (isTRUE(.by_each) || (is.null(.by_each) && .EACHI)) {
         rhs_expr <- rlang::expr(`[`(!!dt,
                                     .SD,
                                     list(!!!dt_cols),
@@ -164,11 +173,17 @@ sd_cols_names <- function(sd_cols) {
         if (rlang::is_call(sd_col)) {
             counter <- counter
             counter <<- counter + 1L
-            paste0("V", counter)
+            ans <- paste0("V", counter)
         }
         else {
-            rlang::as_string(sd_col)
+            ans <- rlang::as_string(sd_col)
         }
+
+        if (ans %in% c(".N", ".I", ".GRP")) {
+            ans <- sub(".", "", ans)
+        }
+
+        ans
     }))
 
     new_names <- names(sd_cols)

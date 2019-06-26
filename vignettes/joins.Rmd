@@ -420,7 +420,9 @@ website %>%
     start_expr %>%
     mutate(window_start = session_start_time - as.difftime(7, units = "days")) %>%
     mutate_join(, name, window_start <= session_start_time, session_start_time >= session_start_time,
-                .SDcols = .(weekly_visits = (.N))) %>%
+                .SDcols = .(weekly_visits = .N),
+                .by_each = TRUE) %>%
+    mutate(window_start = NULL) %>%
     end_expr
 
 print(website)
