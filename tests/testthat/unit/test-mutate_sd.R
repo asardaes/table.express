@@ -50,6 +50,17 @@ test_that("Mutating SD with call and subset of columns works.", {
     expect_identical(ans, expected)
 })
 
+test_that("Mutating SD with a list of expressions/functions works.", {
+    expected <- data.table::copy(DT)[, `:=`(mpg = log(mpg, base = 10), am = log(am, base = 10), x = 1L, y = 2L)]
+
+    ans <- DT %>%
+        start_expr %>%
+        mutate_sd(c("mpg", "am", "x", "y"), .(log, log(.COL), 1L, 2L), base = 10) %>%
+        end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
+})
+
 test_that("Mutating SD with tidyselect helpers works.", {
     dt <- data.table::copy(DT)
     expected <- dt[, `:=`(mpg = log(mpg, base = 10), am = log(am, base = 10))]

@@ -4,18 +4,18 @@
 \alias{mutate_sd}
 \title{Mutate subset of data}
 \usage{
-mutate_sd(.data, .how = identity, ..., .SDcols,
+mutate_sd(.data, .SDcols, .how = identity, ...,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{.how}{The function or function call that will perform the transformation.}
-
-\item{...}{Possibly more arguments for \code{.how}.}
-
 \item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
+
+\item{.how}{The function(s) or function call(s) that will perform the transformation.}
+
+\item{...}{Possibly more arguments for \emph{all} functions/calls in \code{.how}.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
@@ -23,11 +23,12 @@ mutate_sd(.data, .how = identity, ..., .SDcols,
 clause being set already exists?}
 }
 \description{
-Like \link{mutate-table.express} but for a single call and some \code{.SDcols}.
+Like \link{mutate-table.express} but possibly recycling calls.
 }
 \details{
 This function works similar to \code{\link[=transmute_sd]{transmute_sd()}} but keeps all columns and \emph{can} modify by
-reference, like \link{mutate-table.express}.
+reference, like \link{mutate-table.express}. It can serve like
+\link[dplyr:mutate_all]{dplyr's scoped mutation variants} depending on what's given to \code{.SDcols}.
 
 Additionally, \code{.SDcols} supports \link[tidyselect:select_helpers]{tidyselect::select_helpers}, with the caveat that the
 expression is evaluated eagerly, i.e. with the currently captured \code{data.table}. Consider using
@@ -43,6 +44,6 @@ data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
     start_expr \%>\%
-    mutate_sd(.COL * 2, .SDcols = c("mpg", "cyl"))
+    mutate_sd(c("mpg", "cyl"), .COL * 2)
 
 }

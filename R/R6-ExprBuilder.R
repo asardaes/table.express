@@ -364,10 +364,20 @@ EBCompanion$helper_functions <- list(
         }
     },
 
-    .mutate_matching = function(.COL, .how) {
-        data_mask <- rlang::new_environment(list(.COL = .COL))
-        data_mask <- rlang::new_data_mask(data_mask)
-        rlang::eval_tidy(.how, data_mask)
+    .mutate_matching = function(.SD, .SDcols, .hows) {
+        Map(.SDcols, .hows, list(parent.frame()), f = function(.sd_col, .how, .dt_env) {
+            .COL <- mget(.sd_col, .dt_env, ifnotfound = list(NULL))
+            names(.COL) <- ".COL"
+            if (is.null(.COL$.COL)) {
+                .COL <- list()
+            }
+
+            .top <- list2env(.SD, parent = emptyenv())
+            .bottom <- list2env(.COL, parent = .top)
+            .data_mask <- rlang::new_data_mask(.bottom, .top)
+
+            rlang::eval_tidy(.how, .data_mask)
+        })
     },
 
     .non_null = function(col_list) {
