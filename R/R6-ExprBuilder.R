@@ -364,6 +364,7 @@ EBCompanion$helper_functions <- list(
         }
     },
 
+    # data.table needs to see .SD in order to expose the variables in parent.frame
     .mutate_matching = function(.SD, .SDcols, .hows) {
         Map(.SDcols, .hows, list(parent.frame()), f = function(.sd_col, .how, .dt_env) {
             .COL <- mget(.sd_col, .dt_env, ifnotfound = list(NULL))
@@ -372,10 +373,7 @@ EBCompanion$helper_functions <- list(
                 .COL <- list()
             }
 
-            .top <- list2env(.SD, parent = emptyenv())
-            .bottom <- list2env(.COL, parent = .top)
-            .data_mask <- rlang::new_data_mask(.bottom, .top)
-
+            .data_mask <- rlang::new_data_mask(rlang::new_environment(.COL))
             rlang::eval_tidy(.how, .data_mask)
         })
     },
