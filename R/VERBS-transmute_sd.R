@@ -33,8 +33,8 @@
 #' - `.COLNAME`: the name of the column currently being evaluated.
 #'
 #' Unlike a call like `DT[, (vars) := expr]`, `.SDcols` can be created dynamically with an
-#' expression that evaluates to something that would be used in place of `vars` *without* using the
-#' captured `data.table`. See the examples here or in [table.express-package].
+#' expression that evaluates to something that would be used in place of `vars` *without* eagerly
+#' using the captured `data.table`. See the examples here or in [table.express-package].
 #'
 #' @examples
 #'
@@ -43,6 +43,10 @@
 #' data.table::as.data.table(mtcars) %>%
 #'     start_expr %>%
 #'     transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME))
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     transmute_sd(.COL * 2, .SDcols = is.numeric(.COL))
 #'
 transmute_sd <- function(.data, .how = identity, ..., .SDcols = everything(),
                          .parse = getOption("table.express.parse", FALSE),

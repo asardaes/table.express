@@ -226,6 +226,11 @@ DT %>%
 DT %>%
   start_expr %>%
   filter_sd(.COL > 0, .SDcols = contains("m"))
+
+# like dplyr's filter_if
+DT %>%
+  start_expr %>%
+  filter_sd(.COL > 0, .SDcols = is.numeric(.COL))
 ```
 
 ### Using keys or secondary indices
@@ -276,8 +281,7 @@ DT %>%
   }
 ```
 
-Additionally, `mutate_sd` supports the special `.COL` pronoun that symbolizes the column that should be modified,
-and can be used to express the mutation expression:
+Additionally, `mutate_sd` supports the special `.COL` pronoun that symbolizes the column that should be modified:
 
 ```{r mutate-sd-col}
 DT %>%
@@ -286,6 +290,11 @@ DT %>%
   end_expr
 
 print(DT)
+
+# like dplyr's mutate_if
+DT %>%
+  start_expr %>%
+  mutate_sd(as.integer(.COL), .SDcols = all(.COL %% 1 == 0))
 ```
 
 On the other hand, `transmute_sd` never modifies by reference,
@@ -302,6 +311,12 @@ DT %>%
 DT %>%
   start_expr %>%
   transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>%
+  end_expr
+
+# like dplyr's transmute_if
+DT %>%
+  start_expr %>%
+  transmute_sd(.COL * 2, .SDcols = is.numeric(.COL)) %>%
   end_expr
 ```
 
@@ -424,8 +439,8 @@ DT %>%
 
 In the following cases, the mentioned verbs use the captured `data.table` eagerly during expression building:
 
-- `filter_sd` when `.SDcols` is a `tidyselect` call.
-- `mutate_sd` when `.SDcols` is a `tidyselect` call.
+- `filter_sd` when `.SDcols` is a `tidyselect` call or a predicate using `.COL`.
+- `mutate_sd` when `.SDcols` is a `tidyselect` call or a predicate using `.COL`.
 
 This can lead to unexpected results if we don't keep in mind the expression that is built:
 

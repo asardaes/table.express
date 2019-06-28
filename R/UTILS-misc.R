@@ -70,10 +70,16 @@ evaled_is <- function(obj_quo, classes) {
 }
 
 #' @importFrom rlang eval_tidy
+#' @importFrom rlang expr
 #'
 process_sdcols <- function(.data, sdcols_quo) {
     e <- to_expr(sdcols_quo)
+
     if (is_tidyselect_call(e)) {
+        .data$tidy_select(e)
+    }
+    else if (uses_col_pronoun(e)) {
+        e <- rlang::expr(as.logical(.DT_[, lapply(.SD, function(.COL) { !!e })]))
         .data$tidy_select(e)
     }
     else {
@@ -88,4 +94,30 @@ process_sdcols <- function(.data, sdcols_quo) {
 #'
 is_tidyselect_call <- function(expression) {
     rlang::is_call(expression, names(tidyselect::vars_select_helpers))
+}
+
+#' @importFrom rlang as_label
+#' @importFrom rlang is_call
+#'
+uses_col_pronoun <- function(ex) {
+    if (!rlang::is_call(ex)) {
+        return(FALSE)
+    }
+
+    uses_col <- FALSE
+
+    for (i in seq_along(ex)) {
+        sub_ex <- ex[[i]]
+
+        if (rlang::is_call(sub_ex)) {
+            uses_col <- uses_col_pronoun(sub_ex)
+        }
+        else if (rlang::as_label(sub_ex) == ".COL") {
+            uses_col <- TRUE
+        }
+
+        if (uses_col) break
+    }
+
+    uses_col
 }

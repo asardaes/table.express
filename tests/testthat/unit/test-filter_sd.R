@@ -31,3 +31,10 @@ test_that("Filtering SD works with tidyselect helpers.", {
     ans <- DT %>% start_expr %>% filter_sd(.COL > 0, .SDcols = contains("m")) %>% end_expr
     expect_identical(expected, ans)
 })
+
+test_that("Filtering SD with .COL predicates works.", {
+    chosen <- names(DT)[as.logical(DT[, lapply(.SD, function(col) { any(col == 1) })])]
+    expected <- DT[rep(list(1), length(chosen)), on = chosen]
+    ans <- DT %>% start_expr %>% filter_sd(.COL == 1, .SDcols = any(.COL == 1)) %>% end_expr
+    expect_identical(ans, expected)
+})

@@ -84,3 +84,14 @@ test_that("Mutating SD with tidyselect helpers works.", {
     ans <- DT %>% start_expr %>% mutate_sd(".COL * 2", .SDcols = contains("m"), .parse = TRUE) %>% end_expr(.by_ref = FALSE)
     expect_identical(ans, expected)
 })
+
+test_that("Mutating SD with .COL predicates works.", {
+    dt <- data.table::copy(DT)
+    chosen <- names(DT)[as.logical(DT[, lapply(.SD, function(col) { any(col %% 1 != 0L) })])]
+    expected <- dt[, (chosen) := lapply(.SD, as.integer), .SDcols = chosen]
+
+    dt <- data.table::copy(DT)
+    ans <- dt %>% start_expr %>% mutate_sd(as.integer, .SDcols = any(.COL %% 1 != 0L)) %>% end_expr
+
+    expect_identical(ans, expected)
+})

@@ -131,7 +131,8 @@ ExprBuilder <- R6::R6Class(
         tidy_select = function(select_expr) {
             private$.selected_eagerly <- TRUE
             tidyselect::scoped_vars(names(private$.DT))
-            names(private$.DT)[rlang::eval_tidy(select_expr)]
+            .data_mask <- rlang::new_environment(list(.DT_ = private$.DT))
+            names(private$.DT)[rlang::eval_tidy(select_expr, .data_mask)]
         },
 
         get_newest_pronoun = function() {

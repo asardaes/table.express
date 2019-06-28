@@ -30,9 +30,16 @@ This function works similar to \code{\link[=transmute_sd]{transmute_sd()}} but k
 reference, like \link{mutate-table.express}. It can serve like
 \link[dplyr:mutate_all]{dplyr's scoped mutation variants} depending on what's given to \code{.SDcols}.
 
-Additionally, \code{.SDcols} supports \link[tidyselect:select_helpers]{tidyselect::select_helpers}, with the caveat that the
-expression is evaluated eagerly, i.e. with the currently captured \code{data.table}. Consider using
-\code{\link[=chain]{chain()}} to explicitly capture intermediate results as actual \code{data.table}s.
+Additionally, \code{.SDcols} supports:
+\itemize{
+\item \link[tidyselect:select_helpers]{tidyselect::select_helpers}
+\item A predicate using the \code{.COL} pronoun that should return a single logical when \code{.COL} is
+replaced by a \emph{column} of the data.
+}
+
+The caveat is that the expression is evaluated eagerly, i.e. with the currently captured
+\code{data.table}. Consider using \code{\link[=chain]{chain()}} to explicitly capture intermediate results as actual
+\code{data.table}s.
 
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the

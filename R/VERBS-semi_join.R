@@ -33,8 +33,7 @@ semi_join.ExprBuilder <- function(x, y, ..., .parent_env) {
     eb <- x$chain("pronoun", y)
     new_pronoun <- rlang::sym(eb$get_newest_pronoun())
 
-    # avoid NOTEs
-    .DT_ <- y
+    # avoid NOTE
     .semi_joined_names <- EBCompanion$helper_functions$.semi_joined_names
 
     if (length(on) > 0L) {

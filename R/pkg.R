@@ -17,4 +17,4 @@
 #'
 "_PACKAGE"
 
-utils::globalVariables(c(".SD", ".COL"))
+utils::globalVariables(c(".DT_", ".SD", ".COL"))
