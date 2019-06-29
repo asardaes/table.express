@@ -55,6 +55,8 @@ DT <- mtcars %>%
   print
 ```
 
+Two-table joining verbs have [their own vignette](https://asardaes.github.io/table.express/articles/joins.html).
+
 ## Expression delimiters
 
 The foundation for this package is building expressions that are almost entirely delegated to `data.table`.

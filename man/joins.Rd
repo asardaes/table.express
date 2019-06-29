@@ -59,7 +59,9 @@ mutate_join(x, y, ...)
 \item{.by_each}{For \code{mutate_join}. See the details below.}
 }
 \description{
-Two-table joins. Check the "Joining verbs" vignette for more information.
+Two-table joins. Check the
+\href{https://asardaes.github.io/table.express/articles/joins.html}{"Joining verbs" vignette} for more
+information.
 }
 \details{
 The \code{full_join} method is really a wrapper for \code{data.table::merge} that specifies \code{all = TRUE}.

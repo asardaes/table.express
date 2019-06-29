@@ -1,6 +1,8 @@
 #' Joining verbs
 #'
-#' Two-table joins. Check the "Joining verbs" vignette for more information.
+#' Two-table joins. Check the
+#' ["Joining verbs" vignette](https://asardaes.github.io/table.express/articles/joins.html) for more
+#' information.
 #'
 #' @rdname joins
 #' @name joins
