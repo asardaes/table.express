@@ -37,4 +37,8 @@ test_that("Filtering SD with .COL predicates works.", {
     expected <- DT[rep(list(1), length(chosen)), on = chosen]
     ans <- DT %>% start_expr %>% filter_sd(.COL == 1, .SDcols = any(.COL == 1)) %>% end_expr
     expect_identical(ans, expected)
+
+    expect_error(regexp = "single logical", {
+        DT %>% start_expr %>% filter_sd(.COL == 1, .SDcols = .COL == 1) %>% end_expr
+    })
 })

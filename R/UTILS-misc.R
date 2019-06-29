@@ -69,7 +69,10 @@ evaled_is <- function(obj_quo, classes) {
     any(ans)
 }
 
+#' @importFrom rlang abort
+#' @importFrom rlang as_label
 #' @importFrom rlang eval_tidy
+#' @importFrom rlang is_logical
 #' @importFrom rlang quo
 #'
 process_sdcols <- function(.data, .sdcols_quo) {
@@ -80,7 +83,17 @@ process_sdcols <- function(.data, .sdcols_quo) {
     }
     else if (uses_col_pronoun(.sdcols_expr)) {
         # https://github.com/r-lib/covr/issues/377
-        .f_ <- function(.COL) { base::eval(.sdcols_expr) }
+        .f_ <- function(.COL) {
+            ans <- base::eval(.sdcols_expr)
+            if (!rlang::is_logical(ans, n = 1L)) {
+                rlang::abort(paste0("The evaluation of {",
+                                    rlang::as_label(.sdcols_expr),
+                                    "} did not result in a single logical."))
+            }
+
+            ans
+        }
+
         .data$tidy_select(rlang::quo(as.logical(.DT_[, lapply(.SD, .f_)])))
     }
     else {
