@@ -5,7 +5,7 @@
 \alias{select.ExprBuilder}
 \title{Select clause}
 \usage{
-\method{select}{ExprBuilder}(.data, ...,
+\method{select}{ExprBuilder}(.data, ..., .negate = FALSE,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }
@@ -13,6 +13,10 @@
 \item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{Clause for selecting columns. For \code{j} inside the \code{data.table}'s frame.}
+
+\item{.negate}{Whether to negate the selection semantics and keep only columns that do \emph{not}
+match what's given in \code{...}. Negation does \strong{not} support calls in the expressions,
+\code{tidyselect} or otherwise.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 

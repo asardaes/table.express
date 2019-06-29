@@ -69,6 +69,16 @@ test_that("The select verb works with multiple columns.", {
     expectations(ans)
 })
 
+test_that("Selection's semantics can be negated.", {
+    expected <- DT[, !c("mpg", "am")]
+
+    ans <- DT %>% start_expr %>% select(mpg, "am", .negate = TRUE) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% select(1L, 9L, .negate = TRUE) %>% end_expr
+    expect_identical(ans, expected)
+})
+
 test_that("Select with tidyselect works.", {
     expectations <- function(ans, nc) {
         expect_identical(nrow(ans), nrow(DT))

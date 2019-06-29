@@ -10,11 +10,15 @@ dplyr::select
 #' @rdname select-table.express
 #' @name select-table.express
 #' @export
+#' @importFrom rlang as_string
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #'
 #' @template data-arg
 #' @param ... Clause for selecting columns. For `j` inside the `data.table`'s frame.
+#' @param .negate Whether to negate the selection semantics and keep only columns that do *not*
+#'   match what's given in `...`. Negation does **not** support calls in the expressions,
+#'   `tidyselect` or otherwise.
 #' @template parse-arg
 #' @template chain-arg
 #'
@@ -32,7 +36,7 @@ dplyr::select
 #'     start_expr %>%
 #'     select(mpg:cyl)
 #'
-select.ExprBuilder <- function(.data, ...,
+select.ExprBuilder <- function(.data, ..., .negate = FALSE,
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))
 {
@@ -44,10 +48,21 @@ select.ExprBuilder <- function(.data, ...,
 
     if (all(non_calls | nums)) {
         if (all(nums)) {
-            clause <- rlang::expr(c(!!!clauses))
+            if (.negate) {
+                clause <- rlang::expr(!c(!!!clauses))
+            }
+            else {
+                clause <- rlang::expr(c(!!!clauses))
+            }
         }
         else {
-            clause <- rlang::expr(list(!!!clauses))
+            if (.negate) {
+                clauses <- sapply(clauses, rlang::as_string)
+                clause <- rlang::expr(!c(!!!clauses))
+            }
+            else {
+                clause <- rlang::expr(list(!!!clauses))
+            }
         }
     }
     else {

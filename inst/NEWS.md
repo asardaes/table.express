@@ -6,7 +6,7 @@
   and preferable for actual transmutation cases.
 - Now both `mutate_sd` and `filter_sd` support the `.COL` pronoun for `.SDcols` predicates, but they
   remain eager in this regard.
-- `filter_on` gained a `.negate` parameter.
+- `select` and `filter_on` gained a `.negate` parameter.
 - `mutate` gained a `.sequential` parameter to enable usage of newly created columns.
 - Added some debugging statements when option `table.express.verbose` is `TRUE`, or
   `.verbose = TRUE` in `start_expr`/`chain`.
