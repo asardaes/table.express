@@ -86,9 +86,8 @@ and let `data.table` handle it as usual:
 
 ```{r arrange}
 DT %>%
-  start_expr %>%
-  order_by(mpg, -cyl) %T>%
-  print %>%
+  start_expr(.verbose = TRUE) %>%
+  order_by(mpg, -cyl) %>%
   end_expr
 ```
 
@@ -235,23 +234,23 @@ as well as `tidyselect` helpers to choose `.SDcols`
 ```{r filter-sd}
 DT %>%
   start_expr %>%
-  filter_sd(`>`, 20, .SDcols = c("mpg", "qsec")) %T>%
+  filter_sd(c("mpg", "qsec"), `>`, 20) %T>%
   print %>%
   end_expr
 
 DT %>%
   start_expr %>%
-  filter_sd(.COL > 20, .SDcols = c("mpg", "qsec")) %>%
+  filter_sd(c("mpg", "qsec"), .COL > 20) %>%
   end_expr
 
 DT %>%
   start_expr %>%
-  filter_sd(.COL > 0, .SDcols = contains("m"))
+  filter_sd(contains("m"), .COL > 0)
 
 # like dplyr's filter_if
 DT %>%
   start_expr %>%
-  filter_sd(.COL > 0, .SDcols = is.numeric(.COL))
+  filter_sd(is.numeric(.COL), .COL > 0)
 ```
 
 ### Using keys or secondary indices
@@ -296,7 +295,7 @@ It would also be possible to remove several columns with `mutate_sd`:
 ```{r mutate-sd-rm}
 DT %>%
   start_expr %>%
-  mutate_sd(NULL, .SDcols = c("mpg", "cyl")) %>%
+  mutate_sd(c("mpg", "cyl"), NULL) %>%
   end_expr(.by_ref = FALSE) %>% {
     invisible(print(.))
   }
@@ -307,7 +306,7 @@ Additionally, `mutate_sd` supports the special `.COL` pronoun that symbolizes th
 ```{r mutate-sd-col}
 DT %>%
   start_expr %>%
-  mutate_sd(log(.COL), .SDcols = c("mpg", "cyl")) %>%
+  mutate_sd(c("mpg", "cyl"), log(.COL)) %>%
   end_expr
 
 print(DT)
