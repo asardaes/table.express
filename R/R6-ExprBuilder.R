@@ -342,7 +342,7 @@ EBCompanion$helper_functions <- list(
         for (.i in seq_along(.clauses)) {
             .clause <- .clauses[[.i]]
             .name <- names(.clauses[.i])
-            .empty_name <- is.null(.name) | !nzchar(.name)
+            .empty_name <- if (is.null(.name) || !nzchar(.name)) TRUE else FALSE
 
             if (is_tidyselect_call(.clause)) {
                 if (rlang::call_name(.clause) == "everything") {
@@ -362,14 +362,6 @@ EBCompanion$helper_functions <- list(
                 .sub_ans <- as.list(base::eval(.expr))
             }
             else {
-                # .new_vars <- names(.ans)
-                # if (is.null(.new_vars)) {
-                #     .new_vars <- list()
-                # }
-                # else {
-                #     .new_vars <- .ans[nzchar(.new_vars)]
-                # }
-
                 .sub_ans <- eval.parent(.clause)
 
                 if (is.list(.sub_ans)) {
