@@ -70,20 +70,21 @@ evaled_is <- function(obj_quo, classes) {
 }
 
 #' @importFrom rlang eval_tidy
-#' @importFrom rlang expr
+#' @importFrom rlang quo
 #'
-process_sdcols <- function(.data, sdcols_quo) {
-    e <- to_expr(sdcols_quo)
+process_sdcols <- function(.data, .sdcols_quo) {
+    .sdcols_expr <- to_expr(.sdcols_quo)
 
-    if (is_tidyselect_call(e)) {
-        .data$tidy_select(e)
+    if (is_tidyselect_call(.sdcols_expr)) {
+        .data$tidy_select(.sdcols_expr)
     }
-    else if (uses_col_pronoun(e)) {
-        e <- rlang::expr(as.logical(.DT_[, lapply(.SD, function(.COL) { !!e })]))
-        .data$tidy_select(e)
+    else if (uses_col_pronoun(.sdcols_expr)) {
+        # https://github.com/r-lib/covr/issues/377
+        .f_ <- function(.COL) { base::eval(.sdcols_expr) }
+        .data$tidy_select(rlang::quo(as.logical(.DT_[, lapply(.SD, .f_)])))
     }
     else {
-        rlang::eval_tidy(sdcols_quo)
+        rlang::eval_tidy(.sdcols_quo)
     }
 }
 
