@@ -22,5 +22,5 @@ start_expr <- function(.data, ...) {
 #' @template docu-examples
 #'
 start_expr.data.table <- function(.data, ..., .verbose = getOption("table.express.verbose", FALSE)) {
-    ExprBuilder$new(.data)
+    ExprBuilder$new(.data, verbose = .verbose)
 }
