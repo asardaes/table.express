@@ -36,3 +36,10 @@ environment as the `.DT_` pronoun
 
 In many cases character input can also be supported, which could be
 useful for other packages that use `data.table`.
+
+## License
+
+[Mozilla Public License Version 2.0](LICENSE)
+
+This software package was developed independently of any organization or
+institution that is or has been associated with the author.

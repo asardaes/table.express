@@ -9,9 +9,12 @@
 A specialization of \link[dplyr:dplyr-package]{dplyr::dplyr-package} verbs, as well as a set of custom ones, that build
 expressions that can be used within a \link[data.table:data.table-package]{data.table::data.table-package}'s frame.
 }
-\details{
+\note{
 Since this package's functionality is based on the \pkg{rlang} package, and \pkg{rlang} is still
 evolving, breaking changes may be needed in the future.
+
+This software package was developed independently of any organization or institution that is or
+has been associated with the author.
 }
 \examples{
 require("data.table")
