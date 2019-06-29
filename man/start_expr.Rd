@@ -7,12 +7,15 @@
 \usage{
 start_expr(.data, ...)
 
-\method{start_expr}{data.table}(.data, ...)
+\method{start_expr}{data.table}(.data, ...,
+  .verbose = getOption("table.express.verbose", FALSE))
 }
 \arguments{
 \item{.data}{Optionally, something to capture for the expression.}
 
 \item{...}{Arguments for the specific methods.}
+
+\item{.verbose}{Whether to print more information during the expression-building process.}
 }
 \description{
 Start building an expression.

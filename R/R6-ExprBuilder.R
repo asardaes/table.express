@@ -17,6 +17,7 @@
 #' @importFrom rlang is_syntactic_literal
 #' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
+#' @importFrom rlang new_data_mask
 #' @importFrom rlang new_environment
 #' @importFrom rlang parse_expr
 #' @importFrom rlang quo
@@ -32,7 +33,7 @@
 #' @section Methods:
 #'
 #' \describe{
-#'   \item{`initialize(DT, dt_pronouns = list())`}{Constructor that receives a
+#'   \item{`initialize(DT, dt_pronouns = list(), .verbose)`}{Constructor that receives a
 #'     [data.table::data.table-class] in `DT`. The `dt_pronouns` parameter is used internally when
 #'     chaining for joins.}
 #'   \item{`set_select(value, chain_if_needed)`}{Set the select clause expression(s), starting a new
@@ -53,7 +54,7 @@
 ExprBuilder <- R6::R6Class(
     "ExprBuilder",
     public = list(
-        initialize = function(DT, dt_pronouns = list()) {
+        initialize = function(DT, dt_pronouns = list(), verbose = getOption("table.express.verbose", FALSE)) {
             if (data.table::is.data.table(DT)) {
                 private$.DT <- DT
             }
@@ -64,20 +65,39 @@ ExprBuilder <- R6::R6Class(
             }
 
             private$.dt_pronouns = dt_pronouns
+            private$.verbose = verbose
 
             invisible()
         },
 
         set_select = function(value, chain_if_needed) {
-            private$.process_clause("select", value, chain_if_needed)
+            ans <- private$.process_clause("select", value, chain_if_needed)
+            if (private$.verbose) { # nocov start
+                cat("Expression after ", rlang::as_label(sys.call(-1L)), ":\n", sep = "")
+                print(self)
+            } # nocov end
+
+            ans
         },
 
         set_where = function(value, chain_if_needed) {
-            private$.process_clause("where", value, chain_if_needed)
+            ans <- private$.process_clause("where", value, chain_if_needed)
+            if (private$.verbose) { # nocov start
+                cat("Expression after ", rlang::as_label(sys.call(-1L)), ":\n", sep = "")
+                print(self)
+            } # nocov end
+
+            ans
         },
 
         set_by = function(value, chain_if_needed) {
-            private$.process_clause("by", value, chain_if_needed)
+            ans <- private$.process_clause("by", value, chain_if_needed)
+            if (private$.verbose) { # nocov start
+                cat("Expression after ", rlang::as_label(sys.call(-1L)), ":\n", sep = "")
+                print(self)
+            } # nocov end
+
+            ans
         },
 
         chain = function(type = "frame", dt) {
@@ -87,12 +107,20 @@ ExprBuilder <- R6::R6Class(
                 frame = {
                     other <- ExprBuilder$new(private$.DT)
                     private$.insert_child(other)
+                    if (private$.verbose) { # nocov start
+                        cat("Starting new frame.\n")
+                    } # nocov end
+
                     other
                 },
                 pronoun = {
                     dt_pronoun <- paste0(".DT_", length(private$.dt_pronouns), "_")
                     dt_expr <- private$.compute_expr(rlang::sym(dt_pronoun))
                     next_pronouns <- c(private$.dt_pronouns, rlang::list2(!!dt_pronoun := private$.DT))
+
+                    if (private$.verbose) { # nocov start
+                        cat("Starting new expression.\n")
+                    } # nocov end
 
                     eb <- ExprBuilder$new(dt, next_pronouns)
                     eb$set_where(dt_expr, FALSE)
@@ -101,12 +129,25 @@ ExprBuilder <- R6::R6Class(
         },
 
         eval = function(parent_env, by_ref, ...) {
-            .DT_ <- if (by_ref) private$.DT else data.table::copy(private$.DT)
+            .DT_ <- if (by_ref) {
+                if (private$.verbose) { # nocov start
+                    cat("Using captured data.table for evaluation.\n")
+                } # nocov end
+
+                private$.DT
+            }
+            else {
+                if (private$.verbose) { # nocov start
+                    cat("Copying data.table before evaluation.\n")
+                } # nocov end
+
+                data.table::copy(private$.DT)
+            }
 
             is_chain <- !is.null(private$.parent) | !is.null(private$.child)
 
             if (private$.selected_eagerly && is_chain && EBCompanion$chain_select_count(self) > 1L) {
-                rlang::warn(paste("Current expression chain used 'tidyselect' helpers eagerly,",
+                rlang::warn(paste("Current expression used the cpatured data.table eagerly,",
                                   "but has more than one 'j' clause.",
                                   "Consider using 'chain' first."))
             }
@@ -123,15 +164,28 @@ ExprBuilder <- R6::R6Class(
             .expr_env <- rlang::new_environment(dots, parent = parent_env)
 
             final_expr <- self$expr
+            if (private$.verbose) { # nocov start
+                cat("Evaluating:\n")
+                print(final_expr)
+            } # nocov end
+
             final_expr <- rlang::expr(base::evalq(!!final_expr, .expr_env))
 
             base::eval(final_expr)
         },
 
         tidy_select = function(select_expr) {
+            if (private$.verbose) { # nocov start
+                cat("In ", rlang::as_label(sys.call(-1L)), ", using captured data.table eagerly to evaluate:\n", sep = "")
+                print(select_expr)
+            } # nocov end
+
             private$.selected_eagerly <- TRUE
             tidyselect::scoped_vars(names(private$.DT))
+
             .data_mask <- rlang::new_environment(list(.DT_ = private$.DT))
+            .data_mask <- rlang::new_data_mask(.data_mask)
+
             names(private$.DT)[rlang::eval_tidy(select_expr, .data_mask)]
         },
 
@@ -171,6 +225,7 @@ ExprBuilder <- R6::R6Class(
         .dt_pronouns = NULL,
 
         .selected_eagerly = FALSE,
+        .verbose = FALSE,
 
         .compute_expr = function(init) {
             root <- EBCompanion$get_root(self)

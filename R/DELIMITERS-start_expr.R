@@ -13,6 +13,7 @@ start_expr <- function(.data, ...) {
 
 #' @rdname start_expr
 #' @export
+#' @param .verbose Whether to print more information during the expression-building process.
 #'
 #' @details
 #'
@@ -20,6 +21,6 @@ start_expr <- function(.data, ...) {
 #'
 #' @template docu-examples
 #'
-start_expr.data.table <- function(.data, ...) {
+start_expr.data.table <- function(.data, ..., .verbose = getOption("table.express.verbose", FALSE)) {
     ExprBuilder$new(.data)
 }

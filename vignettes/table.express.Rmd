@@ -71,6 +71,12 @@ We capture the input `data.table` and start the process with `start_expr`,
 and evaluate the final expression with `end_expr`.
 Using `chain` is equivalent to calling `end_expr` immediately followed by `start_expr`.
 
+### Debugging
+
+In order to print more information regarding the expression-building process,
+we can either set `options(table.express.verbose = TRUE)`,
+or pass `.verbose = TRUE` to `start_expr` or `chain`.
+
 ## Arranging rows
 
 The `arrange`/`order_by` verbs add an expression with `order` to the frame,

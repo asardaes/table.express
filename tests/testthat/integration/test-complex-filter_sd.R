@@ -1,7 +1,7 @@
 context("  Filtering SD plus other operations")
 
 test_that("Filtering SD with tidyselect in a chain with several select clauses throws warning.", {
-    expect_warning(regexp = "tidyselect.*chain", {
+    expect_warning(regexp = "eager.*chain", {
         ans <- DT %>%
             start_expr %>%
             select(everything()) %>%

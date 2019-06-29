@@ -8,4 +8,6 @@
   remain eager in this regard.
 - `filter_on` gained a `.negate` parameter.
 - `mutate` gained a `.sequential` parameter to enable usage of newly created columns.
+- Added some debugging statements when option `table.express.verbose` is `TRUE`, or
+  `.verbose = TRUE` in `start_expr`/`chain`.
 - Minor updates to main vignette.

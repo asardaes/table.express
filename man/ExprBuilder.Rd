@@ -25,7 +25,7 @@ shouldn't be used directly.
 
 
 \describe{
-\item{\code{initialize(DT, dt_pronouns = list())}}{Constructor that receives a
+\item{\code{initialize(DT, dt_pronouns = list(), .verbose)}}{Constructor that receives a
 \link[data.table:data.table-class]{data.table::data.table} in \code{DT}. The \code{dt_pronouns} parameter is used internally when
 chaining for joins.}
 \item{\code{set_select(value, chain_if_needed)}}{Set the select clause expression(s), starting a new
