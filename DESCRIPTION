@@ -14,14 +14,14 @@ Imports:
     dplyr,
     magrittr,
     R6,
-    rlang (>= 0.3.0),
+    rlang (>= 0.3.1),
     tidyselect
 Suggests:
     knitr,
     rex,
     rmarkdown,
     testthat
-Date: 2019-06-09
+Date: 2019-06-29
 Authors@R: c(
         person("Alexis", "Sarda-Espinosa", role=c("cre", "aut"), email="alexis.sarda@gmail.com")
     )
