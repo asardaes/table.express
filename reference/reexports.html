@@ -37,7 +37,7 @@
 <meta property="og:description" content="These objects are imported from other packages. Follow the links
 below to see their documentation.
 
-  dplyrarrange, filter, group_by, mutate, select, transmute" />
+  dplyranti_join, arrange, filter, full_join, group_by, inner_join, left_join, mutate, right_join, select, semi_join, transmute" />
 
 <meta property="og:description" content="magrittr%&amp;gt;%, %T&amp;gt;%" />
 
@@ -57,6 +57,7 @@ below to see their documentation.
 <![endif]-->
 
 
+
   </head>
 
   <body>
@@ -73,7 +74,7 @@ below to see their documentation.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
       </span>
     </div>
 
@@ -90,6 +91,18 @@ below to see their documentation.
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/joins.html">Joining verbs for data.table</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -110,13 +123,14 @@ below to see their documentation.
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Objects exported from other packages</h1>
-    <small class="dont-index">Source: <a href='https://github.com/asardaes/table.express/blob/master/R/UTILS-misc.R'><code>R/UTILS-misc.R</code></a>, <a href='https://github.com/asardaes/table.express/blob/master/R/UTILS-tidyselect.R'><code>R/UTILS-tidyselect.R</code></a>, <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-arrange.R'><code>R/VERBS-arrange.R</code></a>, and 6 more</small>
+    <small class="dont-index">Source: <a href='https://github.com/asardaes/table.express/blob/master/R/UTILS-misc.R'><code>R/UTILS-misc.R</code></a>, <a href='https://github.com/asardaes/table.express/blob/master/R/UTILS-tidyselect.R'><code>R/UTILS-tidyselect.R</code></a>, <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-anti_join.R'><code>R/VERBS-anti_join.R</code></a>, and 12 more</small>
     <div class="hidden name"><code>reexports.Rd</code></div>
     </div>
 
@@ -125,7 +139,7 @@ below to see their documentation.
     <p>These objects are imported from other packages. Follow the links
 below to see their documentation.</p>
 <dl class='dl-horizontal'>
-  <dt>dplyr</dt><dd><p><code><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></code></p></dd>
+  <dt>dplyr</dt><dd><p><code><a href='https://dplyr.tidyverse.org/reference/join.html'>anti_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>full_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>inner_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>right_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>semi_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></code></p></dd>
 
     <dt>magrittr</dt><dd><p><code>%&gt;%</code>, <code>%T&gt;%</code></p></dd>
 
@@ -145,6 +159,7 @@ below to see their documentation.</p>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Alexis Sarda-Espinosa.</p>
@@ -153,11 +168,14 @@ below to see their documentation.</p>
 <div class="pkgdown">
   <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
