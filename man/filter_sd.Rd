@@ -4,18 +4,18 @@
 \alias{filter_sd}
 \title{Filter subset of data}
 \usage{
-filter_sd(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`,
+filter_sd(.data, .SDcols, .how = Negate(is.na), ..., .collapse = `&`,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
+\item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
+
 \item{.how}{The function or function call that will perform the transformation.}
 
 \item{...}{Possibly more arguments for \code{.how}.}
-
-\item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
 \item{.collapse}{See \link{where-table.express}.}
 
@@ -52,6 +52,6 @@ data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
     start_expr \%>\%
-    filter_sd(.COL == 1, .SDcols = c("vs", "am"))
+    filter_sd(c("vs", "am"), .COL == 1)
 
 }

@@ -14,8 +14,8 @@
 #' @importFrom rlang zap
 #'
 #' @template data-arg
-#' @template transform-sd-args
 #' @param .SDcols See [data.table::data.table] and the details here.
+#' @template transform-sd-args
 #' @param .collapse See [where-table.express].
 #' @template parse-arg
 #' @template chain-arg
@@ -34,9 +34,9 @@
 #'
 #' data.table::as.data.table(mtcars) %>%
 #'     start_expr %>%
-#'     filter_sd(.COL == 1, .SDcols = c("vs", "am"))
+#'     filter_sd(c("vs", "am"), .COL == 1)
 #'
-filter_sd <- function(.data, .how = Negate(is.na), ..., .SDcols, .collapse = `&`,
+filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ..., .collapse = `&`,
                       .parse = getOption("table.express.parse", FALSE),
                       .chain = getOption("table.express.chain", TRUE))
 {
