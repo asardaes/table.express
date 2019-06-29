@@ -195,6 +195,19 @@ DT %>%
 print(DT)
 ```
 
+It can also support expressions that already contain `:=`:
+
+```{r mutate-no-unquote}
+new_vars <- c("x", "y")
+
+DT %>%
+  start_expr %>%
+  mutate(!!new_vars := .(1, 2), .unquote_names = FALSE) %>%
+  end_expr(.by_ref = FALSE) %>% {
+    invisible(print(.))
+  }
+```
+
 ## Filtering rows
 
 The `where`/`filter` verbs work with the `i` part of the frame:
