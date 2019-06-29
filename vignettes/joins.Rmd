@@ -21,7 +21,7 @@ and the joining columns are specified with the `on` parameter.
 However, in addition to the "basic" joins,
 `data.table` allows for special cases like
 rolling joins, summarizing while joining, non-equi joins, etc.
-This vignette will describe the notation to apply these joins with verbs defined `table.express`,
+This vignette will describe the notation to apply these joins with verbs defined in `table.express`,
 which, like the [single-table verbs](https://asardaes.github.io/table.express/articles/table.express.html),
 build `data.table` expressions.
 
@@ -326,8 +326,8 @@ website %>%
 ```
 
 Note, however, that `roll` stayed equal to `Inf`.
-This is because the column order in the expressions changed,
-but we could understand the rolling expressions as:
+This is because even though the column order in the expressions changed,
+we could understand the rolling expressions as follows:
 
 - For `left_join`, the rolling column on the left is `purchase_time`,
   so with `roll = Inf`,
