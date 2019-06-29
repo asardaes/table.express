@@ -5,7 +5,7 @@ test_that("Namespace is well defined.", {
     skip_if(nzchar(Sys.getenv("R_COVR")), "calculating coverage")
 
     expect_silent({
-        r_files <- list.files("../../R/", full.names = TRUE)
+        r_files <- list.files("../../R", full.names = TRUE)
         r_files <- setdiff(r_files, "../../R/pkg.R")
 
         delimiter_re <- rex::rex(start, not("#"), "::", except_any_of("(", ")", ","), end)
