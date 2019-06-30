@@ -1,16 +1,18 @@
 # table.express 0.1.1.9000
 
-- Added joining verbs and a corresponding vignette describing them.
+- Added joining verbs and a corresponding vignette describing them (#1).
 - `transmute` is no longer an alias for `select`. This is to make the latter more flexible in some
   bare selection cases (like combining several `tidyselect` calls), and leave the former more simple
-  and preferable for actual transmutation cases.
+  and preferable for actual transmutation cases (#4).
 - Now both `mutate_sd` and `filter_sd` support the `.COL` pronoun for `.SDcols` predicates, but they
   remain eager in this regard.
-- `select` and `filter_on` gained a `.negate` parameter.
+- `select` and `filter_on` gained a `.negate` parameter (#9 and #6).
 - `mutate` gained a `.sequential` parameter to enable usage of newly created columns.
 - Added some debugging statements when option `table.express.verbose` is `TRUE`, or
   `.verbose = TRUE` in `start_expr`/`chain`.
 - Minor updates to main vignette.
+
+Special thanks to @leungi for checking consistency with `dplyr` in several cases.
 
 # table.express 0.1.1
 
