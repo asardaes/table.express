@@ -15,8 +15,7 @@
 \item{...}{Clause for selecting columns. For \code{j} inside the \code{data.table}'s frame.}
 
 \item{.negate}{Whether to negate the selection semantics and keep only columns that do \emph{not}
-match what's given in \code{...}. Negation does \strong{not} support calls in the expressions,
-\code{tidyselect} or otherwise.}
+match what's given in \code{...}.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 

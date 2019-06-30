@@ -17,8 +17,7 @@ dplyr::select
 #' @template data-arg
 #' @param ... Clause for selecting columns. For `j` inside the `data.table`'s frame.
 #' @param .negate Whether to negate the selection semantics and keep only columns that do *not*
-#'   match what's given in `...`. Negation does **not** support calls in the expressions,
-#'   `tidyselect` or otherwise.
+#'   match what's given in `...`.
 #' @template parse-arg
 #' @template chain-arg
 #'
@@ -68,7 +67,7 @@ select.ExprBuilder <- function(.data, ..., .negate = FALSE,
     else {
         # avoid NOTE
         .select_matching <- EBCompanion$helper_functions$.select_matching
-        clause <- rlang::expr(.select_matching(.SD, !!!clauses))
+        clause <- rlang::expr(.select_matching(.SD, !!!clauses, .negate = !!.negate))
     }
 
     .data$set_select(clause, .chain)

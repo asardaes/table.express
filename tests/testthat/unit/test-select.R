@@ -77,6 +77,12 @@ test_that("Selection's semantics can be negated.", {
 
     ans <- DT %>% start_expr %>% select(1L, 9L, .negate = TRUE) %>% end_expr
     expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- DT[, !c("mpg", "cyl", "disp", "am", "drat", "qsec")]
+    ans <- DT %>% start_expr %>% select(mpg:disp, contains("m"), 5L, qsec, .negate = TRUE) %>% end_expr
+    expect_identical(ans, expected)
 })
 
 test_that("Select with tidyselect works.", {

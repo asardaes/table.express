@@ -334,11 +334,17 @@ EBCompanion$clause_order <- c(
 #' @importFrom tidyselect scoped_vars
 #'
 EBCompanion$helper_functions <- list(
-    .select_matching = function(.SD, ...) {
+    .select_matching = function(.SD, ..., .negate) {
         tidyselect::scoped_vars(names(.SD))
         .clauses <- rlang::enexprs(...)
 
-        .ans <- list()
+        if (.negate) {
+            .ans <- as.list(.SD)
+        }
+        else {
+            .ans <- list()
+        }
+
         for (.i in seq_along(.clauses)) {
             .clause <- .clauses[[.i]]
             .name <- names(.clauses[.i])
@@ -382,7 +388,12 @@ EBCompanion$helper_functions <- list(
                 }
             }
 
-            .ans <- c(.ans, .sub_ans)
+            if (.negate) {
+                .ans <- .ans[setdiff(names(.ans), names(.sub_ans))]
+            }
+            else {
+                .ans <- c(.ans, .sub_ans)
+            }
         }
 
         .ans
