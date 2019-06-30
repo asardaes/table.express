@@ -229,8 +229,8 @@ ExprBuilder <- R6::R6Class(
 
         .compute_expr = function(init) {
             root <- EBCompanion$get_root(self)
-            quo_chain <- EBCompanion$get_quo_chain(root)
-            reduce_expr(quo_chain, init, rlang::expr(`[`))
+            expr_chain <- EBCompanion$get_expr_chain(root)
+            reduce_expr(expr_chain, init, rlang::expr(`[`))
         },
 
         .process_clause = function(name, value, chain_if_needed) {
@@ -259,25 +259,25 @@ ExprBuilder <- R6::R6Class(
             self
         },
 
-        .unlist_quosures = function() {
-            quosures <- rlang::env_get_list(private, EBCompanion$clause_order, NULL)
-            until <- Position(Negate(is.null), quosures, right = TRUE)
-            if(is.na(until)) until <- 1L
+        .get_all_clauses = function() {
+            expressions <- rlang::env_get_list(private, EBCompanion$clause_order, NULL)
+            until <- Position(Negate(is.null), expressions, right = TRUE)
+            if (is.na(until)) until <- 1L
 
-            quosures <- quosures[1L:until]
-            quosures <- lapply(quosures, function(q) {
+            expressions <- expressions[1L:until]
+            expressions <- lapply(expressions, function(q) {
                 if (is.null(q)) q <- rlang::expr()
                 rlang::maybe_missing(q)
             })
 
-            if (".by" %in% names(quosures)) {
-                which_by <- if (isTRUE(attr(quosures$.by, "key_by"))) "keyby" else "by"
-                names(quosures) <- sub("^.by$", which_by, names(quosures))
+            if (".by" %in% names(expressions)) {
+                which_by <- if (isTRUE(attr(expressions$.by, "key_by"))) "keyby" else "by"
+                names(expressions) <- sub("^.by$", which_by, names(expressions))
             }
 
-            to_unname <- names(quosures) %in% c(".select", ".where")
+            to_unname <- names(expressions) %in% c(".select", ".where")
             if (any(to_unname)) {
-                names(quosures)[to_unname] <- ""
+                names(expressions)[to_unname] <- ""
             }
 
             # keep possible NULL in extra arguments
@@ -286,8 +286,7 @@ ExprBuilder <- R6::R6Class(
                 app
             })
 
-            quosures <- c(quosures, appends)
-            unlist(quosures)
+            c(expressions, appends)
         },
 
         .insert_child = function(other) {
@@ -476,16 +475,16 @@ EBCompanion$get_leaf <- function(expr_builder) {
 }
 
 # --------------------------------------------------------------------------------------------------
-# get_quo_chain
+# get_expr_chain
 #
-EBCompanion$get_quo_chain <- function(expr_builder, acc = list()) {
-    acc <- c(acc, list(expr_builder$.__enclos_env__$private$.unlist_quosures()))
+EBCompanion$get_expr_chain <- function(expr_builder, acc = list()) {
+    acc <- c(acc, list(expr_builder$.__enclos_env__$private$.get_all_clauses()))
     next_builder <- EBCompanion$get_child(expr_builder)
 
     if (is.null(next_builder))
         acc
     else
-        EBCompanion$get_quo_chain(next_builder, acc)
+        EBCompanion$get_expr_chain(next_builder, acc)
 }
 
 # --------------------------------------------------------------------------------------------------

@@ -11,7 +11,6 @@ magrittr::`%T>%`
 #' @importFrom rlang is_expression
 #' @importFrom rlang is_quosure
 #' @importFrom rlang parse_expr
-#' @importFrom rlang quo
 #' @importFrom rlang quo_squash
 #'
 to_expr <- function(obj, .parse = FALSE) {
@@ -22,7 +21,7 @@ to_expr <- function(obj, .parse = FALSE) {
         rlang::quo_squash(obj)
     }
     else {
-        rlang::quo(!!obj)
+        obj
     }
 }
 
@@ -36,21 +35,20 @@ parse_dots <- function(.parse = FALSE, ..., .named = FALSE, .ignore_empty = "tra
 
 #' @importFrom rlang expr
 #' @importFrom rlang is_missing
-#' @importFrom rlang quo_squash
 #'
-reduce_expr <- function(quosures, init, op, ..., .parse = FALSE) {
-    if (length(quosures) == 1L && lengths(quosures) == 1L && rlang::is_missing(quosures[[1L]][[1L]])) {
+reduce_expr <- function(expressions, init, op, ..., .parse = FALSE) {
+    if (identical(lengths(expressions), 1L) && rlang::is_missing(expressions[[1L]][[1L]])) {
         init
     }
     else {
-        Reduce(x = quosures, init = init, f = function(current, new) {
+        Reduce(x = expressions, init = init, f = function(current, new) {
             if (is.list(new)) {
                 new <- lapply(new, to_expr, .parse = .parse)
-                rlang::quo_squash(rlang::expr((!!op)(!!current, !!!new)))
+                rlang::expr((!!op)(!!current, !!!new))
             }
             else {
                 new <- to_expr(new, .parse = .parse)
-                rlang::quo_squash(rlang::expr((!!op)(!!current, !!new)))
+                rlang::expr((!!op)(!!current, !!new))
             }
         })
     }
