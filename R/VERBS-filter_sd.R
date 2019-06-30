@@ -15,7 +15,8 @@
 #'
 #' @template data-arg
 #' @param .SDcols See [data.table::data.table] and the details here.
-#' @template transform-sd-args
+#' @param .how The filtering function or predicate.
+#' @param ... Possibly more arguments for `.how`.
 #' @param .collapse See [where-table.express].
 #' @template parse-arg
 #' @template chain-arg

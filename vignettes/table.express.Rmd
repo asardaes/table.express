@@ -340,6 +340,24 @@ DT %>%
   end_expr
 ```
 
+Both verbs also support a list of functions for multiple transformations,
+but `mutate_sd` performs pairwise transformations,
+whereas `transmute_sd` performs all combinations:
+
+```{r list-transform-sd}
+DT %>%
+  start_expr %>%
+  mutate_sd(contains("m"), .(round, -1L)) %>%
+  end_expr(.by_ref = FALSE) %>% {
+    invisible(print(.))
+  }
+
+DT %>%
+  start_expr %>%
+  transmute_sd(contains("m"), .(min, max, mean)) %>%
+  end_expr
+```
+
 ## Data manipulation by group
 
 Since `data.table` already supports this by means of its `by` parameter,

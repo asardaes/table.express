@@ -10,8 +10,7 @@
 #'
 #' @template data-arg
 #' @param .SDcols See [data.table::data.table] and the details here.
-#' @param .how The function(s) or function call(s) that will perform the transformation.
-#' @param ... Possibly more arguments for *all* functions/calls in `.how`.
+#' @template transform-sd-args
 #' @template parse-arg
 #' @template chain-arg
 #'

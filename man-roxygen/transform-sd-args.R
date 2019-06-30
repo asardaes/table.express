@@ -1,2 +1,3 @@
-#' @param .how The function or function call that will perform the transformation.
-#' @param ... Possibly more arguments for `.how`.
+#' @param .how The function(s) or function call(s) that will perform the transformation. If many,
+#'   a list should be used, either with `list()` or `.()`.
+#' @param ... Possibly more arguments for *all* functions/calls in `.how`.

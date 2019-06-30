@@ -4,6 +4,8 @@
 - `transmute` is no longer an alias for `select`. This is to make the latter more flexible in some
   bare selection cases (like combining several `tidyselect` calls), and leave the former more simple
   and preferable for actual transmutation cases.
+- Both `mutate_sd` and `transmute_sd` now support a list of functions as input, but with slightly
+  different semantics; check the vignette.
 - Now both `mutate_sd` and `filter_sd` support the `.COL` pronoun for `.SDcols` predicates, but they
   remain eager in this regard.
 - `select` and `filter_on` gained a `.negate` parameter.

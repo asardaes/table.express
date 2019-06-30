@@ -13,9 +13,10 @@ transmute_sd(.data, .SDcols = everything(), .how = identity, ...,
 
 \item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
-\item{.how}{The function or function call that will perform the transformation.}
+\item{.how}{The function(s) or function call(s) that will perform the transformation. If many,
+a list should be used, either with \code{list()} or \code{.()}.}
 
-\item{...}{Possibly more arguments for \code{.how}.}
+\item{...}{Possibly more arguments for \emph{all} functions/calls in \code{.how}.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 

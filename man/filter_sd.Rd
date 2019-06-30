@@ -13,7 +13,7 @@ filter_sd(.data, .SDcols, .how = Negate(is.na), ..., .collapse = `&`,
 
 \item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
-\item{.how}{The function or function call that will perform the transformation.}
+\item{.how}{The filtering function or predicate.}
 
 \item{...}{Possibly more arguments for \code{.how}.}
 
