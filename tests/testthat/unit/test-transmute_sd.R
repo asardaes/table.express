@@ -3,17 +3,17 @@ context("  Transmute SD")
 test_that("Transmuting SD for all columns works.", {
     expected <- DT[, lapply(.SD, mad, low = TRUE)]
 
-    ans <- DT %>% start_expr %>% transmute_sd(mad, low = TRUE) %>% end_expr
+    ans <- DT %>% start_expr %>% transmute_sd(, mad, low = TRUE) %>% end_expr
     expect_identical(ans, expected)
 
-    ans <- DT %>% start_expr %>% transmute_sd(mad(.COL, ...), low = TRUE) %>% end_expr
+    ans <- DT %>% start_expr %>% transmute_sd(, mad(.COL, ...), low = TRUE) %>% end_expr
     expect_identical(ans, expected)
 
     arg <- TRUE
-    ans <- DT %>% start_expr %>% transmute_sd(mad, low = arg) %>% end_expr
+    ans <- DT %>% start_expr %>% transmute_sd(, mad, low = arg) %>% end_expr
     expect_identical(ans, expected)
 
-    ans <- DT %>% start_expr %>% transmute_sd(mad, low = !!arg) %>% end_expr
+    ans <- DT %>% start_expr %>% transmute_sd(, mad, low = !!arg) %>% end_expr
     expect_identical(ans, expected)
 })
 

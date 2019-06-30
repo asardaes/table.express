@@ -102,7 +102,7 @@ scale_non_integers <- function(x) {
 DT %>%
     start_expr %>%
     filter_sd(.COL == 1, .SDcols = c("vs", "am"), .collapse = `|`) %>%
-    transmute_sd(scale_non_integers) %>%
+    transmute_sd(everything(), scale_non_integers) %>%
     end_expr
 
 # Without copying non-scaled

@@ -10,4 +10,6 @@
 - `mutate` gained a `.sequential` parameter to enable usage of newly created columns.
 - Added some debugging statements when option `table.express.verbose` is `TRUE`, or
   `.verbose = TRUE` in `start_expr`/`chain`.
+- Semi-breaking change: `*_sd` verbs now have `.SDcols` before their ellipsis. This should only
+  require code adjustment for `transmute_sd` when `.SDcols` was left missing.
 - Minor updates to main vignette.

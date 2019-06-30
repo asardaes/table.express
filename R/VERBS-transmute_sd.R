@@ -14,8 +14,8 @@
 #' @importFrom rlang zap
 #'
 #' @template data-arg
-#' @template transform-sd-args
 #' @param .SDcols See [data.table::data.table] and the details here.
+#' @template transform-sd-args
 #' @template parse-arg
 #' @template chain-arg
 #'
@@ -42,13 +42,13 @@
 #'
 #' data.table::as.data.table(mtcars) %>%
 #'     start_expr %>%
-#'     transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME))
+#'     transmute_sd(grepl("^d", .COLNAME), .COL * 2)
 #'
 #' data.table::as.data.table(mtcars) %>%
 #'     start_expr %>%
-#'     transmute_sd(.COL * 2, .SDcols = is.numeric(.COL))
+#'     transmute_sd(is.numeric(.COL), .COL * 2)
 #'
-transmute_sd <- function(.data, .how = identity, ..., .SDcols = everything(),
+transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...,
                          .parse = getOption("table.express.parse", FALSE),
                          .chain = getOption("table.express.chain", TRUE))
 {

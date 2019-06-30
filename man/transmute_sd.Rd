@@ -4,18 +4,18 @@
 \alias{transmute_sd}
 \title{Transmute subset of data}
 \usage{
-transmute_sd(.data, .how = identity, ..., .SDcols = everything(),
+transmute_sd(.data, .SDcols = everything(), .how = identity, ...,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
+\item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
+
 \item{.how}{The function or function call that will perform the transformation.}
 
 \item{...}{Possibly more arguments for \code{.how}.}
-
-\item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
@@ -48,10 +48,10 @@ data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
     start_expr \%>\%
-    transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME))
+    transmute_sd(grepl("^d", .COLNAME), .COL * 2)
 
 data.table::as.data.table(mtcars) \%>\%
     start_expr \%>\%
-    transmute_sd(.COL * 2, .SDcols = is.numeric(.COL))
+    transmute_sd(is.numeric(.COL), .COL * 2)
 
 }

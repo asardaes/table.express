@@ -65,7 +65,7 @@ test_that("Chain transmute_sd -> filter_sd -> transmute_sd", {
         transmute_sd(as.integer, .SDcols = sd_cols) %>%
         chain %>%
         filter_sd(.COL %% 2 == 0, .SDcols = sd_cols) %>%
-        transmute_sd(cumsum) %>%
+        transmute_sd(, cumsum) %>%
         end_expr
 
     expect_identical(ans, expected)
@@ -74,7 +74,7 @@ test_that("Chain transmute_sd -> filter_sd -> transmute_sd", {
         start_expr %>%
         transmute_sd(as.integer, .SDcols = sd_cols) %>%
         filter_sd(.COL %% 2 == 0, .SDcols = sd_cols) %>%
-        transmute_sd(cumsum) %>%
+        transmute_sd(, cumsum) %>%
         end_expr
 
     expect_identical(ans, expected)
