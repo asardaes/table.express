@@ -448,17 +448,14 @@ EBCompanion$helper_functions <- list(
             .matches <- .names[.matches]
         }
 
-        .ans <- list()
-        for (.match in .matches) {
+        .ans <- unlist(recursive = FALSE, lapply(.matches, function(.match) {
             .COL <- .SD[[.match]]
 
             .data_mask <- rlang::new_environment(list(.COL = .COL))
             .data_mask <- rlang::new_data_mask(.data_mask)
 
-            for (.how in .hows) {
-                .ans <- c(.ans, list(rlang::eval_tidy(.how, .data_mask)))
-            }
-        }
+            lapply(.hows, rlang::eval_tidy, data = .data_mask)
+        }))
 
         if (length(.hows) == 1L) {
             names(.ans) <- .matches
