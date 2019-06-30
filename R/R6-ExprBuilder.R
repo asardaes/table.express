@@ -329,12 +329,15 @@ EBCompanion$clause_order <- c(
 #
 # beware of https://github.com/r-lib/rlang/issues/774
 #
+#' @importFrom rlang abort
+#' @importFrom rlang as_label
 #' @importFrom rlang as_string
 #' @importFrom rlang call_name
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
+#' @importFrom rlang is_logical
 #' @importFrom rlang new_data_mask
 #' @importFrom rlang new_environment
 #' @importFrom rlang quo_get_expr
@@ -406,33 +409,65 @@ EBCompanion$helper_functions <- list(
         .ans
     },
 
-    .transmute_matching = function(.COL, .COLNAME, .COLNAMES, .which, .how) {
-        .data_mask <- rlang::new_environment(list(.COL = .COL, .COLNAME = .COLNAME))
-        .data_mask <- rlang::new_data_mask(.data_mask)
+    .transmute_matching = function(.SD, .which, .hows) {
+        .names <- names(.SD)
+        tidyselect::scoped_vars(.names)
+
         .which_expr <- rlang::quo_get_expr(.which)
 
-        if (rlang::is_call(.which_expr, ":")) {
-            condition <- select_with_colon(.COLNAMES, .which_expr)
+        if (is_tidyselect_call(.which_expr)) {
+            .matches <- rlang::eval_tidy(.which)
+        }
+        else if (rlang::is_call(.which_expr, ":")) {
+            .matches <- select_with_colon(.names, .which_expr)
+        }
+        else if (uses_pronouns(.which_expr, c(".COL", ".COLNAME"))) {
+            .matches <- sapply(.names, function(.COLNAME) {
+                .COL <- .SD[[.COLNAME]]
+
+                .data_mask <- rlang::new_environment(list(.COL = .COL, .COLNAME = .COLNAME))
+                .data_mask <- rlang::new_data_mask(.data_mask)
+
+                .match <- rlang::eval_tidy(.which, .data_mask)
+                if (!rlang::is_logical(.match, n = 1L)) {
+                    rlang::abort(paste0("The evaluation of {",
+                                        rlang::as_label(.which_expr),
+                                        "} did not result in a single logical."))
+                }
+
+                .match
+            })
+
+            .matches <- .names[.matches]
         }
         else {
-            tidyselect::scoped_vars(.COLNAMES)
-            condition <- rlang::eval_tidy(.which, .data_mask)
+            .matches <- rlang::eval_tidy(.which)
         }
 
-        if (is.integer(condition)) {
-            condition <- .COLNAMES[condition]
+        if (is.integer(.matches)) {
+            .matches <- .names[.matches]
         }
 
-        if (is.character(condition)) {
-            condition <- .COLNAME %in% condition
+        .ans <- list()
+        for (.match in .matches) {
+            .COL <- .SD[[.match]]
+
+            .data_mask <- rlang::new_environment(list(.COL = .COL))
+            .data_mask <- rlang::new_data_mask(.data_mask)
+
+            for (.how in .hows) {
+                .ans <- c(.ans, list(rlang::eval_tidy(.how, .data_mask)))
+            }
         }
 
-        if (condition) {
-            rlang::eval_tidy(.how, .data_mask)
+        if (length(.hows) == 1L) {
+            names(.ans) <- .matches
         }
         else {
-            NULL
+            names(.ans) <- as.character(t(outer(.matches, sapply(.hows, rlang::call_name), paste, sep = "_")))
         }
+
+        .ans
     },
 
     # data.table needs to see .SD in order to expose the variables in parent.frame
@@ -447,10 +482,6 @@ EBCompanion$helper_functions <- list(
             .data_mask <- rlang::new_data_mask(rlang::new_environment(.COL))
             rlang::eval_tidy(.how, .data_mask)
         })
-    },
-
-    .non_null = function(col_list) {
-        col_list[!sapply(col_list, is.null)]
     },
 
     .semi_joined_names = function(x, y, on) {

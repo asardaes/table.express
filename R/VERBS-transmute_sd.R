@@ -3,15 +3,13 @@
 #' Like [transmute-table.express] but for a single call and maybe specifying `.SDcols`.
 #'
 #' @export
-#' @importFrom rlang call2
-#' @importFrom rlang call_modify
-#' @importFrom rlang call_standardise
-#' @importFrom rlang caller_env
 #' @importFrom rlang enexpr
 #' @importFrom rlang enquo
 #' @importFrom rlang expr
+#' @importFrom rlang is_call
+#' @importFrom rlang quo_get_env
+#' @importFrom rlang quo
 #' @importFrom rlang quos
-#' @importFrom rlang zap
 #'
 #' @template data-arg
 #' @param .SDcols See [data.table::data.table] and the details here.
@@ -52,45 +50,41 @@ transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...,
                          .parse = getOption("table.express.parse", FALSE),
                          .chain = getOption("table.express.chain", TRUE))
 {
-    dots <- parse_dots(.parse, ...)
     how_quo <- rlang::enquo(.how)
 
-    .how <- to_expr(rlang::enexpr(.how), .parse = .parse)
-    .which <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
+    how_exprs <- to_expr(rlang::enexpr(.how), .parse = .parse)
+    which_expr <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
 
-    all_sdcols <- identical(.which, rlang::expr(everything()))
+    all_sdcols <- identical(which_expr, rlang::expr(everything()))
+    colon_call <- rlang::is_call(which_expr, ":")
 
-    if (evaled_is(how_quo, "function")) {
-        if (all_sdcols || evaled_is(rlang::enquo(.SDcols), c("numeric", "character"))) {
-            clause <- rlang::expr(lapply(.SD, !!.how, !!!dots))
-            ans <- .data$set_select(clause, .chain)
+    if (evaled_is(how_quo, "function") &&
+        (all_sdcols ||
+         colon_call ||
+         evaled_is(rlang::enquo(.SDcols), c("numeric", "character"))))
+    {
+        clause <- rlang::expr(lapply(.SD, !!how_exprs, !!!parse_dots(.parse, ...)))
+        ans <- .data$set_select(clause, .chain)
 
-            if (!all_sdcols) {
-                frame_append(ans, .SDcols = c(!!.which), .parse = FALSE)
+        if (!all_sdcols) {
+            if (colon_call) {
+                frame_append(ans, .SDcols = !!which_expr, .parse = FALSE)
             }
-
-            return(ans)
+            else {
+                frame_append(ans, .SDcols = c(!!which_expr), .parse = FALSE)
+            }
         }
 
-        .how <- rlang::call2(.how, rlang::expr(.COL))
+        return(ans)
     }
 
-    .how <- rlang::call_standardise(.how, rlang::caller_env())
-    .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
+    hows <- standardize_calls(how_exprs, rlang::quo_get_env(how_quo), ..., .parse = .parse)
 
     # just to avoid NOTE
-    .non_null <- EBCompanion$helper_functions$.non_null
     .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
 
     clause <- rlang::expr(
-        .non_null(Map(
-            .transmute_matching,
-            .COL = .SD,
-            .COLNAME = names(.SD),
-            .COLNAMES = list(names(.SD)),
-            .which = rlang::quos(!!.which),
-            .how = rlang::quos(!!.how)
-        ))
+        .transmute_matching(.SD, .which = rlang::quo(!!which_expr), .hows = rlang::quos(!!!hows))
     )
 
     .data$set_select(clause, .chain)

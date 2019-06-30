@@ -83,7 +83,7 @@ process_sdcols <- function(.data, .sdcols_quo) {
     if (is_tidyselect_call(.sdcols_expr) || rlang::is_call(.sdcols_expr, ":")) {
         .data$tidy_select(.sdcols_expr)
     }
-    else if (uses_col_pronoun(.sdcols_expr)) {
+    else if (uses_pronouns(.sdcols_expr, ".COL")) {
         # https://github.com/r-lib/covr/issues/377
         .f_ <- function(.COL) {
             ans <- base::eval(.sdcols_expr)
@@ -115,27 +115,27 @@ is_tidyselect_call <- function(expression) {
 #' @importFrom rlang as_label
 #' @importFrom rlang is_call
 #'
-uses_col_pronoun <- function(ex) {
+uses_pronouns <- function(ex, pronouns) {
     if (!rlang::is_call(ex)) {
         return(FALSE)
     }
 
-    uses_col <- FALSE
+    uses <- FALSE
 
     for (i in seq_along(ex)) {
         sub_ex <- ex[[i]]
 
         if (rlang::is_call(sub_ex)) {
-            uses_col <- uses_col_pronoun(sub_ex)
+            uses <- uses_pronouns(sub_ex, pronouns)
         }
-        else if (rlang::as_label(sub_ex) == ".COL") {
-            uses_col <- TRUE
+        else if (rlang::as_label(sub_ex) %in% pronouns) {
+            uses <- TRUE
         }
 
-        if (uses_col) break
+        if (uses) break
     }
 
-    uses_col
+    uses
 }
 
 #' @importFrom rlang as_string
@@ -154,4 +154,37 @@ select_with_colon <- function(.names, .expr) {
     })
 
     .names[.ij[1L] : .ij[2L]]
+}
+
+#' @importFrom rlang call2
+#' @importFrom rlang call_args
+#' @importFrom rlang call_modify
+#' @importFrom rlang call_standardise
+#' @importFrom rlang expr
+#' @importFrom rlang is_call
+#' @importFrom rlang new_quosure
+#' @importFrom rlang zap
+#'
+standardize_calls <- function(.exprs, .env, ..., .parse) {
+    .dots <- parse_dots(.parse, ...)
+
+    if (!rlang::is_call(.exprs, c(".", "list"))) {
+        .exprs <- list(.exprs)
+    }
+    else {
+        .exprs <- rlang::call_args(.exprs)
+    }
+
+    lapply(.exprs, function(.expr) {
+        if (evaled_is(rlang::new_quosure(.expr, .env), "function")) {
+            .expr <- rlang::call2(.expr, rlang::expr(.COL))
+        }
+
+        if (rlang::is_call(.expr)) {
+            .expr <- rlang::call_standardise(.expr, .env)
+            .expr <- rlang::call_modify(.expr, ... = rlang::zap(), !!!.dots)
+        }
+
+        .expr
+    })
 }

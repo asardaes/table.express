@@ -75,10 +75,14 @@ test_that("Transmuting SD with dynamic .SDcols works.", {
 
     ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = any(.COL < 5 & .COL %% 1 != 0)) %>% end_expr
     expect_identical(ans, expected)
+
+    expect_error(regexp = "single logical", {
+        DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = .COL < 5 & .COL %% 1 != 0) %>% end_expr
+    })
 })
 
 test_that("Transmuting SD with tidy selectors works.", {
-    expected <- data.table::copy(DT)[, .(disp = disp * 2, drat = drat * 2)]
+    expected <-DT[, .(disp = disp * 2, drat = drat * 2)]
 
     ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = c("disp", "drat")) %>% end_expr
     expect_identical(ans, expected)
@@ -88,7 +92,7 @@ test_that("Transmuting SD with tidy selectors works.", {
 })
 
 test_that("Transmuting SD with :-calls works.", {
-    expected <- data.table::copy(DT)[, .(disp = disp * 2, hp = hp * 2, drat = drat * 2)]
+    expected <- DT[, .(disp = disp * 2, hp = hp * 2, drat = drat * 2)]
 
     ans <- DT %>% start_expr %>% transmute_sd(disp:drat, .COL * 2) %>% end_expr
     expect_identical(ans, expected)
@@ -97,5 +101,28 @@ test_that("Transmuting SD with :-calls works.", {
     expect_identical(ans, expected)
 
     ans <- DT %>% start_expr %>% transmute_sd(3:drat, .COL * 2) %>% end_expr
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- DT[, .(disp = cumsum(disp), hp = cumsum(hp), drat = cumsum(drat))]
+
+    ans <- DT %>% start_expr %>% transmute_sd(disp:drat, cumsum) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% transmute_sd(3:5, cumsum) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% transmute_sd(3:drat, cumsum) %>% end_expr
+    expect_identical(ans, expected)
+})
+
+test_that("Transmuting SD with list of functions works.", {
+    sd_cols <- c("mpg", "cyl", "disp")
+    expected <- DT[, c(lapply(.SD, min), lapply(.SD, max)), .SDcols = sd_cols]
+    data.table::setnames(expected, as.character(outer(sd_cols, c("min", "max"), paste, sep = "_")))
+
+    ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(min, max(.COL))) %>% end_expr
+    data.table::setcolorder(ans, names(expected))
     expect_identical(ans, expected)
 })

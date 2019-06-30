@@ -3,18 +3,10 @@
 #' Like [mutate-table.express] but possibly recycling calls.
 #'
 #' @export
-#' @importFrom rlang call2
-#' @importFrom rlang call_args
-#' @importFrom rlang call_modify
-#' @importFrom rlang call_standardise
 #' @importFrom rlang enexpr
 #' @importFrom rlang enquo
-#' @importFrom rlang expr
-#' @importFrom rlang is_call
-#' @importFrom rlang new_quosure
 #' @importFrom rlang quo_get_env
 #' @importFrom rlang quos
-#' @importFrom rlang zap
 #'
 #' @template data-arg
 #' @param .SDcols See [data.table::data.table] and the details here.
@@ -46,29 +38,10 @@ mutate_sd <- function(.data, .SDcols, .how = identity, ...,
 {
     .SDcols <- rlang::enquo(.SDcols)
     SDcols <- process_sdcols(.data, .SDcols)
+
     how_exprs <- to_expr(rlang::enexpr(.how), .parse = .parse)
-    dots <- parse_dots(.parse, ...)
-
-    if (!rlang::is_call(how_exprs, c(".", "list"))) {
-        how_exprs <- list(how_exprs)
-    }
-    else {
-        how_exprs <- rlang::call_args(how_exprs)
-    }
-
     how_env <- rlang::quo_get_env(.SDcols)
-    how <- lapply(how_exprs, function(how_expr) {
-        if (evaled_is(rlang::new_quosure(how_expr, how_env), "function")) {
-            how_expr <- rlang::call2(how_expr, rlang::expr(.COL))
-        }
-
-        if (rlang::is_call(how_expr)) {
-            how_expr <- rlang::call_standardise(how_expr, how_env)
-            how_expr <- rlang::call_modify(how_expr, ... = rlang::zap(), !!!dots)
-        }
-
-        how_expr
-    })
+    how <- standardize_calls(how_exprs, how_env, ..., .parse = .parse)
 
     # just to avoid NOTE
     .mutate_matching <- EBCompanion$helper_functions$.mutate_matching
