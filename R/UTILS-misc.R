@@ -73,13 +73,14 @@ evaled_is <- function(obj_quo, classes) {
 #' @importFrom rlang abort
 #' @importFrom rlang as_label
 #' @importFrom rlang eval_tidy
+#' @importFrom rlang is_call
 #' @importFrom rlang is_logical
 #' @importFrom rlang quo
 #'
 process_sdcols <- function(.data, .sdcols_quo) {
     .sdcols_expr <- to_expr(.sdcols_quo)
 
-    if (is_tidyselect_call(.sdcols_expr)) {
+    if (is_tidyselect_call(.sdcols_expr) || rlang::is_call(.sdcols_expr, ":")) {
         .data$tidy_select(.sdcols_expr)
     }
     else if (uses_col_pronoun(.sdcols_expr)) {
@@ -135,4 +136,22 @@ uses_col_pronoun <- function(ex) {
     }
 
     uses_col
+}
+
+#' @importFrom rlang as_string
+#' @importFrom rlang call_args
+#'
+select_with_colon <- function(.names, .expr) {
+    .args <- rlang::call_args(.expr)
+
+    .ij <- sapply(.args, function(.arg) {
+        if (is.numeric(.arg)) {
+            .arg
+        }
+        else {
+            which(rlang::as_string(.arg) == .names)[1L]
+        }
+    })
+
+    .names[.ij[1L] : .ij[2L]]
 }

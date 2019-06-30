@@ -11,7 +11,7 @@ test_that("Filtering SD works for functions.", {
     expect_identical(ans, expected)
 })
 
-test_that("Filtering SD works for calls.", {
+test_that("Filtering SD works for predicates.", {
     expected <- DT[mpg > 20 & qsec > 20]
 
     ans <- DT %>% start_expr %>% filter_sd(.COL > 20, .SDcols = c("mpg", "qsec")) %>% end_expr
@@ -41,4 +41,17 @@ test_that("Filtering SD with .COL predicates works.", {
     expect_error(regexp = "single logical", {
         DT %>% start_expr %>% filter_sd(.COL == 1, .SDcols = .COL == 1) %>% end_expr
     })
+})
+
+test_that("Filtering SD with :-calls works.", {
+    expected <- DT[vs == 1 & am == 1]
+
+    ans <- DT %>% start_expr %>% filter_sd(vs:am, .COL == 1) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% filter_sd(8:9, .COL == 1) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% filter_sd(vs:9, .COL == 1) %>% end_expr
+    expect_identical(ans, expected)
 })

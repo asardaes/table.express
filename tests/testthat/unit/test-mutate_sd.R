@@ -95,3 +95,20 @@ test_that("Mutating SD with .COL predicates works.", {
 
     expect_identical(ans, expected)
 })
+
+test_that("Mutating SD with :-calls works.", {
+    dt <- data.table::copy(DT)
+    expected <- dt[, c("mpg", "cyl", "disp") := -1L]
+
+    dt <- data.table::copy(DT)
+    ans <- dt %>% start_expr %>% mutate_sd(mpg:disp, -1L) %>% end_expr
+    expect_identical(ans, expected)
+
+    dt <- data.table::copy(DT)
+    ans <- dt %>% start_expr %>% mutate_sd(1:3L, -1L) %>% end_expr
+    expect_identical(ans, expected)
+
+    dt <- data.table::copy(DT)
+    ans <- dt %>% start_expr %>% mutate_sd(mpg:3, -1L) %>% end_expr
+    expect_identical(ans, expected)
+})

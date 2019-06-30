@@ -78,11 +78,24 @@ test_that("Transmuting SD with dynamic .SDcols works.", {
 })
 
 test_that("Transmuting SD with tidy selectors works.", {
-    expected <- data.table::copy(DT)[, `:=`(disp = disp * 2, drat = drat * 2)][, .(disp, drat)]
+    expected <- data.table::copy(DT)[, .(disp = disp * 2, drat = drat * 2)]
 
     ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = c("disp", "drat")) %>% end_expr
     expect_identical(ans, expected)
 
     ans <- DT %>% start_expr %>% transmute_sd(.COL * 2, .SDcols = starts_with("d")) %>% end_expr
+    expect_identical(ans, expected)
+})
+
+test_that("Transmuting SD with :-calls works.", {
+    expected <- data.table::copy(DT)[, .(disp = disp * 2, hp = hp * 2, drat = drat * 2)]
+
+    ans <- DT %>% start_expr %>% transmute_sd(disp:drat, .COL * 2) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% transmute_sd(3:5, .COL * 2) %>% end_expr
+    expect_identical(ans, expected)
+
+    ans <- DT %>% start_expr %>% transmute_sd(3:drat, .COL * 2) %>% end_expr
     expect_identical(ans, expected)
 })

@@ -14,6 +14,7 @@
 #' @importFrom rlang env_get_list
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
+#' @importFrom rlang is_call
 #' @importFrom rlang is_syntactic_literal
 #' @importFrom rlang list2
 #' @importFrom rlang maybe_missing
@@ -181,12 +182,18 @@ ExprBuilder <- R6::R6Class(
             } # nocov end
 
             private$.selected_eagerly <- TRUE
-            tidyselect::scoped_vars(names(private$.DT))
 
-            .data_mask <- rlang::new_environment(list(.DT_ = private$.DT))
-            .data_mask <- rlang::new_data_mask(.data_mask)
+            if (rlang::is_call(select_expr, ":")) {
+                select_with_colon(names(private$.DT), select_expr)
+            }
+            else {
+                tidyselect::scoped_vars(names(private$.DT))
 
-            names(private$.DT)[rlang::eval_tidy(select_expr, .data_mask)]
+                .data_mask <- rlang::new_environment(list(.DT_ = private$.DT))
+                .data_mask <- rlang::new_data_mask(.data_mask)
+
+                names(private$.DT)[rlang::eval_tidy(select_expr, .data_mask)]
+            }
         },
 
         get_newest_pronoun = function() {
@@ -330,6 +337,7 @@ EBCompanion$clause_order <- c(
 #' @importFrom rlang is_call
 #' @importFrom rlang new_data_mask
 #' @importFrom rlang new_environment
+#' @importFrom rlang quo_get_expr
 #' @importFrom tidyselect scoped_vars
 #'
 EBCompanion$helper_functions <- list(
@@ -399,12 +407,17 @@ EBCompanion$helper_functions <- list(
     },
 
     .transmute_matching = function(.COL, .COLNAME, .COLNAMES, .which, .how) {
-        tidyselect::scoped_vars(.COLNAMES)
+        .data_mask <- rlang::new_environment(list(.COL = .COL, .COLNAME = .COLNAME))
+        .data_mask <- rlang::new_data_mask(.data_mask)
+        .which_expr <- rlang::quo_get_expr(.which)
 
-        data_mask <- rlang::new_environment(list(.COL = .COL, .COLNAME = .COLNAME))
-        data_mask <- rlang::new_data_mask(data_mask)
-
-        condition <- rlang::eval_tidy(.which, data_mask)
+        if (rlang::is_call(.which_expr, ":")) {
+            condition <- select_with_colon(.COLNAMES, .which_expr)
+        }
+        else {
+            tidyselect::scoped_vars(.COLNAMES)
+            condition <- rlang::eval_tidy(.which, .data_mask)
+        }
 
         if (is.integer(condition)) {
             condition <- .COLNAMES[condition]
@@ -415,7 +428,7 @@ EBCompanion$helper_functions <- list(
         }
 
         if (condition) {
-            rlang::eval_tidy(.how, data_mask)
+            rlang::eval_tidy(.how, .data_mask)
         }
         else {
             NULL
