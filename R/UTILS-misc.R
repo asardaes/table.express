@@ -37,7 +37,10 @@ parse_dots <- function(.parse = FALSE, ..., .named = FALSE, .ignore_empty = "tra
 #' @importFrom rlang is_missing
 #'
 reduce_expr <- function(expressions, init, op, ..., .parse = FALSE) {
-    if (identical(lengths(expressions), 1L) && rlang::is_missing(expressions[[1L]][[1L]])) {
+    # lengths() function was introduced in R 3.2.0
+    lengths <- sapply(expressions, length)
+
+    if (identical(lengths, 1L) && rlang::is_missing(expressions[[1L]][[1L]])) {
         init
     }
     else {
