@@ -458,10 +458,16 @@ EBCompanion$helper_functions <- list(
         }))
 
         if (length(.hows) == 1L) {
-            names(.ans) <- .matches
+            .name <- names(.hows)
+            .suffix <- if (nzchar(.name)) paste0("_", .name) else ""
+            names(.ans) <- paste0(.matches, .suffix)
         }
         else {
-            names(.ans) <- as.character(t(outer(.matches, sapply(.hows, rlang::call_name), paste, sep = "_")))
+            .suffix <- Map(.hows, names(.hows), f = function(.how, .name) {
+                if (nzchar(.name)) .name else rlang::call_name(.how)
+            })
+
+            names(.ans) <- as.character(t(outer(.matches, unlist(.suffix), paste, sep = "_")))
         }
 
         .ans

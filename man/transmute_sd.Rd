@@ -33,7 +33,7 @@ possibly specifying the helper function \code{.transmute_matching}, which is ass
 expression's evaluation environment when calling \code{\link[=end_expr]{end_expr()}} (i.e., \link{ExprBuilder}'s \code{eval}
 method).
 
-Said function includes two pronouns that can be used by \code{.how} and \code{.SDcols}:
+Said function supports two pronouns that can be used by \code{.how} and \code{.SDcols}:
 \itemize{
 \item \code{.COL}: the actual values of the column.
 \item \code{.COLNAME}: the name of the column currently being evaluated.

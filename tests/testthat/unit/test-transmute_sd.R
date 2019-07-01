@@ -125,4 +125,24 @@ test_that("Transmuting SD with list of functions works.", {
     ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(min, max(.COL))) %>% end_expr
     data.table::setcolorder(ans, names(expected))
     expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    sd_cols <- c("mpg", "cyl", "disp")
+    expected <- DT[, lapply(.SD, min), .SDcols = sd_cols]
+    data.table::setnames(expected, paste(sd_cols, "minimum", sep = "_"))
+
+    ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(minimum = min)) %>% end_expr
+    data.table::setcolorder(ans, names(expected))
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    sd_cols <- c("mpg", "cyl", "disp")
+    expected <- DT[, c(lapply(.SD, min), lapply(.SD, max)), .SDcols = sd_cols]
+    data.table::setnames(expected, as.character(outer(sd_cols, c("minimum", "maximum"), paste, sep = "_")))
+
+    ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(minimum = min, maximum = max(.COL))) %>% end_expr
+    data.table::setcolorder(ans, names(expected))
+    expect_identical(ans, expected)
 })

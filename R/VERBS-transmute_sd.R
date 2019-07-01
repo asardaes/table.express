@@ -25,7 +25,7 @@
 #' expression's evaluation environment when calling [end_expr()] (i.e., [ExprBuilder]'s `eval`
 #' method).
 #'
-#' Said function includes two pronouns that can be used by `.how` and `.SDcols`:
+#' Said function supports two pronouns that can be used by `.how` and `.SDcols`:
 #'
 #' - `.COL`: the actual values of the column.
 #' - `.COLNAME`: the name of the column currently being evaluated.
