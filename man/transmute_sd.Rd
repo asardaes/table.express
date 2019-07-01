@@ -14,7 +14,8 @@ transmute_sd(.data, .SDcols = everything(), .how = identity, ...,
 \item{.SDcols}{See \link[data.table:data.table]{data.table::data.table} and the details here.}
 
 \item{.how}{The function(s) or function call(s) that will perform the transformation. If many,
-a list should be used, either with \code{list()} or \code{.()}.}
+a list should be used, either with \code{list()} or \code{.()}. If the list is named, the names will be
+used for the new columns' names.}
 
 \item{...}{Possibly more arguments for \emph{all} functions/calls in \code{.how}.}
 

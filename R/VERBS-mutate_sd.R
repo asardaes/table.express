@@ -42,9 +42,16 @@ mutate_sd <- function(.data, .SDcols, .how = identity, ...,
     how_env <- rlang::quo_get_env(.SDcols)
     how <- standardize_calls(how_exprs, how_env, ..., .parse = .parse)
 
+    new_names <- SDcols
+    how_names <- names(how)
+    which_named <- nzchar(how_names)
+    if (any(which_named)) {
+        new_names[which_named] <- how_names[which_named]
+    }
+
     # just to avoid NOTE
     .mutate_matching <- EBCompanion$helper_functions$.mutate_matching
 
     mutate.ExprBuilder(.data, .parse = FALSE, .unquote_names = FALSE, .chain = .chain,
-                       !!SDcols := .mutate_matching(.SD, !!SDcols, rlang::quos(!!!how)))
+                       !!new_names := .mutate_matching(.SD, !!SDcols, rlang::quos(!!!how)))
 }
