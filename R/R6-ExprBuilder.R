@@ -129,6 +129,16 @@ ExprBuilder <- R6::R6Class(
             )
         },
 
+        chain_if_set = function(...) {
+            clause_values <- rlang::env_get_list(private, c(...))
+            if (any(sapply(clause_values, Negate(is.null)))) {
+                self$chain()
+            }
+            else {
+                self
+            }
+        },
+
         eval = function(parent_env, by_ref, ...) {
             .DT_ <- if (by_ref) {
                 if (private$.verbose) { # nocov start

@@ -383,6 +383,18 @@ DT %>%
   end_expr
 ```
 
+## Distinct combinations of columns
+
+The `distinct` verb is a shortcut for `select(.SD[1])` with a `by` clause:
+
+```{r distinct}
+DT %>%
+  start_expr %>%
+  distinct(vs, am) %T>%
+  print %>%
+  end_expr
+```
+
 ## Automatic expression chaining
 
 A `data.table`'s frame has 3 main elements:

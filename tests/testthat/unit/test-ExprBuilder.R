@@ -36,3 +36,13 @@ test_that("Overriding values with eval's ellipsis works.", {
     ans <- b$eval(rlang::current_env(), TRUE, .DT_ = DT[, -1L])
     expect_identical(ans, DT[, .(cyl)])
 })
+
+test_that("chain_if_set works.", {
+    b1 <- DT %>% start_expr
+    b2 <- b1$chain_if_set(".select")
+    expect_identical(b1, b2)
+
+    select(b1, 1L)
+    b2 <- b1$chain_if_set(".select")
+    expect_false(identical(b1, b2))
+})
