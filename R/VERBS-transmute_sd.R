@@ -3,11 +3,11 @@
 #' Like [transmute-table.express] but for a single call and maybe specifying `.SDcols`.
 #'
 #' @export
-#' @importFrom rlang enexpr
 #' @importFrom rlang enquo
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang quo_get_env
+#' @importFrom rlang quo_get_expr
 #' @importFrom rlang quo
 #' @importFrom rlang quos
 #'
@@ -50,21 +50,18 @@ transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...,
                          .parse = getOption("table.express.parse", FALSE),
                          .chain = getOption("table.express.chain", TRUE))
 {
+    which_quo <- rlang::enquo(.SDcols)
     how_quo <- rlang::enquo(.how)
 
-    how_exprs <- to_expr(rlang::enexpr(.how), .parse = .parse)
-    which_expr <- to_expr(rlang::enexpr(.SDcols), .parse = .parse)
+    which_expr <- to_expr(rlang::quo_get_expr(which_quo), .parse = .parse)
+    how_exprs <- to_expr(rlang::quo_get_expr(how_quo), .parse = .parse)
 
     all_sdcols <- identical(which_expr, rlang::expr(everything()))
     colon_call <- rlang::is_call(which_expr, ":")
 
-    if (evaled_is(how_quo, "function") &&
-        (all_sdcols ||
-         colon_call ||
-         evaled_is(rlang::enquo(.SDcols), c("numeric", "character"))))
-    {
-        clause <- rlang::expr(lapply(.SD, !!how_exprs, !!!parse_dots(.parse, ...)))
-        ans <- .data$set_select(clause, .chain)
+    if (can_combine_lapply(which_quo, how_quo)) {
+        hows <- standardize_lapplys(how_exprs, ..., .parse = .parse)
+        ans <- .data$set_select(hows, .chain)
 
         if (!all_sdcols) {
             if (colon_call) {
@@ -74,18 +71,19 @@ transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...,
                 frame_append(ans, .SDcols = c(!!which_expr), .parse = FALSE)
             }
         }
+    }
+    else {
+        hows <- standardize_calls(how_exprs, rlang::quo_get_env(how_quo), ..., .parse = .parse)
 
-        return(ans)
+        # just to avoid NOTE
+        .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
+
+        clause <- rlang::expr(
+            .transmute_matching(.SD, .which = rlang::quo(!!which_expr), .hows = rlang::quos(!!!hows))
+        )
+
+        ans <- .data$set_select(clause, .chain)
     }
 
-    hows <- standardize_calls(how_exprs, rlang::quo_get_env(how_quo), ..., .parse = .parse)
-
-    # just to avoid NOTE
-    .transmute_matching <- EBCompanion$helper_functions$.transmute_matching
-
-    clause <- rlang::expr(
-        .transmute_matching(.SD, .which = rlang::quo(!!which_expr), .hows = rlang::quos(!!!hows))
-    )
-
-    .data$set_select(clause, .chain)
+    ans
 }

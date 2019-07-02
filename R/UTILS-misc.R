@@ -156,6 +156,63 @@ select_with_colon <- function(.names, .expr) {
     .names[.ij[1L] : .ij[2L]]
 }
 
+#' @importFrom rlang call_args
+#' @importFrom rlang is_call
+#' @importFrom rlang new_quosure
+#' @importFrom rlang quo_get_env
+#' @importFrom rlang quo_get_expr
+#'
+can_combine_lapply <- function(which_quo, how_quo) {
+    simple_num <- evaled_is(which_quo, c("numeric", "character"))
+    simple_call <- rlang::is_call(rlang::quo_get_expr(which_quo), c(":", "everything"))
+
+    if (!simple_num && !simple_call) {
+        FALSE
+    }
+    else if (evaled_is(how_quo, "function")) {
+        TRUE
+    }
+    else if (rlang::is_call(rlang::quo_get_expr(how_quo), c(".", "list"))) {
+        env <- rlang::quo_get_env(how_quo)
+        all(sapply(rlang::call_args(how_quo), function(how_expr) {
+            if (rlang::is_call(how_expr)) {
+                FALSE
+            }
+            else {
+                one_quo <- rlang::new_quosure(how_expr, env)
+                evaled_is(one_quo, "function")
+            }
+        }))
+    }
+    else {
+        FALSE
+    }
+}
+
+#' @importFrom rlang as_string
+#' @importFrom rlang call_args
+#' @importFrom rlang expr
+#' @importFrom rlang is_call
+#'
+standardize_lapplys <- function(.exprs, ..., .parse) {
+    .dots <- parse_dots(.parse, ...)
+
+    if (!rlang::is_call(.exprs, c(".", "list"))) {
+        .exprs <- list(.exprs)
+    }
+    else {
+        .exprs <- rlang::call_args(.exprs)
+        zchars <- !nzchar(names(.exprs))
+        names(.exprs)[zchars] <- sapply(.exprs[zchars], rlang::as_string)
+    }
+
+    .ans <- lapply(.exprs, function(.expr) {
+        rlang::expr(lapply(.SD, !!.expr, !!!.dots))
+    })
+
+    rlang::expr(c(!!!.ans))
+}
+
 #' @importFrom rlang call2
 #' @importFrom rlang call_args
 #' @importFrom rlang call_modify

@@ -119,30 +119,42 @@ test_that("Transmuting SD with :-calls works.", {
 
 test_that("Transmuting SD with list of functions works.", {
     sd_cols <- c("mpg", "cyl", "disp")
-    expected <- DT[, c(lapply(.SD, min), lapply(.SD, max)), .SDcols = sd_cols]
-    data.table::setnames(expected, as.character(outer(sd_cols, c("min", "max"), paste, sep = "_")))
+
+    expected <- DT[, c(min = lapply(.SD, min), max = lapply(.SD, max)), .SDcols = sd_cols]
 
     ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(min, max(.COL))) %>% end_expr
     data.table::setcolorder(ans, names(expected))
     expect_identical(ans, expected)
 
-    # ----------------------------------------------------------------------------------------------
-
-    sd_cols <- c("mpg", "cyl", "disp")
-    expected <- DT[, lapply(.SD, min), .SDcols = sd_cols]
-    data.table::setnames(expected, paste(sd_cols, "minimum", sep = "_"))
-
-    ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(minimum = min)) %>% end_expr
-    data.table::setcolorder(ans, names(expected))
+    ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(min, max)) %>% end_expr
     expect_identical(ans, expected)
 
     # ----------------------------------------------------------------------------------------------
 
-    sd_cols <- c("mpg", "cyl", "disp")
+    expected <- DT[, c(min = lapply(.SD, min)), .SDcols = sd_cols]
+
+    ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(min = min)) %>% end_expr
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- DT[, c(minimum = lapply(.SD, min)), .SDcols = sd_cols]
+
+    ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(minimum = min)) %>% end_expr
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
     expected <- DT[, c(lapply(.SD, min), lapply(.SD, max)), .SDcols = sd_cols]
-    data.table::setnames(expected, as.character(outer(sd_cols, c("minimum", "maximum"), paste, sep = "_")))
+    data.table::setnames(expected, as.character(t(outer(c("minimum", "maximum"), sd_cols, paste, sep = "."))))
 
     ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(minimum = min, maximum = max(.COL))) %>% end_expr
-    data.table::setcolorder(ans, names(expected))
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- DT[, c(minimum = lapply(.SD, min), maximum = lapply(.SD, max)), .SDcols = sd_cols]
+
+    ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(minimum = min, maximum = max)) %>% end_expr
     expect_identical(ans, expected)
 })

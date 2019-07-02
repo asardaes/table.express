@@ -458,26 +458,28 @@ EBCompanion$helper_functions <- list(
             .matches <- .names[.matches]
         }
 
-        .ans <- unlist(recursive = FALSE, lapply(.matches, function(.match) {
+        .data_masks <- lapply(.matches, function(.match) {
             .COL <- .SD[[.match]]
+            .data_mask <- rlang::new_data_mask(rlang::new_environment(list(.COL = .COL)))
+        })
 
-            .data_mask <- rlang::new_environment(list(.COL = .COL))
-            .data_mask <- rlang::new_data_mask(.data_mask)
-
-            lapply(.hows, rlang::eval_tidy, data = .data_mask)
+        .ans <- unlist(recursive = FALSE, lapply(.hows, function(.how) {
+            lapply(.data_masks, function(.data_mask) {
+                rlang::eval_tidy(.how, .data_mask)
+            })
         }))
 
         if (length(.hows) == 1L) {
             .name <- names(.hows)
-            .suffix <- if (nzchar(.name)) paste0("_", .name) else ""
-            names(.ans) <- paste0(.matches, .suffix)
+            .prefix <- if (nzchar(.name)) paste0(.name, ".") else ""
+            names(.ans) <- paste0(.prefix, .matches)
         }
         else {
-            .suffix <- Map(.hows, names(.hows), f = function(.how, .name) {
+            .prefix <- Map(.hows, names(.hows), f = function(.how, .name) {
                 if (nzchar(.name)) .name else rlang::call_name(.how)
             })
 
-            names(.ans) <- as.character(t(outer(.matches, unlist(.suffix), paste, sep = "_")))
+            names(.ans) <- as.character(t(outer(unlist(.prefix), .matches, paste, sep = ".")))
         }
 
         .ans
