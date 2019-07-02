@@ -1,13 +1,3 @@
-#' @importFrom magrittr %>%
-#' @export
-#'
-magrittr::`%>%`
-
-#' @importFrom magrittr %T>%
-#' @export
-#'
-magrittr::`%T>%`
-
 #' @importFrom rlang is_expression
 #' @importFrom rlang is_quosure
 #' @importFrom rlang parse_expr

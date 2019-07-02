@@ -5,9 +5,6 @@
 #'
 #' @author Alexis Sarda-Espinosa
 #'
-#' @importFrom data.table :=
-#' @importFrom rlang !!
-#' @importFrom rlang !!!
 #' @importFrom utils globalVariables
 #'
 #' @note
@@ -23,3 +20,28 @@
 "_PACKAGE"
 
 utils::globalVariables(c(".DT_", ".SD", ".COL"))
+
+#' @importFrom data.table :=
+#' @export
+#'
+data.table::`:=`
+
+#' @importFrom magrittr %>%
+#' @export
+#'
+magrittr::`%>%`
+
+#' @importFrom magrittr %T>%
+#' @export
+#'
+magrittr::`%T>%`
+
+#' @importFrom rlang !!
+#' @export
+#'
+rlang::`!!`
+
+#' @importFrom rlang !!!
+#' @export
+#'
+rlang::`!!!`
