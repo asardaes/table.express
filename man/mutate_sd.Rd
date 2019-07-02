@@ -4,7 +4,7 @@
 \alias{mutate_sd}
 \title{Mutate subset of data}
 \usage{
-mutate_sd(.data, .SDcols, .how = identity, ...,
+mutate_sd(.data, .SDcols, .how = identity, ..., .prefix, .suffix,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }
@@ -18,6 +18,9 @@ a list should be used, either with \code{list()} or \code{.()}. If the list is n
 used for the new columns' names.}
 
 \item{...}{Possibly more arguments for \emph{all} functions/calls in \code{.how}.}
+
+\item{.prefix, .suffix}{Only relevant when \code{.how} is a function: add a prefix or suffix to the new
+column's name. If neither is missing, \code{.prefix} has preference.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 

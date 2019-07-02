@@ -24,6 +24,43 @@ test_that("Mutating SD with function and subset of columns works.", {
     expect_identical(ans, expected)
 })
 
+test_that("Renaming while mutating SD with function and subset of columns works.", {
+    dt <- data.table::copy(DT)
+    expected <- dt[, `:=`(log_mpg = log(mpg, base = 10), log_disp = log(disp, base = 10))]
+
+    sd_cols <- c("mpg", "disp")
+
+    dt <- data.table::copy(DT)
+    ans <- dt %>% start_expr %>% mutate_sd(log, base = 10, .SDcols = sd_cols, .prefix = "log_") %>% end_expr
+    expect_identical(ans, expected)
+
+    dt <- data.table::copy(DT)
+    ans <- dt %>% start_expr %>% mutate_sd(log, base = 10, .SDcols = sd_cols, .prefix = "log_", .suffix = "ignored") %>% end_expr
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    dt <- data.table::copy(DT)
+    expected <- dt[, `:=`(mpg_log = log(mpg, base = 10), disp_log = log(disp, base = 10))]
+
+    sd_cols <- c("mpg", "disp")
+
+    dt <- data.table::copy(DT)
+    ans <- dt %>% start_expr %>% mutate_sd(log, base = 10, .SDcols = sd_cols, .suffix = "_log") %>% end_expr
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    dt <- data.table::copy(DT)
+    expected <- dt[, `:=`(loga.mpg = log(mpg, base = 10), loga.disp = log(disp, base = 10))]
+
+    sd_cols <- c("mpg", "disp")
+
+    dt <- data.table::copy(DT)
+    ans <- dt %>% start_expr %>% mutate_sd(.(loga = log), base = 10, .SDcols = sd_cols) %>% end_expr
+    expect_identical(ans, expected)
+})
+
 test_that("Mutating SD with call and subset of columns works.", {
     dt <- data.table::copy(DT)
     expected <- dt[, `:=`(mpg = log(mpg, base = 10), disp = log(disp, base = 10))]
