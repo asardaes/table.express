@@ -15,4 +15,4 @@
   `.verbose = TRUE` in `start_expr`/`chain`.
 - Semi-breaking change: `*_sd` verbs now have `.SDcols` before their ellipsis. This should only
   require code adjustment for `transmute_sd` when `.SDcols` was left missing.
-- Minor updates to main vignette.
+- Updates to main vignette.

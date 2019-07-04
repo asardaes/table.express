@@ -38,6 +38,11 @@ so they will not be explained here.
 Even though using data manipulation verbs can improve expressiveness in some cases,
 this is not always true,
 so using the traditional `data.table` syntax might still be preferable in many situations.
+Unfortunately, it is not entirely straightforward to use the verbs without considerable knowledge of the syntax understood by `data.table`,
+as well as its [optimizations](https://rdrr.io/github/Rdatatable/data.table/man/datatable-optimize.html) and [special symbols](https://rdrr.io/github/Rdatatable/data.table/man/special-symbols.html).
+We will return to the importance of this at the [end](#as-simple-as-possible).
+
+### Preliminaries
 
 In order to resemble SQL syntax more closely,
 a couple of verb aliases are also defined:
@@ -516,4 +521,69 @@ DT %>%
   chain %>%
   transmute(ans = sqrt(mpg)) %>%
   filter_sd(.COL > 0, .SDcols = contains("m"))
+```
+
+## As simple as possible
+
+Many of the verbs in this package try to help make code more concise whenever possible.
+However, some of the added convenience requires helper functions that aid with non-standard evaluation,
+which doesn't always play nicely with the `data.table` optimizations mentioned in the beginning.
+Therefore, it is worth keeping the built expressions as close to traditional `data.table` syntax as possible.
+The verbs try to stick to this principle,
+but in order to build a simple output expression,
+they also require a simple input.
+
+Let us illustrate this point with `transmute_sd`,
+which can be used to compute summaries:
+
+```{r asap-1}
+DT %>%
+  start_expr %>%
+  group_by(am, vs) %>%
+  transmute_sd(c("mpg", "disp"), mean) %>%
+  frame_append(verbose = TRUE) %T>%
+  print %>%
+  end_expr
+```
+
+We can see, for example, `lapply optimization changed j ...`.
+Changing the expressions just a bit,
+without affecting its semantics,
+still hinders `data.table`'s ability to recognize cases it can optimize:
+
+```{r asap-2}
+DT %>%
+  start_expr %>%
+  group_by(am, vs) %>%
+  transmute_sd(c("mpg", "disp"), mean(.COL)) %>%
+  frame_append(verbose = TRUE) %T>%
+  print %>%
+  end_expr
+```
+
+Corroborated by the statements `j unchanged`, `GForce FALSE`, etc.
+Nevertheless, a different syntax can enable additional functionality,
+for instance column renaming:
+
+```{r asap-3}
+DT %>%
+  start_expr %>%
+  group_by(am, vs) %>%
+  transmute_sd(c("mpg", "disp"), .(avg = mean(.COL), min = min(.COL))) %>%
+  end_expr
+```
+
+Thus, in order to decide which syntax to use,
+we must be aware of what can be optimized by `data.table`,
+but as a general rule of thumb,
+the simpler the better.
+
+```{r asap-4}
+DT %>%
+  start_expr %>%
+  group_by(am, vs) %>%
+  transmute_sd(c("mpg", "disp"), .(min, max)) %>%
+  frame_append(verbose = TRUE) %T>%
+  print %>%
+  end_expr
 ```
