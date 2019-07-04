@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • table.express</title>
+<title>Rows with distinct combinations of columns — distinct-table.express • table.express</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,10 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Rows with distinct combinations of columns — distinct-table.express" />
+
+<meta property="og:description" content="Rows with distinct combinations of columns" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -50,7 +53,7 @@
   </head>
 
   <body>
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -118,62 +121,55 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/asardaes/table.express/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Rows with distinct combinations of columns</h1>
+    <small class="dont-index">Source: <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-distinct.R'><code>R/VERBS-distinct.R</code></a></small>
+    <div class="hidden name"><code>distinct-table.express.Rd</code></div>
     </div>
 
-    <div id="table-express-0-1-1-9000" class="section level1">
-<h1 class="page-header">
-<a href="#table-express-0-1-1-9000" class="anchor"></a>table.express 0.1.1.9000<small> Unreleased </small>
-</h1>
-<ul>
-<li>Added joining verbs and a corresponding vignette describing them (<a href='https://github.com/asardaes/table.express/issues/1'>#1</a>).</li>
-<li>Added the <code>distinct</code> verb.</li>
-<li>
-<code>transmute</code> is no longer an alias for <code>select</code>. This is to make the latter more flexible in some bare selection cases (like combining several <code>tidyselect</code> calls), and leave the former more simple and preferable for actual transmutation cases (<a href='https://github.com/asardaes/table.express/issues/4'>#4</a>).</li>
-<li>Both <code>mutate_sd</code> and <code>transmute_sd</code> now support a list of functions as input, but with slightly different semantics; check the vignette (<a href='https://github.com/asardaes/table.express/issues/8'>#8</a> and <a href='https://github.com/asardaes/table.express/issues/11'>#11</a>).</li>
-<li>Now both <code>mutate_sd</code> and <code>filter_sd</code> support the <code>.COL</code> pronoun for <code>.SDcols</code> predicates, but they remain eager in this regard.</li>
-<li>
-<code>select</code> and <code>filter_on</code> gained a <code>.negate</code> parameter (<a href='https://github.com/asardaes/table.express/issues/9'>#9</a> and <a href='https://github.com/asardaes/table.express/issues/6'>#6</a>).</li>
-<li>
-<code>mutate</code> gained a <code>.sequential</code> parameter to enable usage of newly created columns.</li>
-<li>Added some debugging statements when option <code>table.express.verbose</code> is <code>TRUE</code>, or <code>.verbose = TRUE</code> in <code>start_expr</code>/<code>chain</code>.</li>
-<li>Updates to main vignette.</li>
-<li>Semi-breaking change: <code>*_sd</code> verbs now have <code>.SDcols</code> before their ellipsis. This should only require code adjustment for <code>transmute_sd</code> when <code>.SDcols</code> was left missing.</li>
-</ul>
-<p>Special thanks to <a href='https://github.com/leungi'>@leungi</a> for checking consistency with <code>dplyr</code> in several cases.</p>
-</div>
-    <div id="table-express-0-1-1" class="section level1">
-<h1 class="page-header">
-<a href="#table-express-0-1-1" class="anchor"></a>table.express 0.1.1<small> 2019-06-03 </small>
-</h1>
-<ul>
-<li>Let <code>transmute_sd</code> build expressions with <code>lapply</code> when <code>.how</code> is a function and <code>.SDcols</code> is character or numeric.</li>
-<li>Support numeric input in <code>select</code>.</li>
-<li>Removed <code>tracemem</code> example from vignette to avoid CRAN problems.</li>
-</ul>
-</div>
-    <div id="table-express-0-1-0" class="section level1">
-<h1 class="page-header">
-<a href="#table-express-0-1-0" class="anchor"></a>table.express 0.1.0<small> 2019-05-31 </small>
-</h1>
-<ul>
-<li>Initial version with single-table verbs.</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    
+    <p>Rows with distinct combinations of columns</p>
+    
+    </div>
 
+    <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>,
+  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>))</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>An instance of <a href='ExprBuilder.html'>ExprBuilder</a>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Which columns to check for uniqueness.</p></td>
+    </tr>
+    <tr>
+      <th>.parse</th>
+      <td><p>Logical. Whether to apply <code><a href='https://rlang.r-lib.org/reference/parse_expr.html'>rlang::parse_expr()</a></code> to obtain the expressions.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>To see more examples, check the
+<a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
+<a href='table.express-package.html'>table.express-package</a> entry.</p>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#table-express-0-1-1-9000">0.1.1.9000</a></li>
-        <li><a href="#table-express-0-1-1">0.1.1</a></li>
-        <li><a href="#table-express-0-1-0">0.1.0</a></li>
-      </ul>
-    </div>
-  </div>
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
+  </div>
 </div>
 
 

@@ -133,7 +133,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>,
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.negate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
   <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
     
@@ -147,6 +147,11 @@
     <tr>
       <th>...</th>
       <td><p>Clause for selecting columns. For <code>j</code> inside the <code>data.table</code>'s frame.</p></td>
+    </tr>
+    <tr>
+      <th>.negate</th>
+      <td><p>Whether to negate the selection semantics and keep only columns that do <em>not</em>
+match what's given in <code>...</code>.</p></td>
     </tr>
     <tr>
       <th>.parse</th>
@@ -173,7 +178,7 @@ clause being set already exists?</p></td>
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>:<span class='no'>cyl</span>)</div><div class='output co'>#&gt; .DT_[, .select_matching(.SD, mpg:cyl)]</div><div class='input'>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>:<span class='no'>cyl</span>)</div><div class='output co'>#&gt; .DT_[, .select_matching(.SD, mpg:cyl, .negate = FALSE)]</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

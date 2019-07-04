@@ -132,7 +132,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>transmute_sd</span>(<span class='no'>.data</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></span>(),
+    <pre class="usage"><span class='fu'>transmute_sd</span>(<span class='no'>.data</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></span>(), <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
   <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
     
@@ -144,16 +144,18 @@
       <td><p>An instance of <a href='ExprBuilder.html'>ExprBuilder</a>.</p></td>
     </tr>
     <tr>
+      <th>.SDcols</th>
+      <td><p>See <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a> and the details here.</p></td>
+    </tr>
+    <tr>
       <th>.how</th>
-      <td><p>The function or function call that will perform the transformation.</p></td>
+      <td><p>The function(s) or function call(s) that will perform the transformation. If many,
+a list should be used, either with <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> or <code>.()</code>. If the list is named, the names will be
+used for the new columns' names.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Possibly more arguments for <code>.how</code>.</p></td>
-    </tr>
-    <tr>
-      <th>.SDcols</th>
-      <td><p>See <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a> and the details here.</p></td>
+      <td><p>Possibly more arguments for <em>all</em> functions/calls in <code>.how</code>.</p></td>
     </tr>
     <tr>
       <th>.parse</th>
@@ -173,11 +175,12 @@ function adds/chains a <code>select</code> expression that will be evaluated by 
 possibly specifying the helper function <code>.transmute_matching</code>, which is assigned to the final
 expression's evaluation environment when calling <code><a href='end_expr.html'>end_expr()</a></code> (i.e., <a href='ExprBuilder.html'>ExprBuilder</a>'s <code>eval</code>
 method).</p>
-<p>Said function includes two pronouns that can be used by <code>.how</code> and <code>.SDcols</code>:</p><ul>
+<p>Said function supports two pronouns that can be used by <code>.how</code> and <code>.SDcols</code>:</p><ul>
 <li><p><code>.COL</code>: the actual values of the column.</p></li>
 <li><p><code>.COLNAME</code>: the name of the column currently being evaluated.</p></li>
 </ul>
-    <p>Unlike a call like <code>DT[, (vars) := expr]</code>, <code>.SDcols</code> can be created dynamically with an
+
+<p>Unlike a call like <code>DT[, (vars) := expr]</code>, <code>.SDcols</code> can be created dynamically with an
 expression that evaluates to something that would be used in place of <code>vars</code> <em>without</em> eagerly
 using the captured <code>data.table</code>. See the examples here or in <a href='table.express-package.html'>table.express-package</a>.</p>
     
@@ -188,14 +191,12 @@ using the captured <code>data.table</code>. See the examples here or in <a href=
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>transmute_sd</span>(<span class='no'>.COL</span> * <span class='fl'>2</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>"^d"</span>, <span class='no'>.COLNAME</span>))</div><div class='output co'>#&gt; .DT_[, .non_null(Map(.transmute_matching, .COL = .SD, .COLNAME = names(.SD), 
-#&gt;     .COLNAMES = list(names(.SD)), .which = rlang::quos(grepl("^d", 
-#&gt;         .COLNAME)), .how = rlang::quos(.COL * 2)))]</div><div class='input'>
+    <span class='fu'>transmute_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>"^d"</span>, <span class='no'>.COLNAME</span>), <span class='no'>.COL</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(grepl("^d", 
+#&gt;     .COLNAME)), .hows = rlang::quos(.COL * 2))]</div><div class='input'>
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>transmute_sd</span>(<span class='no'>.COL</span> * <span class='fl'>2</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='no'>.COL</span>))</div><div class='output co'>#&gt; .DT_[, .non_null(Map(.transmute_matching, .COL = .SD, .COLNAME = names(.SD), 
-#&gt;     .COLNAMES = list(names(.SD)), .which = rlang::quos(is.numeric(.COL)), 
-#&gt;     .how = rlang::quos(.COL * 2)))]</div><div class='input'>
+    <span class='fu'>transmute_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='no'>.COL</span>), <span class='no'>.COL</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(is.numeric(.COL)), 
+#&gt;     .hows = rlang::quos(.COL * 2))]</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

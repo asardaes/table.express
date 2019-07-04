@@ -135,10 +135,12 @@ expressions that can be used within a <a href='https://rdrr.io/pkg/data.table/ma
     </div>
 
         
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Since this package's functionality is based on the <span class="pkg">rlang</span> package, and <span class="pkg">rlang</span> is still
 evolving, breaking changes may be needed in the future.</p>
+<p>This software package was developed independently of any organization or institution that is or
+has been associated with the author.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -146,7 +148,9 @@ evolving, breaking changes may be needed in the future.</p>
 <li><p><a href='https://asardaes.github.io/table.express'>https://asardaes.github.io/table.express</a></p></li>
 <li><p><a href='https://github.com/asardaes/table.express'>https://github.com/asardaes/table.express</a></p></li>
 <li><p>Report bugs at <a href='https://github.com/asardaes/table.express/issues'>https://github.com/asardaes/table.express/issues</a></p></li>
-</ul></div>
+</ul>
+
+</div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -496,7 +500,7 @@ evolving, breaking changes may be needed in the future.</p>
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='filter_sd.html'>filter_sd</a></span>(<span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`|`</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>(<span class='no'>scale_non_integers</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></span>(), <span class='no'>scale_non_integers</span>) <span class='kw'>%&gt;%</span>
     <span class='no'>end_expr</span></div><div class='output co'>#&gt;             mpg cyl        disp  hp        drat          wt        qsec vs am
 #&gt;  1: -0.39184157   6  0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1
 #&gt;  2: -0.39184157   6  0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1
@@ -593,7 +597,7 @@ evolving, breaking changes may be needed in the future.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#details">Details</a></li>
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

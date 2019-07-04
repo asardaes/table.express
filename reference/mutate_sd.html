@@ -132,7 +132,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>mutate_sd</span>(<span class='no'>.data</span>, <span class='no'>.SDcols</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>,
+    <pre class="usage"><span class='fu'>mutate_sd</span>(<span class='no'>.data</span>, <span class='no'>.SDcols</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>, <span class='no'>.prefix</span>, <span class='no'>.suffix</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
   <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
     
@@ -149,11 +149,18 @@
     </tr>
     <tr>
       <th>.how</th>
-      <td><p>The function(s) or function call(s) that will perform the transformation.</p></td>
+      <td><p>The function(s) or function call(s) that will perform the transformation. If many,
+a list should be used, either with <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> or <code>.()</code>. If the list is named, the names will be
+used for the new columns' names.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Possibly more arguments for <em>all</em> functions/calls in <code>.how</code>.</p></td>
+    </tr>
+    <tr>
+      <th>.prefix, .suffix</th>
+      <td><p>Only relevant when <code>.how</code> is a function: add a prefix or suffix to the new
+column's name. If neither is missing, <code>.prefix</code> has preference.</p></td>
     </tr>
     <tr>
       <th>.parse</th>
@@ -176,7 +183,8 @@ reference, like <a href='mutate-table.express.html'>mutate-table.express</a>. It
 <li><p>A predicate using the <code>.COL</code> pronoun that should return a single logical when <code>.COL</code> is
 replaced by a <em>column</em> of the data.</p></li>
 </ul>
-    <p>The caveat is that the expression is evaluated eagerly, i.e. with the currently captured
+
+<p>The caveat is that the expression is evaluated eagerly, i.e. with the currently captured
 <code>data.table</code>. Consider using <code><a href='chain.html'>chain()</a></code> to explicitly capture intermediate results as actual
 <code>data.table</code>s.</p>
 <p>To see more examples, check the

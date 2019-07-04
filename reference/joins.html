@@ -34,7 +34,9 @@
 
 <meta property="og:title" content="Joining verbs — joins" />
 
-<meta property="og:description" content="Two-table joins. Check the &quot;Joining verbs&quot; vignette for more information." />
+<meta property="og:description" content="Two-table joins. Check the
+&quot;Joining verbs&quot; vignette for more
+information." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,7 +130,9 @@
 
     <div class="ref-description">
     
-    <p>Two-table joins. Check the "Joining verbs" vignette for more information.</p>
+    <p>Two-table joins. Check the
+<a href='https://asardaes.github.io/table.express/articles/joins.html'>"Joining verbs" vignette</a> for more
+information.</p>
     
     </div>
 
@@ -221,7 +225,9 @@ The expression in <code>x</code> gets evaluated, merged with <code>y</code>, and
     <h2 class="hasAnchor" id="mutating-join"><a class="anchor" href="#mutating-join"></a>Mutating join</h2>
 
     
-    <p>The <a href='ExprBuilder.html'>ExprBuilder</a> method for <code>mutate_join</code> implements the idiom described in <a href='https://stackoverflow.com/a/54313203/5793905'>this link</a>. The columns specified in <code>.SDcols</code> are
+
+
+<p>The <a href='ExprBuilder.html'>ExprBuilder</a> method for <code>mutate_join</code> implements the idiom described in <a href='https://stackoverflow.com/a/54313203/5793905'>this link</a>. The columns specified in <code>.SDcols</code> are
 those that will be added to <code>x</code> from <code>y</code>. The specification can be done by:</p><ul>
 <li><p>Using <a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a>.</p></li>
 <li><p>Passing a character vector. If the character is named, the names are taken as the new column
@@ -232,7 +238,8 @@ names for the values added to <code>x</code>.</p></li>
 <code>x</code>.</p></li>
 </ul></li>
 </ul>
-    <p>The last case mentioned above is useful when the join returns many rows from <code>y</code> for each row
+
+<p>The last case mentioned above is useful when the join returns many rows from <code>y</code> for each row
 in <code>x</code>, so they can be summarized while joining. The value of <code>by</code> in the join depends on what
 is passed to <code>.by_each</code>:</p><ul>
 <li><p>If <code>NULL</code> (the default), <code>by</code> is set to <code>.EACHI</code> if a call is detected in any of the
@@ -240,6 +247,7 @@ expressions from the list in <code>.SDcols</code></p></li>
 <li><p>If <code>TRUE</code>, <code>by</code> is always set to <code>.EACHI</code></p></li>
 <li><p>If <code>FALSE</code>, <code>by</code> is never set to <code>.EACHI</code></p></li>
 </ul>
+
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

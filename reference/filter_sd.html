@@ -132,7 +132,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>filter_sd</span>(<span class='no'>.data</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.na</span>), <span class='no'>...</span>, <span class='no'>.SDcols</span>, <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`&amp;`</span>,
+    <pre class="usage"><span class='fu'>filter_sd</span>(<span class='no'>.data</span>, <span class='no'>.SDcols</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.na</span>), <span class='no'>...</span>, <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`&amp;`</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
   <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
     
@@ -144,16 +144,16 @@
       <td><p>An instance of <a href='ExprBuilder.html'>ExprBuilder</a>.</p></td>
     </tr>
     <tr>
+      <th>.SDcols</th>
+      <td><p>See <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a> and the details here.</p></td>
+    </tr>
+    <tr>
       <th>.how</th>
-      <td><p>The function or function call that will perform the transformation.</p></td>
+      <td><p>The filtering function or predicate.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Possibly more arguments for <code>.how</code>.</p></td>
-    </tr>
-    <tr>
-      <th>.SDcols</th>
-      <td><p>See <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a> and the details here.</p></td>
     </tr>
     <tr>
       <th>.collapse</th>
@@ -179,7 +179,8 @@ and it supports the <code>.COL</code> pronoun. The <code>.how</code> condition i
 <li><p>A predicate using the <code>.COL</code> pronoun that should return a single logical when <code>.COL</code> is
 replaced by a <em>column</em> of the data.</p></li>
 </ul>
-    <p>The caveat is that the expression is evaluated eagerly, i.e. with the currently captured
+
+<p>The caveat is that the expression is evaluated eagerly, i.e. with the currently captured
 <code>data.table</code>. Consider using <code><a href='chain.html'>chain()</a></code> to explicitly capture intermediate results as actual
 <code>data.table</code>s.</p>
 <p>To see more examples, check the
@@ -193,7 +194,7 @@ replaced by a <em>column</em> of the data.</p></li>
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>filter_sd</span>(<span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>))</div><div class='output co'>#&gt; .DT_[vs == 1 &amp; am == 1]</div><div class='input'>
+    <span class='fu'>filter_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; .DT_[vs == 1 &amp; am == 1]</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

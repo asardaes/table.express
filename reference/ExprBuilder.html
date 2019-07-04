@@ -143,16 +143,20 @@ shouldn't be used directly.</p>
     <h2 class="hasAnchor" id="fields"><a class="anchor" href="#fields"></a>Fields</h2>
 
     
-    <dl class='dl-horizontal'>
+
+<dl class='dl-horizontal'>
 <dt><code>appends</code></dt><dd><p>Extra expressions that go at the end.</p></dd>
-    <dt><code>expr</code></dt><dd><p>The final expression that can be evaluated with <code><a href='https://rdrr.io/r/base/eval.html'>base::eval()</a></code> or
+
+<dt><code>expr</code></dt><dd><p>The final expression that can be evaluated with <code><a href='https://rdrr.io/r/base/eval.html'>base::eval()</a></code> or
 <code><a href='https://rlang.r-lib.org/reference/eval_bare.html'>rlang::eval_bare()</a></code>.</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-    <dl class='dl-horizontal'>
+
+
+<dl class='dl-horizontal'>
 <dt><code>initialize(DT, dt_pronouns = list(), .verbose)</code></dt><dd><p>Constructor that receives a
 <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a> in <code>DT</code>. The <code>dt_pronouns</code> parameter is used internally when
 chaining for joins.</p></dd>
@@ -170,6 +174,7 @@ ellipsis' contents are assigned to the expression's evaluation environment.</p><
 table.</p></dd>
 <dt><code><a href='https://rdrr.io/r/base/print.html'>print(...)</a></code></dt><dd><p>Prints the built <code>expr</code>.</p></dd>
 </dl>
+
     
 
   </div>

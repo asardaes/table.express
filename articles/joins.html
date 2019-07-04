@@ -95,7 +95,7 @@
 
     
     
-<p>Almost all joins between 2 <code>data.table</code>s use a notation where one of them is used as <code>i</code> in a frame applied to the other, and the joining columns are specified with the <code>on</code> parameter. However, in addition to the “basic” joins, <code>data.table</code> allows for special cases like rolling joins, summarizing while joining, non-equi joins, etc. This vignette will describe the notation to apply these joins with verbs defined <code>table.express</code>, which, like the <a href="https://asardaes.github.io/table.express/articles/table.express.html">single-table verbs</a>, build <code>data.table</code> expressions.</p>
+<p>Almost all joins between 2 <code>data.table</code>s use a notation where one of them is used as <code>i</code> in a frame applied to the other, and the joining columns are specified with the <code>on</code> parameter. However, in addition to the “basic” joins, <code>data.table</code> allows for special cases like rolling joins, summarizing while joining, non-equi joins, etc. This vignette will describe the notation to apply these joins with verbs defined in <code>table.express</code>, which, like the <a href="https://asardaes.github.io/table.express/articles/table.express.html">single-table verbs</a>, build <code>data.table</code> expressions.</p>
 <div id="basic-joins" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-joins" class="anchor"></a>Basic joins</h2>
@@ -385,7 +385,7 @@
 #&gt; 6:     Mom 2015-12-02 17:58:00         NA          6
 #&gt; 7:   Sally 2016-01-03 10:06:00         14          7
 #&gt; 8:   Sally 2016-01-03 10:15:00         14          8</code></pre>
-<p>Note, however, that <code>roll</code> stayed equal to <code>Inf</code>. This is because the column order in the expressions changed, but we could understand the rolling expressions as:</p>
+<p>Note, however, that <code>roll</code> stayed equal to <code>Inf</code>. This is because even though the column order in the expressions changed, we could understand the rolling expressions as follows:</p>
 <ul>
 <li>For <code>left_join</code>, the rolling column on the left is <code>purchase_time</code>, so with <code>roll = Inf</code>, the values from <code>session_start_time</code> are rolled forward onto <code>purchase_time</code> to find a match while joining.</li>
 <li>For <code>right_join</code>, the rolling column on the right is <code>purchase_time</code>, so <code>roll</code> must stay as <code>Inf</code> to keep the same semantics.</li>
