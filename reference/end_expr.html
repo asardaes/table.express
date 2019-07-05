@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="End and evaluate expression — end_expr" />
 
-<meta property="og:description" content="Finish the expression building process and evaluate it." />
+<meta property="og:description" content="Finish the expression-building process and evaluate it." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@
 
     <div class="ref-description">
     
-    <p>Finish the expression building process and evaluate it.</p>
+    <p>Finish the expression-building process and evaluate it.</p>
     
     </div>
 
@@ -150,12 +150,12 @@
     </tr>
     <tr>
       <th>.by_ref</th>
-      <td><p>Whether to use <code><a href='https://rdrr.io/pkg/data.table/man/copy.html'>data.table::copy()</a></code> before evaluation.</p></td>
+      <td><p>If <code>FALSE</code>, <code><a href='https://rdrr.io/pkg/data.table/man/copy.html'>data.table::copy()</a></code> is used before evaluation.</p></td>
     </tr>
     <tr>
       <th>.parent_env</th>
       <td><p>Optionally, the <em>enclosing</em> environment of the expression's evaluation
-environment.</p></td>
+environment. Defaults to the caller environment.</p></td>
     </tr>
     </table>
     

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -365,7 +365,7 @@
 <p>Starting with <code>mutate_sd</code>, it modifies columns in <code>.SDcols</code> by reference, and columns that are not part of <code>.SDcols</code> are kept:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/mutate_sd.html">mutate_sd</a></span>(exp, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mpg"</span>, <span class="st">"cyl"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/mutate_sd.html">mutate_sd</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mpg"</span>, <span class="st">"cyl"</span>), exp) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb50-4" data-line-number="4"><span class="st">  </span>end_expr</a>
 <a class="sourceLine" id="cb50-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb50-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(DT)</a></code></pre></div>
@@ -404,13 +404,13 @@
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="co"># like dplyr's mutate_if</span></a>
 <a class="sourceLine" id="cb56-2" data-line-number="2">DT <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb56-3" data-line-number="3"><span class="st">  </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb56-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/mutate_sd.html">mutate_sd</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(.COL), <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/r/base/all.html">all</a></span>(.COL <span class="op">%%</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb56-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/mutate_sd.html">mutate_sd</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/all.html">all</a></span>(.COL <span class="op">%%</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="kw"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(.COL))</a></code></pre></div>
 <pre><code>#&gt; .DT_[, `:=`(c("cyl", "hp", "vs", "am", "gear", "carb"), .mutate_matching(.SD, 
 #&gt;     c("cyl", "hp", "vs", "am", "gear", "carb"), rlang::quos(as.integer(.COL))))]</code></pre>
 <p>On the other hand, <code>transmute_sd</code> never modifies by reference, and supports special expressions to “build” what is chosen as <code>.SDcols</code>. These expressions can use <code>tidyselect</code> helpers, as well as another special pronoun: <code>.COLNAME</code>:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb58-2" data-line-number="2"><span class="st">  </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transmute_sd.html">transmute_sd</a></span>(.COL <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/pkg/tidyselect/man/select_helpers.html">starts_with</a></span>(<span class="st">"d"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transmute_sd.html">transmute_sd</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/tidyselect/man/select_helpers.html">starts_with</a></span>(<span class="st">"d"</span>), .COL <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb58-4" data-line-number="4"><span class="st">  </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;     disp drat
 #&gt;  1:  320 7.80
@@ -420,7 +420,7 @@
 #&gt; 32:  242 8.22</code></pre>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">DT <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb60-2" data-line-number="2"><span class="st">  </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb60-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transmute_sd.html">transmute_sd</a></span>(.COL <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span>(<span class="st">"^d"</span>, .COLNAME)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb60-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transmute_sd.html">transmute_sd</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span>(<span class="st">"^d"</span>, .COLNAME), .COL <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb60-4" data-line-number="4"><span class="st">  </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;     disp drat
 #&gt;  1:  320 7.80
@@ -431,7 +431,7 @@
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co"># like dplyr's transmute_if</span></a>
 <a class="sourceLine" id="cb62-2" data-line-number="2">DT <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb62-3" data-line-number="3"><span class="st">  </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb62-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/transmute_sd.html">transmute_sd</a></span>(.COL <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span>(.COL)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb62-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/transmute_sd.html">transmute_sd</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span>(.COL), .COL <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb62-5" data-line-number="5"><span class="st">  </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;      mpg cyl disp  hp drat   wt  qsec vs am gear carb
 #&gt;  1: 42.0  12  320 220 7.80 5.24 32.92  0  2    8    8
@@ -549,6 +549,7 @@
 <li><code>mutate_sd</code></li>
 <li><code>transmute</code></li>
 <li><code>transmute_sd</code></li>
+<li><code>distinct</code></li>
 </ul>
 </li>
 <li>Verbs for grouping:
@@ -559,6 +560,7 @@
 <li>
 <code>key_by</code> to specify <code>keyby</code>
 </li>
+<li><code>distinct</code></li>
 </ul>
 </li>
 </ul>
@@ -625,7 +627,7 @@
 <a class="sourceLine" id="cb94-2" data-line-number="2"><span class="st">  </span>start_expr <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb94-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mpg<span class="op">:</span>disp) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb94-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span>(<span class="dt">ans =</span> <span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(mpg)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb94-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/filter_sd.html">filter_sd</a></span>(.COL <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/pkg/tidyselect/man/select_helpers.html">contains</a></span>(<span class="st">"m"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb94-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/filter_sd.html">filter_sd</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/tidyselect/man/select_helpers.html">contains</a></span>(<span class="st">"m"</span>), .COL <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</a></code></pre></div>
 <pre><code>#&gt; .DT_[, .select_matching(.SD, mpg:disp, .negate = FALSE)][mpg &gt; 
 #&gt;     0 &amp; am &gt; 0, list(ans = sqrt(mpg))]</code></pre>
 <p>The <code>select</code> gets rid of <code>am</code>, but <code>filter_sd</code> sees the columns of <code>DT</code> before any expression has been evaluated. Explicit chaining can help in these cases, capturing intermediate results:</p>
@@ -634,7 +636,7 @@
 <a class="sourceLine" id="cb96-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mpg<span class="op">:</span>disp) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb96-4" data-line-number="4"><span class="st">  </span>chain <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb96-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span>(<span class="dt">ans =</span> <span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(mpg)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb96-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/filter_sd.html">filter_sd</a></span>(.COL <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">.SDcols =</span> <span class="kw"><a href="https://rdrr.io/pkg/tidyselect/man/select_helpers.html">contains</a></span>(<span class="st">"m"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb96-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/filter_sd.html">filter_sd</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/tidyselect/man/select_helpers.html">contains</a></span>(<span class="st">"m"</span>), .COL <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</a></code></pre></div>
 <pre><code>#&gt; .DT_[mpg &gt; 0, list(ans = sqrt(mpg))]</code></pre>
 </div>
 </div>
@@ -674,7 +676,7 @@
 <pre><code>#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(c("mpg", 
 #&gt;     "disp")), .hows = rlang::quos(mean(x = .COL))), by = list(am, 
 #&gt;     vs), verbose = TRUE]
-#&gt; Finding groups using forderv ... 0.001s elapsed (0.000s cpu) 
+#&gt; Finding groups using forderv ... 0.000s elapsed (0.000s cpu) 
 #&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) 
 #&gt; Getting back original order ... 0.000s elapsed (0.000s cpu) 
 #&gt; lapply optimization is on, j unchanged as '.transmute_matching(.SD, .which = rlang::quo(c("mpg", "disp")), .hows = rlang::quos(mean(x = .COL)))'
@@ -683,8 +685,8 @@
 #&gt; Making each group and running j (GForce FALSE) ... The result of j is a named list. It's very inefficient to create the same names over and over again for each group. When j=list(...), any names are detected, removed and put back after grouping has completed, for efficiency. Using j=transform(), for example, prevents that speedup (consider changing to :=). This message may be upgraded to warning in future.
 #&gt; 
 #&gt;   collecting discontiguous groups took 0.000s for 4 groups
-#&gt;   eval(j) took 0.003s for 4 calls
-#&gt; 0.003s elapsed (0.004s cpu)</code></pre>
+#&gt;   eval(j) took 0.002s for 4 calls
+#&gt; 0.003s elapsed (0.000s cpu)</code></pre>
 <pre><code>#&gt;    am vs      mpg     disp
 #&gt; 1:  1  0 19.75000 206.2167
 #&gt; 2:  1  1 28.37143  89.8000
@@ -716,7 +718,7 @@
 #&gt; Getting back original order ... 0.000s elapsed (0.000s cpu) 
 #&gt; lapply optimization changed j from 'c(min = lapply(.SD, min), max = lapply(.SD, max))' to 'list(min(mpg), min(disp), max(mpg), max(disp))'
 #&gt; GForce optimized j to 'list(gmin(mpg), gmin(disp), gmax(mpg), gmax(disp))'
-#&gt; Making each group and running j (GForce TRUE) ... 0.000s elapsed (0.000s cpu)</code></pre>
+#&gt; Making each group and running j (GForce TRUE) ... 0.001s elapsed (0.000s cpu)</code></pre>
 <pre><code>#&gt;    am vs  mpg  disp  mpg disp
 #&gt; 1:  1  0 15.0 120.3 26.0  351
 #&gt; 2:  1  1 21.4  71.1 33.9  121

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -329,7 +329,8 @@
 <div id="rolling-joins" class="section level2">
 <h2 class="hasAnchor">
 <a href="#rolling-joins" class="anchor"></a>Rolling joins</h2>
-<p>A nice blog post describing rolling joins can be found at <a href="https://www.r-bloggers.com/understanding-data-table-rolling-joins/">R-bloggers</a>, so almost the same <code>website</code> and <code>paypal</code> tables will be used for the examples below.</p>
+<p>A nice blog post describing rolling joins can be found at <a href="https://www.r-bloggers.com/understanding-data-table-rolling-joins/">R-bloggers</a>, so almost the same <code>website</code> and <code>paypal</code> tables will be used for the examples below. Another short description with animated depictions can also be found <a href="https://www.gormanalysis.com/blog/r-data-table-rolling-joins/">here</a>.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(website)</a></code></pre></div>
 <pre><code>#&gt;        name  session_start_time session_id
 #&gt;  1:   Erica 2016-01-04 19:12:00          1
 #&gt;  2:   Erica 2016-01-04 21:05:00          2
@@ -347,6 +348,7 @@
 #&gt; 14:   Sally 2016-01-03 10:00:00         14
 #&gt; 15:  Vivian 2016-01-01 09:10:00         15
 #&gt; 16:  Vivian 2016-01-09 02:15:00         16</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(paypal)</a></code></pre></div>
 <pre><code>#&gt;       name       purchase_time payment_id
 #&gt; 1:   Erica 2016-01-03 08:02:00          1
 #&gt; 2: Francis 2016-01-03 19:28:00          2
@@ -358,10 +360,10 @@
 #&gt; 8:   Sally 2016-01-03 10:15:00          8</code></pre>
 <p>In contrast to the blog post, no <code>join_time</code> is added to the tables. This is done on purpose in order to show what happens with the columns that are rolled.</p>
 <p>Let’s use a left rolling join to obtain the <code>session_id</code> that immediately preceded a purchase, if any:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">paypal <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(website, name, <span class="dt">purchase_time =</span> session_start_time, <span class="dt">roll =</span> <span class="ot">Inf</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">paypal <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(website, name, <span class="dt">purchase_time =</span> session_start_time, <span class="dt">roll =</span> <span class="ot">Inf</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;       name  session_start_time session_id payment_id
 #&gt; 1:   Erica 2016-01-03 08:02:00         NA          1
 #&gt; 2: Francis 2016-01-03 19:28:00          4          2
@@ -371,11 +373,12 @@
 #&gt; 6:     Mom 2015-12-02 17:58:00         NA          6
 #&gt; 7:   Sally 2016-01-03 10:06:00         14          7
 #&gt; 8:   Sally 2016-01-03 10:15:00         14          8</code></pre>
-<p>We can see that the rows returned are from the left-hand side (<code>paypal</code>), and since neither Mom nor Erica visited the website before their purchases, their <code>session_id</code> ended as <code>NA</code>. Moreover, the order of the columns in the <code>on</code> expressions is the same as <a href="#basic-joins">above</a>. The tricky part is that the rolled column ended up with the name from the right-hand side, but keeping the values from the left-hand side. If we “invert” the join, the result is the same, but the rolled column’s name is now from the expression’s left-hand side.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">right_join</a></span>(paypal, name, <span class="dt">session_start_time =</span> purchase_time, <span class="dt">roll =</span> <span class="ot">Inf</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<p>We can see that the rows returned are from the left-hand side (<code>paypal</code>), and since neither Mom nor Erica visited the website before their purchases, their <code>session_id</code> ended as <code>NA</code>.</p>
+<p>The order of the columns in the <code>on</code> expressions is the same as <a href="#basic-joins">above</a>. The tricky part is that the rolled column ended up with the name from the right-hand side, but keeping the values from the left-hand side. If we “invert” the join, the result is the same, but the rolled column’s name is now from the expression’s left-hand side.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">right_join</a></span>(paypal, name, <span class="dt">session_start_time =</span> purchase_time, <span class="dt">roll =</span> <span class="ot">Inf</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;       name  session_start_time session_id payment_id
 #&gt; 1:   Erica 2016-01-03 08:02:00         NA          1
 #&gt; 2: Francis 2016-01-03 19:28:00          4          2
@@ -391,10 +394,10 @@
 <li>For <code>right_join</code>, the rolling column on the right is <code>purchase_time</code>, so <code>roll</code> must stay as <code>Inf</code> to keep the same semantics.</li>
 </ul>
 <p>Now let’s say we want to keep all the rows from <code>website</code> and find the closest <code>payment_id</code> that occurred <em>after</em> the visit. This could be expressed as:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(paypal, name, <span class="dt">session_start_time =</span> purchase_time, <span class="dt">roll =</span> <span class="op">-</span><span class="ot">Inf</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(paypal, name, <span class="dt">session_start_time =</span> purchase_time, <span class="dt">roll =</span> <span class="op">-</span><span class="ot">Inf</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;        name       purchase_time payment_id session_id
 #&gt;  1:   Erica 2016-01-04 19:12:00         NA          1
 #&gt;  2:   Erica 2016-01-04 21:05:00         NA          2
@@ -417,10 +420,10 @@
 <li>When <code>rollends = TRUE</code>, the value of <code>roll</code> is inverted <em>only</em> for those rows that would have no match otherwise.</li>
 <li>When <code>rollends = FALSE</code>, a matching roll will only occur if the column’s value falls in a gap with values both before <em>and</em> after.</li>
 </ul>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(paypal, name, <span class="dt">session_start_time =</span> purchase_time, <span class="dt">roll =</span> <span class="op">-</span><span class="ot">Inf</span>, <span class="dt">rollends =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(paypal, name, <span class="dt">session_start_time =</span> purchase_time, <span class="dt">roll =</span> <span class="op">-</span><span class="ot">Inf</span>, <span class="dt">rollends =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;        name       purchase_time payment_id session_id
 #&gt;  1:   Erica 2016-01-04 19:12:00          1          1
 #&gt;  2:   Erica 2016-01-04 21:05:00          1          2
@@ -438,10 +441,10 @@
 #&gt; 14:   Sally 2016-01-03 10:00:00          7         14
 #&gt; 15:  Vivian 2016-01-01 09:10:00         NA         15
 #&gt; 16:  Vivian 2016-01-09 02:15:00         NA         16</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(paypal, name, <span class="dt">session_start_time =</span> purchase_time, <span class="dt">roll =</span> <span class="op">-</span><span class="ot">Inf</span>, <span class="dt">rollends =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(paypal, name, <span class="dt">session_start_time =</span> purchase_time, <span class="dt">roll =</span> <span class="op">-</span><span class="ot">Inf</span>, <span class="dt">rollends =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;        name       purchase_time payment_id session_id
 #&gt;  1:   Erica 2016-01-04 19:12:00         NA          1
 #&gt;  2:   Erica 2016-01-04 21:05:00         NA          2
@@ -466,10 +469,10 @@
 <a href="#non-equi-joins" class="anchor"></a>Non-equi joins</h2>
 <p>Non-equi joins are similar to rolling joins, but instead of rolling a single row’s value, they can return several values per row.</p>
 <p>Using the same data as before, we could find <em>all</em> the <code>session_id</code>s that preceded a <code>payment_id</code>, giving “priority” to <code>paypal</code>’s rows:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">paypal <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(website, name, purchase_time <span class="op">&gt;=</span><span class="st"> </span>session_start_time) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb46-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">paypal <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(website, name, purchase_time <span class="op">&gt;=</span><span class="st"> </span>session_start_time) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;        name  session_start_time session_id payment_id
 #&gt;  1:   Erica 2016-01-03 08:02:00         NA          1
 #&gt;  2: Francis 2016-01-03 19:28:00          3          2
@@ -493,10 +496,10 @@
 #&gt; 20:   Sally 2016-01-03 10:15:00         14          8</code></pre>
 <p>Priority above simply means that all rows from <code>paypal</code> are returned, even if they don’t have a match in <code>website</code>. Even though a column <code>session_start_time</code> appears in the result, the values contained therein are from <code>paypal</code>’s <code>purchase_time</code>.</p>
 <p>A corresponding right non-equi join would yield the same result, expecting only a different order in the columns that are part of the comparisons:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb48-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">right_join</a></span>(paypal, name, session_start_time <span class="op">&lt;=</span><span class="st"> </span>purchase_time) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb48-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">right_join</a></span>(paypal, name, session_start_time <span class="op">&lt;=</span><span class="st"> </span>purchase_time) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="st">    </span>end_expr</a></code></pre></div>
 <pre><code>#&gt;        name  session_start_time session_id payment_id
 #&gt;  1:   Erica 2016-01-03 08:02:00         NA          1
 #&gt;  2: Francis 2016-01-03 19:28:00          3          2
@@ -529,16 +532,16 @@
 <li><code>mutate_join</code></li>
 </ul>
 <p>As a somewhat contrived example, we could add a rolling count of weekly visits per user to the <code>website</code> data introduced <a href="#rolling-joins">above</a>:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">window_start =</span> session_start_time <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/difftime.html">as.difftime</a></span>(<span class="dv">7</span>, <span class="dt">units =</span> <span class="st">"days"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/joins.html">mutate_join</a></span>(, name, window_start <span class="op">&lt;=</span><span class="st"> </span>session_start_time, session_start_time <span class="op">&gt;=</span><span class="st"> </span>session_start_time,</a>
-<a class="sourceLine" id="cb50-5" data-line-number="5">                <span class="dt">.SDcols =</span> .(<span class="dt">weekly_visits =</span> .N),</a>
-<a class="sourceLine" id="cb50-6" data-line-number="6">                <span class="dt">.by_each =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">window_start =</span> <span class="ot">NULL</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-8" data-line-number="8"><span class="st">    </span>end_expr</a>
-<a class="sourceLine" id="cb50-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb50-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(website)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">website <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="st">    </span>start_expr <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">window_start =</span> session_start_time <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/difftime.html">as.difftime</a></span>(<span class="dv">7</span>, <span class="dt">units =</span> <span class="st">"days"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb52-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/joins.html">mutate_join</a></span>(, name, window_start <span class="op">&lt;=</span><span class="st"> </span>session_start_time, session_start_time <span class="op">&gt;=</span><span class="st"> </span>session_start_time,</a>
+<a class="sourceLine" id="cb52-5" data-line-number="5">                <span class="dt">.SDcols =</span> .(<span class="dt">weekly_visits =</span> .N),</a>
+<a class="sourceLine" id="cb52-6" data-line-number="6">                <span class="dt">.by_each =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb52-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">window_start =</span> <span class="ot">NULL</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb52-8" data-line-number="8"><span class="st">    </span>end_expr</a>
+<a class="sourceLine" id="cb52-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb52-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(website)</a></code></pre></div>
 <pre><code>#&gt;        name  session_start_time session_id weekly_visits
 #&gt;  1:   Erica 2016-01-04 19:12:00          1             1
 #&gt;  2:   Erica 2016-01-04 21:05:00          2             2
