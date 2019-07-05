@@ -10,10 +10,7 @@
 #' @param x An [ExprBuilder] instance.
 #' @param y A [data.table::data.table-class].
 #' @param ... Expressions for the `on` part of the join.
-#' @param nomatch See [data.table::data.table].
-#' @param mult See [data.table::data.table].
-#' @param roll See [data.table::data.table].
-#' @param rollends See [data.table::data.table].
+#' @param nomatch,mult,roll,rollends See [data.table::data.table].
 #' @param .parent_env See [end_expr()].
 #' @param .SDcols For `mutate_join`. See the details below.
 #' @param sort Passed to [data.table::merge].

@@ -46,13 +46,7 @@ mutate_join(x, y, ...)
 
 \item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}.}
 
-\item{nomatch}{See \link[data.table:data.table]{data.table::data.table}.}
-
-\item{mult}{See \link[data.table:data.table]{data.table::data.table}.}
-
-\item{roll}{See \link[data.table:data.table]{data.table::data.table}.}
-
-\item{rollends}{See \link[data.table:data.table]{data.table::data.table}.}
+\item{nomatch, mult, roll, rollends}{See \link[data.table:data.table]{data.table::data.table}.}
 
 \item{.SDcols}{For \code{mutate_join}. See the details below.}
 

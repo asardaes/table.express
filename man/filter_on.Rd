@@ -13,9 +13,7 @@ filter_on(.data, ..., nomatch = getOption("datatable.nomatch"),
 
 \item{...}{Key-value pairs, see details.}
 
-\item{nomatch}{See \link[data.table:data.table]{data.table::data.table}.}
-
-\item{mult}{See \link[data.table:data.table]{data.table::data.table}.}
+\item{nomatch, mult}{See \link[data.table:data.table]{data.table::data.table}.}
 
 \item{.negate}{Whether to negate the expression and search only for rows that don't contain the
 given values.}

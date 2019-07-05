@@ -1,7 +1,8 @@
 #' Building 'data.table' expressions with data manipulation verbs
 #'
-#' A specialization of [dplyr::dplyr-package] verbs, as well as a set of custom ones, that build
-#' expressions that can be used within a [data.table::data.table-package]'s frame.
+#' A specialization of [`dplyr`][dplyr::dplyr-package] verbs, as well as a set of custom ones, that
+#' build expressions that can be used within a [`data.table`][data.table::data.table-package]'s
+#' frame.
 #'
 #' @author Alexis Sarda-Espinosa
 #'

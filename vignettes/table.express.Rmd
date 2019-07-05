@@ -289,7 +289,7 @@ and columns that are not part of `.SDcols` are kept:
 ```{r mutate-sd}
 DT %>%
   start_expr %>%
-  mutate_sd(exp, .SDcols = c("mpg", "cyl")) %>%
+  mutate_sd(c("mpg", "cyl"), exp) %>%
   end_expr
 
 print(DT)
@@ -319,7 +319,7 @@ print(DT)
 # like dplyr's mutate_if
 DT %>%
   start_expr %>%
-  mutate_sd(as.integer(.COL), .SDcols = all(.COL %% 1 == 0))
+  mutate_sd(all(.COL %% 1 == 0), as.integer(.COL))
 ```
 
 On the other hand, `transmute_sd` never modifies by reference,
@@ -330,18 +330,18 @@ as well as another special pronoun: `.COLNAME`:
 ```{r transmute-sd}
 DT %>%
   start_expr %>%
-  transmute_sd(.COL * 2, .SDcols = starts_with("d")) %>%
+  transmute_sd(starts_with("d"), .COL * 2) %>%
   end_expr
 
 DT %>%
   start_expr %>%
-  transmute_sd(.COL * 2, .SDcols = grepl("^d", .COLNAME)) %>%
+  transmute_sd(grepl("^d", .COLNAME), .COL * 2) %>%
   end_expr
 
 # like dplyr's transmute_if
 DT %>%
   start_expr %>%
-  transmute_sd(.COL * 2, .SDcols = is.numeric(.COL)) %>%
+  transmute_sd(is.numeric(.COL), .COL * 2) %>%
   end_expr
 ```
 
@@ -443,9 +443,11 @@ which would lead to a warning being shown whenever a part of the query is replac
   - `mutate_sd`
   - `transmute`
   - `transmute_sd`
+  - `distinct`
 - Verbs for grouping:
   - `group_by` to specify `by`
   - `key_by` to specify `keyby`
+  - `distinct`
 
 ## Explicit chaining
 
@@ -506,7 +508,7 @@ DT %>%
   start_expr %>%
   select(mpg:disp) %>%
   transmute(ans = sqrt(mpg)) %>%
-  filter_sd(.COL > 0, .SDcols = contains("m"))
+  filter_sd(contains("m"), .COL > 0)
 ```
 
 The `select` gets rid of `am`,
@@ -520,7 +522,7 @@ DT %>%
   select(mpg:disp) %>%
   chain %>%
   transmute(ans = sqrt(mpg)) %>%
-  filter_sd(.COL > 0, .SDcols = contains("m"))
+  filter_sd(contains("m"), .COL > 0)
 ```
 
 ## As simple as possible

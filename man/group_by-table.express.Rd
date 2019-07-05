@@ -3,7 +3,7 @@
 \name{group_by-table.express}
 \alias{group_by-table.express}
 \alias{group_by.ExprBuilder}
-\title{Group by clause}
+\title{Grouping clauses}
 \usage{
 \method{group_by}{ExprBuilder}(.data, ...,
   .parse = getOption("table.express.parse", FALSE),
@@ -20,7 +20,7 @@
 clause being set already exists?}
 }
 \description{
-Aggregations for a \link[data.table:data.table-class]{data.table::data.table}.
+Grouping by columns of a \link[data.table:data.table]{data.table::data.table}.
 }
 \details{
 Everything in \code{...} will be wrapped in a call to \code{list}.

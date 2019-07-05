@@ -6,8 +6,9 @@
 \alias{table.express-package}
 \title{Building 'data.table' expressions with data manipulation verbs}
 \description{
-A specialization of \link[dplyr:dplyr-package]{dplyr::dplyr-package} verbs, as well as a set of custom ones, that build
-expressions that can be used within a \link[data.table:data.table-package]{data.table::data.table-package}'s frame.
+A specialization of \code{\link[dplyr:dplyr-package]{dplyr}} verbs, as well as a set of custom ones, that
+build expressions that can be used within a \code{\link[data.table:data.table-package]{data.table}}'s
+frame.
 }
 \note{
 Since this package's functionality is based on the \pkg{rlang} package, and \pkg{rlang} is still

@@ -14,13 +14,13 @@ end_expr(.data, ...)
 
 \item{...}{Arguments for the specific methods.}
 
-\item{.by_ref}{Whether to use \code{\link[data.table:copy]{data.table::copy()}} before evaluation.}
+\item{.by_ref}{If \code{FALSE}, \code{\link[data.table:copy]{data.table::copy()}} is used before evaluation.}
 
 \item{.parent_env}{Optionally, the \emph{enclosing} environment of the expression's evaluation
-environment.}
+environment. Defaults to the caller environment.}
 }
 \description{
-Finish the expression building process and evaluate it.
+Finish the expression-building process and evaluate it.
 }
 \details{
 The \link{ExprBuilder} method returns a \link[data.table:data.table-class]{data.table::data.table}.

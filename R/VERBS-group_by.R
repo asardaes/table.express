@@ -3,9 +3,9 @@
 #'
 dplyr::group_by
 
-#' Group by clause
+#' Grouping clauses
 #'
-#' Aggregations for a [data.table::data.table-class].
+#' Grouping by columns of a [data.table::data.table].
 #'
 #' @rdname group_by-table.express
 #' @name group_by-table.express

@@ -8,8 +8,7 @@
 #'
 #' @template data-arg
 #' @param ... Key-value pairs, see details.
-#' @param nomatch See [data.table::data.table].
-#' @param mult See [data.table::data.table].
+#' @param nomatch,mult See [data.table::data.table].
 #' @param .negate Whether to negate the expression and search only for rows that don't contain the
 #'   given values.
 #' @template chain-arg
