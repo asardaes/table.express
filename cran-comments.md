@@ -1,6 +1,6 @@
 
-## Update to version 0.1.1.9000
-Added joining verbs for two tables and fixed minor bugs.
+## Update to version 0.2.0
+Added joining verbs for two tables, improved consistency with dplyr, and fixed minor bugs.
 
 ## Test environments
 * Local GNU/Linux, R release

@@ -1,4 +1,4 @@
-# table.express 0.1.1.9000
+# table.express 0.2.0
 
 - Added joining verbs and a corresponding vignette describing them (#1).
 - Added the `distinct` verb.
