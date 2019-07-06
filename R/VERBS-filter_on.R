@@ -7,7 +7,8 @@
 #' @importFrom rlang expr
 #'
 #' @template data-arg
-#' @param ... Key-value pairs, see details.
+#' @param ... Key-value pairs, maybe with empty keys if the `data.table` already has them. See
+#'   details.
 #' @param nomatch,mult See [data.table::data.table].
 #' @param .negate Whether to negate the expression and search only for rows that don't contain the
 #'   given values.
@@ -17,10 +18,9 @@
 #'
 #' The key-value pairs in '...' are processed as follows:
 #'
-#' - The names are used as `on` in the `data.table` frame.
+#' - The names are used as `on` in the `data.table` frame. If any name is empty, `on` is left
+#'   missing.
 #' - The values are packed in a list and used as `i` in the `data.table` frame.
-#'
-#' Thus, all pairs **must** be named.
 #'
 #' @template docu-examples
 #'
@@ -39,18 +39,16 @@ filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult
     keys <- names(key_value)
     values <- unname(key_value)
 
-    if (any(is.null(keys)) || any(!nzchar(keys))) {
-        rlang::abort("All arguments in '...' must be named.")
-    }
-
     clause <- rlang::expr(list(!!!values))
     if (.negate) {
         clause <- rlang::expr(`!`(`!!`(clause)))
     }
 
-    ans <- .data$set_where(clause, .chain) %>%
-        frame_append(on = !!keys, .parse = FALSE)
+    ans <- .data$set_where(clause, .chain)
 
+    if (all(nzchar(keys))) {
+        frame_append(ans, on = !!keys, .parse = FALSE)
+    }
     if (!missing(nomatch)) {
         frame_append(ans, nomatch = !!nomatch, .parse = FALSE)
     }

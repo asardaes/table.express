@@ -11,7 +11,8 @@ filter_on(.data, ..., nomatch = getOption("datatable.nomatch"),
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{...}{Key-value pairs, see details.}
+\item{...}{Key-value pairs, maybe with empty keys if the \code{data.table} already has them. See
+details.}
 
 \item{nomatch, mult}{See \link[data.table:data.table]{data.table::data.table}.}
 
@@ -27,11 +28,10 @@ Helper to filter specifying the \code{on} part of the \link[data.table:data.tabl
 \details{
 The key-value pairs in '...' are processed as follows:
 \itemize{
-\item The names are used as \code{on} in the \code{data.table} frame.
+\item The names are used as \code{on} in the \code{data.table} frame. If any name is empty, \code{on} is left
+missing.
 \item The values are packed in a list and used as \code{i} in the \code{data.table} frame.
 }
-
-Thus, all pairs \strong{must} be named.
 
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
