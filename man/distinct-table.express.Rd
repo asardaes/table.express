@@ -5,13 +5,19 @@
 \alias{distinct.ExprBuilder}
 \title{Rows with distinct combinations of columns}
 \usage{
-\method{distinct}{ExprBuilder}(.data, ...,
-  .parse = getOption("table.express.parse", FALSE))
+\method{distinct}{ExprBuilder}(.data, ..., .keep_all = TRUE,
+  .keep_old = FALSE, .parse = getOption("table.express.parse", FALSE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
-\item{...}{Which columns to check for uniqueness.}
+\item{...}{Which columns to use to determine uniqueness.}
+
+\item{.keep_all}{Whether to also keep columns that are not mentioned in \code{...}.}
+
+\item{.keep_old}{This should be changed to \code{TRUE} if a new column is created in \code{...} and the
+columns used to create it should also be kept. Has no effect if \code{.keep_all} is \code{FALSE}. See
+examples.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 }
@@ -22,4 +28,13 @@ Rows with distinct combinations of columns
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
+}
+\examples{
+
+data("mtcars")
+data.table::as.data.table(mtcars) \%>\%
+    start_expr \%>\%
+    distinct(amvs = am + vs, .keep_old = TRUE) \%>\%
+    end_expr
+
 }

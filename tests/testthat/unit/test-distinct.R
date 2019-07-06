@@ -1,8 +1,19 @@
 context("  Distinct")
 
-test_that("Distinct works.", {
+test_that("Basic distinct keeping all columns works.", {
     expected <- DT[, .SD[1L], by = .(vs, am)]
-
     ans <- DT %>% start_expr %>% distinct(vs, am) %>% end_expr
+    expect_identical(ans, expected)
+})
+
+test_that("Distinct keeping only used columns works.", {
+    expected <- DT[, unique(.SD), .SDcols = c("vs", "am")]
+    ans <- DT %>% start_expr %>% distinct(vs, am, .keep_all = FALSE) %>% end_expr
+    expect_identical(ans, expected)
+})
+
+test_that("Distinct creating columns works.", {
+    expected <- DT[, .SD[1L], by = .(amvs = vs + am), .SDcols = names(DT)]
+    ans <- DT %>% start_expr %>% distinct(amvs = vs + am, .keep_old = TRUE) %>% end_expr
     expect_identical(ans, expected)
 })

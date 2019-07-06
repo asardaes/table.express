@@ -1,3 +1,7 @@
+# table.express 0.2.0.9000
+
+- `distinct` gained `.keep_all` and `.keep_old` parameters.
+
 # table.express 0.2.0
 
 - Added joining verbs and a corresponding vignette describing them (#1).
