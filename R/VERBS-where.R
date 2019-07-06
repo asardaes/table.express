@@ -15,7 +15,6 @@ where <- function(.data, ...) {
 
 #' @rdname where-table.express
 #' @export
-#' @importFrom rlang enexprs
 #' @importFrom rlang enquo
 #' @importFrom rlang quo_get_expr
 #'
@@ -37,13 +36,13 @@ where.ExprBuilder <- function(.data, ..., .collapse = `&`,
                               .parse = getOption("table.express.parse", FALSE),
                               .chain = getOption("table.express.chain", TRUE))
 {
-    clause <- rlang::enexprs(...)
+    clause <- parse_dots(.parse, ...)
 
     if (length(clause) == 0L) {
         return(.data)
     }
 
-    first_where <- to_expr(clause[[1L]], .parse = .parse)
+    first_where <- clause[[1L]]
 
     if (length(clause) == 1L) {
         clause <- first_where

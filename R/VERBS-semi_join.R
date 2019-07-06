@@ -8,7 +8,6 @@ dplyr::semi_join
 #' @export
 #' @importFrom data.table setnames
 #' @importFrom rlang as_string
-#' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang sym
@@ -26,7 +25,7 @@ dplyr::semi_join
 #'     end_expr
 #'
 semi_join.ExprBuilder <- function(x, y, ..., .parent_env) {
-    on <- rlang::enexprs(...)
+    on <- parse_dots(TRUE, ...)
     on <- name_switcheroo(on)
     on_char <- sapply(unname(on), rlang::as_string)
 

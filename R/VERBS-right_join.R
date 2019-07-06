@@ -7,7 +7,6 @@ dplyr::right_join
 #' @rdname joins
 #' @export
 #' @importFrom rlang enexpr
-#' @importFrom rlang enexprs
 #' @importFrom rlang maybe_missing
 #'
 #' @examples
@@ -20,7 +19,7 @@ dplyr::right_join
 #'
 right_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
     y <- rlang::enexpr(y)
-    on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)
+    on <- parse_dots(TRUE, ...)
 
     join_extras <- list(
         nomatch = rlang::maybe_missing(nomatch),

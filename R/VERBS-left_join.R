@@ -6,7 +6,6 @@ dplyr::left_join
 #' @include VERBS-joins.R
 #' @rdname joins
 #' @export
-#' @importFrom rlang enexprs
 #' @importFrom rlang maybe_missing
 #'
 #' @examples
@@ -24,7 +23,7 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .par
 
     x <- x$chain("pronoun", y)
 
-    on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)
+    on <- parse_dots(TRUE, ...)
     on <- name_comp_switcheroo(on)
 
     join_extras <- list(

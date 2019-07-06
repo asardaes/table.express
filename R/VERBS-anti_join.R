@@ -7,7 +7,6 @@ dplyr::anti_join
 #' @rdname joins
 #' @export
 #' @importFrom rlang enexpr
-#' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #'
 #' @examples
@@ -19,7 +18,7 @@ dplyr::anti_join
 #'
 anti_join.ExprBuilder <- function(x, y, ...) {
     y <- rlang::expr(`!`(`!!`(rlang::enexpr(y))))
-    on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)
+    on <- parse_dots(TRUE, ...)
 
     x <- x$set_where(y, TRUE)
 

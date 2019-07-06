@@ -12,7 +12,6 @@ mutate_join <- function(x, y, ...) {
 #' @importFrom rlang as_string
 #' @importFrom rlang call_args
 #' @importFrom rlang enexpr
-#' @importFrom rlang enexprs
 #' @importFrom rlang enquo
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
@@ -72,7 +71,7 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends,
         dt <- rlang::enexpr(y)
     }
 
-    on <- lapply(rlang::enexprs(...), to_expr, .parse = TRUE)
+    on <- parse_dots(TRUE, ...)
     on <- name_comp_switcheroo(on)
 
     sd_expr <- rlang::enexpr(.SDcols)
