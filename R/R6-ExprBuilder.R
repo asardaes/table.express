@@ -180,9 +180,7 @@ ExprBuilder <- R6::R6Class(
                 print(final_expr)
             } # nocov end
 
-            final_expr <- rlang::expr(base::evalq(!!final_expr, .expr_env))
-
-            base::eval(final_expr)
+            rlang::eval_tidy(final_expr, env = .expr_env)
         },
 
         tidy_select = function(select_expr) {
