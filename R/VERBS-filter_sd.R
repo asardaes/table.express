@@ -10,6 +10,7 @@
 #' @importFrom rlang enexpr
 #' @importFrom rlang enquo
 #' @importFrom rlang expr
+#' @importFrom rlang maybe_missing
 #' @importFrom rlang syms
 #' @importFrom rlang zap
 #'
@@ -17,6 +18,7 @@
 #' @param .SDcols See [data.table::data.table] and the details here.
 #' @param .how The filtering function or predicate.
 #' @param ... Possibly more arguments for `.how`.
+#' @param which Passed to [data.table::data.table].
 #' @param .collapse See [where-table.express].
 #' @template parse-arg
 #' @template chain-arg
@@ -37,7 +39,7 @@
 #'     start_expr %>%
 #'     filter_sd(c("vs", "am"), .COL == 1)
 #'
-filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ..., .collapse = `&`,
+filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collapse = `&`,
                       .parse = getOption("table.express.parse", FALSE),
                       .chain = getOption("table.express.chain", TRUE))
 {
@@ -58,7 +60,8 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ..., .collapse = `&`
 
     clauses <- Map(substitue_col_pronoun, list(.how), rlang::syms(.SDcols))
 
-    where(.data, !!!clauses, .collapse = !!rlang::enexpr(.collapse), .parse = FALSE, .chain = .chain)
+    where(.data, !!!clauses, which = rlang::maybe_missing(which), .collapse = !!rlang::enexpr(.collapse),
+          .parse = FALSE, .chain = .chain)
 }
 
 #' @importFrom rlang as_label

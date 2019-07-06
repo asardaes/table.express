@@ -8,7 +8,7 @@
 \usage{
 where(.data, ...)
 
-\method{where}{ExprBuilder}(.data, ..., .collapse = `&`,
+\method{where}{ExprBuilder}(.data, ..., which = FALSE, .collapse = `&`,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }
@@ -16,6 +16,8 @@ where(.data, ...)
 \item{.data}{The input data.}
 
 \item{...}{Arguments for the specific methods.}
+
+\item{which}{Passed to \link[data.table:data.table]{data.table::data.table}.}
 
 \item{.collapse}{A boolean function which will be used to "concatenate" all conditions in \code{...}.}
 

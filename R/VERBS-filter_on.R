@@ -3,13 +3,12 @@
 #' Helper to filter specifying the `on` part of the [data.table::data.table] query.
 #'
 #' @export
-#' @importFrom rlang abort
 #' @importFrom rlang expr
 #'
 #' @template data-arg
 #' @param ... Key-value pairs, maybe with empty keys if the `data.table` already has them. See
 #'   details.
-#' @param nomatch,mult See [data.table::data.table].
+#' @param which,nomatch,mult See [data.table::data.table].
 #' @param .negate Whether to negate the expression and search only for rows that don't contain the
 #'   given values.
 #' @template chain-arg
@@ -32,8 +31,8 @@
 #'     start_expr %>%
 #'     filter_on(cyl = 4, gear = 5)
 #'
-filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult = "all", .negate = FALSE,
-                      .chain = getOption("table.express.chain", TRUE))
+filter_on <- function(.data, ..., which = FALSE, nomatch = getOption("datatable.nomatch"), mult = "all",
+                      .negate = FALSE, .chain = getOption("table.express.chain", TRUE))
 {
     key_value <- parse_dots(FALSE, ...)
     keys <- names(key_value)
@@ -48,6 +47,9 @@ filter_on <- function(.data, ..., nomatch = getOption("datatable.nomatch"), mult
 
     if (all(nzchar(keys))) {
         frame_append(ans, on = !!keys, .parse = FALSE)
+    }
+    if (!missing(which)) {
+        frame_append(ans, which = !!which, .parse = FALSE)
     }
     if (!missing(nomatch)) {
         frame_append(ans, nomatch = !!nomatch, .parse = FALSE)

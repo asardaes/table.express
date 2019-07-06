@@ -4,9 +4,9 @@
 \alias{filter_on}
 \title{Filter with secondary indices}
 \usage{
-filter_on(.data, ..., nomatch = getOption("datatable.nomatch"),
-  mult = "all", .negate = FALSE,
-  .chain = getOption("table.express.chain", TRUE))
+filter_on(.data, ..., which = FALSE,
+  nomatch = getOption("datatable.nomatch"), mult = "all",
+  .negate = FALSE, .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -14,7 +14,7 @@ filter_on(.data, ..., nomatch = getOption("datatable.nomatch"),
 \item{...}{Key-value pairs, maybe with empty keys if the \code{data.table} already has them. See
 details.}
 
-\item{nomatch, mult}{See \link[data.table:data.table]{data.table::data.table}.}
+\item{which, nomatch, mult}{See \link[data.table:data.table]{data.table::data.table}.}
 
 \item{.negate}{Whether to negate the expression and search only for rows that don't contain the
 given values.}

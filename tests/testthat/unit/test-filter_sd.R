@@ -55,3 +55,9 @@ test_that("Filtering SD with :-calls works.", {
     ans <- DT %>% start_expr %>% filter_sd(vs:9, .COL == 1) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Filtering SD when which = TRUE works.", {
+    expected <- DT[vs == 1 & am == 1, which = TRUE]
+    ans <- DT %>% start_expr %>% filter_sd(vs:am, .COL == 1, which = TRUE) %>% end_expr
+    expect_identical(ans, expected)
+})

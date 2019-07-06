@@ -4,8 +4,8 @@
 \alias{filter_sd}
 \title{Filter subset of data}
 \usage{
-filter_sd(.data, .SDcols, .how = Negate(is.na), ..., .collapse = `&`,
-  .parse = getOption("table.express.parse", FALSE),
+filter_sd(.data, .SDcols, .how = Negate(is.na), ..., which = FALSE,
+  .collapse = `&`, .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }
 \arguments{
@@ -16,6 +16,8 @@ filter_sd(.data, .SDcols, .how = Negate(is.na), ..., .collapse = `&`,
 \item{.how}{The filtering function or predicate.}
 
 \item{...}{Possibly more arguments for \code{.how}.}
+
+\item{which}{Passed to \link[data.table:data.table]{data.table::data.table}.}
 
 \item{.collapse}{See \link{where-table.express}.}
 

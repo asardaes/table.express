@@ -139,3 +139,9 @@ test_that("The filter verb works with several values per key for primary keys.",
 
     expect_identical(ans, expected)
 })
+
+test_that("Filtering when passing which = TRUE works.", {
+    expected <- DT[cyl == 6 & mpg > 20, which = TRUE]
+    ans <- DT %>% start_expr %>% filter(cyl == 6, mpg > 20, which = TRUE) %>% end_expr
+    expect_identical(ans, expected)
+})

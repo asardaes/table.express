@@ -59,3 +59,9 @@ test_that("The filter_on verb works for several values per key.", {
 
     expect_identical(ans, expected)
 })
+
+test_that("The filter_on verb works when which = TRUE.", {
+    expected <- data.table::copy(DT)[.(1, 0), on = c("vs", "am"), which = TRUE]
+    ans <- DT %>% start_expr %>% filter_on(vs = 1, am = 0, which = TRUE) %>% end_expr(.by_ref = FALSE)
+    expect_identical(ans, expected)
+})
