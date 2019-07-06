@@ -686,7 +686,7 @@
 #&gt; 
 #&gt;   collecting discontiguous groups took 0.000s for 4 groups
 #&gt;   eval(j) took 0.002s for 4 calls
-#&gt; 0.003s elapsed (0.000s cpu)</code></pre>
+#&gt; 0.003s elapsed (0.004s cpu)</code></pre>
 <pre><code>#&gt;    am vs      mpg     disp
 #&gt; 1:  1  0 19.75000 206.2167
 #&gt; 2:  1  1 28.37143  89.8000
@@ -713,12 +713,12 @@
 <a class="sourceLine" id="cb106-7" data-line-number="7"><span class="st">  </span>end_expr</a></code></pre></div>
 <pre><code>#&gt; .DT_[, c(min = lapply(.SD, min), max = lapply(.SD, max)), by = list(am, 
 #&gt;     vs), .SDcols = c(c("mpg", "disp")), verbose = TRUE]
-#&gt; Finding groups using forderv ... 0.000s elapsed (0.000s cpu) 
+#&gt; Finding groups using forderv ... 0.001s elapsed (0.000s cpu) 
 #&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) 
 #&gt; Getting back original order ... 0.000s elapsed (0.000s cpu) 
 #&gt; lapply optimization changed j from 'c(min = lapply(.SD, min), max = lapply(.SD, max))' to 'list(min(mpg), min(disp), max(mpg), max(disp))'
 #&gt; GForce optimized j to 'list(gmin(mpg), gmin(disp), gmax(mpg), gmax(disp))'
-#&gt; Making each group and running j (GForce TRUE) ... 0.001s elapsed (0.000s cpu)</code></pre>
+#&gt; Making each group and running j (GForce TRUE) ... 0.000s elapsed (0.000s cpu)</code></pre>
 <pre><code>#&gt;    am vs  mpg  disp  mpg disp
 #&gt; 1:  1  0 15.0 120.3 26.0  351
 #&gt; 2:  1  1 21.4  71.1 33.9  121
