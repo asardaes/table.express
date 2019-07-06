@@ -4,7 +4,7 @@
 \alias{filter_sd}
 \title{Filter subset of data}
 \usage{
-filter_sd(.data, .SDcols, .how = Negate(is.na), ..., which = FALSE,
+filter_sd(.data, .SDcols, .how = Negate(is.na), ..., which,
   .collapse = `&`, .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 }
