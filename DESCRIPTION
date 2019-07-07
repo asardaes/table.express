@@ -41,6 +41,7 @@ Collate:
     'R6-ExprBuilder.R'
     'UTILS-frame_append.R'
     'UTILS-misc.R'
+    'UTILS-nest_expr.R'
     'UTILS-tidyselect.R'
     'VERBS-joins.R'
     'VERBS-anti_join.R'

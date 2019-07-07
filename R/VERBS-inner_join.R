@@ -19,6 +19,7 @@ inner_join.ExprBuilder <- function(x, y, ...) {
     y <- rlang::enexpr(y)
     on <- parse_dots(TRUE, ...)
 
+    y <- x$seek_and_nestroy(list(y))[[1L]]
     x <- x$set_where(y, TRUE)
     frame_append(x, nomatch = NULL, mult = "all")
 

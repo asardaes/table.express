@@ -11,6 +11,8 @@
 #' @importFrom rlang abort
 #' @importFrom rlang as_label
 #' @importFrom rlang dots_list
+#' @importFrom rlang call_name
+#' @importFrom rlang caller_env
 #' @importFrom rlang env_get_list
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
@@ -55,7 +57,9 @@
 ExprBuilder <- R6::R6Class(
     "ExprBuilder",
     public = list(
-        initialize = function(DT, dt_pronouns = list(), verbose = getOption("table.express.verbose", FALSE)) {
+        initialize = function(DT, dt_pronouns = list(), nested = list(),
+                              verbose = getOption("table.express.verbose", FALSE))
+        {
             if (data.table::is.data.table(DT)) {
                 private$.DT <- DT
             }
@@ -66,6 +70,7 @@ ExprBuilder <- R6::R6Class(
             }
 
             private$.dt_pronouns = dt_pronouns
+            private$.nested = nested
             private$.verbose = verbose
 
             invisible()
@@ -106,7 +111,7 @@ ExprBuilder <- R6::R6Class(
             switch(
                 type,
                 frame = {
-                    other <- ExprBuilder$new(private$.DT, private$.dt_pronouns)
+                    other <- ExprBuilder$new(private$.DT, private$.dt_pronouns, private$.nested, private$.verbose)
                     private$.insert_child(other)
                     if (private$.verbose) { # nocov start
                         cat("Starting new frame.\n")
@@ -123,7 +128,7 @@ ExprBuilder <- R6::R6Class(
                         cat("Starting new expression.\n")
                     } # nocov end
 
-                    eb <- ExprBuilder$new(dt, next_pronouns)
+                    eb <- ExprBuilder$new(dt, next_pronouns, private$.nested, private$.verbose)
                     eb$set_where(dt_expr, FALSE)
                 }
             )
@@ -137,6 +142,34 @@ ExprBuilder <- R6::R6Class(
             else {
                 self
             }
+        },
+
+        seek_and_nestroy = function(.exprs) {
+            .DT_ <- private$.DT
+            .env <- rlang::caller_env(2L)
+            .verbose <- private$.verbose
+
+            lapply(.exprs, function(.expr) {
+                if (rlang::is_call(.expr) && isTRUE(rlang::call_name(.expr) == "nest_expr")) {
+                    .nested_exprs <- rlang::eval_tidy(.expr, env = .env)
+                    .functional_chain <- reduce_expr(.nested_exprs, rlang::expr(.DT_), rlang::expr(`%>%`))
+
+                    if (.verbose) { # nocov start
+                        cat("Nesting the result of evaluating the following functional chain:\n")
+                        print(.functional_chain)
+                    } # nocov end
+
+                    .ans <- base::eval(.functional_chain)
+
+                    .nest_pronoun <- paste0(".NEST_", length(private$.nested), "_")
+                    private$.nested <- c(private$.nested, rlang::list2(!!.nest_pronoun := .ans))
+
+                    rlang::sym(.nest_pronoun)
+                }
+                else {
+                    .expr
+                }
+            })
         },
 
         eval = function(parent_env, by_ref, ...) {
@@ -163,24 +196,7 @@ ExprBuilder <- R6::R6Class(
                                   "Consider using 'chain' first."))
             }
 
-            dots <- rlang::dots_list(
-                .DT_ = .DT_,
-                !!!private$.dt_pronouns,
-                !!!EBCompanion$helper_functions,
-                !!!tidyselect::vars_select_helpers,
-                ...,
-                .homonyms = "last"
-            )
-
-            .expr_env <- rlang::new_environment(dots, parent = parent_env)
-
-            final_expr <- self$expr
-            if (private$.verbose) { # nocov start
-                cat("Evaluating:\n")
-                print(final_expr)
-            } # nocov end
-
-            rlang::eval_tidy(final_expr, env = .expr_env)
+            private$.eval(parent_env, .DT_ = .DT_, ...)
         },
 
         tidy_select = function(select_expr) {
@@ -238,6 +254,7 @@ ExprBuilder <- R6::R6Class(
         .by = NULL,
         .appends = NULL,
         .dt_pronouns = NULL,
+        .nested = NULL,
 
         .selected_eagerly = FALSE,
         .verbose = FALSE,
@@ -317,6 +334,27 @@ ExprBuilder <- R6::R6Class(
             private$.child <- root
 
             invisible()
+        },
+
+        .eval = function(.parent_env, ...) {
+            dots <- rlang::dots_list(
+                !!!private$.dt_pronouns,
+                !!!private$.nested,
+                !!!EBCompanion$helper_functions,
+                !!!tidyselect::vars_select_helpers,
+                ...,
+                .homonyms = "last"
+            )
+
+            .expr_env <- rlang::new_environment(dots, parent = .parent_env)
+
+            final_expr <- self$expr
+            if (private$.verbose) { # nocov start
+                cat("Evaluating:\n")
+                print(final_expr)
+            } # nocov end
+
+            rlang::eval_tidy(final_expr, env = .expr_env)
         }
     )
 )

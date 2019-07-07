@@ -17,7 +17,10 @@ dplyr::anti_join
 #'     end_expr
 #'
 anti_join.ExprBuilder <- function(x, y, ...) {
-    y <- rlang::expr(`!`(`!!`(rlang::enexpr(y))))
+    y <- rlang::enexpr(y)
+    y <- x$seek_and_nestroy(list(y))[[1L]]
+    y <- rlang::expr(`!`(`!!`(y)))
+
     on <- parse_dots(TRUE, ...)
 
     x <- x$set_where(y, TRUE)

@@ -24,6 +24,10 @@ where <- function(.data, ...) {
 #' @template parse-arg
 #' @template chain-arg
 #'
+#' @details
+#'
+#' The expressions in `...` can call [nest_expr()], and are eagerly nested if they do.
+#'
 #' @template docu-examples
 #'
 #' @examples
@@ -43,6 +47,8 @@ where.ExprBuilder <- function(.data, ..., which = FALSE, .collapse = `&`,
     if (length(clause) == 0L) {
         return(.data)
     }
+
+    clause <- .data$seek_and_nestroy(clause)
 
     first_where <- clause[[1L]]
 

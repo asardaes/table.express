@@ -145,3 +145,14 @@ test_that("Filtering when passing which = TRUE works.", {
     ans <- DT %>% start_expr %>% filter(cyl == 6, mpg > 20, which = TRUE) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Nesting expressions in where/filter works.", {
+    expected <- lhs[lhs[, .I[v == max(v)], by=x]$V1]
+
+    ans <- lhs %>%
+        start_expr %>%
+        where(nest_expr(.start = FALSE, { .[, .I[v == max(v)], by=x]$V1 })) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+})

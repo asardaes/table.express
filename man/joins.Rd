@@ -36,7 +36,8 @@ mutate_join(x, y, ...)
 \arguments{
 \item{x}{An \link{ExprBuilder} instance.}
 
-\item{y}{A \link[data.table:data.table-class]{data.table::data.table}.}
+\item{y}{A \link[data.table:data.table-class]{data.table::data.table} or, for some verbs (see details), a call to
+\code{\link[=nest_expr]{nest_expr()}}.}
 
 \item{...}{Expressions for the \code{on} part of the join.}
 
@@ -58,6 +59,13 @@ Two-table joins. Check the
 information.
 }
 \details{
+The following joins support \code{\link[=nest_expr]{nest_expr()}} in \code{y}:
+\itemize{
+\item \code{anti_join}
+\item \code{inner_join}
+\item \code{right_join}
+}
+
 The \code{full_join} method is really a wrapper for \code{data.table::merge} that specifies \code{all = TRUE}.
 The expression in \code{x} gets evaluated, merged with \code{y}, and the result is captured in a new
 \link{ExprBuilder}. Useful in case you want to keep building expressions after the merge.

@@ -18,7 +18,7 @@ dplyr::right_join
 #'     end_expr
 #'
 right_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
-    y <- rlang::enexpr(y)
+    y <- x$seek_and_nestroy(list(rlang::enexpr(y)))[[1L]]
     on <- parse_dots(TRUE, ...)
 
     join_extras <- list(

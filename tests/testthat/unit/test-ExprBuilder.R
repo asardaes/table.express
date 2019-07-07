@@ -56,3 +56,72 @@ test_that("Chained pronouns are also passed after frame chaining.", {
 
     expect_identical(eb$.__enclos_env__$private$.dt_pronouns[[1L]], lhs)
 })
+
+test_that("Nested expressions are correctly evaluated.", {
+    eb <- ExprBuilder$new(DT)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- DT %>% start_expr %>% transmute(max(mpg)) %>% end_expr
+
+    ans <- with(new.env(), {
+        eb$seek_and_nestroy(rlang::exprs(nest_expr(
+            ignored = transmute(max(mpg))
+        )))
+    })
+
+    expect_identical(ans[[1L]], rlang::expr(.NEST_0_))
+    expect_identical(eb$.__enclos_env__$private$.nested[[1L]], expected)
+
+    ans <- with(new.env(), {
+        eb$seek_and_nestroy(rlang::exprs(nest_expr(
+            "transmute(max(mpg))",
+            .parse = TRUE
+        )))
+    })
+
+    expect_identical(ans[[1L]], rlang::expr(.NEST_1_))
+    expect_identical(eb$.__enclos_env__$private$.nested[[2L]], expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- DT %>% start_expr %>% transmute(max(mpg)) %>% end_expr %>% round
+
+    ans <- with(new.env(), {
+        eb$seek_and_nestroy(rlang::exprs(nest_expr(
+            .end = FALSE,
+            transmute(max(mpg)),
+            end_expr,
+            round
+        )))
+    })
+
+    expect_identical(ans[[1L]], rlang::expr(.NEST_2_))
+    expect_identical(eb$.__enclos_env__$private$.nested[[3L]], expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    ans <- with(new.env(), {
+        eb$seek_and_nestroy(rlang::exprs(nest_expr(
+            .start = FALSE,
+            { round(.[, .(max(mpg))]) }
+        )))
+    })
+
+    expect_identical(ans[[1L]], rlang::expr(.NEST_3_))
+    expect_identical(eb$.__enclos_env__$private$.nested[[4L]], expected)
+})
+
+test_that("Nested expressions are correctly chained.", {
+    eb <- ExprBuilder$new(DT)
+    expected <- DT %>% start_expr %>% transmute(max(mpg)) %>% end_expr
+
+    with(new.env(), {
+        eb$seek_and_nestroy(rlang::exprs(nest_expr(
+            ignored = transmute(max(mpg))
+        )))
+    })
+
+    eb <- eb$chain()
+    expect_identical(eb$.__enclos_env__$private$.nested[[1L]], expected)
+})

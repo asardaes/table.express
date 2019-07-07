@@ -28,6 +28,7 @@ reference:
     desc: ~
     contents:
       - '`frame_append`'
+      - '`nest_expr`'
   - title: "R6 Classes"
     desc: ~
     contents:

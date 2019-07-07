@@ -30,6 +30,8 @@ clause being set already exists?}
 Clause for subsetting rows.
 }
 \details{
+The expressions in \code{...} can call \code{\link[=nest_expr]{nest_expr()}}, and are eagerly nested if they do.
+
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.

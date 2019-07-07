@@ -34,7 +34,7 @@ test_that("Session immediately before a purchase, if any.", {
         mutate_join(website, name, purchase_time = session_start_time, .SDcols = "session_id", roll = Inf) %>%
         mutate_join(website, session_id, .SDcols = "session_start_time") %>%
         chain(.by_ref = FALSE) %>%
-        filter_sd(.SDcols = everything()) %>%
+        filter_sd(everything()) %>%
         end_expr
 
     expect_identical(data.table::setkey(ans, NULL), data.table::setcolorder(expected, names(ans)))

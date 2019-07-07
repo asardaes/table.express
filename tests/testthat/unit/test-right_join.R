@@ -128,3 +128,14 @@ test_that("Right non-equi join with mult works.", {
     expect_identical(ans, expected)
 })
 
+test_that("Nesting expressions in right_join's y works.", {
+    expected <- lhs[lhs[, .(v=max(v)), by=x], on=c("x","v")]
+
+    ans <- lhs %>%
+        start_expr %>%
+        right_join(nest_expr(.start = FALSE, { .[, .(v = max(v)), by = x] }),
+                   x, v) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+})

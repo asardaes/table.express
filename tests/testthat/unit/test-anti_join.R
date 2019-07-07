@@ -15,3 +15,9 @@ test_that("Anti join works.", {
     ans <- lhs %>% start_expr %>% anti_join(rhs) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Nesting expressions in anti_join's y works.", {
+    expected <- lhs[!lhs[x == "a"], on = "x"]
+    ans <- lhs %>% start_expr %>% anti_join(nest_expr(filter(x == "a")), x) %>% end_expr
+    expect_identical(ans, expected)
+})

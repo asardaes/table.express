@@ -8,7 +8,8 @@
 #' @name joins
 #'
 #' @param x An [ExprBuilder] instance.
-#' @param y A [data.table::data.table-class].
+#' @param y A [data.table::data.table-class] or, for some verbs (see details), a call to
+#'   [nest_expr()].
 #' @param ... Expressions for the `on` part of the join.
 #' @param nomatch,mult,roll,rollends See [data.table::data.table].
 #' @param .parent_env See [end_expr()].
@@ -16,6 +17,14 @@
 #' @param sort Passed to [data.table::merge].
 #' @param allow Passed as [`data.table`][data.table::data.table]'s `allow.cartesian`.
 #' @param .by_each For `mutate_join`. See the details below.
+#'
+#' @details
+#'
+#' The following joins support [nest_expr()] in `y`:
+#'
+#' - `anti_join`
+#' - `inner_join`
+#' - `right_join`
 #'
 #' @seealso
 #'
