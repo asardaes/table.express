@@ -390,8 +390,11 @@ EBCompanion$clause_order <- c(
 #' @importFrom tidyselect scoped_vars
 #'
 EBCompanion$helper_functions <- list(
-    .select_matching = function(.SD, ..., .negate) {
-        tidyselect::scoped_vars(names(.SD))
+    .select_matching = function(.SD = list(), ..., .negate) {
+        if (!is.null(names(.SD))) {
+            tidyselect::scoped_vars(names(.SD))
+        }
+
         .clauses <- rlang::enexprs(...)
 
         if (.negate) {

@@ -13,6 +13,8 @@ dplyr::select
 #' @importFrom rlang as_string
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
+#' @importFrom rlang maybe_missing
+#' @importFrom rlang missing_arg
 #'
 #' @template data-arg
 #' @param ... Clause for selecting columns. For `j` inside the `data.table`'s frame.
@@ -67,7 +69,20 @@ select.ExprBuilder <- function(.data, ..., .negate = FALSE,
     else {
         # avoid NOTE
         .select_matching <- EBCompanion$helper_functions$.select_matching
-        clause <- rlang::expr(.select_matching(.SD, !!!clauses, .negate = !!.negate))
+
+        calls <- !non_calls
+        if (.negate || any(nums) || (any(calls) && (
+            any(sapply(clauses[calls], rlang::is_call, name = ":")) ||
+            any(sapply(clauses[calls], is_tidyselect_call))
+        ))) {
+            needs_sd <- TRUE
+        }
+        else {
+            needs_sd <- FALSE
+        }
+
+        .SD <- if (needs_sd) rlang::expr(.SD) else rlang::missing_arg()
+        clause <- rlang::expr(.select_matching(!!rlang::maybe_missing(.SD), !!!clauses, .negate = !!.negate))
     }
 
     .data$set_select(clause, .chain)
