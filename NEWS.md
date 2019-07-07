@@ -5,6 +5,7 @@
 - `filter_on` now allows empty names for data tables that already have keys (#17).
 - All filtering verbs now have a `which` parameter (#17).
 - Added `nest_expr` for certain scenarios that need the captured `data.table` (#16).
+- Simplified `semi_join`, and it's no longer eager.
 
 # table.express 0.2.0
 

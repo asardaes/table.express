@@ -31,7 +31,7 @@ mutate_join(x, y, ...)
 
 \method{right_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
 
-\method{semi_join}{ExprBuilder}(x, y, ..., .parent_env)
+\method{semi_join}{ExprBuilder}(x, y, ...)
 }
 \arguments{
 \item{x}{An \link{ExprBuilder} instance.}
@@ -69,8 +69,6 @@ The following joins support \code{\link[=nest_expr]{nest_expr()}} in \code{y}:
 The \code{full_join} method is really a wrapper for \code{data.table::merge} that specifies \code{all = TRUE}.
 The expression in \code{x} gets evaluated, merged with \code{y}, and the result is captured in a new
 \link{ExprBuilder}. Useful in case you want to keep building expressions after the merge.
-
-The \code{semi_join} method \link[=chain]{starts a new expression} immediately.
 }
 \section{Mutating join}{
 

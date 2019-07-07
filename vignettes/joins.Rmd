@@ -101,9 +101,9 @@ A %>%
     end_expr
 ```
 
-The `semi_join` verb is semi-eager in the sense that it starts a new expression chain automatically.
-This is because it requires special internal name handling when some columns of both `data.table`s have the same name,
-but are not part of the `on` expression:
+A `semi_join` is essentially a `right_join` with `nomatch = NULL`,
+and where `j` is set to `unique(.SD)`,
+so it will chain automatically if either `i` or `j` are set.
 
 ```{r semi-join}
 setnames(B, "v2", "v")
@@ -112,18 +112,7 @@ A %>%
     start_expr %>%
     semi_join(B, x) %>%
     end_expr
-
-A %>%
-    start_expr %>%
-    left_join(B, x) %>%
-    end_expr
 ```
-
-As shown, the `left_join` case renamed `A`'s `v` to `i.v`.
-A `semi_join` is essentially a `left_join` with `nomatch = NULL`,
-`mult = "first"`,
-and where only the left-hand side columns are selected afterwards,
-hence the special handling required.
 
 Finally, `full_join` is basically a wrapper for `merge` specifying `all = TRUE`,
 so it's only useful when more expressions are to be added after the join:
