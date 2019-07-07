@@ -46,3 +46,13 @@ test_that("chain_if_set works.", {
     b2 <- b1$chain_if_set(".select")
     expect_false(identical(b1, b2))
 })
+
+test_that("Chained pronouns are also passed after frame chaining.", {
+    eb <- lhs %>%
+        start_expr %>%
+        left_join(rhs, x, v) %>%
+        mutate(y = y) %>%
+        mutate(z = 0L)
+
+    expect_identical(eb$.__enclos_env__$private$.dt_pronouns[[1L]], lhs)
+})

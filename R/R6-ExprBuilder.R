@@ -106,7 +106,7 @@ ExprBuilder <- R6::R6Class(
             switch(
                 type,
                 frame = {
-                    other <- ExprBuilder$new(private$.DT)
+                    other <- ExprBuilder$new(private$.DT, private$.dt_pronouns)
                     private$.insert_child(other)
                     if (private$.verbose) { # nocov start
                         cat("Starting new frame.\n")
