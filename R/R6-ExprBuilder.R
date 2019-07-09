@@ -79,7 +79,7 @@ ExprBuilder <- R6::R6Class(
         set_select = function(value, chain_if_needed) {
             ans <- private$.process_clause("select", value, chain_if_needed)
             if (private$.verbose) { # nocov start
-                cat("Expression after ", rlang::as_label(sys.call(-1L)), ":\n", sep = "")
+                cat("Expression after ", EBCompanion$get_top_call(), ":\n", sep = "")
                 print(self)
             } # nocov end
 
@@ -89,7 +89,7 @@ ExprBuilder <- R6::R6Class(
         set_where = function(value, chain_if_needed) {
             ans <- private$.process_clause("where", value, chain_if_needed)
             if (private$.verbose) { # nocov start
-                cat("Expression after ", rlang::as_label(sys.call(-1L)), ":\n", sep = "")
+                cat("Expression after ", EBCompanion$get_top_call(), ":\n", sep = "")
                 print(self)
             } # nocov end
 
@@ -99,7 +99,7 @@ ExprBuilder <- R6::R6Class(
         set_by = function(value, chain_if_needed) {
             ans <- private$.process_clause("by", value, chain_if_needed)
             if (private$.verbose) { # nocov start
-                cat("Expression after ", rlang::as_label(sys.call(-1L)), ":\n", sep = "")
+                cat("Expression after ", EBCompanion$get_top_call(), ":\n", sep = "")
                 print(self)
             } # nocov end
 
@@ -201,7 +201,7 @@ ExprBuilder <- R6::R6Class(
 
         tidy_select = function(select_expr) {
             if (private$.verbose) { # nocov start
-                cat("In ", rlang::as_label(sys.call(-1L)), ", using captured data.table eagerly to evaluate:\n", sep = "")
+                cat("In {", EBCompanion$get_top_call(), "}, using captured data.table eagerly to evaluate:\n", sep = "")
                 print(select_expr)
             } # nocov end
 
@@ -229,7 +229,14 @@ ExprBuilder <- R6::R6Class(
         # value should always be a list of 0 or more expressions
         appends = function(value) {
             if (missing(value)) return(private$.appends)
+
             private$.appends <- c(private$.appends, value)
+
+            if (private$.verbose) { # nocov start
+                cat("Expression after ", EBCompanion$get_top_call(), ":\n", sep = "")
+                print(self)
+            } # nocov end
+
             invisible()
         },
 
@@ -619,6 +626,28 @@ EBCompanion$chain_select_count <- function(expr_builder) {
     }
 
     .recursion(EBCompanion$get_root(expr_builder), 0L)
+}
+
+# --------------------------------------------------------------------------------------------------
+# get_top_call
+#
+#' @importFrom rlang as_label
+#' @importFrom rlang call_name
+#' @importFrom rlang trace_back
+#'
+EBCompanion$get_top_call <- function() {
+    ns_funs <- ls(asNamespace("table.express"))
+    call_stack <- rlang::trace_back()[[1L]]
+    top_call <- Find(call_stack, right = TRUE, nomatch = sys.call(-2L), f = function(.call) {
+        if (is.null(.call)) return(FALSE)
+
+        .name <- rlang::call_name(.call)
+        if (is.null(.name)) return(FALSE)
+
+        .name %in% ns_funs
+    })
+
+    rlang::as_label(top_call)
 }
 
 lockEnvironment(EBCompanion, TRUE)
