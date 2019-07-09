@@ -6,6 +6,7 @@ dplyr::left_join
 #' @include VERBS-joins.R
 #' @rdname joins
 #' @export
+#' @importFrom rlang caller_env
 #' @importFrom rlang maybe_missing
 #'
 #' @examples
@@ -21,7 +22,11 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .par
         y <- end_expr.ExprBuilder(x, .parent_env = rlang::maybe_missing(.parent_env))
     }
 
-    x <- x$chain("pronoun", y)
+    if (missing(.parent_env)) {
+        .parent_env <- rlang::caller_env()
+    }
+
+    x <- x$chain("pronoun", y, .parent_env)
 
     on <- parse_dots(TRUE, ...)
     on <- name_comp_switcheroo(on)

@@ -106,7 +106,7 @@ ExprBuilder <- R6::R6Class(
             ans
         },
 
-        chain = function(type = "frame", dt) {
+        chain = function(type = "frame", next_dt, parent_env) {
             type <- match.arg(type, c("frame", "pronoun"))
             switch(
                 type,
@@ -120,16 +120,16 @@ ExprBuilder <- R6::R6Class(
                     other
                 },
                 pronoun = {
+                    dt <- self$eval(parent_env, TRUE)
                     dt_pronoun <- paste0(".DT_", length(private$.dt_pronouns), "_")
-                    dt_expr <- private$.compute_expr(rlang::sym(dt_pronoun))
-                    next_pronouns <- c(private$.dt_pronouns, rlang::list2(!!dt_pronoun := private$.DT))
+                    next_pronouns <- c(private$.dt_pronouns, rlang::list2(!!dt_pronoun := dt))
 
                     if (private$.verbose) { # nocov start
-                        cat("Starting new expression.\n")
+                        cat("Starting new expression, nesting previous .DT_ pronoun.\n")
                     } # nocov end
 
-                    eb <- ExprBuilder$new(dt, next_pronouns, private$.nested, private$.verbose)
-                    eb$set_where(dt_expr, FALSE)
+                    eb <- ExprBuilder$new(next_dt, next_pronouns, private$.nested, private$.verbose)
+                    eb$set_where(rlang::sym(dt_pronoun), FALSE)
                 }
             )
         },
