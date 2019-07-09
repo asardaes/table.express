@@ -5,19 +5,15 @@
 \alias{distinct.ExprBuilder}
 \title{Rows with distinct combinations of columns}
 \usage{
-\method{distinct}{ExprBuilder}(.data, ..., .keep_all = TRUE,
-  .keep_old = FALSE, .parse = getOption("table.express.parse", FALSE))
+\method{distinct}{ExprBuilder}(.data, ..., .keep = TRUE,
+  .parse = getOption("table.express.parse", FALSE))
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{Which columns to use to determine uniqueness.}
 
-\item{.keep_all}{Whether to also keep columns that are not mentioned in \code{...}.}
-
-\item{.keep_old}{This should be changed to \code{TRUE} if a new column is created in \code{...} and the
-columns used to create it should also be kept. Has no effect if \code{.keep_all} is \code{FALSE}. See
-examples.}
+\item{.keep}{See details below.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 }
@@ -25,6 +21,11 @@ examples.}
 Rows with distinct combinations of columns
 }
 \details{
+If \code{.keep = TRUE} (the default), the columns not mentioned in \code{...} are also kept. However, if
+a new column is created in one of the expressions therein, \code{.keep} can also be set to a character
+vector containing the names of \emph{all} the columns that should be in the result in addition to the
+ones mentioned in \code{...}. See the examples.
+
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.
@@ -32,9 +33,11 @@ To see more examples, check the
 \examples{
 
 data("mtcars")
+
+# compare with .keep = TRUE
 data.table::as.data.table(mtcars) \%>\%
     start_expr \%>\%
-    distinct(amvs = am + vs, .keep_old = TRUE) \%>\%
+    distinct(amvs = am + vs, .keep = names(mtcars)) \%>\%
     end_expr
 
 }

@@ -390,12 +390,28 @@ DT %>%
 
 ## Distinct combinations of columns
 
-The `distinct` verb is a shortcut for `select(.SD[1])` with a `by` clause:
+The `distinct` verb is a shortcut for:
+
+- `select(.SD[1])` with a `by` clause if `.keep = TRUE`.
+- Same as above plus specific `.SDcols` if `.keep` is a character vector.
+- `unique(.SD)` with specific `.SDcols` if `.keep = FALSE`.
 
 ```{r distinct}
 DT %>%
   start_expr %>%
   distinct(vs, am) %T>%
+  print %>%
+  end_expr
+
+DT %>%
+  start_expr %>%
+  distinct(vsam = vs + am, .keep = names(DT)) %T>%
+  print %>%
+  end_expr
+
+DT %>%
+  start_expr %>%
+  distinct(vs, am, .keep = FALSE) %T>%
   print %>%
   end_expr
 ```

@@ -13,34 +13,39 @@ dplyr::distinct
 #'
 #' @template data-arg
 #' @param ... Which columns to use to determine uniqueness.
-#' @param .keep_all Whether to also keep columns that are not mentioned in `...`.
-#' @param .keep_old This should be changed to `TRUE` if a new column is created in `...` and the
-#'   columns used to create it should also be kept. Has no effect if `.keep_all` is `FALSE`. See
-#'   examples.
+#' @param .keep See details below.
 #' @template parse-arg
+#'
+#' @details
+#'
+#' If `.keep = TRUE` (the default), the columns not mentioned in `...` are also kept. However, if
+#' a new column is created in one of the expressions therein, `.keep` can also be set to a character
+#' vector containing the names of *all* the columns that should be in the result in addition to the
+#' ones mentioned in `...`. See the examples.
 #'
 #' @template docu-examples
 #'
 #' @examples
 #'
 #' data("mtcars")
+#'
+#' # compare with .keep = TRUE
 #' data.table::as.data.table(mtcars) %>%
 #'     start_expr %>%
-#'     distinct(amvs = am + vs, .keep_old = TRUE) %>%
+#'     distinct(amvs = am + vs, .keep = names(mtcars)) %>%
 #'     end_expr
 #'
-distinct.ExprBuilder <- function(.data, ..., .keep_all = TRUE, .keep_old = FALSE,
+distinct.ExprBuilder <- function(.data, ..., .keep = TRUE,
                                  .parse = getOption("table.express.parse", FALSE)) {
     cols <- parse_dots(.parse, ...)
 
-    if (.keep_all) {
+    if (isTRUE(.keep) || is.character(.keep)) {
         .data <- .data$chain_if_set(".select", ".by")
         .data$set_by(rlang::expr(list(!!!cols)), FALSE)
         .data$set_select(rlang::expr(.SD[1L]), FALSE)
 
-        if (.keep_old) {
-            # TODO: won't work if pronoun is chained afterwards
-            frame_append(.data, .SDcols = names(.DT_))
+        if (is.character(.keep)) {
+            frame_append(.data, .SDcols = !!.keep)
         }
     }
     else {
