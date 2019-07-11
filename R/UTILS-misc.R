@@ -235,3 +235,27 @@ standardize_calls <- function(.exprs, .env, ..., .parse) {
         .expr
     })
 }
+
+#' @importFrom rlang expr
+#'
+extrema_by <- function(expressions, .some, ...) {
+    bys <- parse_dots(TRUE, ...)
+
+    if (length(expressions) > 1L) {
+        op <- if (.some) rlang::expr(`|`) else rlang::expr(`&`)
+        expressions <- reduce_expr(expressions[-1L], expressions[[1L]], op)
+    }
+    else {
+        expressions <- expressions[[1L]]
+    }
+
+    # avoid NOTE
+    . <- .I <- NULL
+
+    if (length(bys) > 0L) {
+        rlang::expr(.[, .(.extrema_ = .I[!!expressions]), by = list(!!!bys)]$.extrema_)
+    }
+    else {
+        rlang::expr(.[, .(.extrema_ = .I[!!expressions])]$.extrema_)
+    }
+}

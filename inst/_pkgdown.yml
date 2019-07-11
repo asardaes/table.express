@@ -20,6 +20,7 @@ reference:
       - ends_with("_sd")
       - '`filter_on`'
       - '`key_by`'
+      - '`extrema_by`'
   - title: "Two-Table Verbs"
     desc: ~
     contents:

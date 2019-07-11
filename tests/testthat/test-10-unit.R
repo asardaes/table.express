@@ -18,6 +18,8 @@ source("unit/test-transmute_sd.R", TRUE)
 source("unit/test-filter_sd.R", TRUE)
 source("unit/test-filter_on.R", TRUE)
 source("unit/test-distinct.R", TRUE)
+source("unit/test-max_by.R", TRUE)
+source("unit/test-min_by.R", TRUE)
 
 source("unit/test-left_join.R", TRUE)
 source("unit/test-mutate_join.R", TRUE)

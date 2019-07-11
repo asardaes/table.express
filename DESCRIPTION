@@ -55,6 +55,8 @@ Collate:
     'VERBS-inner_join.R'
     'VERBS-key_by.R'
     'VERBS-left_join.R'
+    'VERBS-max_by.R'
+    'VERBS-min_by.R'
     'VERBS-mutate.R'
     'VERBS-mutate_join.R'
     'VERBS-mutate_sd.R'

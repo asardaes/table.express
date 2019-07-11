@@ -16,7 +16,6 @@ where <- function(.data, ...) {
 #' @rdname where-table.express
 #' @export
 #' @importFrom rlang enquo
-#' @importFrom rlang is_missing
 #' @importFrom rlang quo_get_expr
 #'
 #' @param which Passed to [data.table::data.table].
@@ -61,7 +60,7 @@ where.ExprBuilder <- function(.data, ..., which = FALSE, .collapse = `&`,
     }
 
     .data <- .data$set_where(clause, .chain)
-    if (!rlang::is_missing(which)) {
+    if (!missing(which)) {
         frame_append(.data, which = !!which, .parse = FALSE)
     }
 
