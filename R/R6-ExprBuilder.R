@@ -159,7 +159,8 @@ ExprBuilder <- R6::R6Class(
                         print(.functional_chain)
                     } # nocov end
 
-                    .ans <- base::eval(.functional_chain)
+                    .env <- rlang::new_environment(list(.DT_ = .DT_), parent = .env)
+                    .ans <- rlang::eval_tidy(.functional_chain, env = .env)
 
                     .nest_pronoun <- paste0(".NEST_", length(private$.nested), "_")
                     private$.nested <- c(private$.nested, rlang::list2(!!.nest_pronoun := .ans))

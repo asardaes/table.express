@@ -8,6 +8,11 @@ dplyr::semi_join
 #' @export
 #' @importFrom rlang enexpr
 #' @importFrom rlang expr
+#' @importFrom rlang exprs
+#'
+#' @param .eager For `semi_join`. If `TRUE`, it uses [nest_expr()] to build an expression like
+#'   [this](https://stackoverflow.com/a/18971223/5793905) instead of the default one. This uses the
+#'   captured `data.table` eagerly, so use [chain()] when needed. The default is lazy.
 #'
 #' @examples
 #'
@@ -17,16 +22,32 @@ dplyr::semi_join
 #'     semi_join(rhs, x) %>%
 #'     end_expr
 #'
-semi_join.ExprBuilder <- function(x, y, ...) {
+semi_join.ExprBuilder <- function(x, y, ..., allow = FALSE, .eager = FALSE) {
+    y <- rlang::enexpr(y)
     on <- parse_dots(TRUE, ...)
 
-    x <- x$chain_if_set(".where", ".select")
-    x <- x$set_where(rlang::enexpr(y), FALSE)
-    x <- x$set_select(rlang::expr(unique(.SD)), FALSE)
+    if (.eager) {
+        where_expr <- rlang::exprs(nest_expr(
+            .parse = FALSE,
+            .end = FALSE,
+            inner_join(!!y, !!!on),
+            frame_append(which = TRUE, allow.cartesian = !!allow),
+            end_expr,
+            unique
+        ))
 
-    frame_append(x, nomatch = NULL, .parse = FALSE)
-    if (length(on) > 0L) {
-        frame_append(x, on = list(!!!on), .parse = FALSE)
+        where_clause <- x$seek_and_nestroy(where_expr)[[1L]]
+        x <- x$set_where(where_clause, TRUE)
+    }
+    else {
+        x <- x$chain_if_set(".where", ".select")
+        x <- x$set_where(y, FALSE)
+        x <- x$set_select(rlang::expr(unique(.SD)), FALSE)
+
+        frame_append(x, nomatch = NULL, .parse = FALSE)
+        if (length(on) > 0L) {
+            frame_append(x, on = list(!!!on), .parse = FALSE)
+        }
     }
 
     x

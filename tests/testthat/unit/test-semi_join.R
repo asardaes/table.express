@@ -1,11 +1,18 @@
 context("  Semi join")
 
-test_that("Semi join works like in dplyr.", {
+test_that("Semi join works.", {
     expected <- rhs[lhs, unique(.SD), on="x", nomatch=NULL]
 
     ans <- rhs %>%
         start_expr %>%
         semi_join(lhs, "x") %>%
+        end_expr
+
+    expect_identical(ans, expected)
+
+    ans <- rhs %>%
+        start_expr %>%
+        semi_join(lhs, "x", .eager = TRUE) %>%
         end_expr
 
     expect_identical(ans, expected)
@@ -27,6 +34,13 @@ test_that("Semi join works like in dplyr.", {
     ans <- paypal %>%
         start_expr %>%
         semi_join(website, payment_id = session_id) %>%
+        end_expr
+
+    expect_identical(ans, expected)
+
+    ans <- paypal %>%
+        start_expr %>%
+        semi_join(website, payment_id = session_id, .eager = TRUE) %>%
         end_expr
 
     expect_identical(ans, expected)

@@ -31,7 +31,8 @@ mutate_join(x, y, ...)
 
 \method{right_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
 
-\method{semi_join}{ExprBuilder}(x, y, ...)
+\method{semi_join}{ExprBuilder}(x, y, ..., allow = FALSE,
+  .eager = FALSE)
 }
 \arguments{
 \item{x}{An \link{ExprBuilder} instance.}
@@ -52,6 +53,10 @@ mutate_join(x, y, ...)
 \item{.SDcols}{For \code{mutate_join}. See the details below.}
 
 \item{.by_each}{For \code{mutate_join}. See the details below.}
+
+\item{.eager}{For \code{semi_join}. If \code{TRUE}, it uses \code{\link[=nest_expr]{nest_expr()}} to build an expression like
+\href{https://stackoverflow.com/a/18971223/5793905}{this} instead of the default one. This uses the
+captured \code{data.table} eagerly, so use \code{\link[=chain]{chain()}} when needed. The default is lazy.}
 }
 \description{
 Two-table joins. Check the
