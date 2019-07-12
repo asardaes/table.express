@@ -18,11 +18,21 @@
 #' These verbs implement the idiom shown [here](https://stackoverflow.com/q/16573995/5793905) by
 #' leveraging [nest_expr()]. The whole nested expression is assigned to `i` in the `data.table`'s
 #' frame. It is probably a good idea to use this on a frame that has no other frames preceding it
-#' in the current expression, so consider using [chain()] when needed.
+#' in the current expression, given that [nest_expr()] uses the captured `data.table` so consider
+#' using [chain()] when needed.
 #'
 #' Several columns can be specified in `.col`, and depending on the value of `.some`, the rows with
 #' all or some extrema are returned, using `&` or `|` respectively. Depending on your data, using
 #' more than more column might not make sense, resulting in an empty `data.table`.
+#'
+#' @examples
+#'
+#' data("mtcars")
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     start_expr %>%
+#'     max_by("mpg", "vs") %>%
+#'     end_expr
 #'
 max_by <- function(.data, .col, ...) {
     UseMethod("max_by")
