@@ -293,6 +293,13 @@ DT %>%
   end_expr
 
 print(DT)
+
+DT %>%
+  start_expr %>%
+  mutate_sd(c("mpg", "cyl"), log) %>%
+  end_expr
+
+print(DT)
 ```
 
 It would also be possible to remove several columns with `mutate_sd`:
@@ -309,17 +316,10 @@ DT %>%
 Additionally, `mutate_sd` supports the special `.COL` pronoun that symbolizes the column that should be modified:
 
 ```{r mutate-sd-col}
-DT %>%
-  start_expr %>%
-  mutate_sd(c("mpg", "cyl"), log(.COL)) %>%
-  end_expr
-
-print(DT)
-
 # like dplyr's mutate_if
 DT %>%
   start_expr %>%
-  mutate_sd(all(.COL %% 1 == 0), as.integer(.COL))
+  mutate_sd(all(.COL %% 1 == 0), as.integer)
 ```
 
 On the other hand, `transmute_sd` never modifies by reference,
