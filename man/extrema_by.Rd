@@ -38,12 +38,12 @@ Find rows with maxima/minima in given columns.
 These verbs implement the idiom shown \href{https://stackoverflow.com/q/16573995/5793905}{here} by
 leveraging \code{\link[=nest_expr]{nest_expr()}}. The whole nested expression is assigned to \code{i} in the \code{data.table}'s
 frame. It is probably a good idea to use this on a frame that has no other frames preceding it
-in the current expression, given that \code{\link[=nest_expr]{nest_expr()}} uses the captured \code{data.table} so consider
+in the current expression, given that \code{\link[=nest_expr]{nest_expr()}} uses the captured \code{data.table}, so consider
 using \code{\link[=chain]{chain()}} when needed.
 
 Several columns can be specified in \code{.col}, and depending on the value of \code{.some}, the rows with
 all or some extrema are returned, using \code{&} or \code{|} respectively. Depending on your data, using
-more than more column might not make sense, resulting in an empty \code{data.table}.
+more than one column might not make sense, resulting in an empty \code{data.table}.
 }
 \examples{
 
