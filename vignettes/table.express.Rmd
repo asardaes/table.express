@@ -416,6 +416,29 @@ DT %>%
   end_expr
 ```
 
+## Nesting expressions
+
+Some `data.table` idioms benefit from nesting expressions,
+for instance [this idiom](https://stackoverflow.com/a/16574176/5793905) to find,
+by groups, rows where a column has its extrema.
+The helper function `nest_expr` can help in these cases.
+When used inside a supported verb,
+it [eagerly](#eager-verbs) builds a functional chain with `%>%`,
+where the currently captured `data.table` enters as `.`
+
+For example, the linked idiom could be expressed as:
+
+```{r nest-expr}
+DT %>%
+  start_expr(.verbose = TRUE) %>%
+  where(nest_expr(.start = FALSE, {
+    .[, .I[mpg == max(mpg)], by = vs]$V1
+  })) %>%
+  end_expr
+```
+
+Nevertheless, this specific logic has been encapsulated in the `max_by`/`min_by` verbs.
+
 ## Automatic expression chaining
 
 A `data.table`'s frame has 3 main elements:
@@ -514,6 +537,12 @@ In the following cases, the mentioned verbs use the captured `data.table` eagerl
 
 - `filter_sd` when `.SDcols` is a `tidyselect` call or a predicate using `.COL`.
 - `mutate_sd` when `.SDcols` is a `tidyselect` call or a predicate using `.COL`.
+- Using `nest_expr` in:
+  - `anti_join`'s `y`.
+  - `inner_join`'s `y`.
+  - `right_join`'s `y`.
+  - `filter` or `where`.
+- `max_by` and `min_by`, since they are based on `nest_expr`.
 
 This can lead to unexpected results if we don't keep in mind the expression that is built:
 
