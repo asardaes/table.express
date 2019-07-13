@@ -34,3 +34,9 @@ test_that("The group_by verb works as expected.", {
 
     expect_equal(ans, expected)
 })
+
+test_that("group_by works with a single .EACHI", {
+    expected <- lhs[rhs, .(y = max(y)), by = .EACHI, on = c("x")]
+    ans <- lhs %>% start_expr %>% group_by(.EACHI) %>% right_join(rhs, x) %>% transmute(y = max(y)) %>% end_expr
+    expect_identical(ans, expected)
+})

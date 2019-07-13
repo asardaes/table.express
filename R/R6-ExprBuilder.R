@@ -306,7 +306,13 @@ ExprBuilder <- R6::R6Class(
             })
 
             if (".by" %in% names(expressions)) {
+                .EACHI <- NULL # avoid NOTE
                 which_by <- if (isTRUE(attr(expressions$.by, "key_by"))) "keyby" else "by"
+
+                if (identical(expressions$.by, rlang::expr(list(.EACHI)))) {
+                    expressions$.by <- rlang::expr(.EACHI)
+                }
+
                 names(expressions) <- sub("^.by$", which_by, names(expressions))
             }
 
