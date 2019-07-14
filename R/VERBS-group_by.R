@@ -39,3 +39,12 @@ group_by.ExprBuilder <- function(.data, ...,
     clause <- parse_dots(.parse, ...)
     .data$set_by(rlang::quo_squash(rlang::expr(list(!!!clause))), .chain)
 }
+
+#' @rdname group_by-table.express
+#' @export
+#'
+group_by.data.table <- function(.data, ...) {
+    eb <- EagerExprBuilder$new(.data)
+    eb <- group_by.ExprBuilder(eb, ...)
+    eb
+}

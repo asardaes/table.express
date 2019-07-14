@@ -3,11 +3,14 @@
 \name{group_by-table.express}
 \alias{group_by-table.express}
 \alias{group_by.ExprBuilder}
+\alias{group_by.data.table}
 \title{Grouping clauses}
 \usage{
 \method{group_by}{ExprBuilder}(.data, ...,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
+
+\method{group_by}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

@@ -39,6 +39,7 @@ Collate:
     'DELIMITERS-end_expr.R'
     'DELIMITERS-start_expr.R'
     'R6-ExprBuilder.R'
+    'R6-EagerExprBuilder.R'
     'UTILS-frame_append.R'
     'UTILS-misc.R'
     'UTILS-nest_expr.R'

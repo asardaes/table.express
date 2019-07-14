@@ -40,3 +40,21 @@ transmute.ExprBuilder <- function(.data, ...,
 
     .data$set_select(rlang::expr(list(!!!clauses)), .chain)
 }
+
+#' @rdname transmute-table.express
+#' @export
+#' @importFrom rlang caller_env
+#'
+#' @param .parent_env See [end_expr()]
+#'
+transmute.EagerExprBuilder <- function(.data, ..., .parent_env = rlang::caller_env()) {
+    end_expr.ExprBuilder(transmute.ExprBuilder(.data, ...), .parent_env = .parent_env)
+}
+
+#' @rdname transmute-table.express
+#' @export
+#' @importFrom rlang caller_env
+#'
+transmute.data.table <- function(.data, ...) {
+    end_expr.ExprBuilder(transmute.ExprBuilder(ExprBuilder$new(.data), ...), .parent_env = rlang::caller_env())
+}

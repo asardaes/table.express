@@ -3,11 +3,18 @@
 \name{transmute-table.express}
 \alias{transmute-table.express}
 \alias{transmute.ExprBuilder}
+\alias{transmute.EagerExprBuilder}
+\alias{transmute.data.table}
 \title{Compute new columns}
 \usage{
 \method{transmute}{ExprBuilder}(.data, ...,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
+
+\method{transmute}{EagerExprBuilder}(.data, ...,
+  .parent_env = rlang::caller_env())
+
+\method{transmute}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -18,6 +25,8 @@
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}}
 }
 \description{
 Compute and keep only new columns.
