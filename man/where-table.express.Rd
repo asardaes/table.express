@@ -4,6 +4,7 @@
 \alias{where-table.express}
 \alias{where}
 \alias{where.ExprBuilder}
+\alias{where.data.table}
 \title{Where clause}
 \usage{
 where(.data, ...)
@@ -11,6 +12,8 @@ where(.data, ...)
 \method{where}{ExprBuilder}(.data, ..., which = FALSE, .collapse = `&`,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
+
+\method{where}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{The input data.}
@@ -30,7 +33,11 @@ clause being set already exists?}
 Clause for subsetting rows.
 }
 \details{
-The expressions in \code{...} can call \code{\link[=nest_expr]{nest_expr()}}, and are eagerly nested if they do.
+For \link{ExprBuilder}, the expressions in \code{...} can call \code{\link[=nest_expr]{nest_expr()}}, and are eagerly nested if
+they do.
+
+The \link[data.table:data.table-class]{data.table::data.table} method is \strong{lazy}, so it expects another verb to follow
+\emph{afterwards}.
 
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
@@ -43,5 +50,10 @@ data("mtcars")
 data.table::as.data.table(mtcars) \%>\%
     start_expr \%>\%
     where(vs == 0, am == 1)
+
+
+data.table::as.data.table(mtcars) \%>\%
+    where(vs == 0) \%>\%
+    transmute(mpg = round(mpg))
 
 }

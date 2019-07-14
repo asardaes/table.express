@@ -45,6 +45,5 @@ group_by.ExprBuilder <- function(.data, ...,
 #'
 group_by.data.table <- function(.data, ...) {
     eb <- EagerExprBuilder$new(.data)
-    eb <- group_by.ExprBuilder(eb, ...)
-    eb
+    group_by.ExprBuilder(eb, ...)
 }

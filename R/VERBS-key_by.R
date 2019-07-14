@@ -49,6 +49,5 @@ key_by.ExprBuilder <- function(.data, ...,
 #'
 key_by.data.table <- function(.data, ...) {
     eb <- EagerExprBuilder$new(.data)
-    eb <- key_by.ExprBuilder(eb, ...)
-    eb
+    key_by.ExprBuilder(eb, ...)
 }

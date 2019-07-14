@@ -156,3 +156,19 @@ test_that("Nesting expressions in where/filter works.", {
 
     expect_identical(ans, expected)
 })
+
+test_that("Eager version of filter works.", {
+    expected <- DT[vs == 0 & am == 0]
+    ans <- filter(DT, vs == 0, am == 0)
+    expect_identical(ans, expected)
+
+    expected <- DT[vs == 0 | gear == 4]
+    ans <- filter(DT, vs == 0, gear == 4, .collapse = `|`)
+    expect_identical(ans, expected)
+})
+
+test_that("Semi-eager version of where works.", {
+    expected <- DT[vs == 0 & am == 0, .(mean(mpg), max(hp), min(disp))]
+    ans <- DT %>% where(vs == 0, am == 0) %>% transmute(mean(mpg), max(hp), min(disp))
+    expect_identical(ans, expected)
+})

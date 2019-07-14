@@ -25,7 +25,11 @@ where <- function(.data, ...) {
 #'
 #' @details
 #'
-#' The expressions in `...` can call [nest_expr()], and are eagerly nested if they do.
+#' For [ExprBuilder], the expressions in `...` can call [nest_expr()], and are eagerly nested if
+#' they do.
+#'
+#' The [data.table::data.table-class] method is **lazy**, so it expects another verb to follow
+#' *afterwards*.
 #'
 #' @template docu-examples
 #'
@@ -65,4 +69,18 @@ where.ExprBuilder <- function(.data, ..., which = FALSE, .collapse = `&`,
     }
 
     .data
+}
+
+#' @rdname where-table.express
+#' @export
+#'
+#' @examples
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     where(vs == 0) %>%
+#'     transmute(mpg = round(mpg))
+#'
+where.data.table <- function(.data, ...) {
+    eb <- EagerExprBuilder$new(.data)
+    where.ExprBuilder(eb, ...)
 }
