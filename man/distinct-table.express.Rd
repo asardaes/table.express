@@ -3,10 +3,13 @@
 \name{distinct-table.express}
 \alias{distinct-table.express}
 \alias{distinct.ExprBuilder}
+\alias{distinct.data.table}
 \title{Rows with distinct combinations of columns}
 \usage{
 \method{distinct}{ExprBuilder}(.data, ..., .keep = TRUE,
   .parse = getOption("table.express.parse", FALSE))
+
+\method{distinct}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}

@@ -56,3 +56,13 @@ distinct.ExprBuilder <- function(.data, ..., .keep = TRUE,
 
     .data
 }
+
+#' @rdname distinct-table.express
+#' @export
+#' @importFrom rlang caller_env
+#'
+distinct.data.table <- function(.data, ...) {
+    eb <- ExprBuilder$new(.data)
+    lazy_ans <- distinct.ExprBuilder(eb, ...)
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+}
