@@ -88,6 +88,26 @@ select.ExprBuilder <- function(.data, ..., .negate = FALSE,
     .data$set_select(clause, .chain)
 }
 
+#' @rdname select-table.express
+#' @export
+#' @importFrom rlang caller_env
+#'
+#' @param .parent_env See [end_expr()]
+#'
+select.EagerExprBuilder <- function(.data, ..., .parent_env = rlang::caller_env()) {
+    end_expr.ExprBuilder(select.ExprBuilder(.data, ...), .parent_env = .parent_env)
+}
+
+#' @rdname select-table.express
+#' @export
+#' @importFrom rlang caller_env
+#'
+select.data.table <- function(.data, ...) {
+    eb <- ExprBuilder$new(.data)
+    lazy_ans <- select.ExprBuilder(eb, ...)
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+}
+
 #' @importFrom rlang call_args
 #' @importFrom rlang is_call
 #'
