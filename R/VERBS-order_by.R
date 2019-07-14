@@ -39,3 +39,13 @@ order_by.ExprBuilder <- function(.data, ..., .collapse,
 {
     where.ExprBuilder(.data, order(!!!parse_dots(.parse, ...)), .parse = FALSE, .chain = .chain)
 }
+
+#' @rdname order_by-table.express
+#' @export
+#' @importFrom rlang caller_env
+#'
+order_by.data.table <- function(.data, ...) {
+    eb <- ExprBuilder$new(.data)
+    lazy_ans <- order_by.ExprBuilder(eb, ...)
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+}

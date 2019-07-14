@@ -19,3 +19,13 @@ dplyr::arrange
 arrange.ExprBuilder <- function(.data, ...) {
     order_by.ExprBuilder(.data, ...)
 }
+
+#' @rdname arrange-table.express
+#' @export
+#' @importFrom rlang caller_env
+#'
+arrange.data.table <- function(.data, ...) {
+    eb <- ExprBuilder$new(.data)
+    lazy_ans <- order_by.ExprBuilder(eb, ...)
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+}
