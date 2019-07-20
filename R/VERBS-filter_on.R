@@ -3,6 +3,13 @@
 #' Helper to filter specifying the `on` part of the [data.table::data.table] query.
 #'
 #' @export
+#'
+filter_on <- function(.data, ...) {
+    UseMethod("filter_on")
+}
+
+#' @rdname filter_on
+#' @export
 #' @importFrom rlang expr
 #'
 #' @template data-arg
@@ -31,8 +38,8 @@
 #'     start_expr %>%
 #'     filter_on(cyl = 4, gear = 5)
 #'
-filter_on <- function(.data, ..., which = FALSE, nomatch = getOption("datatable.nomatch"), mult = "all",
-                      .negate = FALSE, .chain = getOption("table.express.chain", TRUE))
+filter_on.ExprBuilder <- function(.data, ..., which = FALSE, nomatch = getOption("datatable.nomatch"), mult = "all",
+                                  .negate = FALSE, .chain = getOption("table.express.chain", TRUE))
 {
     key_value <- parse_dots(FALSE, ...)
     keys <- names(key_value)
@@ -59,4 +66,22 @@ filter_on <- function(.data, ..., which = FALSE, nomatch = getOption("datatable.
     }
 
     ans
+}
+
+#' @rdname filter_on
+#' @export
+#' @importFrom rlang caller_env
+#'
+#' @template expr-arg
+#'
+filter_on.data.table <- function(.data, ..., .expr = FALSE) {
+    eb <- if (.expr) EagerExprBuilder$new(.data) else ExprBuilder$new(.data)
+    lazy_ans <- filter_on.ExprBuilder(eb, ...)
+
+    if (.expr) {
+        lazy_ans
+    }
+    else {
+        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    }
 }

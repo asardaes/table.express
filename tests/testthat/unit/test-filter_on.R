@@ -65,3 +65,13 @@ test_that("The filter_on verb works when which = TRUE.", {
     ans <- DT %>% start_expr %>% filter_on(vs = 1, am = 0, which = TRUE) %>% end_expr(.by_ref = FALSE)
     expect_identical(ans, expected)
 })
+
+test_that("Eager filter_on works.", {
+    expected <- data.table::copy(DT)[.(1, 0), on = c("vs", "am"), which = TRUE]
+    ans <- data.table::copy(DT) %>% filter_on(vs = 1, am = 0, which = TRUE)
+    expect_identical(ans, expected)
+
+    expected <- data.table::copy(DT)[.(1, 0), flag := TRUE, on = c("vs", "am")]
+    ans <- data.table::copy(DT) %>% filter_on(vs = 1, am = 0, .expr = TRUE) %>% mutate(flag = TRUE)
+    expect_identical(ans, expected)
+})

@@ -12,9 +12,7 @@
 #' @param .some If `TRUE` the rows where *any* of the columns specified in `.col` have extrema are
 #'   returned.
 #' @template chain-arg
-#' @param .expr If `.data` is a `data.table` and `.expr` is `TRUE`, an instance of
-#'   [EagerExprBuilder] will be returned. Useful if you want to add clauses to `j`, e.g. with
-#'   [mutate-table.express].
+#' @template expr-arg
 #'
 #' @details
 #'
