@@ -2,11 +2,21 @@
 % Please edit documentation in R/VERBS-transmute_sd.R
 \name{transmute_sd}
 \alias{transmute_sd}
+\alias{transmute_sd.ExprBuilder}
+\alias{transmute_sd.EagerExprBuilder}
+\alias{transmute_sd.data.table}
 \title{Transmute subset of data}
 \usage{
-transmute_sd(.data, .SDcols = everything(), .how = identity, ...,
-  .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+transmute_sd(.data, .SDcols = everything(), .how = identity, ...)
+
+\method{transmute_sd}{ExprBuilder}(.data, .SDcols = everything(),
+  .how = identity, ..., .parse = getOption("table.express.parse",
+  FALSE), .chain = getOption("table.express.chain", TRUE))
+
+\method{transmute_sd}{EagerExprBuilder}(.data, ...,
+  .parent_env = rlang::caller_env())
+
+\method{transmute_sd}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -23,6 +33,8 @@ used for the new columns' names.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}}
 }
 \description{
 Like \link{transmute-table.express} but for a single call and maybe specifying \code{.SDcols}.

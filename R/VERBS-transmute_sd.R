@@ -3,6 +3,13 @@
 #' Like [transmute-table.express] but for a single call and maybe specifying `.SDcols`.
 #'
 #' @export
+#'
+transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...) {
+    UseMethod("transmute_sd")
+}
+
+#' @rdname transmute_sd
+#' @export
 #' @importFrom rlang enquo
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
@@ -46,9 +53,9 @@
 #'     start_expr %>%
 #'     transmute_sd(is.numeric(.COL), .COL * 2)
 #'
-transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...,
-                         .parse = getOption("table.express.parse", FALSE),
-                         .chain = getOption("table.express.chain", TRUE))
+transmute_sd.ExprBuilder <- function(.data, .SDcols = everything(), .how = identity, ...,
+                                     .parse = getOption("table.express.parse", FALSE),
+                                     .chain = getOption("table.express.chain", TRUE))
 {
     which_quo <- rlang::enquo(.SDcols)
     how_quo <- rlang::enquo(.how)
@@ -86,4 +93,24 @@ transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...,
     }
 
     ans
+}
+
+#' @rdname transmute_sd
+#' @export
+#' @importFrom rlang caller_env
+#'
+#' @param .parent_env See [end_expr()]
+#'
+transmute_sd.EagerExprBuilder <- function(.data, ..., .parent_env = rlang::caller_env()) {
+    end_expr.ExprBuilder(transmute_sd.ExprBuilder(.data, ...), .parent_env = .parent_env)
+}
+
+#' @rdname transmute_sd
+#' @export
+#' @importFrom rlang caller_env
+#'
+transmute_sd.data.table <- function(.data, ...) {
+    eb <- ExprBuilder$new(.data)
+    lazy_ans <- transmute_sd.ExprBuilder(eb, ...)
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
 }
