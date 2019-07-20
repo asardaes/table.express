@@ -2,11 +2,21 @@
 % Please edit documentation in R/VERBS-mutate_sd.R
 \name{mutate_sd}
 \alias{mutate_sd}
+\alias{mutate_sd.ExprBuilder}
+\alias{mutate_sd.EagerExprBuilder}
+\alias{mutate_sd.data.table}
 \title{Mutate subset of data}
 \usage{
-mutate_sd(.data, .SDcols, .how = identity, ..., .prefix, .suffix,
-  .parse = getOption("table.express.parse", FALSE),
+mutate_sd(.data, .SDcols, .how = identity, ...)
+
+\method{mutate_sd}{ExprBuilder}(.data, .SDcols, .how = identity, ...,
+  .prefix, .suffix, .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
+
+\method{mutate_sd}{EagerExprBuilder}(.data, ...,
+  .parent_env = rlang::caller_env())
+
+\method{mutate_sd}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -26,6 +36,8 @@ column's name. If neither is missing, \code{.prefix} has preference.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}}
 }
 \description{
 Like \link{mutate-table.express} but possibly recycling calls.

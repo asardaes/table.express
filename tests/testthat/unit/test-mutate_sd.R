@@ -160,3 +160,13 @@ test_that("Mutating SD with :-calls works.", {
     ans <- dt %>% start_expr %>% mutate_sd(mpg:3, -1L) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Eager mutation of SD works.", {
+    expected <- data.table::copy(DT)[, c("mpg", "cyl") := lapply(.SD, "*", 2), .SDcols = c("mpg", "cyl")]
+    ans <- data.table::copy(DT) %>% mutate_sd(c("mpg", "cyl"), .COL * 2)
+    expect_identical(ans, expected)
+
+    expected <- data.table::copy(DT)[vs == 0, c("mpg", "cyl") := lapply(.SD, "*", 2), .SDcols = c("mpg", "cyl")]
+    ans <- data.table::copy(DT) %>% where(vs == 0) %>% mutate_sd(c("mpg", "cyl"), .COL * 2)
+    expect_identical(ans, expected)
+})
