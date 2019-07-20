@@ -61,3 +61,13 @@ test_that("Filtering SD when which = TRUE works.", {
     ans <- DT %>% start_expr %>% filter_sd(vs:am, .COL == 1, which = TRUE) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Eager filter_sd works.", {
+    expected <- DT[vs == 1 & am == 1, which = TRUE]
+    ans <- DT %>% filter_sd(vs:am, .COL == 1, which = TRUE)
+    expect_identical(ans, expected)
+
+    expected <- data.table::copy(DT)[vs == 1 & am == 1, flag := TRUE]
+    ans <- data.table::copy(DT) %>% filter_sd(vs:am, .COL == 1, .expr = TRUE) %>% mutate(flag = TRUE)
+    expect_identical(ans, expected)
+})

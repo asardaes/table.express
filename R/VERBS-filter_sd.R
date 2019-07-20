@@ -3,6 +3,13 @@
 #' Helper to filter rows with the same condition applied to a subset of the data.
 #'
 #' @export
+#'
+filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ...) {
+    UseMethod("filter_sd")
+}
+
+#' @rdname filter_sd
+#' @export
 #' @importFrom rlang call2
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
@@ -39,9 +46,9 @@
 #'     start_expr %>%
 #'     filter_sd(c("vs", "am"), .COL == 1)
 #'
-filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collapse = `&`,
-                      .parse = getOption("table.express.parse", FALSE),
-                      .chain = getOption("table.express.chain", TRUE))
+filter_sd.ExprBuilder <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collapse = `&`,
+                                  .parse = getOption("table.express.parse", FALSE),
+                                  .chain = getOption("table.express.chain", TRUE))
 {
     .SDcols <- process_sdcols(.data, rlang::enquo(.SDcols))
 
@@ -62,6 +69,24 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collaps
 
     where(.data, !!!clauses, which = rlang::maybe_missing(which), .collapse = !!rlang::enexpr(.collapse),
           .parse = FALSE, .chain = .chain)
+}
+
+#' @rdname filter_sd
+#' @export
+#' @importFrom rlang caller_env
+#'
+#' @template expr-arg
+#'
+filter_sd.data.table <- function(.data, ..., .expr = FALSE) {
+    eb <- if (.expr) EagerExprBuilder$new(.data) else ExprBuilder$new(.data)
+    lazy_ans <- filter_sd.ExprBuilder(eb, ...)
+
+    if (.expr) {
+        lazy_ans
+    }
+    else {
+        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    }
 }
 
 #' @importFrom rlang as_label

@@ -2,11 +2,18 @@
 % Please edit documentation in R/VERBS-filter_sd.R
 \name{filter_sd}
 \alias{filter_sd}
+\alias{filter_sd.ExprBuilder}
+\alias{filter_sd.data.table}
 \title{Filter subset of data}
 \usage{
-filter_sd(.data, .SDcols, .how = Negate(is.na), ..., which,
-  .collapse = `&`, .parse = getOption("table.express.parse", FALSE),
+filter_sd(.data, .SDcols, .how = Negate(is.na), ...)
+
+\method{filter_sd}{ExprBuilder}(.data, .SDcols, .how = Negate(is.na),
+  ..., which, .collapse = `&`,
+  .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
+
+\method{filter_sd}{data.table}(.data, ..., .expr = FALSE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -25,6 +32,10 @@ filter_sd(.data, .SDcols, .how = Negate(is.na), ..., which,
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.expr}{If \code{.data} is a \code{data.table} and \code{.expr} is \code{TRUE}, an instance of
+\link{EagerExprBuilder} will be returned. Useful if you want to add clauses to \code{j}, e.g. with
+\link{mutate-table.express}.}
 }
 \description{
 Helper to filter rows with the same condition applied to a subset of the data.
