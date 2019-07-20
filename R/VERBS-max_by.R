@@ -12,6 +12,9 @@
 #' @param .some If `TRUE` the rows where *any* of the columns specified in `.col` have extrema are
 #'   returned.
 #' @template chain-arg
+#' @param .expr If `.data` is a `data.table` and `.expr` is `TRUE`, an instance of
+#'   [EagerExprBuilder] will be returned. Useful if you want to add clauses to `j`, e.g. with
+#'   [mutate-table.express].
 #'
 #' @details
 #'
@@ -51,4 +54,20 @@ max_by.ExprBuilder <- function(.data, .col, ..., .some = FALSE, .chain = getOpti
     nested <- extrema_by(expressions, .some, ...)
 
     where.ExprBuilder(.data, nest_expr(.start = FALSE, .parse = FALSE, `{`(!!nested)), .parse = FALSE, .chain = .chain)
+}
+
+#' @rdname extrema_by
+#' @export
+#' @importFrom rlang caller_env
+#'
+max_by.data.table <- function(.data, .col, ..., .expr = FALSE) {
+    eb <- if (.expr) EagerExprBuilder$new(.data) else ExprBuilder$new(.data)
+    lazy_ans <- max_by.ExprBuilder(eb, .col, ...)
+
+    if (.expr) {
+        lazy_ans
+    }
+    else {
+        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    }
 }

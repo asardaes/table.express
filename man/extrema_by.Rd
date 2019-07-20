@@ -4,8 +4,10 @@
 \alias{extrema_by}
 \alias{max_by}
 \alias{max_by.ExprBuilder}
+\alias{max_by.data.table}
 \alias{min_by}
 \alias{min_by.ExprBuilder}
+\alias{min_by.data.table}
 \title{Find rows with extrema in specific columns}
 \usage{
 max_by(.data, .col, ...)
@@ -13,10 +15,14 @@ max_by(.data, .col, ...)
 \method{max_by}{ExprBuilder}(.data, .col, ..., .some = FALSE,
   .chain = getOption("table.express.chain", TRUE))
 
+\method{max_by}{data.table}(.data, .col, ..., .expr = FALSE)
+
 min_by(.data, .col, ...)
 
 \method{min_by}{ExprBuilder}(.data, .col, ..., .some = FALSE,
   .chain = getOption("table.express.chain", TRUE))
+
+\method{min_by}{data.table}(.data, .col, ..., .expr = FALSE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -30,6 +36,10 @@ returned.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.expr}{If \code{.data} is a \code{data.table} and \code{.expr} is \code{TRUE}, an instance of
+\link{EagerExprBuilder} will be returned. Useful if you want to add clauses to \code{j}, e.g. with
+\link{mutate-table.express}.}
 }
 \description{
 Find rows with maxima/minima in given columns.

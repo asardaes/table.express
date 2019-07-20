@@ -33,3 +33,13 @@ test_that("min_by for multiple .col works.", {
     ans <- DT %>% start_expr %>% min_by(c("gear", "carb"), cyl, .some = TRUE) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Eager min_by works.", {
+    expected <- DT[DT[, .I[mpg == min(mpg)], by = "vs"]$V1]
+    ans <- DT %>% min_by("mpg", vs)
+    expect_identical(ans, expected)
+
+    expected <- data.table::copy(DT)[DT[, .I[mpg == min(mpg)], by = "vs"]$V1, flag := TRUE]
+    ans <- data.table::copy(DT) %>% min_by("mpg", vs, .expr = TRUE) %>% mutate(flag = TRUE)
+    expect_identical(ans, expected)
+})
