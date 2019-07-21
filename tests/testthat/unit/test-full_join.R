@@ -21,3 +21,13 @@ test_that("Self full join works.", {
     ans <- lhs %>% start_expr %>% full_join(, x) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Eager full_join works.", {
+    expected <- merge(lhs, rhs, by = "x", all = TRUE)
+    ans <- lhs %>% full_join(rhs, x)
+    expect_identical(ans, expected)
+
+    expected <- merge(lhs, lhs, by = "x", all = TRUE, allow = TRUE)
+    ans <- lhs %>% full_join(, x)
+    expect_identical(ans, expected)
+})

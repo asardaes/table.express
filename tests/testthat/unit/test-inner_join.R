@@ -27,3 +27,13 @@ test_that("Nesting expressions in inner_join's y works.", {
 
     expect_identical(ans, expected)
 })
+
+test_that("Eager inner_join works.", {
+    expected <- paypal[website, on = .(payment_id = session_id), nomatch = NULL]
+    ans <- paypal %>% inner_join(website, payment_id = session_id)
+    expect_identical(ans, expected)
+
+    expected <- paypal[website, .(name, payment_id), on = .(payment_id = session_id), nomatch = NULL]
+    ans <- paypal %>% inner_join(website, payment_id = session_id, .expr = TRUE) %>% select(name, payment_id)
+    expect_identical(ans, expected)
+})

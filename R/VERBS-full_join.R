@@ -39,3 +39,13 @@ full_join.ExprBuilder <- function(x, y, ..., sort = TRUE, allow = TRUE, .parent_
     ans <- base::merge(x, y, all = TRUE, by.x = by_x, by.y = by_y, sort = sort, allow.cartesian = allow)
     ExprBuilder$new(ans)
 }
+
+#' @rdname joins
+#' @export
+#' @importFrom rlang caller_env
+#'
+full_join.data.table <- function(x, ...) {
+    eb <- ExprBuilder$new(x)
+    lazy_ans <- full_join.ExprBuilder(eb, ...)
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+}

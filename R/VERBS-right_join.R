@@ -31,3 +31,23 @@ right_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
     x <- x$set_where(y, TRUE)
     leftright_join(x, on, join_extras)
 }
+
+#' @rdname joins
+#' @export
+#' @importFrom rlang caller_env
+#'
+right_join.data.table <- function(x, ..., allow = FALSE, .expr = FALSE) {
+    eb <- if (.expr) EagerExprBuilder$new(x) else ExprBuilder$new(x)
+    lazy_ans <- right_join.ExprBuilder(eb, ...)
+
+    if (allow) {
+        frame_append(lazy_ans, allow.cartesian = TRUE)
+    }
+
+    if (.expr) {
+        lazy_ans
+    }
+    else {
+        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    }
+}

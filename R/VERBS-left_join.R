@@ -40,3 +40,30 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .par
 
     leftright_join(x, on, join_extras)
 }
+
+#' @rdname joins
+#' @export
+#' @importFrom rlang caller_env
+#' @importFrom rlang enexpr
+#'
+left_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
+    x_expr <- rlang::enexpr(x)
+
+    if (missing(y)) {
+        y <- x
+    }
+
+    eb <- if (.expr) EagerExprBuilder$new(y) else ExprBuilder$new(y)
+    lazy_ans <- right_join.ExprBuilder(eb, y = !!x_expr, ...)
+
+    if (allow) {
+        frame_append(lazy_ans, allow.cartesian = TRUE)
+    }
+
+    if (.expr) {
+        lazy_ans
+    }
+    else {
+        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    }
+}

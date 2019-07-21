@@ -28,7 +28,7 @@ given values.}
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
 
-\item{.expr}{If \code{.data} is a \code{data.table} and \code{.expr} is \code{TRUE}, an instance of
+\item{.expr}{If the input is a \code{data.table} and \code{.expr} is \code{TRUE}, an instance of
 \link{EagerExprBuilder} will be returned. Useful if you want to add clauses to \code{j}, e.g. with
 \link{mutate-table.express}.}
 }

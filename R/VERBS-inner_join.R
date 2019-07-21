@@ -29,3 +29,19 @@ inner_join.ExprBuilder <- function(x, y, ...) {
 
     x
 }
+
+#' @rdname joins
+#' @export
+#' @importFrom rlang caller_env
+#'
+inner_join.data.table <- function(x, ..., .expr = FALSE) {
+    eb <- if (.expr) EagerExprBuilder$new(x) else ExprBuilder$new(x)
+    lazy_ans <- inner_join.ExprBuilder(eb, ...)
+
+    if (.expr) {
+        lazy_ans
+    }
+    else {
+        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    }
+}
