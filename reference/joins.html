@@ -68,7 +68,7 @@ information." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -139,16 +139,28 @@ information.</p>
     <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>anti_join</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>anti_join</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>.expr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>full_join</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>allow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>.parent_env</span>)
 
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>full_join</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>inner_join</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>inner_join</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>.expr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>, <span class='no'>nomatch</span>, <span class='no'>mult</span>, <span class='no'>roll</span>, <span class='no'>rollends</span>,
   <span class='no'>.parent_env</span>)
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>, <span class='kw'>allow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>.expr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>mutate_join</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
 
@@ -156,11 +168,26 @@ information.</p>
 <span class='fu'>mutate_join</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>, <span class='no'>.SDcols</span>, <span class='no'>mult</span>, <span class='no'>roll</span>, <span class='no'>rollends</span>,
   <span class='kw'>allow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>.by_each</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>.parent_env</span>)
 
+<span class='co'># S3 method for EagerExprBuilder</span>
+<span class='fu'>mutate_join</span>(<span class='no'>x</span>, <span class='no'>...</span>,
+  <span class='kw'>.parent_env</span> <span class='kw'>=</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/caller_env.html'>caller_env</a></span>())
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'>mutate_join</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>right_join</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>, <span class='no'>nomatch</span>, <span class='no'>mult</span>, <span class='no'>roll</span>, <span class='no'>rollends</span>)
 
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>right_join</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>allow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>.expr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='co'># S3 method for ExprBuilder</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>semi_join</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>, <span class='no'>.parent_env</span>)</pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>semi_join</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>, <span class='kw'>allow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>.eager</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>semi_join</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>, <span class='kw'>allow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>.eager</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,11 +198,18 @@ information.</p>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a>.</p></td>
+      <td><p>A <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a> or, for some verbs (see details), a call to
+<code><a href='nest_expr.html'>nest_expr()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Expressions for the <code>on</code> part of the join.</p></td>
+    </tr>
+    <tr>
+      <th>.expr</th>
+      <td><p>If the input is a <code>data.table</code> and <code>.expr</code> is <code>TRUE</code>, an instance of
+<a href='EagerExprBuilder.html'>EagerExprBuilder</a> will be returned. Useful if you want to add clauses to <code>j</code>, e.g. with
+<a href='mutate-table.express.html'>mutate-table.express</a>.</p></td>
     </tr>
     <tr>
       <th>sort</th>
@@ -201,14 +235,25 @@ information.</p>
       <th>.by_each</th>
       <td><p>For <code>mutate_join</code>. See the details below.</p></td>
     </tr>
+    <tr>
+      <th>.eager</th>
+      <td><p>For <code>semi_join</code>. If <code>TRUE</code>, it uses <code><a href='nest_expr.html'>nest_expr()</a></code> to build an expression like
+<a href='https://stackoverflow.com/a/18971223/5793905'>this</a> instead of the default one. This uses the
+captured <code>data.table</code> eagerly, so use <code><a href='chain.html'>chain()</a></code> when needed. The default is lazy.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>full_join</code> method is really a wrapper for <code><a href='https://rdrr.io/pkg/data.table/man/merge.html'>data.table::merge</a></code> that specifies <code>all = TRUE</code>.
+    <p>The following joins support <code><a href='nest_expr.html'>nest_expr()</a></code> in <code>y</code>:</p><ul>
+<li><p><code>anti_join</code></p></li>
+<li><p><code>inner_join</code></p></li>
+<li><p><code>right_join</code></p></li>
+</ul>
+
+<p>The <code>full_join</code> method is really a wrapper for <code><a href='https://rdrr.io/pkg/data.table/man/merge.html'>data.table::merge</a></code> that specifies <code>all = TRUE</code>.
 The expression in <code>x</code> gets evaluated, merged with <code>y</code>, and the result is captured in a new
 <a href='ExprBuilder.html'>ExprBuilder</a>. Useful in case you want to keep building expressions after the merge.</p>
-<p>The <code>semi_join</code> method <a href='chain.html'>starts a new expression</a> immediately.</p>
     
     <h2 class="hasAnchor" id="mutating-join"><a class="anchor" href="#mutating-join"></a>Mutating join</h2>
 
@@ -254,15 +299,11 @@ expressions from the list in <code>.SDcols</code></p></li>
 
 
 <span class='no'>rhs</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>anti_join</a></span>(<span class='no'>lhs</span>, <span class='no'>x</span>, <span class='no'>v</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;    x v foo
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>anti_join</a></span>(<span class='no'>lhs</span>, <span class='no'>x</span>, <span class='no'>v</span>)</div><div class='output co'>#&gt;    x v foo
 #&gt; 1: b 7   2</div><div class='input'>
 
 <span class='no'>lhs</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>inner_join</a></span>(<span class='no'>rhs</span>, <span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;    x y v i.v foo
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>inner_join</a></span>(<span class='no'>rhs</span>, <span class='no'>x</span>)</div><div class='output co'>#&gt;    x y v i.v foo
 #&gt; 1: c 1 7   8   4
 #&gt; 2: c 3 8   8   4
 #&gt; 3: c 6 9   8   4
@@ -272,9 +313,7 @@ expressions from the list in <code>.SDcols</code></p></li>
 
 <span class='co'># creates new data.table</span>
 <span class='no'>lhs</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>rhs</span>, <span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;    x  v foo y i.v
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>rhs</span>, <span class='no'>x</span>)</div><div class='output co'>#&gt;    x  v foo y i.v
 #&gt; 1: b  7   2 1   1
 #&gt; 2: b  7   2 3   2
 #&gt; 3: b  7   2 6   3
@@ -298,9 +337,7 @@ expressions from the list in <code>.SDcols</code></p></li>
 
 <span class='co'># creates new data.table</span>
 <span class='no'>lhs</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>right_join</a></span>(<span class='no'>rhs</span>, <span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;    x y v i.v foo
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>right_join</a></span>(<span class='no'>rhs</span>, <span class='no'>x</span>)</div><div class='output co'>#&gt;    x y v i.v foo
 #&gt; 1: c 1 7   8   4
 #&gt; 2: c 3 8   8   4
 #&gt; 3: c 6 9   8   4
@@ -310,15 +347,13 @@ expressions from the list in <code>.SDcols</code></p></li>
 
 <span class='co'># keep only columns from lhs</span>
 <span class='no'>lhs</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>semi_join</a></span>(<span class='no'>rhs</span>, <span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;    x y v
-#&gt; 1: b 1 1
-#&gt; 2: b 3 2
-#&gt; 3: b 6 3
-#&gt; 4: c 1 7
-#&gt; 5: c 3 8
-#&gt; 6: c 6 9</div><div class='input'>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>semi_join</a></span>(<span class='no'>rhs</span>, <span class='no'>x</span>)</div><div class='output co'>#&gt;    x y v
+#&gt; 1: c 1 7
+#&gt; 2: c 3 8
+#&gt; 3: c 6 9
+#&gt; 4: b 1 1
+#&gt; 5: b 3 2
+#&gt; 6: b 6 3</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

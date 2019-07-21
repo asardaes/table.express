@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -135,7 +135,14 @@
     <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
-  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
+  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
+
+<span class='co'># S3 method for EagerExprBuilder</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>,
+  <span class='kw'>.parent_env</span> <span class='kw'>=</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/caller_env.html'>caller_env</a></span>())
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,6 +164,10 @@
       <td><p>Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?</p></td>
     </tr>
+    <tr>
+      <th>.parent_env</th>
+      <td><p>See <code><a href='end_expr.html'>end_expr()</a></code></p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -172,8 +183,40 @@ clause being set already exists?</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mtcars"</span>)
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='kw'>ans</span> <span class='kw'>=</span> <span class='no'>mpg</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; .DT_[, list(ans = mpg * 2)]</div><div class='input'>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='kw'>ans</span> <span class='kw'>=</span> <span class='no'>mpg</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt;      ans
+#&gt;  1: 42.0
+#&gt;  2: 42.0
+#&gt;  3: 45.6
+#&gt;  4: 42.8
+#&gt;  5: 37.4
+#&gt;  6: 36.2
+#&gt;  7: 28.6
+#&gt;  8: 48.8
+#&gt;  9: 45.6
+#&gt; 10: 38.4
+#&gt; 11: 35.6
+#&gt; 12: 32.8
+#&gt; 13: 34.6
+#&gt; 14: 30.4
+#&gt; 15: 20.8
+#&gt; 16: 20.8
+#&gt; 17: 29.4
+#&gt; 18: 64.8
+#&gt; 19: 60.8
+#&gt; 20: 67.8
+#&gt; 21: 43.0
+#&gt; 22: 31.0
+#&gt; 23: 30.4
+#&gt; 24: 26.6
+#&gt; 25: 38.4
+#&gt; 26: 54.6
+#&gt; 27: 52.0
+#&gt; 28: 60.8
+#&gt; 29: 31.6
+#&gt; 30: 39.4
+#&gt; 31: 30.0
+#&gt; 32: 42.8
+#&gt;      ans</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

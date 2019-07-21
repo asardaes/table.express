@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -132,9 +132,16 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>filter_sd</span>(<span class='no'>.data</span>, <span class='no'>.SDcols</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.na</span>), <span class='no'>...</span>, <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`&amp;`</span>,
+    <pre class="usage"><span class='fu'>filter_sd</span>(<span class='no'>.data</span>, <span class='no'>.SDcols</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.na</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for ExprBuilder</span>
+<span class='fu'>filter_sd</span>(<span class='no'>.data</span>, <span class='no'>.SDcols</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.na</span>),
+  <span class='no'>...</span>, <span class='no'>which</span>, <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`&amp;`</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
-  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
+  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>), <span class='kw'>.caller_env_n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'>filter_sd</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.expr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,6 +163,10 @@
       <td><p>Possibly more arguments for <code>.how</code>.</p></td>
     </tr>
     <tr>
+      <th>which</th>
+      <td><p>Passed to <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a>.</p></td>
+    </tr>
+    <tr>
       <th>.collapse</th>
       <td><p>See <a href='where-table.express.html'>where-table.express</a>.</p></td>
     </tr>
@@ -167,6 +178,17 @@
       <th>.chain</th>
       <td><p>Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?</p></td>
+    </tr>
+    <tr>
+      <th>.caller_env_n</th>
+      <td><p>Internal. Passed to <code><a href='https://rlang.r-lib.org/reference/caller_env.html'>rlang::caller_env()</a></code> to find the function specified in
+<code>.how</code> and <a href='https://rlang.r-lib.org/reference/call_standardise.html'>standardize</a> its call.</p></td>
+    </tr>
+    <tr>
+      <th>.expr</th>
+      <td><p>If the input is a <code>data.table</code> and <code>.expr</code> is <code>TRUE</code>, an instance of
+<a href='EagerExprBuilder.html'>EagerExprBuilder</a> will be returned. Useful if you want to add clauses to <code>j</code>, e.g. with
+<a href='mutate-table.express.html'>mutate-table.express</a>.</p></td>
     </tr>
     </table>
     
@@ -193,8 +215,14 @@ replaced by a <em>column</em> of the data.</p></li>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mtcars"</span>)
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>filter_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; .DT_[vs == 1 &amp; am == 1]</div><div class='input'>
+    <span class='fu'>filter_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+#&gt; 1: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+#&gt; 2: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+#&gt; 3: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+#&gt; 4: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+#&gt; 5: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+#&gt; 6: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+#&gt; 7: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

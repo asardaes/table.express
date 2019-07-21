@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set key of the result — key_by • table.express</title>
+<title>Set key to group by — key_by • table.express</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Set key of the result — key_by" />
+<meta property="og:title" content="Set key to group by — key_by" />
 
-<meta property="og:description" content="Group by and set key of the result." />
+<meta property="og:description" content="Group by setting key of the input." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -121,14 +121,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set key of the result</h1>
+    <h1>Set key to group by</h1>
     <small class="dont-index">Source: <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-key_by.R'><code>R/VERBS-key_by.R</code></a></small>
     <div class="hidden name"><code>key_by.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Group by and set key of the result.</p>
+    <p>Group by setting key of the input.</p>
     
     </div>
 
@@ -137,7 +137,10 @@
 <span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'>key_by</span>(<span class='no'>.data</span>, <span class='no'>...</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
-  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
+  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'>key_by</span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

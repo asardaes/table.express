@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -179,31 +179,31 @@
       <tr>
         
         <td>
-          <p><code><a href="arrange-table.express.html">arrange(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
+          <p><code><a href="arrange-table.express.html">arrange(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="arrange-table.express.html">arrange(<i>&lt;data.table&gt;</i>)</a></code> </p>
         </td>
         <td><p>Arrange rows</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="distinct-table.express.html">distinct(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
+          <p><code><a href="distinct-table.express.html">distinct(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="distinct-table.express.html">distinct(<i>&lt;data.table&gt;</i>)</a></code> </p>
         </td>
         <td><p>Rows with distinct combinations of columns</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="filter-table.express.html">filter(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
+          <p><code><a href="filter-table.express.html">filter(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="filter-table.express.html">filter(<i>&lt;data.table&gt;</i>)</a></code> </p>
         </td>
         <td><p>Filter rows</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="group_by-table.express.html">group_by(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
+          <p><code><a href="group_by-table.express.html">group_by(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="group_by-table.express.html">group_by(<i>&lt;data.table&gt;</i>)</a></code> </p>
         </td>
         <td><p>Grouping clauses</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="mutate-table.express.html">mutate(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
+          <p><code><a href="mutate-table.express.html">mutate(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="mutate-table.express.html">mutate(<i>&lt;EagerExprBuilder&gt;</i>)</a></code> <code><a href="mutate-table.express.html">mutate(<i>&lt;data.table&gt;</i>)</a></code> </p>
         </td>
         <td><p>Add or update columns</p></td>
       </tr><tr>
@@ -215,13 +215,13 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="select-table.express.html">select(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
+          <p><code><a href="select-table.express.html">select(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="select-table.express.html">select(<i>&lt;EagerExprBuilder&gt;</i>)</a></code> <code><a href="select-table.express.html">select(<i>&lt;data.table&gt;</i>)</a></code> </p>
         </td>
         <td><p>Select clause</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="transmute-table.express.html">transmute(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
+          <p><code><a href="transmute-table.express.html">transmute(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="transmute-table.express.html">transmute(<i>&lt;EagerExprBuilder&gt;</i>)</a></code> <code><a href="transmute-table.express.html">transmute(<i>&lt;data.table&gt;</i>)</a></code> </p>
         </td>
         <td><p>Compute new columns</p></td>
       </tr><tr>
@@ -259,7 +259,13 @@
         <td>
           <p><code><a href="key_by.html">key_by()</a></code> </p>
         </td>
-        <td><p>Set key of the result</p></td>
+        <td><p>Set key to group by</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="extrema_by.html">max_by()</a></code> <code><a href="extrema_by.html">min_by()</a></code> </p>
+        </td>
+        <td><p>Find rows with extrema in specific columns</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -271,7 +277,7 @@
       <tr>
         
         <td>
-          <p><code><a href="joins.html">anti_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">full_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">inner_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">left_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">mutate_join()</a></code> <code><a href="joins.html">right_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">semi_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> </p>
+          <p><code><a href="joins.html">anti_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">anti_join(<i>&lt;data.table&gt;</i>)</a></code> <code><a href="joins.html">full_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">full_join(<i>&lt;data.table&gt;</i>)</a></code> <code><a href="joins.html">inner_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">inner_join(<i>&lt;data.table&gt;</i>)</a></code> <code><a href="joins.html">left_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">left_join(<i>&lt;data.table&gt;</i>)</a></code> <code><a href="joins.html">mutate_join()</a></code> <code><a href="joins.html">right_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">right_join(<i>&lt;data.table&gt;</i>)</a></code> <code><a href="joins.html">semi_join(<i>&lt;ExprBuilder&gt;</i>)</a></code> <code><a href="joins.html">semi_join(<i>&lt;data.table&gt;</i>)</a></code> </p>
         </td>
         <td><p>Joining verbs</p></td>
       </tr>
@@ -288,6 +294,12 @@
           <p><code><a href="frame_append.html">frame_append()</a></code> </p>
         </td>
         <td><p>Append expressions to the frame</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nest_expr.html">nest_expr()</a></code> </p>
+        </td>
+        <td><p>Nest expressions as a functional chain</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -302,6 +314,12 @@
           <p><code><a href="ExprBuilder.html">ExprBuilder</a></code> </p>
         </td>
         <td><p>Frame expression builder</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="EagerExprBuilder.html">EagerExprBuilder</a></code> </p>
+        </td>
+        <td><p>Eager frame expression builder</p></td>
       </tr>
     </tbody>
     </table>

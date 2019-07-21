@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -135,7 +135,14 @@
     <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.negate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
-  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
+  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
+
+<span class='co'># S3 method for EagerExprBuilder</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>,
+  <span class='kw'>.parent_env</span> <span class='kw'>=</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/caller_env.html'>caller_env</a></span>())
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,6 +169,10 @@ match what's given in <code>...</code>.</p></td>
       <td><p>Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?</p></td>
     </tr>
+    <tr>
+      <th>.parent_env</th>
+      <td><p>See <code><a href='end_expr.html'>end_expr()</a></code></p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -177,8 +188,40 @@ clause being set already exists?</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mtcars"</span>)
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>:<span class='no'>cyl</span>)</div><div class='output co'>#&gt; .DT_[, .select_matching(.SD, mpg:cyl, .negate = FALSE)]</div><div class='input'>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>:<span class='no'>cyl</span>)</div><div class='output co'>#&gt;      mpg cyl
+#&gt;  1: 21.0   6
+#&gt;  2: 21.0   6
+#&gt;  3: 22.8   4
+#&gt;  4: 21.4   6
+#&gt;  5: 18.7   8
+#&gt;  6: 18.1   6
+#&gt;  7: 14.3   8
+#&gt;  8: 24.4   4
+#&gt;  9: 22.8   4
+#&gt; 10: 19.2   6
+#&gt; 11: 17.8   6
+#&gt; 12: 16.4   8
+#&gt; 13: 17.3   8
+#&gt; 14: 15.2   8
+#&gt; 15: 10.4   8
+#&gt; 16: 10.4   8
+#&gt; 17: 14.7   8
+#&gt; 18: 32.4   4
+#&gt; 19: 30.4   4
+#&gt; 20: 33.9   4
+#&gt; 21: 21.5   4
+#&gt; 22: 15.5   8
+#&gt; 23: 15.2   8
+#&gt; 24: 13.3   8
+#&gt; 25: 19.2   8
+#&gt; 26: 27.3   4
+#&gt; 27: 26.0   4
+#&gt; 28: 30.4   4
+#&gt; 29: 15.8   8
+#&gt; 30: 19.7   6
+#&gt; 31: 15.0   8
+#&gt; 32: 21.4   4
+#&gt;      mpg cyl</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

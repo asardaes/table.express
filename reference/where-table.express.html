@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -135,9 +135,12 @@
     <pre class="usage"><span class='fu'>where</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ExprBuilder</span>
-<span class='fu'>where</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`&amp;`</span>,
+<span class='fu'>where</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='no'>which</span>, <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`&amp;`</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
-  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
+  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'>where</span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,6 +152,10 @@
     <tr>
       <th>...</th>
       <td><p>Arguments for the specific methods.</p></td>
+    </tr>
+    <tr>
+      <th>which</th>
+      <td><p>Passed to <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a>.</p></td>
     </tr>
     <tr>
       <th>.collapse</th>
@@ -167,7 +174,11 @@ clause being set already exists?</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To see more examples, check the
+    <p>For <a href='ExprBuilder.html'>ExprBuilder</a>, the expressions in <code>...</code> can call <code><a href='nest_expr.html'>nest_expr()</a></code>, and are eagerly nested if
+they do.</p>
+<p>The <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a> method is <strong>lazy</strong>, so it expects another verb to follow
+<em>afterwards</em>.</p>
+<p>To see more examples, check the
 <a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
 <a href='table.express-package.html'>table.express-package</a> entry.</p>
     
@@ -179,6 +190,28 @@ clause being set already exists?</p></td>
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>where</span>(<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>0</span>, <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; .DT_[vs == 0 &amp; am == 1]</div><div class='input'>
+
+<span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>where</span>(<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>0</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt;     mpg
+#&gt;  1:  21
+#&gt;  2:  21
+#&gt;  3:  19
+#&gt;  4:  14
+#&gt;  5:  16
+#&gt;  6:  17
+#&gt;  7:  15
+#&gt;  8:  10
+#&gt;  9:  10
+#&gt; 10:  15
+#&gt; 11:  16
+#&gt; 12:  15
+#&gt; 13:  13
+#&gt; 14:  19
+#&gt; 15:  26
+#&gt; 16:  16
+#&gt; 17:  20
+#&gt; 18:  15</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

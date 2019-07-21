@@ -4,6 +4,9 @@
     <loc>https://asardaes.github.io/table.express//index.html</loc>
   </url>
   <url>
+    <loc>https://asardaes.github.io/table.express//reference/EagerExprBuilder.html</loc>
+  </url>
+  <url>
     <loc>https://asardaes.github.io/table.express//reference/ExprBuilder.html</loc>
   </url>
   <url>
@@ -17,6 +20,9 @@
   </url>
   <url>
     <loc>https://asardaes.github.io/table.express//reference/end_expr.html</loc>
+  </url>
+  <url>
+    <loc>https://asardaes.github.io/table.express//reference/extrema_by.html</loc>
   </url>
   <url>
     <loc>https://asardaes.github.io/table.express//reference/filter-table.express.html</loc>
@@ -44,6 +50,9 @@
   </url>
   <url>
     <loc>https://asardaes.github.io/table.express//reference/mutate_sd.html</loc>
+  </url>
+  <url>
+    <loc>https://asardaes.github.io/table.express//reference/nest_expr.html</loc>
   </url>
   <url>
     <loc>https://asardaes.github.io/table.express//reference/order_by-table.express.html</loc>

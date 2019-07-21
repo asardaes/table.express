@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -132,9 +132,19 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>transmute_sd</span>(<span class='no'>.data</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></span>(), <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>,
-  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
-  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
+    <pre class="usage"><span class='fu'>transmute_sd</span>(<span class='no'>.data</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></span>(), <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for ExprBuilder</span>
+<span class='fu'>transmute_sd</span>(<span class='no'>.data</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></span>(),
+  <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>, <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>,
+  <span class='fl'>FALSE</span>), <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
+
+<span class='co'># S3 method for EagerExprBuilder</span>
+<span class='fu'>transmute_sd</span>(<span class='no'>.data</span>, <span class='no'>...</span>,
+  <span class='kw'>.parent_env</span> <span class='kw'>=</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/caller_env.html'>caller_env</a></span>())
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'>transmute_sd</span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +176,10 @@ used for the new columns' names.</p></td>
       <td><p>Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?</p></td>
     </tr>
+    <tr>
+      <th>.parent_env</th>
+      <td><p>See <code><a href='end_expr.html'>end_expr()</a></code></p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -190,13 +204,75 @@ using the captured <code>data.table</code>. See the examples here or in <a href=
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mtcars"</span>)
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>transmute_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>"^d"</span>, <span class='no'>.COLNAME</span>), <span class='no'>.COL</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(grepl("^d", 
-#&gt;     .COLNAME)), .hows = rlang::quos(.COL * 2))]</div><div class='input'>
+    <span class='fu'>transmute_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>"^d"</span>, <span class='no'>.COLNAME</span>), <span class='no'>.COL</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt;      disp drat
+#&gt;  1: 320.0 7.80
+#&gt;  2: 320.0 7.80
+#&gt;  3: 216.0 7.70
+#&gt;  4: 516.0 6.16
+#&gt;  5: 720.0 6.30
+#&gt;  6: 450.0 5.52
+#&gt;  7: 720.0 6.42
+#&gt;  8: 293.4 7.38
+#&gt;  9: 281.6 7.84
+#&gt; 10: 335.2 7.84
+#&gt; 11: 335.2 7.84
+#&gt; 12: 551.6 6.14
+#&gt; 13: 551.6 6.14
+#&gt; 14: 551.6 6.14
+#&gt; 15: 944.0 5.86
+#&gt; 16: 920.0 6.00
+#&gt; 17: 880.0 6.46
+#&gt; 18: 157.4 8.16
+#&gt; 19: 151.4 9.86
+#&gt; 20: 142.2 8.44
+#&gt; 21: 240.2 7.40
+#&gt; 22: 636.0 5.52
+#&gt; 23: 608.0 6.30
+#&gt; 24: 700.0 7.46
+#&gt; 25: 800.0 6.16
+#&gt; 26: 158.0 8.16
+#&gt; 27: 240.6 8.86
+#&gt; 28: 190.2 7.54
+#&gt; 29: 702.0 8.44
+#&gt; 30: 290.0 7.24
+#&gt; 31: 602.0 7.08
+#&gt; 32: 242.0 8.22
+#&gt;      disp drat</div><div class='input'>
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>transmute_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='no'>.COL</span>), <span class='no'>.COL</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(is.numeric(.COL)), 
-#&gt;     .hows = rlang::quos(.COL * 2))]</div><div class='input'>
+    <span class='fu'>transmute_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='no'>.COL</span>), <span class='no'>.COL</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt;      mpg cyl  disp  hp drat     wt  qsec vs am gear carb
+#&gt;  1: 42.0  12 320.0 220 7.80  5.240 32.92  0  2    8    8
+#&gt;  2: 42.0  12 320.0 220 7.80  5.750 34.04  0  2    8    8
+#&gt;  3: 45.6   8 216.0 186 7.70  4.640 37.22  2  2    8    2
+#&gt;  4: 42.8  12 516.0 220 6.16  6.430 38.88  2  0    6    2
+#&gt;  5: 37.4  16 720.0 350 6.30  6.880 34.04  0  0    6    4
+#&gt;  6: 36.2  12 450.0 210 5.52  6.920 40.44  2  0    6    2
+#&gt;  7: 28.6  16 720.0 490 6.42  7.140 31.68  0  0    6    8
+#&gt;  8: 48.8   8 293.4 124 7.38  6.380 40.00  2  0    8    4
+#&gt;  9: 45.6   8 281.6 190 7.84  6.300 45.80  2  0    8    4
+#&gt; 10: 38.4  12 335.2 246 7.84  6.880 36.60  2  0    8    8
+#&gt; 11: 35.6  12 335.2 246 7.84  6.880 37.80  2  0    8    8
+#&gt; 12: 32.8  16 551.6 360 6.14  8.140 34.80  0  0    6    6
+#&gt; 13: 34.6  16 551.6 360 6.14  7.460 35.20  0  0    6    6
+#&gt; 14: 30.4  16 551.6 360 6.14  7.560 36.00  0  0    6    6
+#&gt; 15: 20.8  16 944.0 410 5.86 10.500 35.96  0  0    6    8
+#&gt; 16: 20.8  16 920.0 430 6.00 10.848 35.64  0  0    6    8
+#&gt; 17: 29.4  16 880.0 460 6.46 10.690 34.84  0  0    6    8
+#&gt; 18: 64.8   8 157.4 132 8.16  4.400 38.94  2  2    8    2
+#&gt; 19: 60.8   8 151.4 104 9.86  3.230 37.04  2  2    8    4
+#&gt; 20: 67.8   8 142.2 130 8.44  3.670 39.80  2  2    8    2
+#&gt; 21: 43.0   8 240.2 194 7.40  4.930 40.02  2  0    6    2
+#&gt; 22: 31.0  16 636.0 300 5.52  7.040 33.74  0  0    6    4
+#&gt; 23: 30.4  16 608.0 300 6.30  6.870 34.60  0  0    6    4
+#&gt; 24: 26.6  16 700.0 490 7.46  7.680 30.82  0  0    6    8
+#&gt; 25: 38.4  16 800.0 350 6.16  7.690 34.10  0  0    6    4
+#&gt; 26: 54.6   8 158.0 132 8.16  3.870 37.80  2  2    8    2
+#&gt; 27: 52.0   8 240.6 182 8.86  4.280 33.40  0  2   10    4
+#&gt; 28: 60.8   8 190.2 226 7.54  3.026 33.80  2  2   10    4
+#&gt; 29: 31.6  16 702.0 528 8.44  6.340 29.00  0  2   10    8
+#&gt; 30: 39.4  12 290.0 350 7.24  5.540 31.00  0  2   10   12
+#&gt; 31: 30.0  16 602.0 670 7.08  7.140 29.20  0  2   10   16
+#&gt; 32: 42.8   8 242.0 218 8.22  5.560 37.20  2  2    8    4
+#&gt;      mpg cyl  disp  hp drat     wt  qsec vs am gear carb</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

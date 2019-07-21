@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -132,9 +132,15 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>filter_on</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>nomatch</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"datatable.nomatch"</span>),
-  <span class='kw'>mult</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>.negate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
+    <pre class="usage"><span class='fu'>filter_on</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for ExprBuilder</span>
+<span class='fu'>filter_on</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>nomatch</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"datatable.nomatch"</span>), <span class='kw'>mult</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
+  <span class='kw'>.negate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'>filter_on</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.expr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,10 +151,11 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Key-value pairs, see details.</p></td>
+      <td><p>Key-value pairs, maybe with empty keys if the <code>data.table</code> already has them. See
+details.</p></td>
     </tr>
     <tr>
-      <th>nomatch, mult</th>
+      <th>which, nomatch, mult</th>
       <td><p>See <a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table::data.table</a>.</p></td>
     </tr>
     <tr>
@@ -161,16 +168,22 @@ given values.</p></td>
       <td><p>Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?</p></td>
     </tr>
+    <tr>
+      <th>.expr</th>
+      <td><p>If the input is a <code>data.table</code> and <code>.expr</code> is <code>TRUE</code>, an instance of
+<a href='EagerExprBuilder.html'>EagerExprBuilder</a> will be returned. Useful if you want to add clauses to <code>j</code>, e.g. with
+<a href='mutate-table.express.html'>mutate-table.express</a>.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The key-value pairs in '...' are processed as follows:</p><ul>
-<li><p>The names are used as <code>on</code> in the <code>data.table</code> frame.</p></li>
+<li><p>The names are used as <code>on</code> in the <code>data.table</code> frame. If any name is empty, <code>on</code> is left
+missing.</p></li>
 <li><p>The values are packed in a list and used as <code>i</code> in the <code>data.table</code> frame.</p></li>
 </ul>
 
-<p>Thus, all pairs <strong>must</strong> be named.</p>
 <p>To see more examples, check the
 <a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
 <a href='table.express-package.html'>table.express-package</a> entry.</p>
@@ -181,8 +194,9 @@ clause being set already exists?</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mtcars"</span>)
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>filter_on</span>(<span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>gear</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; .DT_[list(4, 5), on = c("cyl", "gear")]</div><div class='input'>
+    <span class='fu'>filter_on</span>(<span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>gear</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt qsec vs am gear carb
+#&gt; 1: 26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2
+#&gt; 2: 30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

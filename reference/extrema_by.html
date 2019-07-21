@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rows with distinct combinations of columns — distinct-table.express • table.express</title>
+<title>Find rows with extrema in specific columns — extrema_by • table.express</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Rows with distinct combinations of columns — distinct-table.express" />
+<meta property="og:title" content="Find rows with extrema in specific columns — extrema_by" />
 
-<meta property="og:description" content="Rows with distinct combinations of columns" />
+<meta property="og:description" content="Find rows with maxima/minima in given columns." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,23 +121,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Rows with distinct combinations of columns</h1>
-    <small class="dont-index">Source: <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-distinct.R'><code>R/VERBS-distinct.R</code></a></small>
-    <div class="hidden name"><code>distinct-table.express.Rd</code></div>
+    <h1>Find rows with extrema in specific columns</h1>
+    <small class="dont-index">Source: <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-max_by.R'><code>R/VERBS-max_by.R</code></a>, <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-min_by.R'><code>R/VERBS-min_by.R</code></a></small>
+    <div class="hidden name"><code>extrema_by.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Rows with distinct combinations of columns</p>
+    <p>Find rows with maxima/minima in given columns.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.keep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>))
+    <pre class="usage"><span class='fu'>max_by</span>(<span class='no'>.data</span>, <span class='no'>.col</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for ExprBuilder</span>
+<span class='fu'>max_by</span>(<span class='no'>.data</span>, <span class='no'>.col</span>, <span class='no'>...</span>, <span class='kw'>.some</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
 
 <span class='co'># S3 method for data.table</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>max_by</span>(<span class='no'>.data</span>, <span class='no'>.col</span>, <span class='no'>...</span>, <span class='kw'>.expr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>min_by</span>(<span class='no'>.data</span>, <span class='no'>.col</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for ExprBuilder</span>
+<span class='fu'>min_by</span>(<span class='no'>.data</span>, <span class='no'>.col</span>, <span class='no'>...</span>, <span class='kw'>.some</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'>min_by</span>(<span class='no'>.data</span>, <span class='no'>.col</span>, <span class='no'>...</span>, <span class='kw'>.expr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,40 +158,51 @@
       <td><p>An instance of <a href='ExprBuilder.html'>ExprBuilder</a>.</p></td>
     </tr>
     <tr>
+      <th>.col</th>
+      <td><p>A character vector indicating the columns that will be searched for extrema.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>Which columns to use to determine uniqueness.</p></td>
+      <td><p>Optionally, columns to group by, either as characters or symbols.</p></td>
     </tr>
     <tr>
-      <th>.keep</th>
-      <td><p>See details below.</p></td>
+      <th>.some</th>
+      <td><p>If <code>TRUE</code> the rows where <em>any</em> of the columns specified in <code>.col</code> have extrema are
+returned.</p></td>
     </tr>
     <tr>
-      <th>.parse</th>
-      <td><p>Logical. Whether to apply <code><a href='https://rlang.r-lib.org/reference/parse_expr.html'>rlang::parse_expr()</a></code> to obtain the expressions.</p></td>
+      <th>.chain</th>
+      <td><p>Logical. Should a new frame be automatically chained to the expression if the
+clause being set already exists?</p></td>
+    </tr>
+    <tr>
+      <th>.expr</th>
+      <td><p>If the input is a <code>data.table</code> and <code>.expr</code> is <code>TRUE</code>, an instance of
+<a href='EagerExprBuilder.html'>EagerExprBuilder</a> will be returned. Useful if you want to add clauses to <code>j</code>, e.g. with
+<a href='mutate-table.express.html'>mutate-table.express</a>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If <code>.keep = TRUE</code> (the default), the columns not mentioned in <code>...</code> are also kept. However, if
-a new column is created in one of the expressions therein, <code>.keep</code> can also be set to a character
-vector containing the names of <em>all</em> the columns that should be in the result in addition to the
-ones mentioned in <code>...</code>. See the examples.</p>
-<p>To see more examples, check the
-<a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
-<a href='table.express-package.html'>table.express-package</a> entry.</p>
+    <p>These verbs implement the idiom shown <a href='https://stackoverflow.com/q/16573995/5793905'>here</a> by
+leveraging <code><a href='nest_expr.html'>nest_expr()</a></code>. The whole nested expression is assigned to <code>i</code> in the <code>data.table</code>'s
+frame. It is probably a good idea to use this on a frame that has no other frames preceding it
+in the current expression, given that <code><a href='nest_expr.html'>nest_expr()</a></code> uses the captured <code>data.table</code>, so consider
+using <code><a href='chain.html'>chain()</a></code> when needed.</p>
+<p>Several columns can be specified in <code>.col</code>, and depending on the value of <code>.some</code>, the rows with
+all or some extrema are returned, using <code>&amp;</code> or <code>|</code> respectively. Depending on your data, using
+more than one column might not make sense, resulting in an empty <code>data.table</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mtcars"</span>)
 
-<span class='co'># compare with .keep = TRUE</span>
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span>(<span class='kw'>amvs</span> <span class='kw'>=</span> <span class='no'>am</span> + <span class='no'>vs</span>, <span class='kw'>.keep</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>))</div><div class='output co'>#&gt;    amvs  mpg cyl disp  hp drat   wt  qsec vs am gear carb
-#&gt; 1:    1 21.0   6  160 110 3.90 2.62 16.46  0  1    4    4
-#&gt; 2:    2 22.8   4  108  93 3.85 2.32 18.61  1  1    4    1
-#&gt; 3:    0 18.7   8  360 175 3.15 3.44 17.02  0  0    3    2</div><div class='input'>
+    <span class='fu'>max_by</span>(<span class='st'>"mpg"</span>, <span class='st'>"vs"</span>)</div><div class='output co'>#&gt;     mpg cyl  disp hp drat    wt qsec vs am gear carb
+#&gt; 1: 26.0   4 120.3 91 4.43 2.140 16.7  0  1    5    2
+#&gt; 2: 33.9   4  71.1 65 4.22 1.835 19.9  1  1    4    1</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

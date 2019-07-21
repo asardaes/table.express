@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -137,7 +137,14 @@
     <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.sequential</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>.unquote_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>,
-  <span class='fl'>FALSE</span>), <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))</pre>
+  <span class='fl'>FALSE</span>), <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
+
+<span class='co'># S3 method for EagerExprBuilder</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>,
+  <span class='kw'>.parent_env</span> <span class='kw'>=</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/caller_env.html'>caller_env</a></span>())
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,6 +175,10 @@ to enable usage of newly created columns.</p></td>
       <th>.chain</th>
       <td><p>Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?</p></td>
+    </tr>
+    <tr>
+      <th>.parent_env</th>
+      <td><p>See <code><a href='end_expr.html'>end_expr()</a></code></p></td>
     </tr>
     </table>
     

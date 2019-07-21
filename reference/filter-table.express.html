@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="Filter rows — filter-table.express" />
 
-<meta property="og:description" content="Alias for where-table.express." />
+<meta property="og:description" content="Filter rows" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -128,12 +128,15 @@
 
     <div class="ref-description">
     
-    <p>Alias for <a href='where-table.express.html'>where-table.express</a>.</p>
+    <p>Filter rows</p>
     
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='no'>.preserve</span>)</pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='no'>.preserve</span>)
+
+<span class='co'># S3 method for data.table</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,7 +157,9 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To see more examples, check the
+    <p>The <a href='ExprBuilder.html'>ExprBuilder</a> method is an alias for <a href='where-table.express.html'>where-table.express</a>.</p>
+<p>The <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a> method works eagerly like <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>dplyr::filter()</a></code>.</p>
+<p>To see more examples, check the
 <a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
 <a href='table.express-package.html'>table.express-package</a> entry.</p>
     

@@ -68,7 +68,7 @@ frame." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -165,13 +165,10 @@ has been associated with the author.</p>
 <span class='co'># Simple dplyr-like transformations</span>
 
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>0</span>, <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='kw'>mean_mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>mpg</span>)) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(-<span class='no'>cyl</span>) <span class='kw'>%T&gt;%</span>
-    <span class='no'>print</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt; .DT_[vs == 0 &amp; am == 1, list(mean_mpg = mean(mpg)), by = list(cyl)][order(-cyl)]</div><div class='output co'>#&gt;    cyl mean_mpg
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(-<span class='no'>cyl</span>)</div><div class='output co'>#&gt;    cyl mean_mpg
 #&gt; 1:   8 15.40000
 #&gt; 2:   6 20.56667
 #&gt; 3:   4 26.00000</div><div class='input'>
@@ -188,10 +185,8 @@ has been associated with the author.</p>
 #&gt; 3:   4 26.00000</div><div class='input'>
 <span class='co'># Modification by reference</span>
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>wt_squared</span> <span class='kw'>=</span> <span class='no'>wt</span> ^ <span class='fl'>2</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='where-table.express.html'>where</a></span>(<span class='no'>gear</span> <span class='kw'>%%</span> <span class='fl'>2</span> <span class='kw'>!=</span> <span class='fl'>0</span>, <span class='no'>carb</span> <span class='kw'>%%</span> <span class='fl'>2</span> <span class='kw'>==</span> <span class='fl'>0</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>wt_squared</span> <span class='kw'>=</span> <span class='no'>wt</span> ^ <span class='fl'>2</span>)</div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared
 #&gt;  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4         NA
 #&gt;  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4         NA
 #&gt;  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         NA
@@ -261,9 +256,7 @@ has been associated with the author.</p>
 #&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</div><div class='input'>
 <span class='co'># Deletion by reference</span>
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>wt_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span> <span class='kw'>%&gt;%</span>
     <span class='no'>print</span></div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #&gt;  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 #&gt;  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
@@ -298,12 +291,10 @@ has been associated with the author.</p>
 #&gt; 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
 #&gt; 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 #&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</div><div class='input'>
-<span class='co'># Support for tidyslect helpers (with caveats! check 'Eager verbs' in the vignette)</span>
+<span class='co'># Support for tidyslect helpers</span>
 
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>ends_with</a></span>(<span class='st'>"t"</span>)) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;     drat    wt
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>ends_with</a></span>(<span class='st'>"t"</span>))</div><div class='output co'>#&gt;     drat    wt
 #&gt;  1: 3.90 2.620
 #&gt;  2: 3.90 2.875
 #&gt;  3: 3.85 2.320
@@ -343,9 +334,7 @@ has been associated with the author.</p>
 <span class='co'># Like DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole]</span>
 <span class='no'>whole</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>)[<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>DT</span>, <span class='kw'>function</span>(<span class='no'>x</span>) { <span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span>(<span class='no'>x</span> <span class='kw'>%%</span> <span class='fl'>1</span> <span class='kw'>==</span> <span class='fl'>0</span>) })]
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span>(<span class='no'>as.integer</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='no'>whole</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span>(<span class='no'>as.integer</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='no'>whole</span>)</div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #&gt;  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 #&gt;  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 #&gt;  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
@@ -385,10 +374,8 @@ has been associated with the author.</p>
 #&gt; "integer" "integer" "integer" </div><div class='input'>
 <span class='co'># Like DT[, lapply(.SD, fun), .SDcols = ...]</span>
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>((<span class='no'>.COL</span> - <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>.COL</span>)) / <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>.COL</span>),
-                 <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/setops.html'>setdiff</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>), <span class='no'>whole</span>)) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;             mpg        disp        drat           wt        qsec
+                 <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/setops.html'>setdiff</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>), <span class='no'>whole</span>))</div><div class='output co'>#&gt;             mpg        disp        drat           wt        qsec
 #&gt;  1:  0.15088482 -0.57061982  0.56751369 -0.610399567 -0.77716515
 #&gt;  2:  0.15088482 -0.57061982  0.56751369 -0.349785269 -0.46378082
 #&gt;  3:  0.44954345 -0.99018209  0.47399959 -0.917004624  0.42600682
@@ -424,9 +411,7 @@ has been associated with the author.</p>
 #&gt;             mpg        disp        drat           wt        qsec</div><div class='input'>
 <span class='co'># Filter several with the same condition</span>
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='filter_sd.html'>filter_sd</a></span>(<span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>)) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+    <span class='fu'><a href='filter_sd.html'>filter_sd</a></span>(<span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>))</div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #&gt; 1: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
 #&gt; 2: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
 #&gt; 3: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
@@ -436,9 +421,7 @@ has been associated with the author.</p>
 #&gt; 7: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</div><div class='input'>
 <span class='co'># Using secondary indices, i.e. DT[.(4, 5), on = .(cyl, gear)]</span>
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='filter_on.html'>filter_on</a></span>(<span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>gear</span> <span class='kw'>=</span> <span class='fl'>5</span>) <span class='kw'>%&gt;%</span> <span class='co'># note we don't use ==</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt qsec vs am gear carb
+    <span class='fu'><a href='filter_on.html'>filter_on</a></span>(<span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>gear</span> <span class='kw'>=</span> <span class='fl'>5</span>) <span class='co'># note we don't use ==</span></div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt qsec vs am gear carb
 #&gt; 1: 26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2
 #&gt; 2: 30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2</div><div class='input'>
 <span class='co'># Chaining</span>
@@ -500,10 +483,8 @@ has been associated with the author.</p>
 }
 
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='filter_sd.html'>filter_sd</a></span>(<span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`|`</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></span>(), <span class='no'>scale_non_integers</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;             mpg cyl        disp  hp        drat          wt        qsec vs am
+    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></span>(), <span class='no'>scale_non_integers</span>)</div><div class='output co'>#&gt;             mpg cyl        disp  hp        drat          wt        qsec vs am
 #&gt;  1: -0.39184157   6  0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1
 #&gt;  2: -0.39184157   6  0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1
 #&gt;  3: -0.05835938   4 -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1
@@ -547,53 +528,143 @@ has been associated with the author.</p>
 #&gt; 20:    4    2</div><div class='input'>
 <span class='co'># Without copying non-scaled</span>
 <span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>chain</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span>(<span class='no'>scale</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>)[<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>DT</span>, <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.integer</span>))]) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>print</span></div><div class='output co'>#&gt;             mpg cyl        disp  hp        drat          wt        qsec vs am
-#&gt;  1: -0.39184157   6  0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1
-#&gt;  2: -0.39184157   6  0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1
-#&gt;  3: -0.05835938   4 -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1
-#&gt;  4: -0.31773442   6  1.35743682 110 -1.76258247  0.81223954  0.56081807  1  0
-#&gt;  5: -0.92911843   6  0.92427514 105 -2.46585727  1.18781505  0.93549737  1  0
-#&gt;  6:  0.23806923   4 -0.10349939  62 -0.42196488  0.77391551  0.82981859  1  0
-#&gt;  7: -0.05835938   4 -0.18094345  95  0.08351388  0.71259705  2.22285704  1  0
-#&gt;  8: -0.72532376   6  0.17083634 123  0.08351388  1.15715583  0.01320985  1  0
-#&gt;  9: -0.98469880   6  0.17083634 123  0.08351388  1.15715583  0.30142470  1  0
-#&gt; 10:  1.72021229   4 -0.99607497  66  0.43515128 -0.74371617  0.57522881  1  1
-#&gt; 11:  1.34967653   4 -1.03545331  52  2.30322498 -1.64049852  0.11888863  1  1
-#&gt; 12:  1.99811411   4 -1.09583342  65  0.74283401 -1.30324704  0.78178279  1  1
-#&gt; 13: -0.29920763   4 -0.45265396  97 -0.39998754 -0.33748143  0.83462217  1  0
-#&gt; 14:  0.77534609   4 -0.99213714  66  0.43515128 -1.14995091  0.30142470  1  1
-#&gt; 15:  0.53449784   4 -0.45002873  91  1.20435810 -0.83569385 -0.75536309  0  1
-#&gt; 16:  1.34967653   4 -0.78080674 113 -0.24614618 -1.79686057 -0.65929147  1  1
-#&gt; 17: -1.35523456   8  2.57816520 264  0.74283401  0.74325628 -1.81215088  0  1
-#&gt; 18: -0.63268982   6 -0.12581378 175 -0.57580624  0.13007177 -1.33179279  0  1
-#&gt; 19: -1.50344887   8  1.92185962 335 -0.75162494  1.35644079 -1.76411507  0  1
-#&gt; 20: -0.31773442   4 -0.44084046 109  0.50108330  0.14540138  0.15731727  1  1
+    <span class='fu'><a href='where-table.express.html'>where</a></span>(<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span>(<span class='no'>scale</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>)[<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>DT</span>, <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.integer</span>))])</div><div class='output co'>#&gt;             mpg cyl         disp  hp        drat          wt        qsec vs am
+#&gt;  1: -0.39184157   6   0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1
+#&gt;  2: -0.39184157   6   0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1
+#&gt;  3: -0.05835938   4  -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1
+#&gt;  4: -0.31773442   6   1.35743682 110 -1.76258247  0.81223954  0.56081807  1  0
+#&gt;  5: 18.70000000   8 360.00000000 175  3.15000000  3.44000000 17.02000000  0  0
+#&gt;  6: -0.92911843   6   0.92427514 105 -2.46585727  1.18781505  0.93549737  1  0
+#&gt;  7: 14.30000000   8 360.00000000 245  3.21000000  3.57000000 15.84000000  0  0
+#&gt;  8:  0.23806923   4  -0.10349939  62 -0.42196488  0.77391551  0.82981859  1  0
+#&gt;  9: -0.05835938   4  -0.18094345  95  0.08351388  0.71259705  2.22285704  1  0
+#&gt; 10: -0.72532376   6   0.17083634 123  0.08351388  1.15715583  0.01320985  1  0
+#&gt; 11: -0.98469880   6   0.17083634 123  0.08351388  1.15715583  0.30142470  1  0
+#&gt; 12: 16.40000000   8 275.80000000 180  3.07000000  4.07000000 17.40000000  0  0
+#&gt; 13: 17.30000000   8 275.80000000 180  3.07000000  3.73000000 17.60000000  0  0
+#&gt; 14: 15.20000000   8 275.80000000 180  3.07000000  3.78000000 18.00000000  0  0
+#&gt; 15: 10.40000000   8 472.00000000 205  2.93000000  5.25000000 17.98000000  0  0
+#&gt; 16: 10.40000000   8 460.00000000 215  3.00000000  5.42400000 17.82000000  0  0
+#&gt; 17: 14.70000000   8 440.00000000 230  3.23000000  5.34500000 17.42000000  0  0
+#&gt; 18:  1.72021229   4  -0.99607497  66  0.43515128 -0.74371617  0.57522881  1  1
+#&gt; 19:  1.34967653   4  -1.03545331  52  2.30322498 -1.64049852  0.11888863  1  1
+#&gt; 20:  1.99811411   4  -1.09583342  65  0.74283401 -1.30324704  0.78178279  1  1
+#&gt; 21: -0.29920763   4  -0.45265396  97 -0.39998754 -0.33748143  0.83462217  1  0
+#&gt; 22: 15.50000000   8 318.00000000 150  2.76000000  3.52000000 16.87000000  0  0
+#&gt; 23: 15.20000000   8 304.00000000 150  3.15000000  3.43500000 17.30000000  0  0
+#&gt; 24: 13.30000000   8 350.00000000 245  3.73000000  3.84000000 15.41000000  0  0
+#&gt; 25: 19.20000000   8 400.00000000 175  3.08000000  3.84500000 17.05000000  0  0
+#&gt; 26:  0.77534609   4  -0.99213714  66  0.43515128 -1.14995091  0.30142470  1  1
+#&gt; 27:  0.53449784   4  -0.45002873  91  1.20435810 -0.83569385 -0.75536309  0  1
+#&gt; 28:  1.34967653   4  -0.78080674 113 -0.24614618 -1.79686057 -0.65929147  1  1
+#&gt; 29: -1.35523456   8   2.57816520 264  0.74283401  0.74325628 -1.81215088  0  1
+#&gt; 30: -0.63268982   6  -0.12581378 175 -0.57580624  0.13007177 -1.33179279  0  1
+#&gt; 31: -1.50344887   8   1.92185962 335 -0.75162494  1.35644079 -1.76411507  0  1
+#&gt; 32: -0.31773442   4  -0.44084046 109  0.50108330  0.14540138  0.15731727  1  1
+#&gt;             mpg cyl         disp  hp        drat          wt        qsec vs am
 #&gt;     gear carb
 #&gt;  1:    4    4
 #&gt;  2:    4    4
 #&gt;  3:    4    1
 #&gt;  4:    3    1
-#&gt;  5:    3    1
-#&gt;  6:    4    2
-#&gt;  7:    4    2
-#&gt;  8:    4    4
-#&gt;  9:    4    4
-#&gt; 10:    4    1
-#&gt; 11:    4    2
-#&gt; 12:    4    1
-#&gt; 13:    3    1
-#&gt; 14:    4    1
-#&gt; 15:    5    2
-#&gt; 16:    5    2
-#&gt; 17:    5    4
-#&gt; 18:    5    6
-#&gt; 19:    5    8
-#&gt; 20:    4    2</div></pre>
+#&gt;  5:    3    2
+#&gt;  6:    3    1
+#&gt;  7:    3    4
+#&gt;  8:    4    2
+#&gt;  9:    4    2
+#&gt; 10:    4    4
+#&gt; 11:    4    4
+#&gt; 12:    3    3
+#&gt; 13:    3    3
+#&gt; 14:    3    3
+#&gt; 15:    3    4
+#&gt; 16:    3    4
+#&gt; 17:    3    4
+#&gt; 18:    4    1
+#&gt; 19:    4    2
+#&gt; 20:    4    1
+#&gt; 21:    3    1
+#&gt; 22:    3    2
+#&gt; 23:    3    2
+#&gt; 24:    3    4
+#&gt; 25:    3    2
+#&gt; 26:    4    1
+#&gt; 27:    5    2
+#&gt; 28:    5    2
+#&gt; 29:    5    4
+#&gt; 30:    5    6
+#&gt; 31:    5    8
+#&gt; 32:    4    2
+#&gt;     gear carb</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>DT</span>)</div><div class='output co'>#&gt;             mpg cyl         disp  hp        drat          wt        qsec vs am
+#&gt;  1: -0.39184157   6   0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1
+#&gt;  2: -0.39184157   6   0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1
+#&gt;  3: -0.05835938   4  -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1
+#&gt;  4: -0.31773442   6   1.35743682 110 -1.76258247  0.81223954  0.56081807  1  0
+#&gt;  5: 18.70000000   8 360.00000000 175  3.15000000  3.44000000 17.02000000  0  0
+#&gt;  6: -0.92911843   6   0.92427514 105 -2.46585727  1.18781505  0.93549737  1  0
+#&gt;  7: 14.30000000   8 360.00000000 245  3.21000000  3.57000000 15.84000000  0  0
+#&gt;  8:  0.23806923   4  -0.10349939  62 -0.42196488  0.77391551  0.82981859  1  0
+#&gt;  9: -0.05835938   4  -0.18094345  95  0.08351388  0.71259705  2.22285704  1  0
+#&gt; 10: -0.72532376   6   0.17083634 123  0.08351388  1.15715583  0.01320985  1  0
+#&gt; 11: -0.98469880   6   0.17083634 123  0.08351388  1.15715583  0.30142470  1  0
+#&gt; 12: 16.40000000   8 275.80000000 180  3.07000000  4.07000000 17.40000000  0  0
+#&gt; 13: 17.30000000   8 275.80000000 180  3.07000000  3.73000000 17.60000000  0  0
+#&gt; 14: 15.20000000   8 275.80000000 180  3.07000000  3.78000000 18.00000000  0  0
+#&gt; 15: 10.40000000   8 472.00000000 205  2.93000000  5.25000000 17.98000000  0  0
+#&gt; 16: 10.40000000   8 460.00000000 215  3.00000000  5.42400000 17.82000000  0  0
+#&gt; 17: 14.70000000   8 440.00000000 230  3.23000000  5.34500000 17.42000000  0  0
+#&gt; 18:  1.72021229   4  -0.99607497  66  0.43515128 -0.74371617  0.57522881  1  1
+#&gt; 19:  1.34967653   4  -1.03545331  52  2.30322498 -1.64049852  0.11888863  1  1
+#&gt; 20:  1.99811411   4  -1.09583342  65  0.74283401 -1.30324704  0.78178279  1  1
+#&gt; 21: -0.29920763   4  -0.45265396  97 -0.39998754 -0.33748143  0.83462217  1  0
+#&gt; 22: 15.50000000   8 318.00000000 150  2.76000000  3.52000000 16.87000000  0  0
+#&gt; 23: 15.20000000   8 304.00000000 150  3.15000000  3.43500000 17.30000000  0  0
+#&gt; 24: 13.30000000   8 350.00000000 245  3.73000000  3.84000000 15.41000000  0  0
+#&gt; 25: 19.20000000   8 400.00000000 175  3.08000000  3.84500000 17.05000000  0  0
+#&gt; 26:  0.77534609   4  -0.99213714  66  0.43515128 -1.14995091  0.30142470  1  1
+#&gt; 27:  0.53449784   4  -0.45002873  91  1.20435810 -0.83569385 -0.75536309  0  1
+#&gt; 28:  1.34967653   4  -0.78080674 113 -0.24614618 -1.79686057 -0.65929147  1  1
+#&gt; 29: -1.35523456   8   2.57816520 264  0.74283401  0.74325628 -1.81215088  0  1
+#&gt; 30: -0.63268982   6  -0.12581378 175 -0.57580624  0.13007177 -1.33179279  0  1
+#&gt; 31: -1.50344887   8   1.92185962 335 -0.75162494  1.35644079 -1.76411507  0  1
+#&gt; 32: -0.31773442   4  -0.44084046 109  0.50108330  0.14540138  0.15731727  1  1
+#&gt;             mpg cyl         disp  hp        drat          wt        qsec vs am
+#&gt;     gear carb
+#&gt;  1:    4    4
+#&gt;  2:    4    4
+#&gt;  3:    4    1
+#&gt;  4:    3    1
+#&gt;  5:    3    2
+#&gt;  6:    3    1
+#&gt;  7:    3    4
+#&gt;  8:    4    2
+#&gt;  9:    4    2
+#&gt; 10:    4    4
+#&gt; 11:    4    4
+#&gt; 12:    3    3
+#&gt; 13:    3    3
+#&gt; 14:    3    3
+#&gt; 15:    3    4
+#&gt; 16:    3    4
+#&gt; 17:    3    4
+#&gt; 18:    4    1
+#&gt; 19:    4    2
+#&gt; 20:    4    1
+#&gt; 21:    3    1
+#&gt; 22:    3    2
+#&gt; 23:    3    2
+#&gt; 24:    3    4
+#&gt; 25:    3    2
+#&gt; 26:    4    1
+#&gt; 27:    5    2
+#&gt; 28:    5    2
+#&gt; 29:    5    4
+#&gt; 30:    5    6
+#&gt; 31:    5    8
+#&gt; 32:    4    2
+#&gt;     gear carb</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
