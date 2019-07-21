@@ -11,7 +11,7 @@ filter_sd(.data, .SDcols, .how = Negate(is.na), ...)
 \method{filter_sd}{ExprBuilder}(.data, .SDcols, .how = Negate(is.na),
   ..., which, .collapse = `&`,
   .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+  .chain = getOption("table.express.chain", TRUE), .caller_env_n = 1L)
 
 \method{filter_sd}{data.table}(.data, ..., .expr = FALSE)
 }
@@ -32,6 +32,9 @@ filter_sd(.data, .SDcols, .how = Negate(is.na), ...)
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.caller_env_n}{Internal. Passed to \code{\link[rlang:caller_env]{rlang::caller_env()}} to find the function specified in
+\code{.how} and \link[rlang:call_standardise]{standardize} its call.}
 
 \item{.expr}{If the input is a \code{data.table} and \code{.expr} is \code{TRUE}, an instance of
 \link{EagerExprBuilder} will be returned. Useful if you want to add clauses to \code{j}, e.g. with

@@ -26,6 +26,13 @@ test_that("Chain filter_sd -> transmute_sd -> mutate_sd", {
         end_expr
 
     expect_identical(ans, expected)
+
+    ans <- state %>%
+        filter_sd(matches_cardinal, .SDcols = c("region", "division", "name")) %>%
+        transmute_sd(.COL ^ 2, .SDcols = starts_with("center_")) %>%
+        mutate_sd(.COL * pi / 180, .SDcols = c("center_x", "center_y"))
+
+    expect_identical(ans, expected)
 })
 
 test_that("Chain mutate_sd -> filter_sd -> transmute_sd", {

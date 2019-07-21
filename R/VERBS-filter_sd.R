@@ -29,6 +29,8 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ...) {
 #' @param .collapse See [where-table.express].
 #' @template parse-arg
 #' @template chain-arg
+#' @param .caller_env_n Internal. Passed to [rlang::caller_env()] to find the function specified in
+#'   `.how` and [standardize][rlang::call_standardise()] its call.
 #'
 #' @details
 #'
@@ -48,7 +50,8 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ...) {
 #'
 filter_sd.ExprBuilder <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collapse = `&`,
                                   .parse = getOption("table.express.parse", FALSE),
-                                  .chain = getOption("table.express.chain", TRUE))
+                                  .chain = getOption("table.express.chain", TRUE),
+                                  .caller_env_n = 1L)
 {
     .SDcols <- process_sdcols(.data, rlang::enquo(.SDcols))
 
@@ -62,7 +65,7 @@ filter_sd.ExprBuilder <- function(.data, .SDcols, .how = Negate(is.na), ..., whi
         .how <- to_expr(how_expr, .parse = .parse)
     }
 
-    .how <- rlang::call_standardise(.how, rlang::caller_env())
+    .how <- rlang::call_standardise(.how, rlang::caller_env(.caller_env_n))
     .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
 
     clauses <- Map(substitue_col_pronoun, list(.how), rlang::syms(.SDcols))
@@ -79,7 +82,7 @@ filter_sd.ExprBuilder <- function(.data, .SDcols, .how = Negate(is.na), ..., whi
 #'
 filter_sd.data.table <- function(.data, ..., .expr = FALSE) {
     eb <- if (.expr) EagerExprBuilder$new(.data) else ExprBuilder$new(.data)
-    lazy_ans <- filter_sd.ExprBuilder(eb, ...)
+    lazy_ans <- filter_sd.ExprBuilder(eb, ..., .caller_env_n = 2L)
 
     if (.expr) {
         lazy_ans
