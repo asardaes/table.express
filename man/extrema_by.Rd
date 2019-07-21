@@ -60,8 +60,6 @@ more than one column might not make sense, resulting in an empty \code{data.tabl
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
-    max_by("mpg", "vs") \%>\%
-    end_expr
+    max_by("mpg", "vs")
 
 }

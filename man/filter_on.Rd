@@ -52,7 +52,6 @@ To see more examples, check the
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
     filter_on(cyl = 4, gear = 5)
 
 }

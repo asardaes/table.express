@@ -30,7 +30,6 @@ order_by <- function(.data, ...) { UseMethod("order_by") }
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
 #'     order_by(-cyl, gear)
 #'
 order_by.ExprBuilder <- function(.data, ..., .collapse,

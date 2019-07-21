@@ -35,7 +35,6 @@ filter_on <- function(.data, ...) {
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
 #'     filter_on(cyl = 4, gear = 5)
 #'
 filter_on.ExprBuilder <- function(.data, ..., which = FALSE, nomatch = getOption("datatable.nomatch"), mult = "all",

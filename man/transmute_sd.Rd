@@ -61,11 +61,9 @@ using the captured \code{data.table}. See the examples here or in \link{table.ex
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
     transmute_sd(grepl("^d", .COLNAME), .COL * 2)
 
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
     transmute_sd(is.numeric(.COL), .COL * 2)
 
 }

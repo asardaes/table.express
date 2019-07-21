@@ -12,9 +12,7 @@ dplyr::anti_join
 #' @examples
 #'
 #' rhs %>%
-#'     start_expr %>%
-#'     anti_join(lhs, x, v) %>%
-#'     end_expr
+#'     anti_join(lhs, x, v)
 #'
 anti_join.ExprBuilder <- function(x, y, ...) {
     y <- rlang::enexpr(y)

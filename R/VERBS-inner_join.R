@@ -11,9 +11,7 @@ dplyr::inner_join
 #' @examples
 #'
 #' lhs %>%
-#'     start_expr %>%
-#'     inner_join(rhs, x) %>%
-#'     end_expr
+#'     inner_join(rhs, x)
 #'
 inner_join.ExprBuilder <- function(x, y, ...) {
     y <- rlang::enexpr(y)

@@ -46,11 +46,9 @@ transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...) {
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
 #'     transmute_sd(grepl("^d", .COLNAME), .COL * 2)
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
 #'     transmute_sd(is.numeric(.COL), .COL * 2)
 #'
 transmute_sd.ExprBuilder <- function(.data, .SDcols = everything(), .how = identity, ...,

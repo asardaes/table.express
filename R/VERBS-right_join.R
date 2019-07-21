@@ -13,9 +13,7 @@ dplyr::right_join
 #'
 #' # creates new data.table
 #' lhs %>%
-#'     start_expr %>%
-#'     right_join(rhs, x) %>%
-#'     end_expr
+#'     right_join(rhs, x)
 #'
 right_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
     y <- x$seek_and_nestroy(list(rlang::enexpr(y)))[[1L]]

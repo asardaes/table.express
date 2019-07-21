@@ -31,9 +31,7 @@ dplyr::distinct
 #'
 #' # compare with .keep = TRUE
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
-#'     distinct(amvs = am + vs, .keep = names(mtcars)) %>%
-#'     end_expr
+#'     distinct(amvs = am + vs, .keep = names(mtcars))
 #'
 distinct.ExprBuilder <- function(.data, ..., .keep = TRUE,
                                  .parse = getOption("table.express.parse", FALSE)) {

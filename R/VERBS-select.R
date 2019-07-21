@@ -34,7 +34,6 @@ dplyr::select
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
 #'     select(mpg:cyl)
 #'
 select.ExprBuilder <- function(.data, ..., .negate = FALSE,

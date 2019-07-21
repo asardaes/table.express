@@ -145,22 +145,16 @@ rhs <- data.table::data.table(x = c("c", "b"),
 
 
 rhs \%>\%
-    start_expr \%>\%
-    anti_join(lhs, x, v) \%>\%
-    end_expr
+    anti_join(lhs, x, v)
 
 
 lhs \%>\%
-    start_expr \%>\%
-    inner_join(rhs, x) \%>\%
-    end_expr
+    inner_join(rhs, x)
 
 
 # creates new data.table
 lhs \%>\%
-    start_expr \%>\%
-    left_join(rhs, x) \%>\%
-    end_expr
+    left_join(rhs, x)
 
 
 # would modify lhs by reference
@@ -176,16 +170,12 @@ rhs \%>\%
 
 # creates new data.table
 lhs \%>\%
-    start_expr \%>\%
-    right_join(rhs, x) \%>\%
-    end_expr
+    right_join(rhs, x)
 
 
 # keep only columns from lhs
 lhs \%>\%
-    start_expr \%>\%
-    semi_join(rhs, x) \%>\%
-    end_expr
+    semi_join(rhs, x)
 
 }
 \seealso{

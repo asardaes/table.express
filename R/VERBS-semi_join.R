@@ -18,9 +18,7 @@ dplyr::semi_join
 #'
 #' # keep only columns from lhs
 #' lhs %>%
-#'     start_expr %>%
-#'     semi_join(rhs, x) %>%
-#'     end_expr
+#'     semi_join(rhs, x)
 #'
 semi_join.ExprBuilder <- function(x, y, ..., allow = FALSE, .eager = FALSE) {
     y <- rlang::enexpr(y)

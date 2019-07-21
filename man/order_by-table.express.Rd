@@ -43,7 +43,6 @@ To see more examples, check the
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
     order_by(-cyl, gear)
 
 }

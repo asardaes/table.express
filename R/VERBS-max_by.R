@@ -31,9 +31,7 @@
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
-#'     max_by("mpg", "vs") %>%
-#'     end_expr
+#'     max_by("mpg", "vs")
 #'
 max_by <- function(.data, .col, ...) {
     UseMethod("max_by")

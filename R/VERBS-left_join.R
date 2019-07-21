@@ -13,9 +13,7 @@ dplyr::left_join
 #'
 #' # creates new data.table
 #' lhs %>%
-#'     start_expr %>%
-#'     left_join(rhs, x) %>%
-#'     end_expr
+#'     left_join(rhs, x)
 #'
 left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .parent_env) {
     if (missing(y)) {

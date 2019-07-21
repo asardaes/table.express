@@ -44,13 +44,54 @@ We will return to the importance of this at the [end](#as-simple-as-possible).
 
 ### Preliminaries
 
-In order to resemble SQL syntax more closely,
-a couple of verb aliases are also defined:
+All verbs defined in this package essentially parse the input given to them and build expressions that `data.table` understands.
+These expressions are used in a `data.table` *frame*,
+i.e. in a call similar to `DT[i, j, by, ...]` where `DT` is a `data.table`.
+The [frame's main alements](https://github.com/Rdatatable/data.table/wiki) are the 3 shown:
+`i`, `j`, and `by`.
+Let us first list the available single-table verbs and their effects in the frame
+(two-table joining verbs have [their own vignette](https://asardaes.github.io/table.express/articles/joins.html)):
 
-- `where`, being equivalent to `dplyr`'s `filter`.
-- `order_by`, being equivalent to `dplyr`'s `arrange`.
+- Verbs that set `i`:
+  - `arrange`/`order_by`
+  - `filter`
+  - `filter_on`
+  - `filter_sd`
+  - `where`
+  - `max_by`
+  - `min_by`
+- Verbs that set `j`:
+  - `select`
+  - `mutate`
+  - `mutate_sd`
+  - `transmute`
+  - `transmute_sd`
+- Verbs for grouping:
+  - `group_by` to specify `by`
+  - `key_by` to specify `keyby`
+- Verbs that set more than one clause:
+  - `distinct` specifies `j` and `by`
 
-The examples here will be working with the `mtcars` data to describe single-table verbs:
+The `where` verb is equivalent to `dplyr`'s `filter`,
+but is always lazy,
+i.e. it expects another verb to be used afterwards.
+The `order_by` verb is simply an alias for `arrange`.
+
+Some verbs can/must be combined with others,
+which means that some expressions must be built *lazily*.
+It is possible to work in an entirely lazy manner (see [below](#expression-delimiters)),
+but, as of version 0.3.0, it is no longer necessary
+(do note that this makes `table.express` conflict with
+[`dtplyr`](https://cran.r-project.org/package=dtplyr)).
+Nevertheless, in order to enable some of the expressions to be built lazily,
+the *order* in which the verbs are used becomes important:
+
+- If desired, `group_by`/`key_by` should be used first.
+- Verbs that set `i` should be used next,
+  usually specifying whether they should evaluate the frame or not.
+- Verbs that set `j` should be used last.
+
+The examples here will be working with the `mtcars` data:
 
 ```{r mtcars}
 data("mtcars")
@@ -60,14 +101,11 @@ DT <- mtcars %>%
   print
 ```
 
-Two-table joining verbs have [their own vignette](https://asardaes.github.io/table.express/articles/joins.html).
-
-## Expression delimiters
+### Expression delimiters
 
 The foundation for this package is building expressions that are almost entirely delegated to `data.table`.
-These expressions are built by *parsing* the input of the different verbs.
 In order to explicitly show when an expression is being built and subsequently evaluated,
-we use 3 delimiters:
+we can use 3 delimiters:
 
 - `start_expr`
 - `end_expr`
@@ -78,27 +116,32 @@ We capture the input `data.table` and start the process with `start_expr`,
 and evaluate the final expression with `end_expr`.
 Using `chain` is equivalent to calling `end_expr` immediately followed by `start_expr`.
 
-### Debugging
-
 In order to print more information regarding the expression-building process,
 we can either set `options(table.express.verbose = TRUE)`,
 or pass `.verbose = TRUE` to `start_expr` or `chain`.
 
 ## Arranging rows
 
+Let's start with a lazy example to get an idea of how the built expressions look like.
 The `arrange`/`order_by` verbs add an expression with `order` to the frame,
 and let `data.table` handle it as usual:
 
-```{r arrange}
+```{r arrange-lazy}
 DT %>%
-  start_expr(.verbose = TRUE) %>%
-  order_by(mpg, -cyl) %>%
-  end_expr
+  start_expr %>%
+  order_by(mpg, -cyl)
 ```
 
 We see here that the built expression includes a `.DT_` pronoun.
 When the expression is evaluated,
 the captured `data.table` is assigned to the evaluation environment as said pronoun.
+When evaluating eagerly,
+this whole process happens in the background:
+
+```{r arrange-eager}
+DT %>%
+  order_by(mpg, -cyl)
+```
 
 ## Selecting columns
 
@@ -120,10 +163,7 @@ the `select` verb can be used as usual:
 
 ```{r select}
 DT %>%
-  start_expr %>%
-  select(mpg, am) %T>%
-  print %>%
-  end_expr
+  select(mpg, am)
 ```
 
 To maintain consistency,
@@ -131,24 +171,17 @@ even single columns are kept as `data.table`s:
 
 ```{r select-single}
 DT %>%
-  start_expr %>%
-  select(mpg) %T>%
-  print %>%
-  end_expr
+  select(mpg)
 ```
 
 Calls to `tidyselect`'s helpers or to `:` are handled specially internally:
 
 ```{r select-special}
 DT %>%
-  start_expr %>%
-  select(mpg:disp, gear:carb) %>%
-  end_expr
+  select(mpg:disp, gear:carb)
 
 DT %>%
-  start_expr %>%
-  select(contains("M", ignore.case = TRUE)) %>%
-  end_expr
+  select(contains("M", ignore.case = TRUE))
 ```
 
 Tidy evaluation and the `.parse` argument can also aid in cases where certain parts of the frame were computed programmatically:
@@ -156,9 +189,7 @@ Tidy evaluation and the `.parse` argument can also aid in cases where certain pa
 ```{r select-tidy}
 selected <- c("mpg", "am")
 DT %>%
-  start_expr %>%
-  select(!!!selected, .parse = TRUE) %>%
-  end_expr
+  select(!!!selected, .parse = TRUE)
 ```
 
 ## Transmuting columns
@@ -167,10 +198,7 @@ The `transmute` verb simply wraps everything in its ellipsis in a call to `list`
 
 ```{r transmute}
 DT %>%
-  start_expr %>%
-  transmute(foo = mpg * 2, bar = exp(cyl)) %T>%
-  print %>%
-  end_expr
+  transmute(foo = mpg * 2, bar = exp(cyl))
 ```
 
 Even though `select` can be used for the same
@@ -181,8 +209,6 @@ since it avoids extra function calls and can reduce overhead significantly in sp
 ## Mutating columns
 
 The `mutate` verb builds an expression with `:=` in order to perform assignment by reference by default.
-This can be avoided by passing `.by_ref = FALSE` to `end_expr`,
-which will use `data.table::copy` before assigning `.DT_`:
 
 ```{r mutate}
 DT %>%
@@ -190,13 +216,10 @@ DT %>%
   mutate(mpg = mpg / 2, hp = log(hp))
 
 DT %>%
-  start_expr %>%
-  mutate(mpg = mpg / 2, hp = log(hp)) %>%
-  end_expr(.by_ref = FALSE) %>% {
+  copy %>%
+  mutate(mpg = mpg / 2, hp = log(hp)) %>% {
     invisible(print(.))
   }
-
-print(DT)
 ```
 
 It can also support expressions that already contain `:=`:
@@ -205,9 +228,8 @@ It can also support expressions that already contain `:=`:
 new_vars <- c("x", "y")
 
 DT %>%
-  start_expr %>%
-  mutate(!!new_vars := .(1, 2), .unquote_names = FALSE) %>%
-  end_expr(.by_ref = FALSE) %>% {
+  copy %>%
+  mutate(!!new_vars := .(1, 2), .unquote_names = FALSE) %>% {
     invisible(print(.))
   }
 ```
@@ -218,35 +240,27 @@ The `where`/`filter` verbs work with the `i` part of the frame:
 
 ```{r filter}
 DT %>%
-  start_expr %>%
-  filter(vs == 1L, carb > 2L) %T>%
-  print %>%
-  end_expr
+  filter(vs == 1L, carb > 2L)
 
 DT %>%
-  start_expr %>%
-  select(mean_mpg = mean(mpg)) %>%
-  where(vs == 1L, carb > 2L, .collapse = `|`) %T>%
-  print %>%
-  end_expr
+  where(vs == 1L, carb > 2L) %>%
+  transmute(mean_mpg = mean(mpg))
 ```
+
+As mentioned in the beginning,
+`where` can be used as a lazy version of `filter`,
+letting us add other clauses to the same frame.
 
 The helper verb `filter_sd` can be used to apply the same conditions to many columns,
 and it can use a special pronoun `.COL` while specifying the expression,
-as well as `tidyselect` helpers to choose `.SDcols`
-(with caveats, see [eager verbs](#eager-verbs)):
+as well as `tidyselect` helpers to choose `.SDcols`:
 
 ```{r filter-sd}
 DT %>%
-  start_expr %>%
-  filter_sd(c("mpg", "qsec"), `>`, 20) %T>%
-  print %>%
-  end_expr
+  filter_sd(c("mpg", "qsec"), `>`, 20)
 
 DT %>%
-  start_expr %>%
-  filter_sd(c("mpg", "qsec"), .COL > 20) %>%
-  end_expr
+  filter_sd(c("mpg", "qsec"), .COL > 20)
 
 DT %>%
   start_expr %>%
@@ -256,6 +270,19 @@ DT %>%
 DT %>%
   start_expr %>%
   filter_sd(is.numeric(.COL), .COL > 0)
+```
+
+In order to enable combination of filtering helpers with other verbs,
+the `.expr` parameter can be used to indicate that the expression should be kept,
+delaying evaluation until a verb that sets `j` is used:
+
+```{r filter-sd-expr}
+DT %>%
+  copy %>%
+  filter_sd(c("vs", "am"), .COL > 0, .expr = TRUE) %>%
+  mutate(some_flag = TRUE) %>% {
+    invisible(print(.))
+  }
 ```
 
 ### Using keys or secondary indices
@@ -272,9 +299,7 @@ DT %>%
   end_expr
 
 DT %>%
-  start_expr %>%
-  filter_on(cyl = 6, am = 0, mult = "first") %>%
-  end_expr
+  filter_on(cyl = 6, am = 0, mult = "first")
 ```
 
 ## Modifying subset of data
@@ -288,16 +313,12 @@ and columns that are not part of `.SDcols` are kept:
 
 ```{r mutate-sd}
 DT %>%
-  start_expr %>%
-  mutate_sd(c("mpg", "cyl"), exp) %>%
-  end_expr
+  mutate_sd(c("mpg", "cyl"), exp)
 
 print(DT)
 
 DT %>%
-  start_expr %>%
-  mutate_sd(c("mpg", "cyl"), log) %>%
-  end_expr
+  mutate_sd(c("mpg", "cyl"), log)
 
 print(DT)
 ```
@@ -306,9 +327,8 @@ It would also be possible to remove several columns with `mutate_sd`:
 
 ```{r mutate-sd-rm}
 DT %>%
-  start_expr %>%
-  mutate_sd(c("mpg", "cyl"), NULL) %>%
-  end_expr(.by_ref = FALSE) %>% {
+  copy %>%
+  mutate_sd(c("mpg", "cyl"), NULL) %>% {
     invisible(print(.))
   }
 ```
@@ -329,20 +349,15 @@ as well as another special pronoun: `.COLNAME`:
 
 ```{r transmute-sd}
 DT %>%
-  start_expr %>%
-  transmute_sd(starts_with("d"), .COL * 2) %>%
-  end_expr
+  transmute_sd(starts_with("d"), .COL * 2)
 
 DT %>%
-  start_expr %>%
-  transmute_sd(grepl("^d", .COLNAME), .COL * 2) %>%
-  end_expr
+  transmute_sd(grepl("^d", .COLNAME), .COL * 2)
 
 # like dplyr's transmute_if
 DT %>%
   start_expr %>%
-  transmute_sd(is.numeric(.COL), .COL * 2) %>%
-  end_expr
+  transmute_sd(is.numeric(.COL), .COL * 2)
 ```
 
 Both verbs also support a list of functions for multiple transformations,
@@ -351,16 +366,13 @@ whereas `transmute_sd` performs all combinations:
 
 ```{r list-transform-sd}
 DT %>%
-  start_expr %>%
-  mutate_sd(contains("m"), .(round, -1L)) %>%
-  end_expr(.by_ref = FALSE) %>% {
+  copy %>%
+  mutate_sd(contains("m"), .(round, -1L)) %>% {
     invisible(print(.))
   }
 
 DT %>%
-  start_expr %>%
-  transmute_sd(contains("m"), .(min, max, mean)) %>%
-  end_expr
+  transmute_sd(contains("m"), .(min, max, mean))
 ```
 
 ## Data manipulation by group
@@ -370,22 +382,16 @@ the `group_by` verb simply parses its input and assigns it accordingly:
 
 ```{r group-by}
 DT %>%
-  start_expr %>%
-  select(.N) %>%
-  group_by(gear) %T>%
-  print %>%
-  end_expr
+  group_by(gear) %>%
+  select(.N)
 ```
 
-The `key_by` verb does the same but sets the key of the result in order to sort:
+The `key_by` verb does the same but sets the key of the input in order to sort:
 
 ```{r key-by}
 DT %>%
-  start_expr %>%
-  select(.N) %>%
-  key_by(gear) %T>%
-  print %>%
-  end_expr
+  key_by(gear) %>%
+  select(.N)
 ```
 
 ## Distinct combinations of columns
@@ -398,25 +404,22 @@ The `distinct` verb is a shortcut for:
 
 ```{r distinct}
 DT %>%
-  start_expr %>%
-  distinct(vs, am) %T>%
-  print %>%
-  end_expr
+  distinct(vs, am)
 
 DT %>%
-  start_expr %>%
-  distinct(vsam = vs + am, .keep = names(DT)) %T>%
-  print %>%
-  end_expr
+  distinct(vsam = vs + am, .keep = names(DT))
 
 DT %>%
-  start_expr %>%
-  distinct(vs, am, .keep = FALSE) %T>%
-  print %>%
-  end_expr
+  distinct(vs, am, .keep = FALSE)
 ```
 
-## Nesting expressions
+## Lazy considerations
+
+When working lazily,
+i.e. with `start_expr`/`chain`/`end_expr`,
+there are special considerations that need to be taken into account.
+
+### Nesting expressions
 
 Some `data.table` idioms benefit from nesting expressions,
 for instance [this idiom](https://stackoverflow.com/a/16574176/5793905) to find,
@@ -439,11 +442,9 @@ DT %>%
 
 Nevertheless, this specific logic has been encapsulated in the `max_by`/`min_by` verbs.
 
-## Automatic expression chaining
+### Automatic expression chaining
 
-A `data.table`'s frame has 3 main elements:
-[`i`, `j`, and `by`](https://github.com/Rdatatable/data.table/wiki).
-By default, the verbs defined in this package automatically start a new frame whenever they want to define one of these elements,
+By default, the verbs defined in this package automatically start a new frame whenever they want to define one of `i`/`j`/`by`,
 but the current expression's frame has already specified it;
 otherwise they add to the current frame.
 More complex expressions are thus supported by automatically chaining `data.table` frames:
@@ -467,30 +468,9 @@ If we wanted to be explicit about chaining whenever possible
 we could set `options(table.express.chain = FALSE)`,
 which would lead to a warning being shown whenever a part of the query is replaced.
 
-### Verbs' effects in the frame
+### Explicit chaining
 
-- Verbs that set `i`:
-  - `arrange`
-  - `filter`
-  - `filter_on`
-  - `filter_sd`
-  - `order_by`
-  - `where`
-- Verbs that set `j`:
-  - `select`
-  - `mutate`
-  - `mutate_sd`
-  - `transmute`
-  - `transmute_sd`
-  - `distinct`
-- Verbs for grouping:
-  - `group_by` to specify `by`
-  - `key_by` to specify `keyby`
-  - `distinct`
-
-## Explicit chaining
-
-The automatic chaining mentioned above is not a problem in most situations.
+The automatic chaining mentioned above is enough in most situations.
 For example the following chains lead to the same result,
 and therefore have the same semantics:
 
@@ -533,7 +513,8 @@ DT %>%
 
 ### Eager verbs
 
-In the following cases, the mentioned verbs use the captured `data.table` eagerly during expression building:
+In the following cases, the mentioned verbs use the captured `data.table` eagerly during expression building,
+even when working lazily:
 
 - `filter_sd` when `.SDcols` is a `tidyselect` call or a predicate using `.COL`.
 - `mutate_sd` when `.SDcols` is a `tidyselect` call or a predicate using `.COL`.
@@ -614,10 +595,8 @@ for instance column renaming:
 
 ```{r asap-3}
 DT %>%
-  start_expr %>%
   group_by(am, vs) %>%
-  transmute_sd(c("mpg", "disp"), .(avg = mean(.COL), min = min(.COL))) %>%
-  end_expr
+  transmute_sd(c("mpg", "disp"), .(avg = mean(.COL), min = min(.COL)))
 ```
 
 Thus, in order to decide which syntax to use,

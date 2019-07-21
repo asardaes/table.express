@@ -28,7 +28,6 @@ dplyr::transmute
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
 #'     transmute(ans = mpg * 2)
 #'
 transmute.ExprBuilder <- function(.data, ...,

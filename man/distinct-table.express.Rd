@@ -39,8 +39,6 @@ data("mtcars")
 
 # compare with .keep = TRUE
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
-    distinct(amvs = am + vs, .keep = names(mtcars)) \%>\%
-    end_expr
+    distinct(amvs = am + vs, .keep = names(mtcars))
 
 }

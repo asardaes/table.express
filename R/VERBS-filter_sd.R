@@ -45,7 +45,6 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ...) {
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
 #'     filter_sd(c("vs", "am"), .COL == 1)
 #'
 filter_sd.ExprBuilder <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collapse = `&`,
