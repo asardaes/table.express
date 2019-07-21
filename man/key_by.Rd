@@ -3,13 +3,16 @@
 \name{key_by}
 \alias{key_by}
 \alias{key_by.ExprBuilder}
-\title{Set key of the result}
+\alias{key_by.data.table}
+\title{Set key to group by}
 \usage{
 key_by(.data, ...)
 
 \method{key_by}{ExprBuilder}(.data, ...,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
+
+\method{key_by}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{Object to be grouped and subsequently keyed.}
@@ -22,7 +25,7 @@ key_by(.data, ...)
 clause being set already exists?}
 }
 \description{
-Group by and set key of the result.
+Group by setting key of the input.
 }
 \details{
 Everything in \code{...} will be wrapped in a call to \code{list}. Its contents work like Clauses for

@@ -3,11 +3,18 @@
 \name{mutate-table.express}
 \alias{mutate-table.express}
 \alias{mutate.ExprBuilder}
+\alias{mutate.EagerExprBuilder}
+\alias{mutate.data.table}
 \title{Add or update columns}
 \usage{
 \method{mutate}{ExprBuilder}(.data, ..., .sequential = FALSE,
   .unquote_names = TRUE, .parse = getOption("table.express.parse",
   FALSE), .chain = getOption("table.express.chain", TRUE))
+
+\method{mutate}{EagerExprBuilder}(.data, ...,
+  .parent_env = rlang::caller_env())
+
+\method{mutate}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -24,6 +31,8 @@ to enable usage of newly created columns.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}}
 }
 \description{
 Add or update columns of a \link[data.table:data.table-class]{data.table::data.table}, possibly by reference using

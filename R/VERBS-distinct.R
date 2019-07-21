@@ -31,9 +31,7 @@ dplyr::distinct
 #'
 #' # compare with .keep = TRUE
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
-#'     distinct(amvs = am + vs, .keep = names(mtcars)) %>%
-#'     end_expr
+#'     distinct(amvs = am + vs, .keep = names(mtcars))
 #'
 distinct.ExprBuilder <- function(.data, ..., .keep = TRUE,
                                  .parse = getOption("table.express.parse", FALSE)) {
@@ -55,4 +53,14 @@ distinct.ExprBuilder <- function(.data, ..., .keep = TRUE,
     }
 
     .data
+}
+
+#' @rdname distinct-table.express
+#' @export
+#' @importFrom rlang caller_env
+#'
+distinct.data.table <- function(.data, ...) {
+    eb <- ExprBuilder$new(.data)
+    lazy_ans <- distinct.ExprBuilder(eb, ...)
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
 }

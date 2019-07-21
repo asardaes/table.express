@@ -127,3 +127,13 @@ test_that("Newly created columns can be used if .sequential = TRUE.", {
 
     expect_identical(ans, expected)
 })
+
+test_that("Eager versions of mutate work.", {
+    expected <- data.table::copy(DT)[, x := mpg * 2][, y := x / 2]
+    ans <- data.table::copy(DT) %>% mutate(x = mpg * 2, y = x / 2, .sequential = TRUE)
+    expect_identical(ans, expected)
+
+    expected <- data.table::copy(DT)[gear < 5, ans := 0L, by = .(vs, am)]
+    ans <- data.table::copy(DT) %>% group_by(vs, am) %>% where(gear < 5) %>% mutate(ans = 0L)
+    expect_identical(ans, expected)
+})

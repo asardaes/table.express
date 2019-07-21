@@ -129,3 +129,13 @@ test_that("Combining tidyselect::everything with other expressions works like in
     ans <- DT %>% start_expr %>% select(carb, mpg:gear, everything()) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Eager versions of select work.", {
+    expected <- DT %>% start_expr %>% select(mpg:disp, 5:6, last_col()) %>% end_expr
+    ans <- DT %>% select(mpg:disp, 5:6, last_col())
+    expect_identical(ans, expected)
+
+    expected <- DT %>% start_expr %>% group_by(vs, am) %>% select(.SD[1:2]) %>% end_expr
+    ans <- DT %>% group_by(vs, am) %>% select(.SD[1:2])
+    expect_identical(ans, expected)
+})

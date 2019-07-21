@@ -216,3 +216,18 @@ test_that("mutate_join's .by_each parameter yields the expected results.", {
 
     expect_identical(ans, expected)
 })
+
+test_that("Eager mutate_join works.", {
+    expected <- rhs[lhs, .(x = i.x, y = i.y, v = i.v, foo = x.foo), on = "x"]
+    ans <- data.table::copy(lhs) %>% mutate_join(rhs, "x", .SDcols = "foo")
+    expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- data.table::copy(paypal)[, min_pt := paypal[paypal, on = "name", by = .EACHI,
+                                                            list(min_pt = min(purchase_time))
+                                                            ][, .(min_pt)]
+                                         ]
+    ans <- data.table::copy(paypal) %>% mutate_join(, name, .SDcols = .(min_pt = min(purchase_time)))
+    expect_identical(ans, expected)
+})

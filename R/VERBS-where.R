@@ -16,6 +16,7 @@ where <- function(.data, ...) {
 #' @rdname where-table.express
 #' @export
 #' @importFrom rlang enquo
+#' @importFrom rlang is_missing
 #' @importFrom rlang quo_get_expr
 #'
 #' @param which Passed to [data.table::data.table].
@@ -25,7 +26,11 @@ where <- function(.data, ...) {
 #'
 #' @details
 #'
-#' The expressions in `...` can call [nest_expr()], and are eagerly nested if they do.
+#' For [ExprBuilder], the expressions in `...` can call [nest_expr()], and are eagerly nested if
+#' they do.
+#'
+#' The [data.table::data.table-class] method is **lazy**, so it expects another verb to follow
+#' *afterwards*.
 #'
 #' @template docu-examples
 #'
@@ -37,7 +42,7 @@ where <- function(.data, ...) {
 #'     start_expr %>%
 #'     where(vs == 0, am == 1)
 #'
-where.ExprBuilder <- function(.data, ..., which = FALSE, .collapse = `&`,
+where.ExprBuilder <- function(.data, ..., which, .collapse = `&`,
                               .parse = getOption("table.express.parse", FALSE),
                               .chain = getOption("table.express.chain", TRUE))
 {
@@ -60,9 +65,23 @@ where.ExprBuilder <- function(.data, ..., which = FALSE, .collapse = `&`,
     }
 
     .data <- .data$set_where(clause, .chain)
-    if (!missing(which)) {
+    if (!rlang::is_missing(which)) {
         frame_append(.data, which = !!which, .parse = FALSE)
     }
 
     .data
+}
+
+#' @rdname where-table.express
+#' @export
+#'
+#' @examples
+#'
+#' data.table::as.data.table(mtcars) %>%
+#'     where(vs == 0) %>%
+#'     transmute(mpg = round(mpg))
+#'
+where.data.table <- function(.data, ...) {
+    eb <- EagerExprBuilder$new(.data)
+    where.ExprBuilder(eb, ...)
 }

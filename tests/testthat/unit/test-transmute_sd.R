@@ -158,3 +158,13 @@ test_that("Transmuting SD with list of functions works.", {
     ans <- DT %>% start_expr %>% transmute_sd(mpg:disp, .(minimum = min, maximum = max)) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Eager transmutation of SD works.", {
+    expected <- DT[, lapply(.SD, "*", 2), .SDcols = c("mpg", "cyl")]
+    ans <- DT %>% transmute_sd(c("mpg", "cyl"), .COL * 2)
+    expect_identical(ans, expected)
+
+    expected <- DT[vs == 0, lapply(.SD, "*", 2), .SDcols = c("mpg", "cyl")]
+    ans <- DT %>% where(vs == 0) %>% transmute_sd(c("mpg", "cyl"), .COL * 2)
+    expect_identical(ans, expected)
+})

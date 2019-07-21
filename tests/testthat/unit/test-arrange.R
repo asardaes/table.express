@@ -59,3 +59,23 @@ test_that("The order_by verb works for multiple arguments regardless of the wher
 
     expect_identical(ans, expected)
 })
+
+test_that("Eager versions of arrange work.", {
+    expected <- DT[order(cyl, -gear)]
+    ans <- DT %>% arrange(cyl, -gear)
+    expect_identical(ans, expected)
+
+    expected <- DT[order(cyl), .SD[c(1L, .N)], by = .(vs, am)]
+    ans <- DT %>% group_by(vs, am) %>% arrange(cyl) %>% select(.SD[c(1L, .N)])
+    expect_identical(ans, expected)
+})
+
+test_that("Eager versions of order_by work.", {
+    expected <- DT[order(cyl, -gear)]
+    ans <- DT %>% order_by(cyl, -gear)
+    expect_identical(ans, expected)
+
+    expected <- DT[order(cyl), .SD[c(1L, .N)], by = .(vs, am)]
+    ans <- DT %>% group_by(vs, am) %>% order_by(cyl) %>% select(.SD[c(1L, .N)])
+    expect_identical(ans, expected)
+})

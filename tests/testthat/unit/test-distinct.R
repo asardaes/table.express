@@ -17,3 +17,9 @@ test_that("Distinct creating columns works.", {
     ans <- DT %>% start_expr %>% distinct(amvs = vs + am, .keep = names(DT)) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("Eager version of distinct works.", {
+    expected <- DT[, .SD[1L], by = .(vs, am)]
+    ans <- DT %>% distinct(vs, am)
+    expect_identical(ans, expected)
+})

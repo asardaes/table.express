@@ -28,13 +28,10 @@ DT <- as.data.table(mtcars)
 # Simple dplyr-like transformations
 
 DT \%>\%
-    start_expr \%>\%
+    group_by(cyl) \%>\%
     filter(vs == 0, am == 1) \%>\%
     transmute(mean_mpg = mean(mpg)) \%>\%
-    group_by(cyl) \%>\%
-    arrange(-cyl) \%T>\%
-    print \%>\%
-    end_expr
+    arrange(-cyl)
 
 # Equivalent to previous
 DT \%>\%
@@ -47,26 +44,20 @@ DT \%>\%
 
 # Modification by reference
 DT \%>\%
-    start_expr \%>\%
-    mutate(wt_squared = wt ^ 2) \%>\%
     where(gear \%\% 2 != 0, carb \%\% 2 == 0) \%>\%
-    end_expr
+    mutate(wt_squared = wt ^ 2)
 
 print(DT)
 
 # Deletion by reference
 DT \%>\%
-    start_expr \%>\%
     mutate(wt_squared = NULL) \%>\%
-    end_expr \%>\%
     print
 
-# Support for tidyslect helpers (with caveats! check 'Eager verbs' in the vignette)
+# Support for tidyslect helpers
 
 DT \%>\%
-    start_expr \%>\%
-    select(ends_with("t")) \%>\%
-    end_expr
+    select(ends_with("t"))
 
 # ====================================================================================
 # Helpers to transform a subset of data
@@ -74,30 +65,22 @@ DT \%>\%
 # Like DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole]
 whole <- names(DT)[sapply(DT, function(x) { all(x \%\% 1 == 0) })]
 DT \%>\%
-    start_expr \%>\%
-    mutate_sd(as.integer, .SDcols = whole) \%>\%
-    end_expr
+    mutate_sd(as.integer, .SDcols = whole)
 
 sapply(DT, class)
 
 # Like DT[, lapply(.SD, fun), .SDcols = ...]
 DT \%>\%
-    start_expr \%>\%
     transmute_sd((.COL - mean(.COL)) / sd(.COL),
-                 .SDcols = setdiff(names(DT), whole)) \%>\%
-    end_expr
+                 .SDcols = setdiff(names(DT), whole))
 
 # Filter several with the same condition
 DT \%>\%
-    start_expr \%>\%
-    filter_sd(.COL == 1, .SDcols = c("vs", "am")) \%>\%
-    end_expr
+    filter_sd(.COL == 1, .SDcols = c("vs", "am"))
 
 # Using secondary indices, i.e. DT[.(4, 5), on = .(cyl, gear)]
 DT \%>\%
-    start_expr \%>\%
-    filter_on(cyl = 4, gear = 5) \%>\% # note we don't use ==
-    end_expr
+    filter_on(cyl = 4, gear = 5) # note we don't use ==
 
 # Chaining
 DT \%>\%
@@ -120,19 +103,15 @@ scale_non_integers <- function(x) {
 }
 
 DT \%>\%
-    start_expr \%>\%
     filter_sd(.COL == 1, .SDcols = c("vs", "am"), .collapse = `|`) \%>\%
-    transmute_sd(everything(), scale_non_integers) \%>\%
-    end_expr
+    transmute_sd(everything(), scale_non_integers)
 
 # Without copying non-scaled
 DT \%>\%
-    start_expr \%>\%
-    filter(vs == 1 | am == 1) \%>\%
-    chain \%>\%
-    mutate_sd(scale, .SDcols = names(DT)[sapply(DT, Negate(is.integer))]) \%>\%
-    end_expr \%>\%
-    print
+    where(vs == 1 | am == 1) \%>\%
+    mutate_sd(scale, .SDcols = names(DT)[sapply(DT, Negate(is.integer))])
+
+print(DT)
 }
 \seealso{
 Useful links:

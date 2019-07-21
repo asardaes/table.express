@@ -3,6 +3,13 @@
 #' Helper to filter rows with the same condition applied to a subset of the data.
 #'
 #' @export
+#'
+filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ...) {
+    UseMethod("filter_sd")
+}
+
+#' @rdname filter_sd
+#' @export
 #' @importFrom rlang call2
 #' @importFrom rlang call_modify
 #' @importFrom rlang call_standardise
@@ -22,6 +29,8 @@
 #' @param .collapse See [where-table.express].
 #' @template parse-arg
 #' @template chain-arg
+#' @param .caller_env_n Internal. Passed to [rlang::caller_env()] to find the function specified in
+#'   `.how` and [standardize][rlang::call_standardise()] its call.
 #'
 #' @details
 #'
@@ -36,12 +45,12 @@
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     start_expr %>%
 #'     filter_sd(c("vs", "am"), .COL == 1)
 #'
-filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collapse = `&`,
-                      .parse = getOption("table.express.parse", FALSE),
-                      .chain = getOption("table.express.chain", TRUE))
+filter_sd.ExprBuilder <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collapse = `&`,
+                                  .parse = getOption("table.express.parse", FALSE),
+                                  .chain = getOption("table.express.chain", TRUE),
+                                  .caller_env_n = 1L)
 {
     .SDcols <- process_sdcols(.data, rlang::enquo(.SDcols))
 
@@ -55,13 +64,31 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collaps
         .how <- to_expr(how_expr, .parse = .parse)
     }
 
-    .how <- rlang::call_standardise(.how, rlang::caller_env())
+    .how <- rlang::call_standardise(.how, rlang::caller_env(.caller_env_n))
     .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
 
     clauses <- Map(substitue_col_pronoun, list(.how), rlang::syms(.SDcols))
 
     where(.data, !!!clauses, which = rlang::maybe_missing(which), .collapse = !!rlang::enexpr(.collapse),
           .parse = FALSE, .chain = .chain)
+}
+
+#' @rdname filter_sd
+#' @export
+#' @importFrom rlang caller_env
+#'
+#' @template expr-arg
+#'
+filter_sd.data.table <- function(.data, ..., .expr = FALSE) {
+    eb <- if (.expr) EagerExprBuilder$new(.data) else ExprBuilder$new(.data)
+    lazy_ans <- filter_sd.ExprBuilder(eb, ..., .caller_env_n = 2L)
+
+    if (.expr) {
+        lazy_ans
+    }
+    else {
+        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    }
 }
 
 #' @importFrom rlang as_label

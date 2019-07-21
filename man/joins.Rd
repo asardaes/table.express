@@ -5,33 +5,59 @@
 \name{joins}
 \alias{joins}
 \alias{anti_join.ExprBuilder}
+\alias{anti_join.data.table}
 \alias{full_join.ExprBuilder}
+\alias{full_join.data.table}
 \alias{inner_join.ExprBuilder}
+\alias{inner_join.data.table}
 \alias{left_join.ExprBuilder}
+\alias{left_join.data.table}
 \alias{mutate_join}
 \alias{mutate_join.ExprBuilder}
+\alias{mutate_join.EagerExprBuilder}
+\alias{mutate_join.data.table}
 \alias{right_join.ExprBuilder}
+\alias{right_join.data.table}
 \alias{semi_join.ExprBuilder}
+\alias{semi_join.data.table}
 \title{Joining verbs}
 \usage{
 \method{anti_join}{ExprBuilder}(x, y, ...)
 
+\method{anti_join}{data.table}(x, ..., .expr = FALSE)
+
 \method{full_join}{ExprBuilder}(x, y, ..., sort = TRUE, allow = TRUE,
   .parent_env)
 
+\method{full_join}{data.table}(x, ...)
+
 \method{inner_join}{ExprBuilder}(x, y, ...)
+
+\method{inner_join}{data.table}(x, ..., .expr = FALSE)
 
 \method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends,
   .parent_env)
+
+\method{left_join}{data.table}(x, y, ..., allow = FALSE, .expr = FALSE)
 
 mutate_join(x, y, ...)
 
 \method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, mult, roll, rollends,
   allow = FALSE, .by_each = NULL, .parent_env)
 
+\method{mutate_join}{EagerExprBuilder}(x, ...,
+  .parent_env = rlang::caller_env())
+
+\method{mutate_join}{data.table}(x, y, ...)
+
 \method{right_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
 
+\method{right_join}{data.table}(x, ..., allow = FALSE, .expr = FALSE)
+
 \method{semi_join}{ExprBuilder}(x, y, ..., allow = FALSE,
+  .eager = FALSE)
+
+\method{semi_join}{data.table}(x, y, ..., allow = FALSE,
   .eager = FALSE)
 }
 \arguments{
@@ -41,6 +67,10 @@ mutate_join(x, y, ...)
 \code{\link[=nest_expr]{nest_expr()}}.}
 
 \item{...}{Expressions for the \code{on} part of the join.}
+
+\item{.expr}{If the input is a \code{data.table} and \code{.expr} is \code{TRUE}, an instance of
+\link{EagerExprBuilder} will be returned. Useful if you want to add clauses to \code{j}, e.g. with
+\link{mutate-table.express}.}
 
 \item{sort}{Passed to \link[data.table:merge]{data.table::merge}.}
 
@@ -115,22 +145,16 @@ rhs <- data.table::data.table(x = c("c", "b"),
 
 
 rhs \%>\%
-    start_expr \%>\%
-    anti_join(lhs, x, v) \%>\%
-    end_expr
+    anti_join(lhs, x, v)
 
 
 lhs \%>\%
-    start_expr \%>\%
-    inner_join(rhs, x) \%>\%
-    end_expr
+    inner_join(rhs, x)
 
 
 # creates new data.table
 lhs \%>\%
-    start_expr \%>\%
-    left_join(rhs, x) \%>\%
-    end_expr
+    left_join(rhs, x)
 
 
 # would modify lhs by reference
@@ -146,16 +170,12 @@ rhs \%>\%
 
 # creates new data.table
 lhs \%>\%
-    start_expr \%>\%
-    right_join(rhs, x) \%>\%
-    end_expr
+    right_join(rhs, x)
 
 
 # keep only columns from lhs
 lhs \%>\%
-    start_expr \%>\%
-    semi_join(rhs, x) \%>\%
-    end_expr
+    semi_join(rhs, x)
 
 }
 \seealso{

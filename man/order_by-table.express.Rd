@@ -4,6 +4,7 @@
 \alias{order_by-table.express}
 \alias{order_by}
 \alias{order_by.ExprBuilder}
+\alias{order_by.data.table}
 \title{Order by clause}
 \usage{
 order_by(.data, ...)
@@ -11,6 +12,8 @@ order_by(.data, ...)
 \method{order_by}{ExprBuilder}(.data, ..., .collapse,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
+
+\method{order_by}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{The input data.}
@@ -40,7 +43,6 @@ To see more examples, check the
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
     order_by(-cyl, gear)
 
 }

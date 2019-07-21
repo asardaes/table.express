@@ -163,6 +163,33 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends,
     ans
 }
 
+#' @rdname joins
+#' @export
+#' @importFrom rlang caller_env
+#'
+mutate_join.EagerExprBuilder <- function(x, ..., .parent_env = rlang::caller_env()) {
+    end_expr.ExprBuilder(mutate_join.ExprBuilder(x, ...), .parent_env = .parent_env)
+}
+
+#' @rdname joins
+#' @export
+#' @importFrom rlang caller_env
+#' @importFrom rlang enexpr
+#'
+mutate_join.data.table <- function(x, y, ...) {
+    if (missing(y)) {
+        y <- rlang::enexpr(x)
+    }
+    else {
+        y <- rlang::enexpr(y)
+    }
+
+    eb <- ExprBuilder$new(x)
+    lazy_ans <- mutate_join.ExprBuilder(eb, y = !!y, ...)
+
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+}
+
 #' @importFrom rlang as_string
 #' @importFrom rlang is_call
 #'

@@ -3,11 +3,18 @@
 \name{select-table.express}
 \alias{select-table.express}
 \alias{select.ExprBuilder}
+\alias{select.EagerExprBuilder}
+\alias{select.data.table}
 \title{Select clause}
 \usage{
 \method{select}{ExprBuilder}(.data, ..., .negate = FALSE,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
+
+\method{select}{EagerExprBuilder}(.data, ...,
+  .parent_env = rlang::caller_env())
+
+\method{select}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -21,6 +28,8 @@ match what's given in \code{...}.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}}
 }
 \description{
 Select columns of a \link[data.table:data.table-class]{data.table::data.table}.
@@ -37,7 +46,6 @@ To see more examples, check the
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
     select(mpg:cyl)
 
 }

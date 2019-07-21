@@ -19,6 +19,16 @@ test_that("Visits that had a purchase afterwards, with totals per name and n_vis
         end_expr
 
     expect_identical(ans, expected)
+
+    ans <- website %>%
+        left_join(paypal, name, session_start_time = purchase_time, nomatch = NULL, roll = Inf) %>%
+        mutate(purchase_time = NULL) %>%
+        group_by(name) %>%
+        mutate(num_purchases = length(unique(payment_id))) %>%
+        group_by(payment_id) %>%
+        mutate(num_previous_visits = .N)
+
+    expect_identical(ans, expected)
 })
 
 test_that("Session immediately before a purchase, if any.", {
@@ -36,6 +46,13 @@ test_that("Session immediately before a purchase, if any.", {
         chain(.by_ref = FALSE) %>%
         filter_sd(everything()) %>%
         end_expr
+
+    expect_identical(data.table::setkey(ans, NULL), data.table::setcolorder(expected, names(ans)))
+
+    ans <- data.table::copy(paypal) %>%
+        mutate_join(website, name, purchase_time = session_start_time, .SDcols = "session_id", roll = Inf) %>%
+        mutate_join(website, session_id, .SDcols = "session_start_time") %>%
+        filter_sd(everything())
 
     expect_identical(data.table::setkey(ans, NULL), data.table::setcolorder(expected, names(ans)))
 })
@@ -146,4 +163,7 @@ test_that("A filtering clause can be added to a mutating join.", {
     expect_null(ans$.__enclos_env__$private$.child)
 
     expect_identical(end_expr(ans, .by_ref = FALSE), expected)
+
+    ans <- data.table::copy(lhs) %>% where(x == "c") %>% mutate_join(rhs, x, .SDcols = "foo")
+    expect_identical(ans, expected)
 })

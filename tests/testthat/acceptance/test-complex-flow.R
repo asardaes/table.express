@@ -122,13 +122,35 @@ test_that("The complex flow shown can be expressed with verbs.", {
 
     replaceNA <- function(x) { replace(x, is.na(x), 0) }
 
-    ans <- cons_ex %>%
+    ans <- data.table::copy(cons_ex) %>%
         start_expr %>%
         mutate_join(wide, carId, tripId, .SDcols = list(!!!sd_cols)) %>%
         end_expr %>%
         (data.table::setcolorder)(c("carId", "tripId", "begin", "end"))
 
+    expect_identical(ans, consEx)
+
     # ----------------------------------------------------------------------------------------------
+
+    aggregated <- cons_ex %>%
+        right_join(alertsEx, carId, begin <= timestamp, end >= timestamp, .expr = TRUE) %>%
+        select(carId, tripId, type, additionalInfo1) %>%
+        group_by(carId, tripId, type) %>%
+        transmute(typeCount = .N, typeMean = mean(additionalInfo1)) %>%
+        group_by(carId, tripId) %>%
+        mutate(totals = sum(typeCount))
+
+    wide <- data.table::dcast(
+        aggregated,
+        ... ~ type,
+        value.var = c("typeCount", "typeMean"),
+        sep = "",
+        fill = 0
+    )
+
+    ans <- data.table::copy(cons_ex) %>%
+        mutate_join(wide, carId, tripId, .SDcols = list(!!!sd_cols)) %>%
+        (data.table::setcolorder)(c("carId", "tripId", "begin", "end"))
 
     expect_identical(ans, consEx)
 })
@@ -305,6 +327,8 @@ test_that("https://stackoverflow.com/q/56918395/5793905 works.", {
         )
     )
 
+    dt0 <- data.table::copy(dt)
+
     ans <- dt %>%
         data.table::setkey(id, year, analyst) %>%
         start_expr %>%
@@ -316,6 +340,19 @@ test_that("https://stackoverflow.com/q/56918395/5793905 works.", {
         mutate(first = 1L) %>%
         mutate(rev = +(!first)) %>%
         end_expr
+
+    expect_identical(ans, expected)
+
+    dt <- dt0
+
+    ans <- dt %>%
+        data.table::setkey(id, year, analyst) %>%
+        mutate(first = 0L) %>%
+        arrange(fdate) %>%
+        distinct(id, year) %>%
+        left_join(dt, id, year, analyst, fdate, .expr = TRUE) %>%
+        mutate(first = 1L) %>%
+        mutate(rev = +(!first))
 
     expect_identical(ans, expected)
 })

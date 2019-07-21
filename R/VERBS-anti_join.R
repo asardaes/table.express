@@ -12,9 +12,7 @@ dplyr::anti_join
 #' @examples
 #'
 #' rhs %>%
-#'     start_expr %>%
-#'     anti_join(lhs, x, v) %>%
-#'     end_expr
+#'     anti_join(lhs, x, v)
 #'
 anti_join.ExprBuilder <- function(x, y, ...) {
     y <- rlang::enexpr(y)
@@ -30,4 +28,20 @@ anti_join.ExprBuilder <- function(x, y, ...) {
     }
 
     x
+}
+
+#' @rdname joins
+#' @export
+#' @importFrom rlang caller_env
+#'
+anti_join.data.table <- function(x, ..., .expr = FALSE) {
+    eb <- if (.expr) EagerExprBuilder$new(x) else ExprBuilder$new(x)
+    lazy_ans <- anti_join.ExprBuilder(eb, ...)
+
+    if (.expr) {
+        lazy_ans
+    }
+    else {
+        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    }
 }

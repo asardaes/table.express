@@ -2,11 +2,17 @@
 % Please edit documentation in R/VERBS-filter_on.R
 \name{filter_on}
 \alias{filter_on}
+\alias{filter_on.ExprBuilder}
+\alias{filter_on.data.table}
 \title{Filter with secondary indices}
 \usage{
-filter_on(.data, ..., which = FALSE,
+filter_on(.data, ...)
+
+\method{filter_on}{ExprBuilder}(.data, ..., which = FALSE,
   nomatch = getOption("datatable.nomatch"), mult = "all",
   .negate = FALSE, .chain = getOption("table.express.chain", TRUE))
+
+\method{filter_on}{data.table}(.data, ..., .expr = FALSE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -21,6 +27,10 @@ given values.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.expr}{If the input is a \code{data.table} and \code{.expr} is \code{TRUE}, an instance of
+\link{EagerExprBuilder} will be returned. Useful if you want to add clauses to \code{j}, e.g. with
+\link{mutate-table.express}.}
 }
 \description{
 Helper to filter specifying the \code{on} part of the \link[data.table:data.table]{data.table::data.table} query.
@@ -42,7 +52,6 @@ To see more examples, check the
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
     filter_on(cyl = 4, gear = 5)
 
 }

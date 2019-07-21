@@ -3,6 +3,13 @@
 #' Like [mutate-table.express] but possibly recycling calls.
 #'
 #' @export
+#'
+mutate_sd <- function(.data, .SDcols, .how = identity, ...) {
+    UseMethod("mutate_sd")
+}
+
+#' @rdname mutate_sd
+#' @export
 #' @importFrom rlang enexpr
 #' @importFrom rlang enquo
 #' @importFrom rlang new_quosure
@@ -34,9 +41,9 @@
 #'     start_expr %>%
 #'     mutate_sd(c("mpg", "cyl"), .COL * 2)
 #'
-mutate_sd <- function(.data, .SDcols, .how = identity, ..., .prefix, .suffix,
-                      .parse = getOption("table.express.parse", FALSE),
-                      .chain = getOption("table.express.chain", TRUE))
+mutate_sd.ExprBuilder <- function(.data, .SDcols, .how = identity, ..., .prefix, .suffix,
+                                  .parse = getOption("table.express.parse", FALSE),
+                                  .chain = getOption("table.express.chain", TRUE))
 {
     .SDcols <- rlang::enquo(.SDcols)
     SDcols <- process_sdcols(.data, .SDcols)
@@ -81,4 +88,24 @@ mutate_sd <- function(.data, .SDcols, .how = identity, ..., .prefix, .suffix,
         mutate.ExprBuilder(.data, .parse = FALSE, .unquote_names = FALSE, .chain = .chain,
                            !!new_names := .mutate_matching(.SD, !!SDcols, rlang::quos(!!!how)))
     }
+}
+
+#' @rdname mutate_sd
+#' @export
+#' @importFrom rlang caller_env
+#'
+#' @param .parent_env See [end_expr()]
+#'
+mutate_sd.EagerExprBuilder <- function(.data, ..., .parent_env = rlang::caller_env()) {
+    end_expr.ExprBuilder(mutate_sd.ExprBuilder(.data, ...), .parent_env = .parent_env)
+}
+
+#' @rdname mutate_sd
+#' @export
+#' @importFrom rlang caller_env
+#'
+mutate_sd.data.table <- function(.data, ...) {
+    eb <- ExprBuilder$new(.data)
+    lazy_ans <- mutate_sd.ExprBuilder(eb, ...)
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
 }

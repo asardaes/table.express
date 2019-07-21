@@ -30,13 +30,28 @@ test_that("mutate_sd works with other dplyr verbs as expected.", {
 
     expect_identical(ans, expected)
 
+    ans <- data.table::copy(state) %>%
+        group_by(division) %>%
+        where(region == "West") %>%
+        mutate_sd(function(x) { (x - mean(x)) / sd(x) }, .SDcols = one_of("population", "income"))
+
+    expect_identical(ans, expected)
+
     foo <- function(x) { (x - mean(x)) / sd(x) }
+
     ans <- state %>%
         start_expr %>%
         mutate_sd(foo, .SDcols = one_of("population", "income")) %>%
         where(region == "West") %>%
         group_by(division) %>%
         end_expr(.by_ref = FALSE)
+
+    expect_identical(ans, expected)
+
+    ans <- data.table::copy(state) %>%
+        group_by(division) %>%
+        where(region == "West") %>%
+        mutate_sd(foo, .SDcols = one_of("population", "income"))
 
     expect_identical(ans, expected)
 })

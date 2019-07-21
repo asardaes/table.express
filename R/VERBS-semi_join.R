@@ -18,9 +18,7 @@ dplyr::semi_join
 #'
 #' # keep only columns from lhs
 #' lhs %>%
-#'     start_expr %>%
-#'     semi_join(rhs, x) %>%
-#'     end_expr
+#'     semi_join(rhs, x)
 #'
 semi_join.ExprBuilder <- function(x, y, ..., allow = FALSE, .eager = FALSE) {
     y <- rlang::enexpr(y)
@@ -51,4 +49,36 @@ semi_join.ExprBuilder <- function(x, y, ..., allow = FALSE, .eager = FALSE) {
     }
 
     x
+}
+
+#' @rdname joins
+#' @export
+#' @importFrom rlang caller_env
+#' @importFrom rlang enexpr
+#' @importFrom rlang exprs
+#'
+semi_join.data.table <- function(x, y, ..., allow = FALSE, .eager = FALSE) {
+    eb <- ExprBuilder$new(x)
+    y <- rlang::enexpr(y)
+
+    if (.eager) {
+        on <- parse_dots(TRUE, ...)
+
+        where_expr <- rlang::exprs(nest_expr(
+            .parse = FALSE,
+            .end = FALSE,
+            inner_join(!!y, !!!on),
+            frame_append(which = TRUE, allow.cartesian = !!allow),
+            end_expr,
+            unique
+        ))
+
+        where_clause <- eb$seek_and_nestroy(where_expr)[[1L]]
+        lazy_ans <- eb$set_where(where_clause, FALSE)
+    }
+    else {
+        lazy_ans <- semi_join.ExprBuilder(eb, y = !!y, ...)
+    }
+
+    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
 }

@@ -12,6 +12,12 @@ test_that("A chain of left joins works.", {
         end_expr
 
     expect_identical(ans, expected)
+
+    ans <- paypal %>%
+        left_join(website[, .(name, session_id)], name, allow = TRUE) %>%
+        left_join(website, name, session_id)
+
+    expect_identical(ans, expected)
 })
 
 # https://stackoverflow.com/q/56565051/5793905

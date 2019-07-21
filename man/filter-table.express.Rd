@@ -3,9 +3,12 @@
 \name{filter-table.express}
 \alias{filter-table.express}
 \alias{filter.ExprBuilder}
+\alias{filter.data.table}
 \title{Filter rows}
 \usage{
 \method{filter}{ExprBuilder}(.data, ..., .preserve)
+
+\method{filter}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -15,9 +18,13 @@
 \item{.preserve}{Ignored.}
 }
 \description{
-Alias for \link{where-table.express}.
+Filter rows
 }
 \details{
+The \link{ExprBuilder} method is an alias for \link{where-table.express}.
+
+The \link[data.table:data.table-class]{data.table::data.table} method works eagerly like \code{\link[dplyr:filter]{dplyr::filter()}}.
+
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the
 \link{table.express-package} entry.

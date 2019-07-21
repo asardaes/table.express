@@ -53,14 +53,10 @@ The methods defined in `table.express` accept the `on` part of the expression in
 
 ```{r inner-join}
 A %>%
-    start_expr %>%
-    inner_join(B, x) %>%
-    end_expr
+    inner_join(B, x)
 
 A %>%
-    start_expr %>%
-    inner_join(B, x, v = v2) %>%
-    end_expr
+    inner_join(B, x, v = v2)
 ```
 
 An important thing to note in the second example above is the order in which the columns are given,
@@ -91,58 +87,46 @@ No additional considerations are required to use `right_join` or `anti_join`:
 
 ```{r right-and-anti-join}
 A %>%
-    start_expr %>%
-    right_join(B, x, v = v2) %>%
-    end_expr
+    right_join(B, x, v = v2)
 
 A %>%
-    start_expr %>%
-    anti_join(B, x, v = v2) %>%
-    end_expr
+    anti_join(B, x, v = v2)
 ```
 
 A `semi_join` is essentially a `right_join` with `nomatch = NULL`,
-and where `j` is set to `unique(.SD)`,
-so it will chain automatically if either `i` or `j` are set.
+and where `j` is set to `unique(.SD)`:
 
 ```{r semi-join}
 setnames(B, "v2", "v")
 
 A %>%
-    start_expr %>%
-    semi_join(B, x) %>%
-    end_expr
+    semi_join(B, x)
 ```
 
-Finally, `full_join` is basically a wrapper for `merge` specifying `all = TRUE`,
-so it's only useful when more expressions are to be added after the join:
+Finally, `full_join` is basically a wrapper for `merge` specifying `all = TRUE`:
 
 ```{r full-join}
 A %>%
-    start_expr %>%
-    full_join(B, x) %>%
-    mutate(foo = 0) %>%
-    where(is.na(foo)) %>%
-    end_expr %>% {
-        invisible(print(.))
-    }
+    full_join(B, x)
 ```
 
 ### Expression chaining
 
 Something to keep in mind is that most joins specify `i` and `on` inside the frame,
-so any subsequent verbs that specify `j`, `by`, or `keyby` would not trigger [automatic chaining](https://asardaes.github.io/table.express/articles/table.express.html#automatic-expression-chaining).
+so any subsequent verbs that specify `j`, `by`, or `keyby` would still be possible.
+In order to enable this,
+many joining verbs have an `.expr` parameter that indicates that the expression should be kept,
+delaying evaluation until a verb that sets `j` is used.
 This can be useful if only a subset of the joined columns is desired:
 
 ```{r no-chain-after-join}
 A %>%
-    start_expr %>%
-    left_join(B, x) %>%
-    select(x, y, foo) %>%
-    end_expr
+    left_join(B, x, .expr = TRUE) %>%
+    select(x, y, foo)
 ```
 
-But would require explicit chaining for expressions that should be applied to the joined table:
+But, when working lazily,
+this would require explicit chaining for expressions that should be applied to the joined table:
 
 ```{r chain-after-join}
 A %>%
@@ -170,9 +154,7 @@ possibly with new names:
 
 ```{r basic-mutate-join}
 A %>%
-    start_expr %>%
-    mutate_join(B, x, .SDcols = c("foo", v_from_B = "v")) %>%
-    end_expr
+    mutate_join(B, x, .SDcols = c("foo", v_from_B = "v"))
 
 print(A)
 ```
@@ -182,9 +164,7 @@ so this won't work:
 
 ```{r invalid-mutate-join}
 B %>%
-    start_expr %>%
-    mutate_join(A, x, .SDcols = "y") %>%
-    end_expr
+    mutate_join(A, x, .SDcols = "y")
 ```
 
 In these cases, we must either use `mult` if appropriate,
@@ -192,16 +172,12 @@ or specify a summarizing expression in `.SDcols`:
 
 ```{r summarizing-mutate-join}
 B %>%
-    start_expr %>%
-    mutate_join(A, x, .SDcols = "y", mult = "first") %>%
-    end_expr
+    mutate_join(A, x, .SDcols = "y", mult = "first")
 
 print(B)
 
 B %>%
-    start_expr %>%
-    mutate_join(A, x, .SDcols = .(y = mean(y))) %>%
-    end_expr
+    mutate_join(A, x, .SDcols = .(y = mean(y)))
 
 print(B)
 ```
@@ -295,9 +271,7 @@ Let's use a left rolling join to obtain the `session_id` that immediately preced
 
 ```{r rolling-left-join}
 paypal %>%
-    start_expr %>%
-    left_join(website, name, purchase_time = session_start_time, roll = Inf) %>%
-    end_expr
+    left_join(website, name, purchase_time = session_start_time, roll = Inf)
 ```
 
 We can see that the rows returned are from the left-hand side (`paypal`),
@@ -313,9 +287,7 @@ but the rolled column's name is now from the expression's left-hand side.
 
 ```{r rolling-right-join}
 website %>%
-    start_expr %>%
-    right_join(paypal, name, session_start_time = purchase_time, roll = Inf) %>%
-    end_expr
+    right_join(paypal, name, session_start_time = purchase_time, roll = Inf)
 ```
 
 Note, however, that `roll` stayed equal to `Inf`.
@@ -333,9 +305,7 @@ This could be expressed as:
 
 ```{r rolling-left-join-2}
 website %>%
-    start_expr %>%
-    left_join(paypal, name, session_start_time = purchase_time, roll = -Inf) %>%
-    end_expr
+    left_join(paypal, name, session_start_time = purchase_time, roll = -Inf)
 ```
 
 In order to simplify the meaning of `rollends` a bit,
@@ -348,14 +318,10 @@ otherwise:
 
 ```{r rolling-left-join-rollend}
 website %>%
-    start_expr %>%
-    left_join(paypal, name, session_start_time = purchase_time, roll = -Inf, rollends = TRUE) %>%
-    end_expr
+    left_join(paypal, name, session_start_time = purchase_time, roll = -Inf, rollends = TRUE)
 
 website %>%
-    start_expr %>%
-    left_join(paypal, name, session_start_time = purchase_time, roll = -Inf, rollends = FALSE) %>%
-    end_expr
+    left_join(paypal, name, session_start_time = purchase_time, roll = -Inf, rollends = FALSE)
 ```
 
 Vivian's `payment_id`s are always `NA` because she has never purchased anything.
@@ -373,9 +339,7 @@ giving "priority" to `paypal`'s rows:
 
 ```{r lne-join}
 paypal %>%
-    start_expr %>%
-    left_join(website, name, purchase_time >= session_start_time) %>%
-    end_expr
+    left_join(website, name, purchase_time >= session_start_time)
 ```
 
 Priority above simply means that all rows from `paypal` are returned,
@@ -388,9 +352,7 @@ expecting only a different order in the columns that are part of the comparisons
 
 ```{r rne-join}
 website %>%
-    start_expr %>%
-    right_join(paypal, name, session_start_time <= purchase_time) %>%
-    end_expr
+    right_join(paypal, name, session_start_time <= purchase_time)
 ```
 
 ## Self joins
@@ -410,13 +372,11 @@ we could add a rolling count of weekly visits per user to the `website` data int
 
 ```{r self-join}
 website %>%
-    start_expr %>%
     mutate(window_start = session_start_time - as.difftime(7, units = "days")) %>%
     mutate_join(, name, window_start <= session_start_time, session_start_time >= session_start_time,
                 .SDcols = .(weekly_visits = .N),
                 .by_each = TRUE) %>%
-    mutate(window_start = NULL) %>%
-    end_expr
+    mutate(window_start = NULL)
 
 print(website)
 ```

@@ -1,6 +1,6 @@
-#' Set key of the result
+#' Set key to group by
 #'
-#' Group by and set key of the result.
+#' Group by setting key of the input.
 #'
 #' @export
 #'
@@ -42,4 +42,12 @@ key_by.ExprBuilder <- function(.data, ...,
     clause <- rlang::quo_squash(rlang::expr(list(!!!clause)))
     attr(clause, "key_by") <- TRUE
     .data$set_by(clause, .chain)
+}
+
+#' @rdname key_by
+#' @export
+#'
+key_by.data.table <- function(.data, ...) {
+    eb <- EagerExprBuilder$new(.data)
+    key_by.ExprBuilder(eb, ...)
 }

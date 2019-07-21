@@ -2,11 +2,18 @@
 % Please edit documentation in R/VERBS-filter_sd.R
 \name{filter_sd}
 \alias{filter_sd}
+\alias{filter_sd.ExprBuilder}
+\alias{filter_sd.data.table}
 \title{Filter subset of data}
 \usage{
-filter_sd(.data, .SDcols, .how = Negate(is.na), ..., which,
-  .collapse = `&`, .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+filter_sd(.data, .SDcols, .how = Negate(is.na), ...)
+
+\method{filter_sd}{ExprBuilder}(.data, .SDcols, .how = Negate(is.na),
+  ..., which, .collapse = `&`,
+  .parse = getOption("table.express.parse", FALSE),
+  .chain = getOption("table.express.chain", TRUE), .caller_env_n = 1L)
+
+\method{filter_sd}{data.table}(.data, ..., .expr = FALSE)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -25,6 +32,13 @@ filter_sd(.data, .SDcols, .how = Negate(is.na), ..., which,
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
+
+\item{.caller_env_n}{Internal. Passed to \code{\link[rlang:caller_env]{rlang::caller_env()}} to find the function specified in
+\code{.how} and \link[rlang:call_standardise]{standardize} its call.}
+
+\item{.expr}{If the input is a \code{data.table} and \code{.expr} is \code{TRUE}, an instance of
+\link{EagerExprBuilder} will be returned. Useful if you want to add clauses to \code{j}, e.g. with
+\link{mutate-table.express}.}
 }
 \description{
 Helper to filter rows with the same condition applied to a subset of the data.
@@ -53,7 +67,6 @@ To see more examples, check the
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
     filter_sd(c("vs", "am"), .COL == 1)
 
 }

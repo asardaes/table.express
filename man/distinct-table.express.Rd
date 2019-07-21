@@ -3,10 +3,13 @@
 \name{distinct-table.express}
 \alias{distinct-table.express}
 \alias{distinct.ExprBuilder}
+\alias{distinct.data.table}
 \title{Rows with distinct combinations of columns}
 \usage{
 \method{distinct}{ExprBuilder}(.data, ..., .keep = TRUE,
   .parse = getOption("table.express.parse", FALSE))
+
+\method{distinct}{data.table}(.data, ...)
 }
 \arguments{
 \item{.data}{An instance of \link{ExprBuilder}.}
@@ -36,8 +39,6 @@ data("mtcars")
 
 # compare with .keep = TRUE
 data.table::as.data.table(mtcars) \%>\%
-    start_expr \%>\%
-    distinct(amvs = am + vs, .keep = names(mtcars)) \%>\%
-    end_expr
+    distinct(amvs = am + vs, .keep = names(mtcars))
 
 }

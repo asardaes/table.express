@@ -37,3 +37,17 @@ test_that("Transmuting by value with parsing works.", {
     expect_identical(ans$mpg2, DT$mpg * 2)
     expect_identical(ans$disp0.5, DT$disp / 2)
 })
+
+test_that("Eager versions of transmute work.", {
+    expected <- DT[, .(mpg = mpg * 2, hp = cumsum(hp), vs = max(vs))]
+    ans <- transmute(DT, mpg = mpg * 2, hp = cumsum(hp), vs = max(vs))
+    expect_identical(ans, expected)
+
+    expected <- DT[, .(mpg = mpg * 2, hp = cumsum(hp)), by = .(vs, am)]
+    ans <- DT %>% group_by(vs, am) %>% transmute(mpg = mpg * 2, hp = cumsum(hp))
+    expect_identical(ans, expected)
+
+    expected <- data.table::copy(DT)[, .(mpg = mpg * 2, hp = cumsum(hp)), keyby = .(vs, am)]
+    ans <- DT %>% (data.table::copy) %>% key_by(vs, am) %>% transmute(mpg = mpg * 2, hp = cumsum(hp))
+    expect_identical(ans, expected)
+})

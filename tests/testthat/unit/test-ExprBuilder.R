@@ -101,3 +101,8 @@ test_that("Nested expressions are correctly chained.", {
     eb <- eb$chain()
     expect_identical(eb$.__enclos_env__$private$.nested[[1L]], expected)
 })
+
+test_that("Eager versions of ExprBuilder cannot be chained.", {
+    expect_error(EagerExprBuilder$new(data.table::data.table())$chain(), "cannot be chained")
+    expect_error(EagerExprBuilder$new(data.table::data.table())$chain_if_set(), "cannot be chained")
+})

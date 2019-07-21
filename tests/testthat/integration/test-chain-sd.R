@@ -26,6 +26,13 @@ test_that("Chain filter_sd -> transmute_sd -> mutate_sd", {
         end_expr
 
     expect_identical(ans, expected)
+
+    ans <- state %>%
+        filter_sd(matches_cardinal, .SDcols = c("region", "division", "name")) %>%
+        transmute_sd(.COL ^ 2, .SDcols = starts_with("center_")) %>%
+        mutate_sd(.COL * pi / 180, .SDcols = c("center_x", "center_y"))
+
+    expect_identical(ans, expected)
 })
 
 test_that("Chain mutate_sd -> filter_sd -> transmute_sd", {
@@ -53,6 +60,13 @@ test_that("Chain mutate_sd -> filter_sd -> transmute_sd", {
         end_expr(.by_ref = FALSE)
 
     expect_identical(ans, expected)
+
+    ans <- data.table::copy(DT) %>%
+        mutate_sd(as.integer, .SDcols = sd_cols) %>%
+        filter_sd(.COL %% 2 == 0, .SDcols = sd_cols, .expr = TRUE) %>%
+        transmute_sd(cumsum, .SDcols = setdiff(names(DT), sd_cols))
+
+    expect_identical(ans, expected)
 })
 
 test_that("Chain transmute_sd -> filter_sd -> transmute_sd", {
@@ -76,6 +90,13 @@ test_that("Chain transmute_sd -> filter_sd -> transmute_sd", {
         filter_sd(.COL %% 2 == 0, .SDcols = sd_cols) %>%
         transmute_sd(, cumsum) %>%
         end_expr
+
+    expect_identical(ans, expected)
+
+    ans <- DT %>%
+        transmute_sd(as.integer, .SDcols = sd_cols) %>%
+        filter_sd(.COL %% 2 == 0, .SDcols = sd_cols, .expr = TRUE) %>%
+        transmute_sd(, cumsum)
 
     expect_identical(ans, expected)
 })
@@ -105,6 +126,13 @@ test_that("Chain mutate_sd -> mutate_sd", {
         end_expr
 
     expect_identical(ans, expected)
+
+    ans <- data.table::copy(DT) %>%
+        mutate_sd(round, .SDcols = sd_cols) %>%
+        group_by(cyl) %>%
+        mutate_sd(sum, .SDcols = sd_cols)
+
+    expect_identical(ans, expected)
 })
 
 test_that("Chain filter_sd -> filter_sd", {
@@ -115,6 +143,12 @@ test_that("Chain filter_sd -> filter_sd", {
         filter_sd(.COL == 0, .SDcols = c("vs", "am")) %>%
         filter_sd(.COL > 17, .SDcols = c("mpg", "qsec")) %>%
         end_expr
+
+    expect_identical(ans, expected)
+
+    ans <- DT %>%
+        filter_sd(.COL == 0, .SDcols = c("vs", "am")) %>%
+        filter_sd(.COL > 17, .SDcols = c("mpg", "qsec"))
 
     expect_identical(ans, expected)
 })
@@ -132,6 +166,13 @@ test_that("Chain filter_sd -> mutate_sd -> filter_sd", {
         end_expr
 
     expect_identical(ans, expected)
+
+    ans <- DT %>%
+        filter_sd(.COL == 0, .SDcols = c("vs", "am")) %>%
+        mutate_sd(.COL / 10, .SDcols = c("disp", "hp")) %>%
+        filter_sd(.COL > 17, .SDcols = c("mpg", "qsec"))
+
+    expect_identical(ans, expected)
 })
 
 test_that("Chain filter_sd -> transmute_sd -> filter_sd", {
@@ -145,6 +186,13 @@ test_that("Chain filter_sd -> transmute_sd -> filter_sd", {
         end_expr
 
     expect_identical(ans, expected)
+
+    ans <- DT %>%
+        filter_sd(.COL == 0, .SDcols = c("vs", "am"), .expr = TRUE) %>%
+        transmute_sd(.COL * 2, .SDcols = c("mpg", "qsec")) %>%
+        filter_sd(.COL > 34, .SDcols = c("mpg", "qsec"))
+
+    expect_identical(ans, expected)
 })
 
 test_that("Chain filter_sd -> filter_on -> filter_sd", {
@@ -156,6 +204,13 @@ test_that("Chain filter_sd -> filter_on -> filter_sd", {
         filter_on(region = "West", division = "Pacific") %>%
         filter_sd(.COL > 1000, .SDcols = c("population", "income")) %>%
         end_expr
+
+    expect_identical(ans, expected)
+
+    ans <- state %>%
+        filter_sd(.COL > 5000, .SDcols = c("income", "area")) %>%
+        filter_on(region = "West", division = "Pacific") %>%
+        filter_sd(.COL > 1000, .SDcols = c("population", "income"))
 
     expect_identical(ans, expected)
 })

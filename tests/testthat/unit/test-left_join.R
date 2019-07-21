@@ -141,3 +141,17 @@ test_that("Left non-equi join with mult works.", {
 
     expect_identical(ans, expected)
 })
+
+test_that("Eager left_join works.", {
+    expected <- rhs[lhs, on = "x"]
+    ans <- lhs %>% left_join(rhs, "x")
+    expect_identical(ans, expected)
+
+    expected <- rhs[lhs, .(i.v, foo), on = "x"]
+    ans <- lhs %>% left_join(rhs, "x", .expr = TRUE) %>% select(i.v, foo)
+    expect_identical(ans, expected)
+
+    expected <- lhs[lhs, on = "x", allow = TRUE]
+    ans <- lhs %>% left_join(, "x", allow = TRUE)
+    expect_identical(ans, expected)
+})
