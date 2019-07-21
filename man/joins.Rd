@@ -87,8 +87,6 @@ mutate_join(x, y, ...)
 \item{.eager}{For \code{semi_join}. If \code{TRUE}, it uses \code{\link[=nest_expr]{nest_expr()}} to build an expression like
 \href{https://stackoverflow.com/a/18971223/5793905}{this} instead of the default one. This uses the
 captured \code{data.table} eagerly, so use \code{\link[=chain]{chain()}} when needed. The default is lazy.}
-
-\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}}
 }
 \description{
 Two-table joins. Check the
