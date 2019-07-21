@@ -48,6 +48,13 @@ test_that("Session immediately before a purchase, if any.", {
         end_expr
 
     expect_identical(data.table::setkey(ans, NULL), data.table::setcolorder(expected, names(ans)))
+
+    ans <- data.table::copy(paypal) %>%
+        mutate_join(website, name, purchase_time = session_start_time, .SDcols = "session_id", roll = Inf) %>%
+        mutate_join(website, session_id, .SDcols = "session_start_time") %>%
+        filter_sd(everything())
+
+    expect_identical(data.table::setkey(ans, NULL), data.table::setcolorder(expected, names(ans)))
 })
 
 test_that("inner_join before or after a filter", {
@@ -156,4 +163,7 @@ test_that("A filtering clause can be added to a mutating join.", {
     expect_null(ans$.__enclos_env__$private$.child)
 
     expect_identical(end_expr(ans, .by_ref = FALSE), expected)
+
+    ans <- data.table::copy(lhs) %>% where(x == "c") %>% mutate_join(rhs, x, .SDcols = "foo")
+    expect_identical(ans, expected)
 })

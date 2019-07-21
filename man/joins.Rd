@@ -14,6 +14,7 @@
 \alias{left_join.data.table}
 \alias{mutate_join}
 \alias{mutate_join.ExprBuilder}
+\alias{mutate_join.EagerExprBuilder}
 \alias{mutate_join.data.table}
 \alias{right_join.ExprBuilder}
 \alias{right_join.data.table}
@@ -43,6 +44,9 @@ mutate_join(x, y, ...)
 
 \method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, mult, roll, rollends,
   allow = FALSE, .by_each = NULL, .parent_env)
+
+\method{mutate_join}{EagerExprBuilder}(x, ...,
+  .parent_env = rlang::caller_env())
 
 \method{mutate_join}{data.table}(x, y, ...)
 
@@ -83,6 +87,8 @@ mutate_join(x, y, ...)
 \item{.eager}{For \code{semi_join}. If \code{TRUE}, it uses \code{\link[=nest_expr]{nest_expr()}} to build an expression like
 \href{https://stackoverflow.com/a/18971223/5793905}{this} instead of the default one. This uses the
 captured \code{data.table} eagerly, so use \code{\link[=chain]{chain()}} when needed. The default is lazy.}
+
+\item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}}
 }
 \description{
 Two-table joins. Check the

@@ -166,6 +166,16 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends,
 #' @rdname joins
 #' @export
 #' @importFrom rlang caller_env
+#'
+#' @param .parent_env See [end_expr()]
+#'
+mutate_join.EagerExprBuilder <- function(x, ..., .parent_env = rlang::caller_env()) {
+    end_expr.ExprBuilder(mutate_join.ExprBuilder(x, ...), .parent_env = .parent_env)
+}
+
+#' @rdname joins
+#' @export
+#' @importFrom rlang caller_env
 #' @importFrom rlang enexpr
 #'
 mutate_join.data.table <- function(x, y, ...) {
