@@ -43,8 +43,10 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .par
 
 #' @rdname joins
 #' @export
+#' @importFrom rlang call_args
 #' @importFrom rlang caller_env
 #' @importFrom rlang enexpr
+#' @importFrom rlang expr
 #'
 left_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
     x_expr <- rlang::enexpr(x)
@@ -55,6 +57,10 @@ left_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
 
     eb <- if (.expr) EagerExprBuilder$new(y) else ExprBuilder$new(y)
     lazy_ans <- right_join.ExprBuilder(eb, y = !!x_expr, ...)
+    if (!is.null(lazy_ans$appends$on)) {
+        switched_on <- rlang::expr(list(!!!name_comp_switcheroo(rlang::call_args(lazy_ans$appends$on))))
+        lazy_ans$.__enclos_env__$private$.appends$on <- switched_on
+    }
 
     if (allow) {
         frame_append(lazy_ans, allow.cartesian = TRUE)

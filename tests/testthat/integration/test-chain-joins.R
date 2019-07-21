@@ -19,6 +19,16 @@ test_that("Visits that had a purchase afterwards, with totals per name and n_vis
         end_expr
 
     expect_identical(ans, expected)
+
+    ans <- website %>%
+        left_join(paypal, name, session_start_time = purchase_time, nomatch = NULL, roll = Inf) %>%
+        mutate(purchase_time = NULL) %>%
+        group_by(name) %>%
+        mutate(num_purchases = length(unique(payment_id))) %>%
+        group_by(payment_id) %>%
+        mutate(num_previous_visits = .N)
+
+    expect_identical(ans, expected)
 })
 
 test_that("Session immediately before a purchase, if any.", {
