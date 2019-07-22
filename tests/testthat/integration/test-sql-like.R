@@ -11,7 +11,7 @@ test_that("Queries like select-where-group-order work as expected.", {
         order_by(region) %>%
         end_expr
 
-    expect_identical(ans, expected)
+    expect_equal(ans, expected)
 
     # ----------------------------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ test_that("Queries like select-where-group-order work as expected.", {
         order_by(-division) %>%
         end_expr
 
-    expect_identical(ans, expected)
+    expect_equal(ans, expected)
 
     # ----------------------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ test_that("Queries like select-where-group-order work as expected.", {
         order_by(region, -division) %>%
         end_expr
 
-    expect_identical(ans, expected)
+    expect_equal(ans, expected)
 })
 
 test_that("Queries like select-where-keyby-order work as expected.", {
@@ -53,7 +53,7 @@ test_that("Queries like select-where-keyby-order work as expected.", {
         order_by(region) %>%
         end_expr
 
-    expect_identical(ans, expected)
+    expect_equal(ans, expected)
 
     # ----------------------------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ test_that("Queries like select-where-keyby-order work as expected.", {
         order_by(-division) %>%
         end_expr
 
-    expect_identical(ans, expected)
+    expect_equal(ans, expected)
 
     # ----------------------------------------------------------------------------------------------
 
@@ -81,7 +81,7 @@ test_that("Queries like select-where-keyby-order work as expected.", {
         order_by(region, -division) %>%
         end_expr
 
-    expect_identical(ans, expected)
+    expect_equal(ans, expected)
 })
 
 test_that("Special symbols can be used as usual.", {
@@ -150,6 +150,20 @@ test_that("Complex chains are correctly expressed and evaluated.", {
         key_by(group_id) %>%
 
         end_expr
+
+    expect_identical(ans, expected)
+
+    ans <- state %>%
+        where(population > 1000) %>%
+        select(region:center_y) %>%
+
+        group_by(division) %>%
+        order_by(region) %>%
+        select(region, center_x, center_y, group_id = .GRP) %>%
+
+        key_by(group_id) %>%
+        where(abs(center_x) > 85, abs(center_y) > 40) %>%
+        transmute(min(center_x), max(center_y))
 
     expect_identical(ans, expected)
 })
