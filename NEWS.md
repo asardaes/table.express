@@ -4,7 +4,7 @@
   updated vignettes (#3). Importantly, this makes `table.express` **conflict** with `dtplyr`.
 - Fixed a bug that prevented automatically built chains to work after a `left_join`.
 - Added `max_by` and `min_by` verbs.
-- `distinct` gained a `.keep` parameter.
+- `distinct` gained parameters `.keep` and `.n`.
 - `filter_on` now allows empty names for data tables that already have keys (#17).
 - All filtering verbs now have a `which` parameter (#17).
 - Added `nest_expr` for certain scenarios that need the captured `data.table`; check the vignette
