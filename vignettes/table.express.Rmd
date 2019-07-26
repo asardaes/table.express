@@ -47,7 +47,7 @@ We will return to the importance of this at the [end](#as-simple-as-possible).
 All verbs defined in this package essentially parse the input given to them and build expressions that `data.table` understands.
 These expressions are used in a `data.table` *frame*,
 i.e. in a call similar to `DT[i, j, by, ...]` where `DT` is a `data.table`.
-The [frame's main alements](https://github.com/Rdatatable/data.table/wiki) are the 3 shown:
+The [frame's main elements](https://github.com/Rdatatable/data.table/wiki) are the 3 shown:
 `i`, `j`, and `by`.
 Let us first list the available single-table verbs and their effects in the frame
 (two-table joining verbs have [their own vignette](https://asardaes.github.io/table.express/articles/joins.html)):
@@ -91,7 +91,7 @@ the *order* in which the verbs are used becomes important:
   usually specifying whether they should evaluate the frame or not.
 - Verbs that set `j` should be used last.
 
-The examples here will be working with the `mtcars` data:
+The examples here explain this in more detail with the `mtcars` data:
 
 ```{r mtcars}
 data("mtcars")
@@ -146,7 +146,7 @@ DT %>%
 ## Selecting columns
 
 Even though selecting a subset of columns is a common operation,
-it may be undesirable to do so when working with `data.table`s because they *always* lead to **deep** data copies.
+it may be undesirable to do so when working with `data.table`s because it *always* lead to **deep** data copies.
 Given that `data.table` supports modification by reference,
 these copies are necessary.
 For example, the following would require copying all columns between `mpg` and `disp`,
