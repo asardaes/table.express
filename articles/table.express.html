@@ -100,7 +100,7 @@
 <div id="preliminaries" class="section level3">
 <h3 class="hasAnchor">
 <a href="#preliminaries" class="anchor"></a>Preliminaries</h3>
-<p>All verbs defined in this package essentially parse the input given to them and build expressions that <code>data.table</code> understands. These expressions are used in a <code>data.table</code> <em>frame</em>, i.e. in a call similar to <code>DT[i, j, by, ...]</code> where <code>DT</code> is a <code>data.table</code>. The <a href="https://github.com/Rdatatable/data.table/wiki">frame’s main alements</a> are the 3 shown: <code>i</code>, <code>j</code>, and <code>by</code>. Let us first list the available single-table verbs and their effects in the frame (two-table joining verbs have <a href="https://asardaes.github.io/table.express/articles/joins.html">their own vignette</a>):</p>
+<p>All verbs defined in this package essentially parse the input given to them and build expressions that <code>data.table</code> understands. These expressions are used in a <code>data.table</code> <em>frame</em>, i.e. in a call similar to <code>DT[i, j, by, ...]</code> where <code>DT</code> is a <code>data.table</code>. The <a href="https://github.com/Rdatatable/data.table/wiki">frame’s main elements</a> are the 3 shown: <code>i</code>, <code>j</code>, and <code>by</code>. Let us first list the available single-table verbs and their effects in the frame (two-table joining verbs have <a href="https://asardaes.github.io/table.express/articles/joins.html">their own vignette</a>):</p>
 <ul>
 <li>Verbs that set <code>i</code>:
 <ul>
@@ -149,7 +149,7 @@
 <li>Verbs that set <code>i</code> should be used next, usually specifying whether they should evaluate the frame or not.</li>
 <li>Verbs that set <code>j</code> should be used last.</li>
 </ul>
-<p>The examples here will be working with the <code>mtcars</code> data:</p>
+<p>The examples here explain this in more detail with the <code>mtcars</code> data:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"mtcars"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">DT &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span></a>
@@ -195,7 +195,7 @@
 <div id="selecting-columns" class="section level2">
 <h2 class="hasAnchor">
 <a href="#selecting-columns" class="anchor"></a>Selecting columns</h2>
-<p>Even though selecting a subset of columns is a common operation, it may be undesirable to do so when working with <code>data.table</code>s because they <em>always</em> lead to <strong>deep</strong> data copies. Given that <code>data.table</code> supports modification by reference, these copies are necessary. For example, the following would require copying all columns between <code>mpg</code> and <code>disp</code>, since any of them could be modified by reference afterwards.</p>
+<p>Even though selecting a subset of columns is a common operation, it may be undesirable to do so when working with <code>data.table</code>s because it <em>always</em> lead to <strong>deep</strong> data copies. Given that <code>data.table</code> supports modification by reference, these copies are necessary. For example, the following would require copying all columns between <code>mpg</code> and <code>disp</code>, since any of them could be modified by reference afterwards.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">DT[, mpg<span class="op">:</span>disp][, cyl <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(cyl)]</a></code></pre></div>
 <p>Therefore, it might be preferable to use mutation verbs to remove columns that are not of interest.</p>
 <p>With that said, the <code>select</code> verb can be used as usual:</p>
@@ -657,7 +657,7 @@
 <a class="sourceLine" id="cb97-7" data-line-number="7"><span class="st">  </span>end_expr</a></code></pre></div>
 <pre><code>#&gt; .DT_[, c(lapply(.SD, mean)), by = list(am, vs), .SDcols = c(c("mpg", 
 #&gt;     "disp")), verbose = TRUE]
-#&gt; Finding groups using forderv ... 0.001s elapsed (0.001s cpu) 
+#&gt; Finding groups using forderv ... 0.001s elapsed (0.000s cpu) 
 #&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) 
 #&gt; Getting back original order ... 0.000s elapsed (0.000s cpu) 
 #&gt; lapply optimization changed j from 'c(lapply(.SD, mean))' to 'list(mean(mpg), mean(disp))'
@@ -679,7 +679,7 @@
 <pre><code>#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(c("mpg", 
 #&gt;     "disp")), .hows = rlang::quos(mean(x = .COL))), by = list(am, 
 #&gt;     vs), verbose = TRUE]
-#&gt; Finding groups using forderv ... 0.000s elapsed (0.000s cpu) 
+#&gt; Finding groups using forderv ... 0.000s elapsed (0.001s cpu) 
 #&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) 
 #&gt; Getting back original order ... 0.000s elapsed (0.000s cpu) 
 #&gt; lapply optimization is on, j unchanged as '.transmute_matching(.SD, .which = rlang::quo(c("mpg", "disp")), .hows = rlang::quos(mean(x = .COL)))'
@@ -689,7 +689,7 @@
 #&gt; 
 #&gt;   collecting discontiguous groups took 0.000s for 4 groups
 #&gt;   eval(j) took 0.002s for 4 calls
-#&gt; 0.003s elapsed (0.003s cpu)</code></pre>
+#&gt; 0.002s elapsed (0.002s cpu)</code></pre>
 <pre><code>#&gt;    am vs      mpg     disp
 #&gt; 1:  1  0 19.75000 206.2167
 #&gt; 2:  1  1 28.37143  89.8000
@@ -719,7 +719,7 @@
 #&gt; Getting back original order ... 0.000s elapsed (0.000s cpu) 
 #&gt; lapply optimization changed j from 'c(min = lapply(.SD, min), max = lapply(.SD, max))' to 'list(min(mpg), min(disp), max(mpg), max(disp))'
 #&gt; GForce optimized j to 'list(gmin(mpg), gmin(disp), gmax(mpg), gmax(disp))'
-#&gt; Making each group and running j (GForce TRUE) ... 0.000s elapsed (0.001s cpu)</code></pre>
+#&gt; Making each group and running j (GForce TRUE) ... 0.000s elapsed (0.000s cpu)</code></pre>
 <pre><code>#&gt;    am vs  mpg  disp  mpg disp
 #&gt; 1:  1  0 15.0 120.3 26.0  351
 #&gt; 2:  1  1 21.4  71.1 33.9  121
