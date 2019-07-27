@@ -39,7 +39,7 @@ mutate_sd <- function(.data, .SDcols, .how = identity, ...) {
 #'
 #' data.table::as.data.table(mtcars) %>%
 #'     start_expr %>%
-#'     mutate_sd(c("mpg", "cyl"), .COL * 2)
+#'     mutate_sd(c("mpg", "cyl"), ~ .x * 2)
 #'
 mutate_sd.ExprBuilder <- function(.data, .SDcols, .how = identity, ..., .prefix, .suffix,
                                   .parse = getOption("table.express.parse", FALSE),

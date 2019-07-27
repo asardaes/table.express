@@ -168,3 +168,9 @@ test_that("Eager transmutation of SD works.", {
     ans <- DT %>% where(vs == 0) %>% transmute_sd(c("mpg", "cyl"), .COL * 2)
     expect_identical(ans, expected)
 })
+
+test_that("transmute_sd with formulas works.", {
+    expected <- DT[, lapply(.SD, "*", 2), .SDcols = c("mpg", "am")]
+    ans <- transmute_sd(DT, ~ grepl("m", .y), ~ .x * 2)
+    expect_identical(ans, expected)
+})

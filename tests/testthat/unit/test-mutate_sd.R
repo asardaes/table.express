@@ -170,3 +170,20 @@ test_that("Eager mutation of SD works.", {
     ans <- data.table::copy(DT) %>% where(vs == 0) %>% mutate_sd(c("mpg", "cyl"), .COL * 2)
     expect_identical(ans, expected)
 })
+
+test_that("mutate_sd with formulas works.", {
+    expected <- data.table::copy(DT)[, c("mpg", "cyl") := list(mpg / 2, NULL)]
+    ans <- mutate_sd(data.table::copy(DT), c("mpg", "cyl"), list(~ . / 2, ~ NULL))
+    expect_identical(ans, expected)
+
+    expected <- data.table::copy(DT)[, c("mpg", "am") := list(0, 1)]
+    ans <- mutate_sd(data.table::copy(DT), ~ grepl("m", .y), list(~ 0, ~ 1))
+    expect_identical(ans, expected)
+
+    expected <- data.table::copy(DT)[, c("vs", "am") := lapply(.SD, function(.x) { replace(.x, .x == 0, NA_real_) }),
+                                     .SDcols = c("vs", "am")]
+    ans <- mutate_sd(data.table::copy(DT), ~ any(. == 0), ~ replace(.x, .x == 0, NA_real_))
+    expect_identical(ans, expected)
+
+    expect_error(mutate_sd(DT, ~ .x == 0, ~ replace(.x, .x == 0, NA_real_)), "single logical")
+})

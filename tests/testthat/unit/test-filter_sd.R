@@ -43,6 +43,12 @@ test_that("Filtering SD with .COL predicates works.", {
     })
 })
 
+test_that("Filtering SD with .COLNAME predicates works.", {
+    expected <- DT[drat > 3 & wt > 3]
+    ans <- filter_sd(DT, grepl("t$", .COLNAME), .COL > 3)
+    expect_identical(ans, expected)
+})
+
 test_that("Filtering SD with :-calls works.", {
     expected <- DT[vs == 1 & am == 1]
 
@@ -69,5 +75,11 @@ test_that("Eager filter_sd works.", {
 
     expected <- data.table::copy(DT)[vs == 1 & am == 1, flag := TRUE]
     ans <- data.table::copy(DT) %>% filter_sd(vs:am, .COL == 1, .expr = TRUE) %>% mutate(flag = TRUE)
+    expect_identical(ans, expected)
+})
+
+test_that("filter_sd with formulas works.", {
+    expected <- DT[drat > 3 & wt > 3]
+    ans <- filter_sd(DT, ~ grepl("t$", .y), ~ .x > 3)
     expect_identical(ans, expected)
 })

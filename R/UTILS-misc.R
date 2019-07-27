@@ -62,10 +62,14 @@ evaled_is <- function(obj_quo, classes) {
 
 #' @importFrom rlang abort
 #' @importFrom rlang as_label
+#' @importFrom rlang as_function
 #' @importFrom rlang eval_tidy
+#' @importFrom rlang f_rhs
 #' @importFrom rlang is_call
+#' @importFrom rlang is_formula
 #' @importFrom rlang is_logical
 #' @importFrom rlang quo
+#' @importFrom stats as.formula
 #'
 process_sdcols <- function(.data, .sdcols_quo) {
     .sdcols_expr <- to_expr(.sdcols_quo)
@@ -73,10 +77,27 @@ process_sdcols <- function(.data, .sdcols_quo) {
     if (is_tidyselect_call(.sdcols_expr) || rlang::is_call(.sdcols_expr, ":")) {
         .data$tidy_select(.sdcols_expr)
     }
-    else if (uses_pronouns(.sdcols_expr, ".COL")) {
+    else if (rlang::is_formula(.sdcols_expr)) {
+        .sdcols_fun <- rlang::as_function(stats::as.formula(.sdcols_expr))
+        .f_ <- function(.COL, .COLNAME) {
+            ans <- .sdcols_fun(.COL, .COLNAME)
+
+            if (!rlang::is_logical(ans, n = 1L)) {
+                rlang::abort(paste0("The evaluation of {",
+                                    rlang::as_label(rlang::f_rhs(.sdcols_expr)),
+                                    "} did not result in a single logical."))
+            }
+
+            ans
+        }
+
+        .data$tidy_select(rlang::quo(as.logical(.DT_[, Map(.f_, .SD, names(.SD))])))
+    }
+    else if (uses_pronouns(.sdcols_expr, c(".COL", ".COLNAME"))) {
         # https://github.com/r-lib/covr/issues/377
-        .f_ <- function(.COL) {
+        .f_ <- function(.COL, .COLNAME) {
             ans <- base::eval(.sdcols_expr)
+
             if (!rlang::is_logical(ans, n = 1L)) {
                 rlang::abort(paste0("The evaluation of {",
                                     rlang::as_label(.sdcols_expr),
@@ -86,7 +107,7 @@ process_sdcols <- function(.data, .sdcols_quo) {
             ans
         }
 
-        .data$tidy_select(rlang::quo(as.logical(.DT_[, lapply(.SD, .f_)])))
+        .data$tidy_select(rlang::quo(as.logical(.DT_[, Map(.f_, .SD, names(.SD))])))
     }
     else {
         rlang::eval_tidy(.sdcols_quo)
@@ -209,6 +230,7 @@ standardize_lapplys <- function(.exprs, ..., .parse) {
 #' @importFrom rlang call_standardise
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
+#' @importFrom rlang is_formula
 #' @importFrom rlang new_quosure
 #' @importFrom rlang zap
 #'
@@ -227,7 +249,7 @@ standardize_calls <- function(.exprs, .env, ..., .parse) {
             .expr <- rlang::call2(.expr, rlang::expr(.COL))
         }
 
-        if (rlang::is_call(.expr)) {
+        if (!rlang::is_formula(.expr) && rlang::is_call(.expr)) {
             .expr <- rlang::call_standardise(.expr, .env)
             .expr <- rlang::call_modify(.expr, ... = rlang::zap(), !!!.dots)
         }
@@ -258,4 +280,21 @@ extrema_by <- function(expressions, .some, ...) {
     else {
         rlang::expr(.[, .(.extrema_ = .I[!!expressions])]$.extrema_)
     }
+}
+
+#' @importFrom rlang as_function
+#' @importFrom rlang call2
+#' @importFrom rlang is_formula
+#' @importFrom rlang quo_get_expr
+#' @importFrom stats as.formula
+#'
+unformulate <- function(.how) {
+    .how_expr <- rlang::quo_get_expr(.how) # rlang::is_formula for quosures is TRUE...
+
+    if (rlang::is_formula(.how_expr)) {
+        .how <- rlang::as_function(stats::as.formula(.how_expr))
+        .how <- rlang::call2(.how, base::quote(.COL))
+    }
+
+    .how
 }

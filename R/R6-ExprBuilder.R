@@ -385,6 +385,7 @@ EBCompanion$clause_order <- c(
 # beware of https://github.com/r-lib/rlang/issues/774
 #
 #' @importFrom rlang abort
+#' @importFrom rlang as_function
 #' @importFrom rlang as_label
 #' @importFrom rlang as_string
 #' @importFrom rlang call_name
@@ -392,10 +393,12 @@ EBCompanion$clause_order <- c(
 #' @importFrom rlang enexprs
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
+#' @importFrom rlang is_formula
 #' @importFrom rlang is_logical
 #' @importFrom rlang new_data_mask
 #' @importFrom rlang new_environment
 #' @importFrom rlang quo_get_expr
+#' @importFrom stats as.formula
 #' @importFrom tidyselect scoped_vars
 #'
 EBCompanion$helper_functions <- list(
@@ -479,6 +482,11 @@ EBCompanion$helper_functions <- list(
         else if (rlang::is_call(.which_expr, ":")) {
             .matches <- select_with_colon(.names, .which_expr)
         }
+        else if (rlang::is_formula(.which_expr)) {
+            .which_fun <- rlang::as_function(stats::as.formula(.which_expr))
+            .matches <- Map(.which_fun, .SD, .names)
+            .matches <- .names[unlist(.matches)]
+        }
         else if (uses_pronouns(.which_expr, c(".COL", ".COLNAME"))) {
             .matches <- sapply(.names, function(.COLNAME) {
                 .COL <- .SD[[.COLNAME]]
@@ -512,6 +520,8 @@ EBCompanion$helper_functions <- list(
         })
 
         .ans <- unlist(recursive = FALSE, lapply(.hows, function(.how) {
+            .how <- unformulate(.how)
+
             lapply(.data_masks, function(.data_mask) {
                 rlang::eval_tidy(.how, .data_mask)
             })
@@ -542,6 +552,7 @@ EBCompanion$helper_functions <- list(
                 .COL <- list()
             }
 
+            .how <- unformulate(.how)
             .data_mask <- rlang::new_data_mask(rlang::new_environment(.COL))
             rlang::eval_tidy(.how, .data_mask)
         })

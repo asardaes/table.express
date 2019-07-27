@@ -52,6 +52,7 @@ Additionally, \code{.SDcols} supports:
 \item \link[tidyselect:select_helpers]{tidyselect::select_helpers}
 \item A predicate using the \code{.COL} pronoun that should return a single logical when \code{.COL} is
 replaced by a \emph{column} of the data.
+\item A formula using \code{.} or \code{.x} instead of the aforementioned \code{.COL}.
 }
 
 The caveat is that the expression is evaluated eagerly, i.e. with the currently captured
@@ -67,6 +68,6 @@ To see more examples, check the
 data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
-    filter_sd(c("vs", "am"), .COL == 1)
+    filter_sd(c("vs", "am"), ~ .x == 1)
 
 }

@@ -37,6 +37,9 @@ transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...) {
 #' - `.COL`: the actual values of the column.
 #' - `.COLNAME`: the name of the column currently being evaluated.
 #'
+#' Additionally, lambdas specified as formulas are also supported. In those cases, `.x` is
+#' equivalent to `.COL` and `.y` to `.COLNAME`.
+#'
 #' Unlike a call like `DT[, (vars) := expr]`, `.SDcols` can be created dynamically with an
 #' expression that evaluates to something that would be used in place of `vars` *without* eagerly
 #' using the captured `data.table`. See the examples here or in [table.express-package].
@@ -46,10 +49,10 @@ transmute_sd <- function(.data, .SDcols = everything(), .how = identity, ...) {
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     transmute_sd(grepl("^d", .COLNAME), .COL * 2)
+#'     transmute_sd(~ grepl("^d", .y), ~ .x * 2)
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     transmute_sd(is.numeric(.COL), .COL * 2)
+#'     transmute_sd(~ is.numeric(.x), ~ .x * 2)
 #'
 transmute_sd.ExprBuilder <- function(.data, .SDcols = everything(), .how = identity, ...,
                                      .parse = getOption("table.express.parse", FALSE),

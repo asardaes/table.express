@@ -253,6 +253,7 @@ letting us add other clauses to the same frame.
 
 The helper verb `filter_sd` can be used to apply the same conditions to many columns,
 and it can use a special pronoun `.COL` while specifying the expression,
+lambdas as formulas,
 as well as `tidyselect` helpers to choose `.SDcols`:
 
 ```{r filter-sd}
@@ -264,12 +265,12 @@ DT %>%
 
 DT %>%
   start_expr %>%
-  filter_sd(contains("m"), .COL > 0)
+  filter_sd(contains("m"), ~ .x > 0)
 
 # like dplyr's filter_if
 DT %>%
   start_expr %>%
-  filter_sd(is.numeric(.COL), .COL > 0)
+  filter_sd(~ is.numeric(.x), .x > 0)
 ```
 
 In order to enable combination of filtering helpers with other verbs,
@@ -333,13 +334,18 @@ DT %>%
   }
 ```
 
-Additionally, `mutate_sd` supports the special `.COL` pronoun that symbolizes the column that should be modified:
+Additionally, `mutate_sd` supports the special `.COL` pronoun that symbolizes the column that should be modified,
+as well as lambdas as formulas:
 
 ```{r mutate-sd-col}
 # like dplyr's mutate_if
 DT %>%
   start_expr %>%
   mutate_sd(all(.COL %% 1 == 0), as.integer)
+
+DT %>%
+  start_expr %>%
+  mutate_sd(~ all(.x %% 1 == 0), as.integer)
 ```
 
 On the other hand, `transmute_sd` never modifies by reference,
@@ -357,7 +363,7 @@ DT %>%
 # like dplyr's transmute_if
 DT %>%
   start_expr %>%
-  transmute_sd(is.numeric(.COL), .COL * 2)
+  transmute_sd(~ is.numeric(.x), ~ .x * 2)
 ```
 
 Both verbs also support a list of functions for multiple transformations,

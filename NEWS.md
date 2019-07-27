@@ -3,6 +3,7 @@
 - Verbs can now be used without `start_expr`/`chain`/`end_expr` with some considerations, check the
   updated vignettes (#3). Importantly, this makes `table.express` **conflict** with `dtplyr`.
 - Fixed a bug that prevented automatically built chains to work after a `left_join`.
+- The `*_sd` verbs now support lambdas as formulas (#19).
 - Added `max_by` and `min_by` verbs.
 - `distinct` gained parameters `.keep` and `.n`.
 - `filter_on` now allows empty names for data tables that already have keys (#17).

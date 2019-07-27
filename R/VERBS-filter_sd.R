@@ -17,6 +17,8 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ...) {
 #' @importFrom rlang enexpr
 #' @importFrom rlang enquo
 #' @importFrom rlang expr
+#' @importFrom rlang f_rhs
+#' @importFrom rlang is_formula
 #' @importFrom rlang maybe_missing
 #' @importFrom rlang syms
 #' @importFrom rlang zap
@@ -45,7 +47,7 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ...) {
 #' data("mtcars")
 #'
 #' data.table::as.data.table(mtcars) %>%
-#'     filter_sd(c("vs", "am"), .COL == 1)
+#'     filter_sd(c("vs", "am"), ~ .x == 1)
 #'
 filter_sd.ExprBuilder <- function(.data, .SDcols, .how = Negate(is.na), ..., which, .collapse = `&`,
                                   .parse = getOption("table.express.parse", FALSE),
@@ -62,6 +64,9 @@ filter_sd.ExprBuilder <- function(.data, .SDcols, .how = Negate(is.na), ..., whi
     }
     else {
         .how <- to_expr(how_expr, .parse = .parse)
+        if (rlang::is_formula(.how)) {
+            .how <- rlang::f_rhs(.how)
+        }
     }
 
     .how <- rlang::call_standardise(.how, rlang::caller_env(.caller_env_n))
@@ -101,7 +106,7 @@ substitue_col_pronoun <- function(ex, target_sym) {
         if (rlang::is_call(sub_ex)) {
             ex[[i]] <- substitue_col_pronoun(sub_ex, target_sym)
         }
-        else if (rlang::as_label(sub_ex) == ".COL") {
+        else if (rlang::as_label(sub_ex) %in% c(".COL", ".", ".x")) {
             ex[[i]] <- target_sym
         }
     }

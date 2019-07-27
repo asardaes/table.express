@@ -25,7 +25,7 @@ mutate_sd(.data, .SDcols, .how = identity, ...)
 
 \item{.how}{The function(s) or function call(s) that will perform the transformation. If many,
 a list should be used, either with \code{list()} or \code{.()}. If the list is named, the names will be
-used for the new columns' names.}
+used for the new columns' names. Lambdas specified as formulas are supported.}
 
 \item{...}{Possibly more arguments for \emph{all} functions/calls in \code{.how}.}
 
@@ -52,6 +52,7 @@ Additionally, \code{.SDcols} supports:
 \item \link[tidyselect:select_helpers]{tidyselect::select_helpers}
 \item A predicate using the \code{.COL} pronoun that should return a single logical when \code{.COL} is
 replaced by a \emph{column} of the data.
+\item A formula using \code{.} or \code{.x} instead of the aforementioned \code{.COL}.
 }
 
 The caveat is that the expression is evaluated eagerly, i.e. with the currently captured
@@ -68,6 +69,6 @@ data("mtcars")
 
 data.table::as.data.table(mtcars) \%>\%
     start_expr \%>\%
-    mutate_sd(c("mpg", "cyl"), .COL * 2)
+    mutate_sd(c("mpg", "cyl"), ~ .x * 2)
 
 }
