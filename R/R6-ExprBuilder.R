@@ -77,33 +77,15 @@ ExprBuilder <- R6::R6Class(
         },
 
         set_i = function(value, chain_if_needed) {
-            ans <- private$.process_clause("i", value, chain_if_needed)
-            if (private$.verbose) { # nocov start
-                cat("Expression after ", EBCompanion$get_top_call(), ":\n", sep = "")
-                print(self)
-            } # nocov end
-
-            ans
+            private$.process_clause("i", value, chain_if_needed)
         },
 
         set_j = function(value, chain_if_needed) {
-            ans <- private$.process_clause("j", value, chain_if_needed)
-            if (private$.verbose) { # nocov start
-                cat("Expression after ", EBCompanion$get_top_call(), ":\n", sep = "")
-                print(self)
-            } # nocov end
-
-            ans
+            private$.process_clause("j", value, chain_if_needed)
         },
 
         set_by = function(value, chain_if_needed) {
-            ans <- private$.process_clause("by", value, chain_if_needed)
-            if (private$.verbose) { # nocov start
-                cat("Expression after ", EBCompanion$get_top_call(), ":\n", sep = "")
-                print(self)
-            } # nocov end
-
-            ans
+            private$.process_clause("by", value, chain_if_needed)
         },
 
         chain = function(type = "frame", next_dt, parent_env) {
@@ -291,6 +273,12 @@ ExprBuilder <- R6::R6Class(
             }
 
             assign(private_name, value, private)
+
+            if (private$.verbose) { # nocov start
+                cat("Expression after ", EBCompanion$get_top_call(-3L), ":\n", sep = "")
+                print(self)
+            } # nocov end
+
             self
         },
 
@@ -653,10 +641,10 @@ EBCompanion$chain_select_count <- function(expr_builder) {
 #' @importFrom rlang call_name
 #' @importFrom rlang trace_back
 #'
-EBCompanion$get_top_call <- function() {
+EBCompanion$get_top_call <- function(n = -2L) {
     ns_funs <- ls(asNamespace("table.express"))
     call_stack <- rlang::trace_back()[[1L]]
-    top_call <- Find(call_stack, right = TRUE, nomatch = sys.call(-2L), f = function(.call) {
+    top_call <- Find(call_stack, right = TRUE, nomatch = sys.call(n), f = function(.call) {
         if (is.null(.call)) return(FALSE)
 
         .name <- rlang::call_name(.call)
