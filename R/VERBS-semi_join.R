@@ -35,12 +35,12 @@ semi_join.ExprBuilder <- function(x, y, ..., allow = FALSE, .eager = FALSE) {
         ))
 
         where_clause <- x$seek_and_nestroy(where_expr)[[1L]]
-        x <- x$set_where(where_clause, TRUE)
+        x <- x$set_i(where_clause, TRUE)
     }
     else {
-        x <- x$chain_if_set(".where", ".select")
-        x <- x$set_where(y, FALSE)
-        x <- x$set_select(rlang::expr(unique(.SD)), FALSE)
+        x <- x$chain_if_set(".i", ".j")
+        x <- x$set_i(y, FALSE)
+        x <- x$set_j(rlang::expr(unique(.SD)), FALSE)
 
         frame_append(x, nomatch = NULL, .parse = FALSE)
         if (length(on) > 0L) {
@@ -74,7 +74,7 @@ semi_join.data.table <- function(x, y, ..., allow = FALSE, .eager = FALSE) {
         ))
 
         where_clause <- eb$seek_and_nestroy(where_expr)[[1L]]
-        lazy_ans <- eb$set_where(where_clause, FALSE)
+        lazy_ans <- eb$set_i(where_clause, FALSE)
     }
     else {
         lazy_ans <- semi_join.ExprBuilder(eb, y = !!y, ...)

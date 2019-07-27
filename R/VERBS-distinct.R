@@ -47,9 +47,9 @@ distinct.ExprBuilder <- function(.data, ..., .keep = TRUE, .n = 1L,
     cols <- parse_dots(.parse, ...)
 
     if (isTRUE(.keep) || is.character(.keep)) {
-        .data <- .data$chain_if_set(".select", ".by")
+        .data <- .data$chain_if_set(".j", ".by")
         .data$set_by(rlang::expr(list(!!!cols)), FALSE)
-        .data$set_select(rlang::expr(.SD[!!rlang::enexpr(.n)]), FALSE)
+        .data$set_j(rlang::expr(.SD[!!rlang::enexpr(.n)]), FALSE)
 
         if (is.character(.keep)) {
             frame_append(.data, .SDcols = !!.keep)
@@ -57,7 +57,7 @@ distinct.ExprBuilder <- function(.data, ..., .keep = TRUE, .n = 1L,
     }
     else {
         cols <- sapply(cols, rlang::as_string)
-        .data <- .data$set_select(rlang::expr(unique(.SD)), TRUE)
+        .data <- .data$set_j(rlang::expr(unique(.SD)), TRUE)
         frame_append(.data, .SDcols = !!cols)
     }
 

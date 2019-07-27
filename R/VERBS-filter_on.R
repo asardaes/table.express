@@ -49,7 +49,7 @@ filter_on.ExprBuilder <- function(.data, ..., which = FALSE, nomatch = getOption
         clause <- rlang::expr(`!`(`!!`(clause)))
     }
 
-    ans <- .data$set_where(clause, .chain)
+    ans <- .data$set_i(clause, .chain)
 
     if (all(nzchar(keys))) {
         frame_append(ans, on = !!keys, .parse = FALSE)

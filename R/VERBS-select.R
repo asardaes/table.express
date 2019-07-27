@@ -84,7 +84,7 @@ select.ExprBuilder <- function(.data, ..., .negate = FALSE,
         clause <- rlang::expr(.select_matching(!!rlang::maybe_missing(.SD), !!!clauses, .negate = !!.negate))
     }
 
-    .data$set_select(clause, .chain)
+    .data$set_j(clause, .chain)
 }
 
 #' @rdname select-table.express

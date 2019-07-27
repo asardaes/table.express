@@ -18,7 +18,7 @@ inner_join.ExprBuilder <- function(x, y, ...) {
     on <- parse_dots(TRUE, ...)
 
     y <- x$seek_and_nestroy(list(y))[[1L]]
-    x <- x$set_where(y, TRUE)
+    x <- x$set_i(y, TRUE)
     frame_append(x, nomatch = NULL, mult = "all")
 
     if (length(on) > 0L) {

@@ -64,7 +64,7 @@ where.ExprBuilder <- function(.data, ..., which, .collapse = `&`,
         clause <- reduce_expr(clause[-1L], first_where, .collapse, .parse = .parse)
     }
 
-    .data <- .data$set_where(clause, .chain)
+    .data <- .data$set_i(clause, .chain)
     if (!rlang::is_missing(which)) {
         frame_append(.data, which = !!which, .parse = FALSE)
     }

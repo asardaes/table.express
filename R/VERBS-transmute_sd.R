@@ -69,7 +69,7 @@ transmute_sd.ExprBuilder <- function(.data, .SDcols = everything(), .how = ident
 
     if (can_combine_lapply(which_quo, how_quo)) {
         hows <- standardize_lapplys(how_exprs, ..., .parse = .parse)
-        ans <- .data$set_select(hows, .chain)
+        ans <- .data$set_j(hows, .chain)
 
         if (!all_sdcols) {
             if (colon_call) {
@@ -90,7 +90,7 @@ transmute_sd.ExprBuilder <- function(.data, .SDcols = everything(), .how = ident
             .transmute_matching(.SD, .which = rlang::quo(!!which_expr), .hows = rlang::quos(!!!hows))
         )
 
-        ans <- .data$set_select(clause, .chain)
+        ans <- .data$set_j(clause, .chain)
     }
 
     ans

@@ -21,7 +21,7 @@ anti_join.ExprBuilder <- function(x, y, ...) {
 
     on <- parse_dots(TRUE, ...)
 
-    x <- x$set_where(y, TRUE)
+    x <- x$set_i(y, TRUE)
 
     if (length(on) > 0L) {
         frame_append(x, on = list(!!!on))

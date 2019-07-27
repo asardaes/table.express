@@ -28,9 +28,9 @@ shouldn't be used directly.
 \item{\code{initialize(DT, dt_pronouns = list(), .verbose)}}{Constructor that receives a
 \link[data.table:data.table-class]{data.table::data.table} in \code{DT}. The \code{dt_pronouns} parameter is used internally when
 chaining for joins.}
-\item{\code{set_select(value, chain_if_needed)}}{Set the select clause expression(s), starting a new
-frame if the current one already has said expression set.}
-\item{\code{set_where(value, chain_if_needed)}}{Like \code{set_select} but for the where clause.}
+\item{\code{set_j(value, chain_if_needed)}}{Set the \code{j} clause expression(s), starting a new frame
+if the current one already has said expression set.}
+\item{\code{set_i(value, chain_if_needed)}}{Like \code{set_j} but for the \code{i} clause.}
 \item{\code{set_by(value, chain_if_needed)}}{Set the by clause expression.}
 \item{\code{chain(type = "frame", dt)}}{By default, start a new expression with the current one as
 its parent. If \code{type = "pronoun"}, \code{dt} is used to start a new expression that joins the

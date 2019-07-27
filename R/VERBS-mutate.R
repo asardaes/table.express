@@ -66,7 +66,7 @@ mutate.ExprBuilder <- function(.data, ..., .sequential = FALSE, .unquote_names =
         clause <- clauses[[1L]]
     }
 
-    .data$set_select(clause, .chain)
+    .data$set_j(clause, .chain)
 }
 
 #' @rdname mutate-table.express

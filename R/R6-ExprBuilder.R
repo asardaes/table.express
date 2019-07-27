@@ -39,9 +39,9 @@
 #'   \item{`initialize(DT, dt_pronouns = list(), .verbose)`}{Constructor that receives a
 #'     [data.table::data.table-class] in `DT`. The `dt_pronouns` parameter is used internally when
 #'     chaining for joins.}
-#'   \item{`set_select(value, chain_if_needed)`}{Set the select clause expression(s), starting a new
-#'     frame if the current one already has said expression set.}
-#'   \item{`set_where(value, chain_if_needed)`}{Like `set_select` but for the where clause.}
+#'   \item{`set_j(value, chain_if_needed)`}{Set the `j` clause expression(s), starting a new frame
+#'     if the current one already has said expression set.}
+#'   \item{`set_i(value, chain_if_needed)`}{Like `set_j` but for the `i` clause.}
 #'   \item{`set_by(value, chain_if_needed)`}{Set the by clause expression.}
 #'   \item{`chain(type = "frame", dt)`}{By default, start a new expression with the current one as
 #'     its parent. If `type = "pronoun"`, `dt` is used to start a new expression that joins the
@@ -76,8 +76,8 @@ ExprBuilder <- R6::R6Class(
             invisible()
         },
 
-        set_select = function(value, chain_if_needed) {
-            ans <- private$.process_clause("select", value, chain_if_needed)
+        set_i = function(value, chain_if_needed) {
+            ans <- private$.process_clause("i", value, chain_if_needed)
             if (private$.verbose) { # nocov start
                 cat("Expression after ", EBCompanion$get_top_call(), ":\n", sep = "")
                 print(self)
@@ -86,8 +86,8 @@ ExprBuilder <- R6::R6Class(
             ans
         },
 
-        set_where = function(value, chain_if_needed) {
-            ans <- private$.process_clause("where", value, chain_if_needed)
+        set_j = function(value, chain_if_needed) {
+            ans <- private$.process_clause("j", value, chain_if_needed)
             if (private$.verbose) { # nocov start
                 cat("Expression after ", EBCompanion$get_top_call(), ":\n", sep = "")
                 print(self)
@@ -129,7 +129,7 @@ ExprBuilder <- R6::R6Class(
                     } # nocov end
 
                     eb <- ExprBuilder$new(next_dt, next_pronouns, private$.nested, private$.verbose)
-                    eb$set_where(rlang::sym(dt_pronoun), FALSE)
+                    eb$set_i(rlang::sym(dt_pronoun), FALSE)
                 }
             )
         },
@@ -252,8 +252,8 @@ ExprBuilder <- R6::R6Class(
         .parent = NULL,
         .child = NULL,
 
-        .select = NULL,
-        .where = NULL,
+        .i = NULL,
+        .j = NULL,
         .by = NULL,
         .appends = NULL,
         .dt_pronouns = NULL,
@@ -316,7 +316,7 @@ ExprBuilder <- R6::R6Class(
                 names(expressions) <- sub("^.by$", which_by, names(expressions))
             }
 
-            to_unname <- names(expressions) %in% c(".select", ".where")
+            to_unname <- names(expressions) %in% c(".j", ".i")
             if (any(to_unname)) {
                 names(expressions)[to_unname] <- ""
             }
@@ -374,8 +374,8 @@ ExprBuilder <- R6::R6Class(
 EBCompanion <- new.env()
 
 EBCompanion$clause_order <- c(
-    ".where",
-    ".select",
+    ".i",
+    ".j",
     ".by"
 )
 
@@ -631,7 +631,7 @@ EBCompanion$set_child <- function(expr_builder, child) {
 #
 EBCompanion$chain_select_count <- function(expr_builder) {
     .recursion <- function(node, count) {
-        if (!is.null(node$.__enclos_env__$private$.select)) {
+        if (!is.null(node$.__enclos_env__$private$.j)) {
             count <- count + 1L
         }
 

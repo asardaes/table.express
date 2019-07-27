@@ -16,11 +16,11 @@ test_that("Warning is given when replacing clauses", {
     b <- ExprBuilder$new(DT)
 
     expr <- rlang::expr(foo(bar))
-    b$set_select(expr, FALSE)
-    expect_warning(b$set_select(expr, FALSE))
+    b$set_j(expr, FALSE)
+    expect_warning(b$set_j(expr, FALSE))
 
-    b$set_where(expr, FALSE)
-    expect_warning(b$set_where(expr, FALSE))
+    b$set_i(expr, FALSE)
+    expect_warning(b$set_i(expr, FALSE))
 
     b$set_by(expr, FALSE)
     expect_warning(b$set_by(expr, FALSE))
@@ -39,11 +39,11 @@ test_that("Overriding values with eval's ellipsis works.", {
 
 test_that("chain_if_set works.", {
     b1 <- DT %>% start_expr
-    b2 <- b1$chain_if_set(".select")
+    b2 <- b1$chain_if_set(".j")
     expect_identical(b1, b2)
 
     select(b1, 1L)
-    b2 <- b1$chain_if_set(".select")
+    b2 <- b1$chain_if_set(".j")
     expect_false(identical(b1, b2))
 })
 

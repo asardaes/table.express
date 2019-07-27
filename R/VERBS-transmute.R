@@ -37,7 +37,7 @@ transmute.ExprBuilder <- function(.data, ...,
     clauses <- parse_dots(.parse, ...)
     if (length(clauses) == 0L) return(.data)
 
-    .data$set_select(rlang::expr(list(!!!clauses)), .chain)
+    .data$set_j(rlang::expr(list(!!!clauses)), .chain)
 }
 
 #' @rdname transmute-table.express
