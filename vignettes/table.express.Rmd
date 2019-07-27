@@ -400,6 +400,13 @@ DT %>%
   select(.N)
 ```
 
+Using `group_by` or `key_by` by itself would not be useful.
+Therefore, they are entirely lazy,
+and simply return the expression builder that is used in the background.
+Using other verbs will normally lead to the evaluation of the expression,
+though some verbs can delay evaluation,
+e.g. `where` and other verbs that set `i` when their respective `.expr` parameters are set to `TRUE`.
+
 ## Distinct combinations of columns
 
 The `distinct` verb is a shortcut for:
