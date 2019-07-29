@@ -367,7 +367,7 @@ DT %>%
 ```
 
 Both verbs also support a list of functions for multiple transformations,
-but `mutate_sd` performs pairwise transformations,
+but `mutate_sd` performs pairwise transformations by default,
 whereas `transmute_sd` performs all combinations:
 
 ```{r list-transform-sd}

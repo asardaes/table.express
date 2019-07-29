@@ -10,7 +10,8 @@
 mutate_sd(.data, .SDcols, .how = identity, ...)
 
 \method{mutate_sd}{ExprBuilder}(.data, .SDcols, .how = identity, ...,
-  .prefix, .suffix, .parse = getOption("table.express.parse", FALSE),
+  .pairwise = TRUE, .prefix, .suffix,
+  .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 
 \method{mutate_sd}{EagerExprBuilder}(.data, ...,
@@ -28,6 +29,9 @@ a list should be used, either with \code{list()} or \code{.()}. If the list is n
 used for the new columns' names. Lambdas specified as formulas are supported.}
 
 \item{...}{Possibly more arguments for \emph{all} functions/calls in \code{.how}.}
+
+\item{.pairwise}{If \code{FALSE}, each function in \code{.how} is applied to each column in \code{.SDcols} (like
+a cartesian product).}
 
 \item{.prefix, .suffix}{Only relevant when \code{.how} is a function: add a prefix or suffix to the new
 column's name. If neither is missing, \code{.prefix} has preference.}

@@ -107,6 +107,18 @@ test_that("Mutating SD with a list of expressions/functions works.", {
         end_expr(.by_ref = FALSE)
 
     expect_identical(ans, expected)
+
+    # ----------------------------------------------------------------------------------------------
+
+    expected <- data.table::copy(DT)[, `:=`(log.mpg = log(mpg),
+                                            log.am = log(am),
+                                            exp.mpg = exp(mpg),
+                                            exp.am = exp(am))]
+
+    ans <- data.table::copy(DT) %>%
+        mutate_sd(c("mpg", "am"), .(log, exp), .pairwise = FALSE)
+
+    expect_identical(ans, expected)
 })
 
 test_that("Mutating SD with tidyselect helpers works.", {
