@@ -146,7 +146,7 @@ DT %>%
 ## Selecting columns
 
 Even though selecting a subset of columns is a common operation,
-it may be undesirable to do so when working with `data.table`s because it *always* lead to **deep** data copies.
+it may be undesirable to do so when working with `data.table`s because it *always* leads to **deep** data copies.
 Given that `data.table` supports modification by reference,
 these copies are necessary.
 For example, the following would require copying all columns between `mpg` and `disp`,
