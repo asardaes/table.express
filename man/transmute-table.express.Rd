@@ -7,7 +7,7 @@
 \alias{transmute.data.table}
 \title{Compute new columns}
 \usage{
-\method{transmute}{ExprBuilder}(.data, ...,
+\method{transmute}{ExprBuilder}(.data, ..., .enlist = TRUE,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE))
 
@@ -21,6 +21,8 @@
 
 \item{...}{Clauses for transmuting columns. For \code{j} inside the \code{data.table}'s frame.}
 
+\item{.enlist}{See details.}
+
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
@@ -32,7 +34,8 @@ clause being set already exists?}
 Compute and keep only new columns.
 }
 \details{
-Everything in \code{...} is wrapped in a call to \code{list}.
+Everything in \code{...} is wrapped in a call to \code{list} by default. If only one expression is given,
+you can set \code{.enlist} to \code{FALSE} to skip the call to \code{list}.
 
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the

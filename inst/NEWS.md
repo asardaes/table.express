@@ -7,6 +7,7 @@
 - Added `max_by` and `min_by` verbs.
 - `mutate_sd` gained parameter `.pairwise`.
 - `distinct` gained parameters `.keep` and `.n`.
+- `transmute` gained parameter `.enlist`.
 - `filter_on` now allows empty names for data tables that already have keys.
 - All filtering verbs now have a `which` parameter.
 - Added `nest_expr` for certain scenarios that need the captured `data.table`; check the vignette.

@@ -51,3 +51,15 @@ test_that("Eager versions of transmute work.", {
     ans <- DT %>% (data.table::copy) %>% key_by(vs, am) %>% transmute(mpg = mpg * 2, hp = cumsum(hp))
     expect_identical(ans, expected)
 })
+
+test_that("Preventing enlisting during transmutation works.", {
+    expected <- DT[, mpg + hp]
+    ans <- transmute(DT, mpg + hp, .enlist = FALSE)
+    expect_identical(ans, expected)
+
+    expect_warning(regexp = "1 expression", {
+        ans <- transmute(DT, mpg + hp, vs * am, .enlist = FALSE)
+    })
+
+    expect_identical(ans, expected)
+})
