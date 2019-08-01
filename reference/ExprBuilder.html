@@ -67,7 +67,7 @@ shouldn't be used directly." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -160,9 +160,9 @@ shouldn't be used directly.</p>
 <dt><code>initialize(DT, dt_pronouns = list(), .verbose)</code></dt><dd><p>Constructor that receives a
 <a href='https://rdrr.io/pkg/data.table/man/data.table-class.html'>data.table::data.table</a> in <code>DT</code>. The <code>dt_pronouns</code> parameter is used internally when
 chaining for joins.</p></dd>
-<dt><code>set_select(value, chain_if_needed)</code></dt><dd><p>Set the select clause expression(s), starting a new
-frame if the current one already has said expression set.</p></dd>
-<dt><code>set_where(value, chain_if_needed)</code></dt><dd><p>Like <code>set_select</code> but for the where clause.</p></dd>
+<dt><code>set_j(value, chain_if_needed)</code></dt><dd><p>Set the <code>j</code> clause expression(s), starting a new frame
+if the current one already has said expression set.</p></dd>
+<dt><code>set_i(value, chain_if_needed)</code></dt><dd><p>Like <code>set_j</code> but for the <code>i</code> clause.</p></dd>
 <dt><code>set_by(value, chain_if_needed)</code></dt><dd><p>Set the by clause expression.</p></dd>
 <dt><code><a href='chain.html'>chain(type = "frame", dt)</a></code></dt><dd><p>By default, start a new expression with the current one as
 its parent. If <code>type = "pronoun"</code>, <code>dt</code> is used to start a new expression that joins the

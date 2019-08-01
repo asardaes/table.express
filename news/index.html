@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -122,16 +122,21 @@
       <small>Source: <a href='https://github.com/asardaes/table.express/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="table-express-0-2-0-9000" class="section level1">
+    <div id="table-express-0-3-0" class="section level1">
 <h1 class="page-header">
-<a href="#table-express-0-2-0-9000" class="anchor"></a>table.express 0.2.0.9000<small> Unreleased </small>
+<a href="#table-express-0-3-0" class="anchor"></a>table.express 0.3.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>Verbs can now be used without <code>start_expr</code>/<code>chain</code>/<code>end_expr</code> with some considerations, check the updated vignettes (<a href='https://github.com/asardaes/table.express/issues/3'>#3</a>). Importantly, this makes <code>table.express</code> <strong>conflict</strong> with <code>dtplyr</code>.</li>
 <li>Fixed a bug that prevented automatically built chains to work after a <code>left_join</code>.</li>
+<li>The <code>*_sd</code> verbs now support lambdas as formulas (<a href='https://github.com/asardaes/table.express/issues/19'>#19</a>).</li>
 <li>Added <code>max_by</code> and <code>min_by</code> verbs.</li>
 <li>
+<code>mutate_sd</code> gained parameter <code>.pairwise</code>.</li>
+<li>
 <code>distinct</code> gained parameters <code>.keep</code> and <code>.n</code>.</li>
+<li>
+<code>transmute</code> gained parameter <code>.enlist</code> (<a href='https://github.com/asardaes/table.express/issues/20'>#20</a>).</li>
 <li>
 <code>filter_on</code> now allows empty names for data tables that already have keys (<a href='https://github.com/asardaes/table.express/issues/17'>#17</a>).</li>
 <li>All filtering verbs now have a <code>which</code> parameter (<a href='https://github.com/asardaes/table.express/issues/17'>#17</a>).</li>
@@ -184,7 +189,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#table-express-0-2-0-9000">0.2.0.9000</a></li>
+        <li><a href="#table-express-0-3-0">0.3.0</a></li>
         <li><a href="#table-express-0-2-0">0.2.0</a></li>
         <li><a href="#table-express-0-1-1">0.1.1</a></li>
         <li><a href="#table-express-0-1-0">0.1.0</a></li>

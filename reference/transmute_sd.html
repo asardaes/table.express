@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -161,7 +161,7 @@
       <th>.how</th>
       <td><p>The function(s) or function call(s) that will perform the transformation. If many,
 a list should be used, either with <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> or <code>.()</code>. If the list is named, the names will be
-used for the new columns' names.</p></td>
+used for the new columns' names. Lambdas specified as formulas are supported.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -194,6 +194,8 @@ method).</p>
 <li><p><code>.COLNAME</code>: the name of the column currently being evaluated.</p></li>
 </ul>
 
+<p>Additionally, lambdas specified as formulas are also supported. In those cases, <code>.x</code> is
+equivalent to <code>.COL</code> and <code>.y</code> to <code>.COLNAME</code>.</p>
 <p>Unlike a call like <code>DT[, (vars) := expr]</code>, <code>.SDcols</code> can be created dynamically with an
 expression that evaluates to something that would be used in place of <code>vars</code> <em>without</em> eagerly
 using the captured <code>data.table</code>. See the examples here or in <a href='table.express-package.html'>table.express-package</a>.</p>
@@ -204,7 +206,7 @@ using the captured <code>data.table</code>. See the examples here or in <a href=
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mtcars"</span>)
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>transmute_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>"^d"</span>, <span class='no'>.COLNAME</span>), <span class='no'>.COL</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt;      disp drat
+    <span class='fu'>transmute_sd</span>(~ <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>"^d"</span>, <span class='no'>.y</span>), ~ <span class='no'>.x</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt;      disp drat
 #&gt;  1: 320.0 7.80
 #&gt;  2: 320.0 7.80
 #&gt;  3: 216.0 7.70
@@ -239,7 +241,7 @@ using the captured <code>data.table</code>. See the examples here or in <a href=
 #&gt; 32: 242.0 8.22
 #&gt;      disp drat</div><div class='input'>
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>transmute_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='no'>.COL</span>), <span class='no'>.COL</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt;      mpg cyl  disp  hp drat     wt  qsec vs am gear carb
+    <span class='fu'>transmute_sd</span>(~ <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='no'>.x</span>), ~ <span class='no'>.x</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt;      mpg cyl  disp  hp drat     wt  qsec vs am gear carb
 #&gt;  1: 42.0  12 320.0 220 7.80  5.240 32.92  0  2    8    8
 #&gt;  2: 42.0  12 320.0 220 7.80  5.750 34.04  0  2    8    8
 #&gt;  3: 45.6   8 216.0 186 7.70  4.640 37.22  2  2    8    2

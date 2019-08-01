@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -136,7 +136,8 @@
 
 <span class='co'># S3 method for ExprBuilder</span>
 <span class='fu'>mutate_sd</span>(<span class='no'>.data</span>, <span class='no'>.SDcols</span>, <span class='kw'>.how</span> <span class='kw'>=</span> <span class='no'>identity</span>, <span class='no'>...</span>,
-  <span class='no'>.prefix</span>, <span class='no'>.suffix</span>, <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
+  <span class='kw'>.pairwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>.prefix</span>, <span class='no'>.suffix</span>,
+  <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
   <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
 
 <span class='co'># S3 method for EagerExprBuilder</span>
@@ -161,11 +162,16 @@
       <th>.how</th>
       <td><p>The function(s) or function call(s) that will perform the transformation. If many,
 a list should be used, either with <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> or <code>.()</code>. If the list is named, the names will be
-used for the new columns' names.</p></td>
+used for the new columns' names. Lambdas specified as formulas are supported.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Possibly more arguments for <em>all</em> functions/calls in <code>.how</code>.</p></td>
+    </tr>
+    <tr>
+      <th>.pairwise</th>
+      <td><p>If <code>FALSE</code>, each function in <code>.how</code> is applied to each column in <code>.SDcols</code> (like
+a cartesian product).</p></td>
     </tr>
     <tr>
       <th>.prefix, .suffix</th>
@@ -196,6 +202,7 @@ reference, like <a href='mutate-table.express.html'>mutate-table.express</a>. It
 <li><p><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a></p></li>
 <li><p>A predicate using the <code>.COL</code> pronoun that should return a single logical when <code>.COL</code> is
 replaced by a <em>column</em> of the data.</p></li>
+<li><p>A formula using <code>.</code> or <code>.x</code> instead of the aforementioned <code>.COL</code>.</p></li>
 </ul>
 
 <p>The caveat is that the expression is evaluated eagerly, i.e. with the currently captured
@@ -212,8 +219,8 @@ replaced by a <em>column</em> of the data.</p></li>
 
 <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
     <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>mutate_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mpg"</span>, <span class='st'>"cyl"</span>), <span class='no'>.COL</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; .DT_[, `:=`(c("mpg", "cyl"), .mutate_matching(.SD, c("mpg", "cyl"
-#&gt; ), rlang::quos(.COL * 2)))]</div><div class='input'>
+    <span class='fu'>mutate_sd</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mpg"</span>, <span class='st'>"cyl"</span>), ~ <span class='no'>.x</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; .DT_[, `:=`(c("mpg", "cyl"), .mutate_matching(.SD, c("mpg", "cyl"
+#&gt; ), rlang::quos(~.x * 2)))]</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

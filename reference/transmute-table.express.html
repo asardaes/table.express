@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ExprBuilder</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>,
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.enlist</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>.parse</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.parse"</span>, <span class='fl'>FALSE</span>),
   <span class='kw'>.chain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"table.express.chain"</span>, <span class='fl'>TRUE</span>))
 
@@ -156,6 +156,10 @@
       <td><p>Clauses for transmuting columns. For <code>j</code> inside the <code>data.table</code>'s frame.</p></td>
     </tr>
     <tr>
+      <th>.enlist</th>
+      <td><p>See details.</p></td>
+    </tr>
+    <tr>
       <th>.parse</th>
       <td><p>Logical. Whether to apply <code><a href='https://rlang.r-lib.org/reference/parse_expr.html'>rlang::parse_expr()</a></code> to obtain the expressions.</p></td>
     </tr>
@@ -172,7 +176,8 @@ clause being set already exists?</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Everything in <code>...</code> is wrapped in a call to <code>list</code>.</p>
+    <p>Everything in <code>...</code> is wrapped in a call to <code>list</code> by default. If only one expression is given,
+you can set <code>.enlist</code> to <code>FALSE</code> to skip the call to <code>list</code>.</p>
 <p>To see more examples, check the
 <a href='https://asardaes.github.io/table.express/articles/table.express.html'>vignette</a>, or the
 <a href='table.express-package.html'>table.express-package</a> entry.</p>
