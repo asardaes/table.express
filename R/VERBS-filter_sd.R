@@ -37,7 +37,8 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ...) {
 #' @details
 #'
 #' This function adds/chains an `i` expression that will be evaluated by [data.table::data.table],
-#' and it supports the `.COL` pronoun. The `.how` condition is applied to all `.SDcols`.
+#' and it supports the `.COL` pronoun and lambdas as formulas. The `.how` condition is applied to
+#' all `.SDcols`.
 #'
 #' @template tidyselect-sdcols
 #' @template docu-examples

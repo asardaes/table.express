@@ -45,7 +45,8 @@ Helper to filter rows with the same condition applied to a subset of the data.
 }
 \details{
 This function adds/chains an \code{i} expression that will be evaluated by \link[data.table:data.table]{data.table::data.table},
-and it supports the \code{.COL} pronoun. The \code{.how} condition is applied to all \code{.SDcols}.
+and it supports the \code{.COL} pronoun and lambdas as formulas. The \code{.how} condition is applied to
+all \code{.SDcols}.
 
 Additionally, \code{.SDcols} supports:
 \itemize{
