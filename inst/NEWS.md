@@ -1,4 +1,4 @@
-# table.express 0.2.0.9000
+# table.express 0.3.0
 
 - Verbs can now be used without `start_expr`/`chain`/`end_expr` with some considerations, check the
   updated vignettes. Importantly, this makes `table.express` **conflict** with `dtplyr`.
