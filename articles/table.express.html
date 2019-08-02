@@ -669,7 +669,7 @@
 #&gt; Getting back original order ... 0.000s elapsed (0.000s cpu) 
 #&gt; lapply optimization changed j from 'c(lapply(.SD, mean))' to 'list(mean(mpg), mean(disp))'
 #&gt; GForce optimized j to 'list(gmean(mpg), gmean(disp))'
-#&gt; Making each group and running j (GForce TRUE) ... 0.001s elapsed (0.000s cpu)</code></pre>
+#&gt; Making each group and running j (GForce TRUE) ... 0.000s elapsed (0.000s cpu)</code></pre>
 <pre><code>#&gt;    am vs      mpg     disp
 #&gt; 1:  1  0 19.75000 206.2167
 #&gt; 2:  1  1 28.37143  89.8000
@@ -686,7 +686,7 @@
 <pre><code>#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(c("mpg", 
 #&gt;     "disp")), .hows = rlang::quos(mean(x = .COL))), by = list(am, 
 #&gt;     vs), verbose = TRUE]
-#&gt; Finding groups using forderv ... 0.001s elapsed (0.000s cpu) 
+#&gt; Finding groups using forderv ... 0.000s elapsed (0.000s cpu) 
 #&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) 
 #&gt; Getting back original order ... 0.000s elapsed (0.000s cpu) 
 #&gt; lapply optimization is on, j unchanged as '.transmute_matching(.SD, .which = rlang::quo(c("mpg", "disp")), .hows = rlang::quos(mean(x = .COL)))'
@@ -696,7 +696,7 @@
 #&gt; 
 #&gt;   collecting discontiguous groups took 0.000s for 4 groups
 #&gt;   eval(j) took 0.002s for 4 calls
-#&gt; 0.002s elapsed (0.003s cpu)</code></pre>
+#&gt; 0.003s elapsed (0.003s cpu)</code></pre>
 <pre><code>#&gt;    am vs      mpg     disp
 #&gt; 1:  1  0 19.75000 206.2167
 #&gt; 2:  1  1 28.37143  89.8000
