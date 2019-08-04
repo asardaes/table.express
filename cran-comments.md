@@ -1,6 +1,5 @@
 
-## Update to version 0.3.0
-Several usability improvements, added new verbs, and fixed some bugs.
+## Update to version ...
 
 ## Test environments
 * Local GNU/Linux, R release
