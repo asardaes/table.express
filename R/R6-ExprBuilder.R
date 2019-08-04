@@ -11,8 +11,10 @@
 #' @importFrom rlang abort
 #' @importFrom rlang as_label
 #' @importFrom rlang dots_list
+#' @importFrom rlang call2
 #' @importFrom rlang call_name
 #' @importFrom rlang caller_env
+#' @importFrom rlang current_env
 #' @importFrom rlang env_get_list
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang expr
@@ -343,15 +345,35 @@ ExprBuilder <- R6::R6Class(
                 .homonyms = "last"
             )
 
-            .expr_env <- rlang::new_environment(dots, parent = .parent_env)
-
             final_expr <- self$expr
+
             if (private$.verbose) { # nocov start
                 cat("Evaluating:\n")
                 print(final_expr)
             } # nocov end
 
-            rlang::eval_tidy(final_expr, env = .expr_env)
+            .cedta <- rlang::call2(":::", "data.table", "cedta")
+            .cedta <- rlang::call2(.cedta, n = 1L)
+            .cedta <- rlang::eval_tidy(.cedta, env = .parent_env)
+
+            if (.cedta) {
+                .expr_env <- rlang::new_environment(dots, parent = .parent_env)
+                rlang::eval_tidy(final_expr, env = .expr_env)
+            }
+            else { # nocov start
+                .expr_env <- rlang::new_environment(dots, parent = rlang::current_env())
+                ans <- try(rlang::eval_tidy(final_expr, env = .expr_env), silent = TRUE)
+                if (inherits(ans, "try-error")) {
+                    rlang::abort(paste("A 'dplyr' verb dispatched from",
+                                       "a package that is *not* data.table aware,",
+                                       "and the workaround didn't work.",
+                                       "See https://github.com/asardaes/table.express/issues/21"),
+                                 "table.express.data_table_unaware_error")
+                }
+                else {
+                    ans
+                }
+            } # nocov end
         }
     )
 )
