@@ -82,24 +82,28 @@ DT \%>\%
 DT \%>\%
     filter_on(cyl = 4, gear = 5) # note we don't use ==
 
+scale_undim <- function(...) {
+    as.numeric(scale(...)) # remove dimensions
+}
+
 # Chaining
 DT \%>\%
     start_expr \%>\%
     mutate_sd(as.integer, .SDcols = whole) \%>\%
     chain \%>\%
     filter_sd(.COL == 1, .SDcols = c("vs", "am"), .collapse = `|`) \%>\%
-    transmute_sd(scale, .SDcols = !is.integer(.COL)) \%>\%
+    transmute_sd(scale_undim, .SDcols = !is.integer(.COL)) \%>\%
     end_expr
 
 # The previous is quivalent to
 DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole
    ][vs == 1 | am == 1,
-     lapply(.SD, scale),
+     lapply(.SD, scale_undim),
      .SDcols = names(DT)[sapply(DT, Negate(is.integer))]]
 
 # Alternative to keep all columns (*copying* non-scaled ones)
 scale_non_integers <- function(x) {
-    if (is.integer(x)) x else scale(x)
+    if (is.integer(x)) x else scale_undim(x)
 }
 
 DT \%>\%
