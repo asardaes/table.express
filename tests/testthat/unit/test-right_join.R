@@ -153,3 +153,16 @@ test_that("Eager right_join works.", {
     ans <- lhs %>% right_join(lhs, "x", allow = TRUE)
     expect_identical(ans, expected)
 })
+
+test_that("right_join can delegate to data.frame method when necessary.", {
+    .expr <- rlang::expr((function() {
+        local_rhs <- data.table::setDT(!!rhs)
+        right_join(data.table::setDT(!!lhs), local_rhs, by = "x")
+    })())
+
+    expect_warning(eval(.expr, envir = asNamespace("rex")), "table.express")
+
+    .expr <- rlang::expr(right_join(data.table::setDT(!!lhs), data.table::setDT(!!rhs), x))
+    ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))
+    expect_equal(ans_from_workaround, right_join(lhs, rhs, x))
+})

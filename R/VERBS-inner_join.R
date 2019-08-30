@@ -31,6 +31,8 @@ inner_join.ExprBuilder <- function(x, y, ...) {
 #' @rdname joins
 #' @export
 #' @importFrom rlang caller_env
+#' @importFrom rlang current_env
+#' @importFrom rlang warn
 #'
 inner_join.data.table <- function(x, ..., .expr = FALSE) {
     eb <- if (.expr) EagerExprBuilder$new(x) else ExprBuilder$new(x)
@@ -40,6 +42,13 @@ inner_join.data.table <- function(x, ..., .expr = FALSE) {
         lazy_ans
     }
     else {
-        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+        .generic_env <- rlang::current_env()
+        tryCatch(
+            end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()),
+            table.express.data_table_unaware_error = function(err) {
+                rlang::warn(paste(err$message, "Trying to dispatch to data.frame method."))
+                delegate_join("inner_join", .generic_env)
+            }
+        )
     }
 }

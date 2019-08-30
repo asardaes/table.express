@@ -31,3 +31,16 @@ test_that("Eager anti_join works.", {
     ans <- lhs %>% anti_join(rhs, "x", .expr = TRUE) %>% select(y, v)
     expect_identical(ans, expected)
 })
+
+test_that("anti_join can delegate to data.frame method when necessary.", {
+    .expr <- rlang::expr((function() {
+        local_lhs <- data.table::setDT(!!lhs)
+        anti_join(data.table::setDT(!!rhs), local_lhs, by = c("x", "v"))
+    })())
+
+    expect_warning(eval(.expr, envir = asNamespace("rex")), "table.express")
+
+    .expr <- rlang::expr(anti_join(data.table::setDT(!!rhs), data.table::setDT(!!lhs), x, v))
+    ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))
+    expect_equal(ans_from_workaround, anti_join(rhs, lhs, x, v))
+})

@@ -122,3 +122,7 @@ leftright_join <- function(eb, on, join_extras) {
 
     frame_append(eb, !!!join_extras, .ignore_empty = "all")
 }
+
+delegate_join <- function(.fun_, .generic_env) {
+    do.call(NextMethod, list(.fun_), envir = .generic_env)
+}
