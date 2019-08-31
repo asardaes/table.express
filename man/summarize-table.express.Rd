@@ -39,8 +39,6 @@
 clause being set already exists?}
 
 \item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}}
-
-\item{.enlist}{See details.}
 }
 \description{
 Compute summaries for columns, perhaps by group.

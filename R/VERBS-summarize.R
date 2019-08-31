@@ -33,7 +33,6 @@ gforce_optimized <- c(
 #'
 #' @template data-arg
 #' @param ... Clauses for transmuting columns. For `j` inside the `data.table`'s frame.
-#' @param .enlist See details.
 #' @template parse-arg
 #' @template chain-arg
 #'
