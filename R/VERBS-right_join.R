@@ -9,13 +9,16 @@ dplyr::right_join
 #' @importFrom rlang enexpr
 #' @importFrom rlang maybe_missing
 #'
+#' @param which If `TRUE`, return the row numbers that matched in `x` instead of the result of the
+#'   join.
+#'
 #' @examples
 #'
 #' # creates new data.table
 #' lhs %>%
 #'     right_join(rhs, x)
 #'
-right_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
+right_join.ExprBuilder <- function(x, y, ..., which, nomatch, mult, roll, rollends) {
     y <- x$seek_and_nestroy(list(rlang::enexpr(y)))[[1L]]
     on <- parse_dots(TRUE, ...)
 
@@ -23,7 +26,8 @@ right_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
         nomatch = rlang::maybe_missing(nomatch),
         mult = rlang::maybe_missing(mult),
         roll = rlang::maybe_missing(roll),
-        rollends = rlang::maybe_missing(rollends)
+        rollends = rlang::maybe_missing(rollends),
+        which = rlang::maybe_missing(which)
     )
 
     x <- x$set_i(y, TRUE)

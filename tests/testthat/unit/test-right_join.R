@@ -167,3 +167,8 @@ test_that("right_join can delegate to data.frame method when necessary.", {
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))
     expect_equal(ans_from_workaround, right_join(lhs, rhs, x))
 })
+
+test_that("right_join works when which=TRUE.", {
+    expect_identical(right_join(lhs, rhs, x, which = TRUE),
+                     c(7:9, 1:3))
+})

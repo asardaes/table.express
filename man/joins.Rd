@@ -50,7 +50,8 @@ mutate_join(x, y, ...)
 
 \method{mutate_join}{data.table}(x, y, ...)
 
-\method{right_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends)
+\method{right_join}{ExprBuilder}(x, y, ..., which, nomatch, mult, roll,
+  rollends)
 
 \method{right_join}{data.table}(x, ..., allow = FALSE, .expr = FALSE)
 
@@ -83,6 +84,9 @@ mutate_join(x, y, ...)
 \item{.SDcols}{For \code{mutate_join}. See the details below.}
 
 \item{.by_each}{For \code{mutate_join}. See the details below.}
+
+\item{which}{If \code{TRUE}, return the row numbers that matched in \code{x} instead of the result of the
+join.}
 
 \item{.eager}{For \code{semi_join}. If \code{TRUE}, it uses \code{\link[=nest_expr]{nest_expr()}} to build an expression like
 \href{https://stackoverflow.com/a/18971223/5793905}{this} instead of the default one. This uses the
