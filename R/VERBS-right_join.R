@@ -34,7 +34,6 @@ right_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends) {
 #' @export
 #' @importFrom rlang caller_env
 #' @importFrom rlang current_env
-#' @importFrom rlang warn
 #'
 right_join.data.table <- function(x, ..., allow = FALSE, .expr = FALSE) {
     eb <- if (.expr) EagerExprBuilder$new(x) else ExprBuilder$new(x)
@@ -52,8 +51,7 @@ right_join.data.table <- function(x, ..., allow = FALSE, .expr = FALSE) {
         tryCatch(
             end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()),
             table.express.data_table_unaware_error = function(err) {
-                rlang::warn(paste(err$message, "Trying to dispatch to data.frame method."))
-                delegate_join("right_join", .generic_env)
+                delegate_join("right_join", err$message, .generic_env)
             }
         )
     }

@@ -46,7 +46,6 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .par
 #' @importFrom rlang current_env
 #' @importFrom rlang enexpr
 #' @importFrom rlang expr
-#' @importFrom rlang warn
 #'
 left_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
     x_expr <- rlang::enexpr(x)
@@ -74,8 +73,7 @@ left_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
         tryCatch(
             end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()),
             table.express.data_table_unaware_error = function(err) {
-                rlang::warn(paste(err$message, "Trying to dispatch to data.frame method."))
-                delegate_join("left_join", .generic_env)
+                delegate_join("left_join", err$message, .generic_env)
             }
         )
     }

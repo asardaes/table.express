@@ -123,6 +123,12 @@ leftright_join <- function(eb, on, join_extras) {
     frame_append(eb, !!!join_extras, .ignore_empty = "all")
 }
 
-delegate_join <- function(.fun_, .generic_env) {
+#' @importFrom rlang warn
+#'
+delegate_join <- function(.fun_, .err_msg, .generic_env) {
+    if (isTRUE(getOption("table.express.warn.cedta", TRUE))) {
+        rlang::warn(paste(.err_msg, "Trying to dispatch to data.frame method."))
+    }
+
     do.call(NextMethod, list(.fun_), envir = .generic_env)
 }
