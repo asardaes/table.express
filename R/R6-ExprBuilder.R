@@ -560,6 +560,16 @@ EBCompanion$helper_functions <- list(
             .data_mask <- rlang::new_data_mask(rlang::new_environment(.COL))
             rlang::eval_tidy(.how, .data_mask)
         })
+    },
+
+    .validating_summarize = function(...) {
+        ans <- list(...)
+        if (length(ans) > 0L && any(lengths(ans) > 1L)) {
+            stop("All summary values must have length 1, got: [",
+                 paste(names(ans), lengths(ans), sep = " of length ", collapse = ", "),
+                 "]")
+        }
+        ans
     }
 )
 

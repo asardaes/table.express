@@ -1,6 +1,7 @@
 # table.express 0.3.0.9000
 
 - Improved compatibility with packages that use `dplyr` without importing `data.table` (#21).
+- Added `summarize`/`summarise` verbs.
 
 # table.express 0.3.0
 

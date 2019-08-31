@@ -66,6 +66,7 @@ Collate:
     'VERBS-right_join.R'
     'VERBS-select.R'
     'VERBS-semi_join.R'
+    'VERBS-summarize.R'
     'VERBS-transmute.R'
     'VERBS-transmute_sd.R'
     'VERBS-where.R'

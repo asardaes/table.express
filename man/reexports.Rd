@@ -3,7 +3,8 @@
 %   R/VERBS-arrange.R, R/VERBS-distinct.R, R/VERBS-filter.R,
 %   R/VERBS-full_join.R, R/VERBS-group_by.R, R/VERBS-inner_join.R,
 %   R/VERBS-left_join.R, R/VERBS-mutate.R, R/VERBS-right_join.R,
-%   R/VERBS-select.R, R/VERBS-semi_join.R, R/VERBS-transmute.R, R/pkg.R
+%   R/VERBS-select.R, R/VERBS-semi_join.R, R/VERBS-summarize.R,
+%   R/VERBS-transmute.R, R/pkg.R
 \docType{import}
 \name{reexports}
 \alias{reexports}
@@ -27,6 +28,8 @@
 \alias{right_join}
 \alias{select}
 \alias{semi_join}
+\alias{summarize}
+\alias{summarise}
 \alias{transmute}
 \alias{:=}
 \alias{\%>\%}
@@ -42,7 +45,7 @@ below to see their documentation.
 \describe{
   \item{data.table}{\code{\link[data.table]{:=}}}
 
-  \item{dplyr}{\code{\link[dplyr]{anti_join}}, \code{\link[dplyr]{arrange}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{full_join}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{inner_join}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{right_join}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{semi_join}}, \code{\link[dplyr]{transmute}}}
+  \item{dplyr}{\code{\link[dplyr]{anti_join}}, \code{\link[dplyr]{arrange}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{full_join}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{inner_join}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{right_join}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{semi_join}}, \code{\link[dplyr]{summarize}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{transmute}}}
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}, \code{\link[magrittr]{\%T>\%}}}
 
