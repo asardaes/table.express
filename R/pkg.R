@@ -13,6 +13,13 @@
 #' Since this package's functionality is based on the \pkg{rlang} package, and \pkg{rlang} is still
 #' evolving, breaking changes may be needed in the future.
 #'
+#' Note that since version 0.3.0, it is not possible to load \pkg{table.express} and \pkg{dtplyr} at
+#' the same time, since they define the same `data.table` methods for many \pkg{dplyr} generics.
+#'
+#' If a package uses `dplyr` without importing `data.table`, the methods in this package will try to
+#' delegate to the `data.frame` methods with a warning. To avoid the warning, use
+#' `options(table.express.warn.cedta = FALSE)`.
+#'
 #' This software package was developed independently of any organization or institution that is or
 #' has been associated with the author.
 #'

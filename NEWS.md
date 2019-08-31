@@ -1,3 +1,7 @@
+# table.express 0.3.0.9000
+
+- Improved compatibility with packages that use `dplyr` without importing `data.table` (#21).
+
 # table.express 0.3.0
 
 - Verbs can now be used without `start_expr`/`chain`/`end_expr` with some considerations, check the
