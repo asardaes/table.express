@@ -206,6 +206,13 @@ Even though `select` can be used for the same
 the simplicity of `transmute`'s internals makes it preferable when no `tidyselect` helpers are needed,
 since it avoids extra function calls and can reduce overhead significantly in special circumstances.
 
+### Summarizing columns
+
+Because of the way `data.table` handles `j`,
+`transmute` could be used to summarize columns.
+However, the `summarize`/`summarise` verbs can be more expressive,
+and they check whether the summary value actually has length 1.
+
 ## Mutating columns
 
 The `mutate` verb builds an expression with `:=` in order to perform assignment by reference by default.
