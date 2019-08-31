@@ -40,3 +40,13 @@ test_that("group_by works with a single .EACHI", {
     ans <- lhs %>% start_expr %>% group_by(.EACHI) %>% right_join(rhs, x) %>% transmute(y = max(y)) %>% end_expr
     expect_identical(ans, expected)
 })
+
+test_that("group_by can delegate to data.frame method when necessary.", {
+    .expr <- rlang::expr((function() {
+        local_lhs <- data.table::setDT(!!lhs)
+        group_by(local_lhs, x)
+    })())
+
+    expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
+    expect_equal(ans, dplyr:::group_by.data.frame(lhs, x))
+})

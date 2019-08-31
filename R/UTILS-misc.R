@@ -299,6 +299,15 @@ unformulate <- function(.how) {
     .how
 }
 
+#' @importFrom rlang call2
+#' @importFrom rlang eval_tidy
+#'
+cedta <- function(.env) {
+    .cedta <- rlang::call2(":::", "data.table", "cedta")
+    .cedta <- rlang::call2(.cedta, n = 1L)
+    rlang::eval_tidy(.cedta, env = .env)
+}
+
 #' @importFrom rlang caller_env
 #' @importFrom rlang eval_tidy
 #' @importFrom rlang warn

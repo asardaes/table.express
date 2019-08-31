@@ -11,7 +11,6 @@
 #' @importFrom rlang abort
 #' @importFrom rlang as_label
 #' @importFrom rlang dots_list
-#' @importFrom rlang call2
 #' @importFrom rlang call_name
 #' @importFrom rlang caller_env
 #' @importFrom rlang current_env
@@ -352,11 +351,7 @@ ExprBuilder <- R6::R6Class(
                 print(final_expr)
             } # nocov end
 
-            .cedta <- rlang::call2(":::", "data.table", "cedta")
-            .cedta <- rlang::call2(.cedta, n = 1L)
-            .cedta <- rlang::eval_tidy(.cedta, env = .parent_env)
-
-            if (.cedta) {
+            if (cedta(.parent_env)) {
                 .expr_env <- rlang::new_environment(dots, parent = .parent_env)
                 rlang::eval_tidy(final_expr, env = .expr_env)
             }

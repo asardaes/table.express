@@ -42,8 +42,20 @@ group_by.ExprBuilder <- function(.data, ...,
 
 #' @rdname group_by-table.express
 #' @export
+#' @importFrom rlang caller_env
+#' @importFrom rlang warn
 #'
 group_by.data.table <- function(.data, ...) {
-    eb <- EagerExprBuilder$new(.data)
-    group_by.ExprBuilder(eb, ...)
+    if (cedta(rlang::caller_env())) {
+        eb <- EagerExprBuilder$new(.data)
+        group_by.ExprBuilder(eb, ...)
+    }
+    else {
+        if (isTRUE(getOption("table.express.warn.cedta", TRUE))) {
+            rlang::warn(paste("[table.express] 'group_by' was called from an environment that is *not* 'data.table' aware,",
+                              "dispatching to data.frame method."))
+        }
+
+        NextMethod("group_by")
+    }
 }
