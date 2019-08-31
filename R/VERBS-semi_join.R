@@ -54,7 +54,6 @@ semi_join.ExprBuilder <- function(x, y, ..., allow = FALSE, .eager = FALSE) {
 #' @rdname joins
 #' @export
 #' @importFrom rlang caller_env
-#' @importFrom rlang current_env
 #' @importFrom rlang enexpr
 #' @importFrom rlang exprs
 #'
@@ -81,11 +80,5 @@ semi_join.data.table <- function(x, y, ..., allow = FALSE, .eager = FALSE) {
         lazy_ans <- semi_join.ExprBuilder(eb, y = !!y_expr, ...)
     }
 
-    .generic_env <- rlang::current_env()
-    tryCatch(
-        end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()),
-        table.express.data_table_unaware_error = function(err) {
-            delegate_join("semi_join", err$message, .generic_env)
-        }
-    )
+    try_delegate("semi_join", end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()))
 }

@@ -38,7 +38,8 @@ test_that("anti_join can delegate to data.frame method when necessary.", {
         anti_join(data.table::setDT(!!rhs), local_lhs, by = c("x", "v"))
     })())
 
-    expect_warning(eval(.expr, envir = asNamespace("rex")), "table.express")
+    expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
+    expect_equal(ans, dplyr:::anti_join.data.frame(rhs, lhs, by = c("x", "v")))
 
     .expr <- rlang::expr(anti_join(data.table::setDT(!!rhs), data.table::setDT(!!lhs), x, v))
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))

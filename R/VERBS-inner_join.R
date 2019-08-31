@@ -31,7 +31,6 @@ inner_join.ExprBuilder <- function(x, y, ...) {
 #' @rdname joins
 #' @export
 #' @importFrom rlang caller_env
-#' @importFrom rlang current_env
 #'
 inner_join.data.table <- function(x, ..., .expr = FALSE) {
     eb <- if (.expr) EagerExprBuilder$new(x) else ExprBuilder$new(x)
@@ -41,12 +40,6 @@ inner_join.data.table <- function(x, ..., .expr = FALSE) {
         lazy_ans
     }
     else {
-        .generic_env <- rlang::current_env()
-        tryCatch(
-            end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()),
-            table.express.data_table_unaware_error = function(err) {
-                delegate_join("inner_join", err$message, .generic_env)
-            }
-        )
+        try_delegate("inner_join", end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()))
     }
 }

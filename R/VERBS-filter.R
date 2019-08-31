@@ -32,5 +32,5 @@ filter.ExprBuilder <- function(.data, ..., .preserve) {
 filter.data.table <- function(.data, ...) {
     eb <- ExprBuilder$new(.data)
     lazy_ans <- filter.ExprBuilder(eb, ...)
-    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    try_delegate("filter", end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()))
 }

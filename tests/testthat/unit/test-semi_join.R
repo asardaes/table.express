@@ -67,7 +67,8 @@ test_that("semi_join can delegate to data.frame method when necessary.", {
         semi_join(data.table::setDT(!!lhs), local_rhs, by = "x")
     })())
 
-    expect_warning(eval(.expr, envir = asNamespace("rex")), "table.express")
+    expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
+    expect_equal(ans, dplyr:::semi_join.data.frame(lhs, rhs, "x"))
 
     .expr <- rlang::expr(semi_join(data.table::setDT(!!lhs), data.table::setDT(!!rhs), x))
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))

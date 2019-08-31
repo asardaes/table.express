@@ -71,5 +71,5 @@ distinct.ExprBuilder <- function(.data, ..., .keep = TRUE, .n = 1L,
 distinct.data.table <- function(.data, ...) {
     eb <- ExprBuilder$new(.data)
     lazy_ans <- distinct.ExprBuilder(eb, ...)
-    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    try_delegate("distinct", end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()))
 }

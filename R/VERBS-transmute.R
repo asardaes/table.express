@@ -69,5 +69,5 @@ transmute.EagerExprBuilder <- function(.data, ..., .parent_env = rlang::caller_e
 transmute.data.table <- function(.data, ...) {
     eb <- ExprBuilder$new(.data)
     lazy_ans <- transmute.ExprBuilder(eb, ...)
-    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    try_delegate("transmute", end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()))
 }

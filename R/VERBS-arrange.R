@@ -27,5 +27,5 @@ arrange.ExprBuilder <- function(.data, ...) {
 arrange.data.table <- function(.data, ...) {
     eb <- ExprBuilder$new(.data)
     lazy_ans <- order_by.ExprBuilder(eb, ...)
-    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    try_delegate("arrange", end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()))
 }

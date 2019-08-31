@@ -44,7 +44,8 @@ test_that("inner_join can delegate to data.frame method when necessary.", {
         inner_join(data.table::setDT(!!lhs), local_rhs, by = "x")
     })())
 
-    expect_warning(eval(.expr, envir = asNamespace("rex")), "table.express")
+    expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
+    expect_equal(ans, dplyr:::inner_join.data.frame(lhs, rhs, "x"))
 
     .expr <- rlang::expr(inner_join(data.table::setDT(!!lhs), data.table::setDT(!!rhs), x))
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))

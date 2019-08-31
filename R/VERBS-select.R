@@ -104,7 +104,7 @@ select.EagerExprBuilder <- function(.data, ..., .parent_env = rlang::caller_env(
 select.data.table <- function(.data, ...) {
     eb <- ExprBuilder$new(.data)
     lazy_ans <- select.ExprBuilder(eb, ...)
-    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    try_delegate("select", end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()))
 }
 
 #' @importFrom rlang call_args

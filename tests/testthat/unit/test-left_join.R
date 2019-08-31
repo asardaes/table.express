@@ -162,7 +162,8 @@ test_that("left_join can delegate to data.frame method when necessary.", {
         left_join(local_lhs, data.table::setDT(!!rhs), by = "x")
     })())
 
-    expect_warning(eval(.expr, envir = asNamespace("rex")), "table.express")
+    expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
+    expect_equal(ans, dplyr:::left_join.data.frame(lhs, rhs, "x"))
 
     .expr <- rlang::expr(left_join(data.table::setDT(!!lhs), data.table::setDT(!!rhs), x))
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))

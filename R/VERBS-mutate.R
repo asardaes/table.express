@@ -86,5 +86,5 @@ mutate.EagerExprBuilder <- function(.data, ..., .parent_env = rlang::caller_env(
 mutate.data.table <- function(.data, ...) {
     eb <- ExprBuilder$new(.data)
     lazy_ans <- mutate.ExprBuilder(eb, ...)
-    end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env())
+    try_delegate("mutate", end_expr.ExprBuilder(lazy_ans, .parent_env = rlang::caller_env()))
 }
