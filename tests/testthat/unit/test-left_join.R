@@ -158,14 +158,14 @@ test_that("Eager left_join works.", {
 
 test_that("left_join can delegate to data.frame method when necessary.", {
     .expr <- rlang::expr((function() {
-        local_lhs <- data.table::setDT(!!lhs)
-        left_join(local_lhs, data.table::setDT(!!rhs), by = "x")
+        local_lhs <- data.table::as.data.table(!!lhs)
+        left_join(local_lhs, data.table::as.data.table(!!rhs), by = "x")
     })())
 
     expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
     expect_equal(ans, dplyr:::left_join.data.frame(lhs, rhs, "x"))
 
-    .expr <- rlang::expr(left_join(data.table::setDT(!!lhs), data.table::setDT(!!rhs), x))
+    .expr <- rlang::expr(left_join(data.table::as.data.table(!!lhs), data.table::as.data.table(!!rhs), x))
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))
     expect_equal(ans_from_workaround, left_join(lhs, rhs, x))
 })

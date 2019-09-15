@@ -156,14 +156,14 @@ test_that("Eager right_join works.", {
 
 test_that("right_join can delegate to data.frame method when necessary.", {
     .expr <- rlang::expr((function() {
-        local_rhs <- data.table::setDT(!!rhs)
-        right_join(data.table::setDT(!!lhs), local_rhs, by = "x")
+        local_rhs <- data.table::as.data.table(!!rhs)
+        right_join(data.table::as.data.table(!!lhs), local_rhs, by = "x")
     })())
 
     expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
     expect_equal(ans, dplyr:::right_join.data.frame(lhs, rhs, "x"))
 
-    .expr <- rlang::expr(right_join(data.table::setDT(!!lhs), data.table::setDT(!!rhs), x))
+    .expr <- rlang::expr(right_join(data.table::as.data.table(!!lhs), data.table::as.data.table(!!rhs), x))
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))
     expect_equal(ans_from_workaround, right_join(lhs, rhs, x))
 })

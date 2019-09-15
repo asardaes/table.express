@@ -40,14 +40,14 @@ test_that("Eager inner_join works.", {
 
 test_that("inner_join can delegate to data.frame method when necessary.", {
     .expr <- rlang::expr((function() {
-        local_rhs <- data.table::setDT(!!rhs)
-        inner_join(data.table::setDT(!!lhs), local_rhs, by = "x")
+        local_rhs <- data.table::as.data.table(!!rhs)
+        inner_join(data.table::as.data.table(!!lhs), local_rhs, by = "x")
     })())
 
     expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
     expect_equal(ans, dplyr:::inner_join.data.frame(lhs, rhs, "x"))
 
-    .expr <- rlang::expr(inner_join(data.table::setDT(!!lhs), data.table::setDT(!!rhs), x))
+    .expr <- rlang::expr(inner_join(data.table::as.data.table(!!lhs), data.table::as.data.table(!!rhs), x))
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))
     expect_equal(ans_from_workaround, inner_join(lhs, rhs, x))
 })

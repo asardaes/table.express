@@ -34,14 +34,14 @@ test_that("Eager anti_join works.", {
 
 test_that("anti_join can delegate to data.frame method when necessary.", {
     .expr <- rlang::expr((function() {
-        local_lhs <- data.table::setDT(!!lhs)
-        anti_join(data.table::setDT(!!rhs), local_lhs, by = c("x", "v"))
+        local_lhs <- data.table::as.data.table(!!lhs)
+        anti_join(data.table::as.data.table(!!rhs), local_lhs, by = c("x", "v"))
     })())
 
     expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
     expect_equal(ans, dplyr:::anti_join.data.frame(rhs, lhs, by = c("x", "v")))
 
-    .expr <- rlang::expr(anti_join(data.table::setDT(!!rhs), data.table::setDT(!!lhs), x, v))
+    .expr <- rlang::expr(anti_join(data.table::as.data.table(!!rhs), data.table::as.data.table(!!lhs), x, v))
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))
     expect_equal(ans_from_workaround, anti_join(rhs, lhs, x, v))
 })

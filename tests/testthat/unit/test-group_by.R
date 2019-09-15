@@ -43,7 +43,7 @@ test_that("group_by works with a single .EACHI", {
 
 test_that("group_by can delegate to data.frame method when necessary.", {
     .expr <- rlang::expr((function() {
-        local_lhs <- data.table::setDT(!!lhs)
+        local_lhs <- data.table::as.data.table(!!lhs)
         group_by(local_lhs, x)
     })())
 
