@@ -1,6 +1,5 @@
 
-## Update to version 0.3.1
-Minor improvements and 'dplyr' compatibility adjustments.
+## Update to version 0.3.1.9000
 
 ## Test environments
 * Local GNU/Linux, R release
