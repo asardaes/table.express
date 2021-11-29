@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -39,7 +43,6 @@
 <meta property="og:description" content="A specialization of dplyr verbs, as well as a set of custom ones, that
 build expressions that can be used within a data.table's
 frame." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -57,7 +60,7 @@ frame." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,7 +74,7 @@ frame." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
       </span>
     </div>
 
@@ -79,12 +82,9 @@ frame." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/table.express.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -99,6 +99,9 @@ frame." />
     <li>
       <a href="../articles/joins.html">Joining verbs for data.table</a>
     </li>
+    <li>
+      <a href="../articles/table.express.html">Using table.express</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -107,8 +110,8 @@ frame." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/asardaes/table.express">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/asardaes/table.express/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,7 +135,7 @@ frame." />
 
     <div class="ref-description">
     <p>A specialization of <code><a href='https://dplyr.tidyverse.org/reference/dplyr-package.html'>dplyr</a></code> verbs, as well as a set of custom ones, that
-build expressions that can be used within a <code><a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table</a></code>'s
+build expressions that can be used within a <code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></code>'s
 frame.</p>
     </div>
 
@@ -146,7 +149,7 @@ evolving, breaking changes may be needed in the future.</p>
 the same time, since they define the same <code>data.table</code> methods for many <span class="pkg">dplyr</span> generics.</p>
 <p>If a package uses <code>dplyr</code> without importing <code>data.table</code>, the methods in this package will try to
 delegate to the <code>data.frame</code> methods with a warning. To avoid the warning, use
-<code><a href='https://rdrr.io/r/base/options.html'>options(table.express.warn.cedta = FALSE)</a></code>.</p>
+<code>options(table.express.warn.cedta = FALSE)</code>.</p>
 <p>This software package was developed independently of any organization or institution that is or
 has been associated with the author.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -158,532 +161,563 @@ has been associated with the author.</p>
 </ul>
 
 </div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alexis Sarda-Espinosa</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"data.table"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: data.table</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"mtcars"</span>)
-
-<span class='no'>DT</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>as.data.table</a></span>(<span class='no'>mtcars</span>)
-
-<span class='co'># ====================================================================================</span>
-<span class='co'># Simple dplyr-like transformations</span>
-
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>0</span>, <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='kw'>mean_mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>mpg</span>)) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(-<span class='no'>cyl</span>)</div><div class='output co'>#&gt;    cyl mean_mpg
-#&gt; 1:   8 15.40000
-#&gt; 2:   6 20.56667
-#&gt; 3:   4 26.00000</div><div class='input'>
-<span class='co'># Equivalent to previous</span>
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='kw'>mean_mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>mpg</span>)) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='where-table.express.html'>where</a></span>(<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>0</span>, <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='order_by-table.express.html'>order_by</a></span>(-<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;    cyl mean_mpg
-#&gt; 1:   8 15.40000
-#&gt; 2:   6 20.56667
-#&gt; 3:   4 26.00000</div><div class='input'>
-<span class='co'># Modification by reference</span>
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='where-table.express.html'>where</a></span>(<span class='no'>gear</span> <span class='kw'>%%</span> <span class='fl'>2</span> <span class='kw'>!=</span> <span class='fl'>0</span>, <span class='no'>carb</span> <span class='kw'>%%</span> <span class='fl'>2</span> <span class='kw'>==</span> <span class='fl'>0</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>wt_squared</span> <span class='kw'>=</span> <span class='no'>wt</span> ^ <span class='fl'>2</span>)</div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared
-#&gt;  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4         NA
-#&gt;  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4         NA
-#&gt;  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         NA
-#&gt;  4: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         NA
-#&gt;  5: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2  11.833600
-#&gt;  6: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         NA
-#&gt;  7: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4  12.744900
-#&gt;  8: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         NA
-#&gt;  9: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         NA
-#&gt; 10: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         NA
-#&gt; 11: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         NA
-#&gt; 12: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         NA
-#&gt; 13: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         NA
-#&gt; 14: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         NA
-#&gt; 15: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4  27.562500
-#&gt; 16: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4  29.419776
-#&gt; 17: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4  28.569025
-#&gt; 18: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         NA
-#&gt; 19: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         NA
-#&gt; 20: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         NA
-#&gt; 21: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         NA
-#&gt; 22: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2  12.390400
-#&gt; 23: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2  11.799225
-#&gt; 24: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4  14.745600
-#&gt; 25: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2  14.784025
-#&gt; 26: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         NA
-#&gt; 27: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2   4.579600
-#&gt; 28: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2   2.289169
-#&gt; 29: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4  10.048900
-#&gt; 30: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6   7.672900
-#&gt; 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8  12.744900
-#&gt; 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2         NA
-#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>DT</span>)</div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared
-#&gt;  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4         NA
-#&gt;  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4         NA
-#&gt;  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         NA
-#&gt;  4: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         NA
-#&gt;  5: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2  11.833600
-#&gt;  6: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         NA
-#&gt;  7: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4  12.744900
-#&gt;  8: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         NA
-#&gt;  9: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         NA
-#&gt; 10: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         NA
-#&gt; 11: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         NA
-#&gt; 12: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         NA
-#&gt; 13: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         NA
-#&gt; 14: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         NA
-#&gt; 15: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4  27.562500
-#&gt; 16: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4  29.419776
-#&gt; 17: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4  28.569025
-#&gt; 18: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         NA
-#&gt; 19: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         NA
-#&gt; 20: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         NA
-#&gt; 21: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         NA
-#&gt; 22: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2  12.390400
-#&gt; 23: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2  11.799225
-#&gt; 24: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4  14.745600
-#&gt; 25: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2  14.784025
-#&gt; 26: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         NA
-#&gt; 27: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2   4.579600
-#&gt; 28: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2   2.289169
-#&gt; 29: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4  10.048900
-#&gt; 30: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6   7.672900
-#&gt; 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8  12.744900
-#&gt; 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2         NA
-#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</div><div class='input'>
-<span class='co'># Deletion by reference</span>
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>wt_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>print</span></div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-#&gt;  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-#&gt;  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-#&gt;  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-#&gt;  4: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-#&gt;  5: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-#&gt;  6: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-#&gt;  7: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-#&gt;  8: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-#&gt;  9: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-#&gt; 10: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-#&gt; 11: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-#&gt; 12: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-#&gt; 13: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-#&gt; 14: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-#&gt; 15: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-#&gt; 16: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-#&gt; 17: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-#&gt; 18: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-#&gt; 19: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-#&gt; 20: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-#&gt; 21: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-#&gt; 22: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-#&gt; 23: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-#&gt; 24: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-#&gt; 25: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-#&gt; 26: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-#&gt; 27: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-#&gt; 28: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-#&gt; 29: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-#&gt; 30: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-#&gt; 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-#&gt; 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</div><div class='input'>
-<span class='co'># Support for tidyslect helpers</span>
-
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>ends_with</a></span>(<span class='st'>"t"</span>))</div><div class='output co'>#&gt;     drat    wt
-#&gt;  1: 3.90 2.620
-#&gt;  2: 3.90 2.875
-#&gt;  3: 3.85 2.320
-#&gt;  4: 3.08 3.215
-#&gt;  5: 3.15 3.440
-#&gt;  6: 2.76 3.460
-#&gt;  7: 3.21 3.570
-#&gt;  8: 3.69 3.190
-#&gt;  9: 3.92 3.150
-#&gt; 10: 3.92 3.440
-#&gt; 11: 3.92 3.440
-#&gt; 12: 3.07 4.070
-#&gt; 13: 3.07 3.730
-#&gt; 14: 3.07 3.780
-#&gt; 15: 2.93 5.250
-#&gt; 16: 3.00 5.424
-#&gt; 17: 3.23 5.345
-#&gt; 18: 4.08 2.200
-#&gt; 19: 4.93 1.615
-#&gt; 20: 4.22 1.835
-#&gt; 21: 3.70 2.465
-#&gt; 22: 2.76 3.520
-#&gt; 23: 3.15 3.435
-#&gt; 24: 3.73 3.840
-#&gt; 25: 3.08 3.845
-#&gt; 26: 4.08 1.935
-#&gt; 27: 4.43 2.140
-#&gt; 28: 3.77 1.513
-#&gt; 29: 4.22 3.170
-#&gt; 30: 3.62 2.770
-#&gt; 31: 3.54 3.570
-#&gt; 32: 4.11 2.780
-#&gt;     drat    wt</div><div class='input'>
-<span class='co'># ====================================================================================</span>
-<span class='co'># Helpers to transform a subset of data</span>
-
-<span class='co'># Like DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole]</span>
-<span class='no'>whole</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>)[<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>DT</span>, <span class='kw'>function</span>(<span class='no'>x</span>) { <span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span>(<span class='no'>x</span> <span class='kw'>%%</span> <span class='fl'>1</span> <span class='kw'>==</span> <span class='fl'>0</span>) })]
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span>(<span class='no'>as.integer</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='no'>whole</span>)</div><div class='output co'>#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-#&gt;  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-#&gt;  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-#&gt;  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-#&gt;  4: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-#&gt;  5: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-#&gt;  6: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-#&gt;  7: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-#&gt;  8: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-#&gt;  9: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-#&gt; 10: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-#&gt; 11: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-#&gt; 12: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-#&gt; 13: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-#&gt; 14: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-#&gt; 15: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-#&gt; 16: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-#&gt; 17: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-#&gt; 18: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-#&gt; 19: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-#&gt; 20: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-#&gt; 21: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-#&gt; 22: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-#&gt; 23: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-#&gt; 24: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-#&gt; 25: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-#&gt; 26: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-#&gt; 27: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-#&gt; 28: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-#&gt; 29: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-#&gt; 30: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-#&gt; 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-#&gt; 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>DT</span>, <span class='no'>class</span>)</div><div class='output co'>#&gt;       mpg       cyl      disp        hp      drat        wt      qsec        vs 
-#&gt; "numeric" "integer" "numeric" "integer" "numeric" "numeric" "numeric" "integer" 
-#&gt;        am      gear      carb 
-#&gt; "integer" "integer" "integer" </div><div class='input'>
-<span class='co'># Like DT[, lapply(.SD, fun), .SDcols = ...]</span>
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>((<span class='no'>.COL</span> - <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>.COL</span>)) / <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>.COL</span>),
-                 <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/setops.html'>setdiff</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>), <span class='no'>whole</span>))</div><div class='output co'>#&gt;             mpg        disp        drat           wt        qsec
-#&gt;  1:  0.15088482 -0.57061982  0.56751369 -0.610399567 -0.77716515
-#&gt;  2:  0.15088482 -0.57061982  0.56751369 -0.349785269 -0.46378082
-#&gt;  3:  0.44954345 -0.99018209  0.47399959 -0.917004624  0.42600682
-#&gt;  4:  0.21725341  0.22009369 -0.96611753 -0.002299538  0.89048716
-#&gt;  5: -0.23073453  1.04308123 -0.83519779  0.227654255 -0.46378082
-#&gt;  6: -0.33028740 -0.04616698 -1.56460776  0.248094592  1.32698675
-#&gt;  7: -0.96078893  1.04308123 -0.72298087  0.360516446 -1.12412636
-#&gt;  8:  0.71501778 -0.67793094  0.17475447 -0.027849959  1.20387148
-#&gt;  9:  0.44954345 -0.72553512  0.60491932 -0.068730634  2.82675459
-#&gt; 10: -0.14777380 -0.50929918  0.60491932  0.227654255  0.25252621
-#&gt; 11: -0.38006384 -0.50929918  0.60491932  0.227654255  0.58829513
-#&gt; 12: -0.61235388  0.36371309 -0.98482035  0.871524874 -0.25112717
-#&gt; 13: -0.46302456  0.36371309 -0.98482035  0.524039143 -0.13920420
-#&gt; 14: -0.81145962  0.36371309 -0.98482035  0.575139986  0.08464175
-#&gt; 15: -1.60788262  1.94675381 -1.24665983  2.077504765  0.07344945
-#&gt; 16: -1.60788262  1.84993175 -1.11574009  2.255335698 -0.01608893
-#&gt; 17: -0.89442035  1.68856165 -0.68557523  2.174596366 -0.23993487
-#&gt; 18:  2.04238943 -1.22658929  0.90416444 -1.039646647  0.90727560
-#&gt; 19:  1.71054652 -1.25079481  2.49390411 -1.637526508  0.37564148
-#&gt; 20:  2.29127162 -1.28790993  1.16600392 -1.412682800  1.14790999
-#&gt; 21:  0.23384555 -0.89255318  0.19345729 -0.768812180  1.20946763
-#&gt; 22: -0.76168319  0.70420401 -1.56460776  0.309415603 -0.54772305
-#&gt; 23: -0.81145962  0.59124494 -0.83519779  0.222544170 -0.30708866
-#&gt; 24: -1.12671039  0.96239618  0.24956575  0.636460997 -1.36476075
-#&gt; 25: -0.14777380  1.36582144 -0.96611753  0.641571082 -0.44699237
-#&gt; 26:  1.19619000 -1.22416874  0.90416444 -1.310481114  0.58829513
-#&gt; 27:  0.98049211 -0.89093948  1.55876313 -1.100967659 -0.64285758
-#&gt; 28:  1.71054652 -1.09426581  0.32437703 -1.741772228 -0.53093460
-#&gt; 29: -0.71190675  0.97046468  1.16600392 -0.048290296 -1.87401028
-#&gt; 30: -0.06481307 -0.69164740  0.04383473 -0.457097039 -1.31439542
-#&gt; 31: -0.84464392  0.56703942 -0.10578782  0.360516446 -1.81804880
-#&gt; 32:  0.21725341 -0.88529152  0.96027290 -0.446876870  0.42041067
-#&gt;             mpg        disp        drat           wt        qsec</div><div class='input'>
-<span class='co'># Filter several with the same condition</span>
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='filter_sd.html'>filter_sd</a></span>(<span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>))</div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-#&gt; 1: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-#&gt; 2: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-#&gt; 3: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-#&gt; 4: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-#&gt; 5: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-#&gt; 6: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-#&gt; 7: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</div><div class='input'>
-<span class='co'># Using secondary indices, i.e. DT[.(4, 5), on = .(cyl, gear)]</span>
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='filter_on.html'>filter_on</a></span>(<span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>gear</span> <span class='kw'>=</span> <span class='fl'>5</span>) <span class='co'># note we don't use ==</span></div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt qsec vs am gear carb
-#&gt; 1: 26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2
-#&gt; 2: 30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2</div><div class='input'>
-<span class='no'>scale_undim</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>) {
-    <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span>(<span class='no'>...</span>)) <span class='co'># remove dimensions</span>
-}
-
-<span class='co'># Chaining</span>
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='no'>start_expr</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span>(<span class='no'>as.integer</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='no'>whole</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>chain</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='filter_sd.html'>filter_sd</a></span>(<span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`|`</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>(<span class='no'>scale_undim</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> !<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>is.integer</a></span>(<span class='no'>.COL</span>)) <span class='kw'>%&gt;%</span>
-    <span class='no'>end_expr</span></div><div class='output co'>#&gt;             mpg        disp        drat          wt        qsec
-#&gt;  1: -0.39184157  0.07107789  0.03955921 -0.09987243 -0.87064903
-#&gt;  2: -0.39184157  0.07107789  0.03955921  0.29103270 -0.60164850
-#&gt;  3: -0.05835938 -0.61147991 -0.07032748 -0.55976081  0.16212085
-#&gt;  4: -0.31773442  1.35743682 -1.76258247  0.81223954  0.56081807
-#&gt;  5: -0.92911843  0.92427514 -2.46585727  1.18781505  0.93549737
-#&gt;  6:  0.23806923 -0.10349939 -0.42196488  0.77391551  0.82981859
-#&gt;  7: -0.05835938 -0.18094345  0.08351388  0.71259705  2.22285704
-#&gt;  8: -0.72532376  0.17083634  0.08351388  1.15715583  0.01320985
-#&gt;  9: -0.98469880  0.17083634  0.08351388  1.15715583  0.30142470
-#&gt; 10:  1.72021229 -0.99607497  0.43515128 -0.74371617  0.57522881
-#&gt; 11:  1.34967653 -1.03545331  2.30322498 -1.64049852  0.11888863
-#&gt; 12:  1.99811411 -1.09583342  0.74283401 -1.30324704  0.78178279
-#&gt; 13: -0.29920763 -0.45265396 -0.39998754 -0.33748143  0.83462217
-#&gt; 14:  0.77534609 -0.99213714  0.43515128 -1.14995091  0.30142470
-#&gt; 15:  0.53449784 -0.45002873  1.20435810 -0.83569385 -0.75536309
-#&gt; 16:  1.34967653 -0.78080674 -0.24614618 -1.79686057 -0.65929147
-#&gt; 17: -1.35523456  2.57816520  0.74283401  0.74325628 -1.81215088
-#&gt; 18: -0.63268982 -0.12581378 -0.57580624  0.13007177 -1.33179279
-#&gt; 19: -1.50344887  1.92185962 -0.75162494  1.35644079 -1.76411507
-#&gt; 20: -0.31773442 -0.44084046  0.50108330  0.14540138  0.15731727</div><div class='input'>
-<span class='co'># The previous is quivalent to</span>
-<span class='no'>DT</span>[, (<span class='no'>whole</span>) <span class='kw'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>.SD</span>, <span class='no'>as.integer</span>), <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='no'>whole</span>
-   ][<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>,
-     <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>.SD</span>, <span class='no'>scale_undim</span>),
-     <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>)[<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>DT</span>, <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.integer</span>))]]</div><div class='output co'>#&gt;             mpg        disp        drat          wt        qsec
-#&gt;  1: -0.39184157  0.07107789  0.03955921 -0.09987243 -0.87064903
-#&gt;  2: -0.39184157  0.07107789  0.03955921  0.29103270 -0.60164850
-#&gt;  3: -0.05835938 -0.61147991 -0.07032748 -0.55976081  0.16212085
-#&gt;  4: -0.31773442  1.35743682 -1.76258247  0.81223954  0.56081807
-#&gt;  5: -0.92911843  0.92427514 -2.46585727  1.18781505  0.93549737
-#&gt;  6:  0.23806923 -0.10349939 -0.42196488  0.77391551  0.82981859
-#&gt;  7: -0.05835938 -0.18094345  0.08351388  0.71259705  2.22285704
-#&gt;  8: -0.72532376  0.17083634  0.08351388  1.15715583  0.01320985
-#&gt;  9: -0.98469880  0.17083634  0.08351388  1.15715583  0.30142470
-#&gt; 10:  1.72021229 -0.99607497  0.43515128 -0.74371617  0.57522881
-#&gt; 11:  1.34967653 -1.03545331  2.30322498 -1.64049852  0.11888863
-#&gt; 12:  1.99811411 -1.09583342  0.74283401 -1.30324704  0.78178279
-#&gt; 13: -0.29920763 -0.45265396 -0.39998754 -0.33748143  0.83462217
-#&gt; 14:  0.77534609 -0.99213714  0.43515128 -1.14995091  0.30142470
-#&gt; 15:  0.53449784 -0.45002873  1.20435810 -0.83569385 -0.75536309
-#&gt; 16:  1.34967653 -0.78080674 -0.24614618 -1.79686057 -0.65929147
-#&gt; 17: -1.35523456  2.57816520  0.74283401  0.74325628 -1.81215088
-#&gt; 18: -0.63268982 -0.12581378 -0.57580624  0.13007177 -1.33179279
-#&gt; 19: -1.50344887  1.92185962 -0.75162494  1.35644079 -1.76411507
-#&gt; 20: -0.31773442 -0.44084046  0.50108330  0.14540138  0.15731727</div><div class='input'>
-<span class='co'># Alternative to keep all columns (*copying* non-scaled ones)</span>
-<span class='no'>scale_non_integers</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
-    <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>is.integer</a></span>(<span class='no'>x</span>)) <span class='no'>x</span> <span class='kw'>else</span> <span class='fu'>scale_undim</span>(<span class='no'>x</span>)
-}
-
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='filter_sd.html'>filter_sd</a></span>(<span class='no'>.COL</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='kw'>.collapse</span> <span class='kw'>=</span> <span class='no'>`|`</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></span>(), <span class='no'>scale_non_integers</span>)</div><div class='output co'>#&gt;             mpg cyl        disp  hp        drat          wt        qsec vs am
-#&gt;  1: -0.39184157   6  0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1
-#&gt;  2: -0.39184157   6  0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1
-#&gt;  3: -0.05835938   4 -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1
-#&gt;  4: -0.31773442   6  1.35743682 110 -1.76258247  0.81223954  0.56081807  1  0
-#&gt;  5: -0.92911843   6  0.92427514 105 -2.46585727  1.18781505  0.93549737  1  0
-#&gt;  6:  0.23806923   4 -0.10349939  62 -0.42196488  0.77391551  0.82981859  1  0
-#&gt;  7: -0.05835938   4 -0.18094345  95  0.08351388  0.71259705  2.22285704  1  0
-#&gt;  8: -0.72532376   6  0.17083634 123  0.08351388  1.15715583  0.01320985  1  0
-#&gt;  9: -0.98469880   6  0.17083634 123  0.08351388  1.15715583  0.30142470  1  0
-#&gt; 10:  1.72021229   4 -0.99607497  66  0.43515128 -0.74371617  0.57522881  1  1
-#&gt; 11:  1.34967653   4 -1.03545331  52  2.30322498 -1.64049852  0.11888863  1  1
-#&gt; 12:  1.99811411   4 -1.09583342  65  0.74283401 -1.30324704  0.78178279  1  1
-#&gt; 13: -0.29920763   4 -0.45265396  97 -0.39998754 -0.33748143  0.83462217  1  0
-#&gt; 14:  0.77534609   4 -0.99213714  66  0.43515128 -1.14995091  0.30142470  1  1
-#&gt; 15:  0.53449784   4 -0.45002873  91  1.20435810 -0.83569385 -0.75536309  0  1
-#&gt; 16:  1.34967653   4 -0.78080674 113 -0.24614618 -1.79686057 -0.65929147  1  1
-#&gt; 17: -1.35523456   8  2.57816520 264  0.74283401  0.74325628 -1.81215088  0  1
-#&gt; 18: -0.63268982   6 -0.12581378 175 -0.57580624  0.13007177 -1.33179279  0  1
-#&gt; 19: -1.50344887   8  1.92185962 335 -0.75162494  1.35644079 -1.76411507  0  1
-#&gt; 20: -0.31773442   4 -0.44084046 109  0.50108330  0.14540138  0.15731727  1  1
-#&gt;     gear carb
-#&gt;  1:    4    4
-#&gt;  2:    4    4
-#&gt;  3:    4    1
-#&gt;  4:    3    1
-#&gt;  5:    3    1
-#&gt;  6:    4    2
-#&gt;  7:    4    2
-#&gt;  8:    4    4
-#&gt;  9:    4    4
-#&gt; 10:    4    1
-#&gt; 11:    4    2
-#&gt; 12:    4    1
-#&gt; 13:    3    1
-#&gt; 14:    4    1
-#&gt; 15:    5    2
-#&gt; 16:    5    2
-#&gt; 17:    5    4
-#&gt; 18:    5    6
-#&gt; 19:    5    8
-#&gt; 20:    4    2</div><div class='input'>
-<span class='co'># Without copying non-scaled</span>
-<span class='no'>DT</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='where-table.express.html'>where</a></span>(<span class='no'>vs</span> <span class='kw'>==</span> <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>am</span> <span class='kw'>==</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span>(<span class='no'>scale</span>, <span class='kw'>.SDcols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>DT</span>)[<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>DT</span>, <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>is.integer</span>))])</div><div class='output co'>#&gt;             mpg cyl         disp  hp        drat          wt        qsec vs am
-#&gt;  1: -0.39184157   6   0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1
-#&gt;  2: -0.39184157   6   0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1
-#&gt;  3: -0.05835938   4  -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1
-#&gt;  4: -0.31773442   6   1.35743682 110 -1.76258247  0.81223954  0.56081807  1  0
-#&gt;  5: 18.70000000   8 360.00000000 175  3.15000000  3.44000000 17.02000000  0  0
-#&gt;  6: -0.92911843   6   0.92427514 105 -2.46585727  1.18781505  0.93549737  1  0
-#&gt;  7: 14.30000000   8 360.00000000 245  3.21000000  3.57000000 15.84000000  0  0
-#&gt;  8:  0.23806923   4  -0.10349939  62 -0.42196488  0.77391551  0.82981859  1  0
-#&gt;  9: -0.05835938   4  -0.18094345  95  0.08351388  0.71259705  2.22285704  1  0
-#&gt; 10: -0.72532376   6   0.17083634 123  0.08351388  1.15715583  0.01320985  1  0
-#&gt; 11: -0.98469880   6   0.17083634 123  0.08351388  1.15715583  0.30142470  1  0
-#&gt; 12: 16.40000000   8 275.80000000 180  3.07000000  4.07000000 17.40000000  0  0
-#&gt; 13: 17.30000000   8 275.80000000 180  3.07000000  3.73000000 17.60000000  0  0
-#&gt; 14: 15.20000000   8 275.80000000 180  3.07000000  3.78000000 18.00000000  0  0
-#&gt; 15: 10.40000000   8 472.00000000 205  2.93000000  5.25000000 17.98000000  0  0
-#&gt; 16: 10.40000000   8 460.00000000 215  3.00000000  5.42400000 17.82000000  0  0
-#&gt; 17: 14.70000000   8 440.00000000 230  3.23000000  5.34500000 17.42000000  0  0
-#&gt; 18:  1.72021229   4  -0.99607497  66  0.43515128 -0.74371617  0.57522881  1  1
-#&gt; 19:  1.34967653   4  -1.03545331  52  2.30322498 -1.64049852  0.11888863  1  1
-#&gt; 20:  1.99811411   4  -1.09583342  65  0.74283401 -1.30324704  0.78178279  1  1
-#&gt; 21: -0.29920763   4  -0.45265396  97 -0.39998754 -0.33748143  0.83462217  1  0
-#&gt; 22: 15.50000000   8 318.00000000 150  2.76000000  3.52000000 16.87000000  0  0
-#&gt; 23: 15.20000000   8 304.00000000 150  3.15000000  3.43500000 17.30000000  0  0
-#&gt; 24: 13.30000000   8 350.00000000 245  3.73000000  3.84000000 15.41000000  0  0
-#&gt; 25: 19.20000000   8 400.00000000 175  3.08000000  3.84500000 17.05000000  0  0
-#&gt; 26:  0.77534609   4  -0.99213714  66  0.43515128 -1.14995091  0.30142470  1  1
-#&gt; 27:  0.53449784   4  -0.45002873  91  1.20435810 -0.83569385 -0.75536309  0  1
-#&gt; 28:  1.34967653   4  -0.78080674 113 -0.24614618 -1.79686057 -0.65929147  1  1
-#&gt; 29: -1.35523456   8   2.57816520 264  0.74283401  0.74325628 -1.81215088  0  1
-#&gt; 30: -0.63268982   6  -0.12581378 175 -0.57580624  0.13007177 -1.33179279  0  1
-#&gt; 31: -1.50344887   8   1.92185962 335 -0.75162494  1.35644079 -1.76411507  0  1
-#&gt; 32: -0.31773442   4  -0.44084046 109  0.50108330  0.14540138  0.15731727  1  1
-#&gt;             mpg cyl         disp  hp        drat          wt        qsec vs am
-#&gt;     gear carb
-#&gt;  1:    4    4
-#&gt;  2:    4    4
-#&gt;  3:    4    1
-#&gt;  4:    3    1
-#&gt;  5:    3    2
-#&gt;  6:    3    1
-#&gt;  7:    3    4
-#&gt;  8:    4    2
-#&gt;  9:    4    2
-#&gt; 10:    4    4
-#&gt; 11:    4    4
-#&gt; 12:    3    3
-#&gt; 13:    3    3
-#&gt; 14:    3    3
-#&gt; 15:    3    4
-#&gt; 16:    3    4
-#&gt; 17:    3    4
-#&gt; 18:    4    1
-#&gt; 19:    4    2
-#&gt; 20:    4    1
-#&gt; 21:    3    1
-#&gt; 22:    3    2
-#&gt; 23:    3    2
-#&gt; 24:    3    4
-#&gt; 25:    3    2
-#&gt; 26:    4    1
-#&gt; 27:    5    2
-#&gt; 28:    5    2
-#&gt; 29:    5    4
-#&gt; 30:    5    6
-#&gt; 31:    5    8
-#&gt; 32:    4    2
-#&gt;     gear carb</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>DT</span>)</div><div class='output co'>#&gt;             mpg cyl         disp  hp        drat          wt        qsec vs am
-#&gt;  1: -0.39184157   6   0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1
-#&gt;  2: -0.39184157   6   0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1
-#&gt;  3: -0.05835938   4  -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1
-#&gt;  4: -0.31773442   6   1.35743682 110 -1.76258247  0.81223954  0.56081807  1  0
-#&gt;  5: 18.70000000   8 360.00000000 175  3.15000000  3.44000000 17.02000000  0  0
-#&gt;  6: -0.92911843   6   0.92427514 105 -2.46585727  1.18781505  0.93549737  1  0
-#&gt;  7: 14.30000000   8 360.00000000 245  3.21000000  3.57000000 15.84000000  0  0
-#&gt;  8:  0.23806923   4  -0.10349939  62 -0.42196488  0.77391551  0.82981859  1  0
-#&gt;  9: -0.05835938   4  -0.18094345  95  0.08351388  0.71259705  2.22285704  1  0
-#&gt; 10: -0.72532376   6   0.17083634 123  0.08351388  1.15715583  0.01320985  1  0
-#&gt; 11: -0.98469880   6   0.17083634 123  0.08351388  1.15715583  0.30142470  1  0
-#&gt; 12: 16.40000000   8 275.80000000 180  3.07000000  4.07000000 17.40000000  0  0
-#&gt; 13: 17.30000000   8 275.80000000 180  3.07000000  3.73000000 17.60000000  0  0
-#&gt; 14: 15.20000000   8 275.80000000 180  3.07000000  3.78000000 18.00000000  0  0
-#&gt; 15: 10.40000000   8 472.00000000 205  2.93000000  5.25000000 17.98000000  0  0
-#&gt; 16: 10.40000000   8 460.00000000 215  3.00000000  5.42400000 17.82000000  0  0
-#&gt; 17: 14.70000000   8 440.00000000 230  3.23000000  5.34500000 17.42000000  0  0
-#&gt; 18:  1.72021229   4  -0.99607497  66  0.43515128 -0.74371617  0.57522881  1  1
-#&gt; 19:  1.34967653   4  -1.03545331  52  2.30322498 -1.64049852  0.11888863  1  1
-#&gt; 20:  1.99811411   4  -1.09583342  65  0.74283401 -1.30324704  0.78178279  1  1
-#&gt; 21: -0.29920763   4  -0.45265396  97 -0.39998754 -0.33748143  0.83462217  1  0
-#&gt; 22: 15.50000000   8 318.00000000 150  2.76000000  3.52000000 16.87000000  0  0
-#&gt; 23: 15.20000000   8 304.00000000 150  3.15000000  3.43500000 17.30000000  0  0
-#&gt; 24: 13.30000000   8 350.00000000 245  3.73000000  3.84000000 15.41000000  0  0
-#&gt; 25: 19.20000000   8 400.00000000 175  3.08000000  3.84500000 17.05000000  0  0
-#&gt; 26:  0.77534609   4  -0.99213714  66  0.43515128 -1.14995091  0.30142470  1  1
-#&gt; 27:  0.53449784   4  -0.45002873  91  1.20435810 -0.83569385 -0.75536309  0  1
-#&gt; 28:  1.34967653   4  -0.78080674 113 -0.24614618 -1.79686057 -0.65929147  1  1
-#&gt; 29: -1.35523456   8   2.57816520 264  0.74283401  0.74325628 -1.81215088  0  1
-#&gt; 30: -0.63268982   6  -0.12581378 175 -0.57580624  0.13007177 -1.33179279  0  1
-#&gt; 31: -1.50344887   8   1.92185962 335 -0.75162494  1.35644079 -1.76411507  0  1
-#&gt; 32: -0.31773442   4  -0.44084046 109  0.50108330  0.14540138  0.15731727  1  1
-#&gt;             mpg cyl         disp  hp        drat          wt        qsec vs am
-#&gt;     gear carb
-#&gt;  1:    4    4
-#&gt;  2:    4    4
-#&gt;  3:    4    1
-#&gt;  4:    3    1
-#&gt;  5:    3    2
-#&gt;  6:    3    1
-#&gt;  7:    3    4
-#&gt;  8:    4    2
-#&gt;  9:    4    2
-#&gt; 10:    4    4
-#&gt; 11:    4    4
-#&gt; 12:    3    3
-#&gt; 13:    3    3
-#&gt; 14:    3    3
-#&gt; 15:    3    4
-#&gt; 16:    3    4
-#&gt; 17:    3    4
-#&gt; 18:    4    1
-#&gt; 19:    4    2
-#&gt; 20:    4    1
-#&gt; 21:    3    1
-#&gt; 22:    3    2
-#&gt; 23:    3    2
-#&gt; 24:    3    4
-#&gt; 25:    3    2
-#&gt; 26:    4    1
-#&gt; 27:    5    2
-#&gt; 28:    5    2
-#&gt; 29:    5    4
-#&gt; 30:    5    6
-#&gt; 31:    5    8
-#&gt; 32:    4    2
-#&gt;     gear carb</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://r-datatable.com'>"data.table"</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: data.table</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"mtcars"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># ====================================================================================</span></span>
+<span class='r-in'><span class='co'># Simple dplyr-like transformations</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>==</span> <span class='fl'>0</span>, <span class='va'>am</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span>mean_mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>cyl</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    cyl mean_mpg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:   8 15.40000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2:   6 20.56667</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3:   4 26.00000</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Equivalent to previous</span></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='va'>start_expr</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span>mean_mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='where-table.express.html'>where</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>==</span> <span class='fl'>0</span>, <span class='va'>am</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='order_by-table.express.html'>order_by</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='va'>end_expr</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    cyl mean_mpg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:   8 15.40000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2:   6 20.56667</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3:   4 26.00000</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Modification by reference</span></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='where-table.express.html'>where</a></span><span class='op'>(</span><span class='va'>gear</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>!=</span> <span class='fl'>0</span>, <span class='va'>carb</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>2</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>wt_squared <span class='op'>=</span> <span class='va'>wt</span> <span class='op'>^</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2  11.833600</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4  12.744900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4  27.562500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4  29.419776</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4  28.569025</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2  12.390400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2  11.799225</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4  14.745600</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2  14.784025</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2   4.579600</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2   2.289169</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4  10.048900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6   7.672900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8  12.744900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>DT</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2  11.833600</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4  12.744900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4  27.562500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4  29.419776</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4  28.569025</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2  12.390400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2  11.799225</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4  14.745600</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2  14.784025</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2   4.579600</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2   2.289169</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4  10.048900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6   7.672900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8  12.744900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Deletion by reference</span></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>wt_squared <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='va'>print</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Support for tidyslect helpers</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='st'>"t"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     drat    wt</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: 3.90 2.620</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: 3.90 2.875</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: 3.85 2.320</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: 3.08 3.215</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: 3.15 3.440</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: 2.76 3.460</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: 3.21 3.570</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: 3.69 3.190</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: 3.92 3.150</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10: 3.92 3.440</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11: 3.92 3.440</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12: 3.07 4.070</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: 3.07 3.730</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14: 3.07 3.780</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15: 2.93 5.250</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16: 3.00 5.424</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: 3.23 5.345</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18: 4.08 2.200</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19: 4.93 1.615</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20: 4.22 1.835</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21: 3.70 2.465</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22: 2.76 3.520</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23: 3.15 3.435</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24: 3.73 3.840</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25: 3.08 3.845</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26: 4.08 1.935</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27: 4.43 2.140</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28: 3.77 1.513</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29: 4.22 3.170</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30: 3.62 2.770</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31: 3.54 3.570</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32: 4.11 2.780</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     drat    wt</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># ====================================================================================</span></span>
+<span class='r-in'><span class='co'># Helpers to transform a subset of data</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Like DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole]</span></span>
+<span class='r-in'><span class='va'>whole</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>DT</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>DT</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span> <span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>1</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>}</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span><span class='op'>(</span><span class='va'>as.integer</span>, .SDcols <span class='op'>=</span> <span class='va'>whole</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>DT</span>, <span class='va'>class</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       mpg       cyl      disp        hp      drat        wt      qsec        vs </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "numeric" "integer" "numeric" "integer" "numeric" "numeric" "numeric" "integer" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        am      gear      carb </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "integer" "integer" "integer" </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Like DT[, lapply(.SD, fun), .SDcols = ...]</span></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>.COL</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>.COL</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>.COL</span><span class='op'>)</span>,</span>
+<span class='r-in'>                 .SDcols <span class='op'>=</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/setops.html'>setdiff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>DT</span><span class='op'>)</span>, <span class='va'>whole</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             mpg        disp        drat           wt        qsec</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:  0.15088482 -0.57061982  0.56751369 -0.610399567 -0.77716515</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:  0.15088482 -0.57061982  0.56751369 -0.349785269 -0.46378082</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:  0.44954345 -0.99018209  0.47399959 -0.917004624  0.42600682</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:  0.21725341  0.22009369 -0.96611753 -0.002299538  0.89048716</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: -0.23073453  1.04308123 -0.83519779  0.227654255 -0.46378082</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: -0.33028740 -0.04616698 -1.56460776  0.248094592  1.32698675</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: -0.96078893  1.04308123 -0.72298087  0.360516446 -1.12412636</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:  0.71501778 -0.67793094  0.17475447 -0.027849959  1.20387148</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:  0.44954345 -0.72553512  0.60491932 -0.068730634  2.82675459</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10: -0.14777380 -0.50929918  0.60491932  0.227654255  0.25252621</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11: -0.38006384 -0.50929918  0.60491932  0.227654255  0.58829513</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12: -0.61235388  0.36371309 -0.98482035  0.871524874 -0.25112717</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: -0.46302456  0.36371309 -0.98482035  0.524039143 -0.13920420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14: -0.81145962  0.36371309 -0.98482035  0.575139986  0.08464175</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15: -1.60788262  1.94675381 -1.24665983  2.077504765  0.07344945</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16: -1.60788262  1.84993175 -1.11574009  2.255335698 -0.01608893</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: -0.89442035  1.68856165 -0.68557523  2.174596366 -0.23993487</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:  2.04238943 -1.22658929  0.90416444 -1.039646647  0.90727560</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:  1.71054652 -1.25079481  2.49390411 -1.637526508  0.37564148</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:  2.29127162 -1.28790993  1.16600392 -1.412682800  1.14790999</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21:  0.23384555 -0.89255318  0.19345729 -0.768812180  1.20946763</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22: -0.76168319  0.70420401 -1.56460776  0.309415603 -0.54772305</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23: -0.81145962  0.59124494 -0.83519779  0.222544170 -0.30708866</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24: -1.12671039  0.96239618  0.24956575  0.636460997 -1.36476075</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25: -0.14777380  1.36582144 -0.96611753  0.641571082 -0.44699237</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26:  1.19619000 -1.22416874  0.90416444 -1.310481114  0.58829513</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27:  0.98049211 -0.89093948  1.55876313 -1.100967659 -0.64285758</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28:  1.71054652 -1.09426581  0.32437703 -1.741772228 -0.53093460</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29: -0.71190675  0.97046468  1.16600392 -0.048290296 -1.87401028</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30: -0.06481307 -0.69164740  0.04383473 -0.457097039 -1.31439542</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31: -0.84464392  0.56703942 -0.10578782  0.360516446 -1.81804880</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32:  0.21725341 -0.88529152  0.96027290 -0.446876870  0.42041067</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             mpg        disp        drat           wt        qsec</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Filter several with the same condition</span></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='filter_sd.html'>filter_sd</a></span><span class='op'>(</span><span class='va'>.COL</span> <span class='op'>==</span> <span class='fl'>1</span>, .SDcols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vs"</span>, <span class='st'>"am"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Using secondary indices, i.e. DT[.(4, 5), on = .(cyl, gear)]</span></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='filter_on.html'>filter_on</a></span><span class='op'>(</span>cyl <span class='op'>=</span> <span class='fl'>4</span>, gear <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='co'># note we don't use ==</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     mpg cyl  disp  hp drat    wt qsec vs am gear carb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: 26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2: 30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>scale_undim</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># remove dimensions</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Chaining</span></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='va'>start_expr</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span><span class='op'>(</span><span class='va'>as.integer</span>, .SDcols <span class='op'>=</span> <span class='va'>whole</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='va'>chain</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='filter_sd.html'>filter_sd</a></span><span class='op'>(</span><span class='va'>.COL</span> <span class='op'>==</span> <span class='fl'>1</span>, .SDcols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vs"</span>, <span class='st'>"am"</span><span class='op'>)</span>, .collapse <span class='op'>=</span> <span class='va'>`|`</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span><span class='op'>(</span><span class='va'>scale_undim</span>, .SDcols <span class='op'>=</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>is.integer</a></span><span class='op'>(</span><span class='va'>.COL</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='va'>end_expr</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             mpg        disp        drat          wt        qsec</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: -0.39184157  0.07107789  0.03955921 -0.09987243 -0.87064903</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: -0.39184157  0.07107789  0.03955921  0.29103270 -0.60164850</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: -0.05835938 -0.61147991 -0.07032748 -0.55976081  0.16212085</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: -0.31773442  1.35743682 -1.76258247  0.81223954  0.56081807</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: -0.92911843  0.92427514 -2.46585727  1.18781505  0.93549737</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:  0.23806923 -0.10349939 -0.42196488  0.77391551  0.82981859</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: -0.05835938 -0.18094345  0.08351388  0.71259705  2.22285704</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: -0.72532376  0.17083634  0.08351388  1.15715583  0.01320985</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: -0.98469880  0.17083634  0.08351388  1.15715583  0.30142470</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:  1.72021229 -0.99607497  0.43515128 -0.74371617  0.57522881</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:  1.34967653 -1.03545331  2.30322498 -1.64049852  0.11888863</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:  1.99811411 -1.09583342  0.74283401 -1.30324704  0.78178279</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: -0.29920763 -0.45265396 -0.39998754 -0.33748143  0.83462217</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:  0.77534609 -0.99213714  0.43515128 -1.14995091  0.30142470</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:  0.53449784 -0.45002873  1.20435810 -0.83569385 -0.75536309</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:  1.34967653 -0.78080674 -0.24614618 -1.79686057 -0.65929147</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: -1.35523456  2.57816520  0.74283401  0.74325628 -1.81215088</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18: -0.63268982 -0.12581378 -0.57580624  0.13007177 -1.33179279</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19: -1.50344887  1.92185962 -0.75162494  1.35644079 -1.76411507</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20: -0.31773442 -0.44084046  0.50108330  0.14540138  0.15731727</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The previous is quivalent to</span></span>
+<span class='r-in'><span class='va'>DT</span><span class='op'>[</span>, <span class='op'>(</span><span class='va'>whole</span><span class='op'>)</span> <span class='op'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>.SD</span>, <span class='va'>as.integer</span><span class='op'>)</span>, .SDcols <span class='op'>=</span> <span class='va'>whole</span></span>
+<span class='r-in'>   <span class='op'>]</span><span class='op'>[</span><span class='va'>vs</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>am</span> <span class='op'>==</span> <span class='fl'>1</span>,</span>
+<span class='r-in'>     <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>.SD</span>, <span class='va'>scale_undim</span><span class='op'>)</span>,</span>
+<span class='r-in'>     .SDcols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>DT</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>DT</span>, <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span><span class='op'>(</span><span class='va'>is.integer</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             mpg        disp        drat          wt        qsec</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: -0.39184157  0.07107789  0.03955921 -0.09987243 -0.87064903</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: -0.39184157  0.07107789  0.03955921  0.29103270 -0.60164850</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: -0.05835938 -0.61147991 -0.07032748 -0.55976081  0.16212085</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: -0.31773442  1.35743682 -1.76258247  0.81223954  0.56081807</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: -0.92911843  0.92427514 -2.46585727  1.18781505  0.93549737</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:  0.23806923 -0.10349939 -0.42196488  0.77391551  0.82981859</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: -0.05835938 -0.18094345  0.08351388  0.71259705  2.22285704</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: -0.72532376  0.17083634  0.08351388  1.15715583  0.01320985</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: -0.98469880  0.17083634  0.08351388  1.15715583  0.30142470</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:  1.72021229 -0.99607497  0.43515128 -0.74371617  0.57522881</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:  1.34967653 -1.03545331  2.30322498 -1.64049852  0.11888863</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:  1.99811411 -1.09583342  0.74283401 -1.30324704  0.78178279</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: -0.29920763 -0.45265396 -0.39998754 -0.33748143  0.83462217</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:  0.77534609 -0.99213714  0.43515128 -1.14995091  0.30142470</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:  0.53449784 -0.45002873  1.20435810 -0.83569385 -0.75536309</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:  1.34967653 -0.78080674 -0.24614618 -1.79686057 -0.65929147</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: -1.35523456  2.57816520  0.74283401  0.74325628 -1.81215088</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18: -0.63268982 -0.12581378 -0.57580624  0.13007177 -1.33179279</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19: -1.50344887  1.92185962 -0.75162494  1.35644079 -1.76411507</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20: -0.31773442 -0.44084046  0.50108330  0.14540138  0.15731727</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Alternative to keep all columns (*copying* non-scaled ones)</span></span>
+<span class='r-in'><span class='va'>scale_non_integers</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>    <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>is.integer</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span> <span class='va'>x</span> <span class='kw'>else</span> <span class='fu'>scale_undim</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='filter_sd.html'>filter_sd</a></span><span class='op'>(</span><span class='va'>.COL</span> <span class='op'>==</span> <span class='fl'>1</span>, .SDcols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vs"</span>, <span class='st'>"am"</span><span class='op'>)</span>, .collapse <span class='op'>=</span> <span class='va'>`|`</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='transmute_sd.html'>transmute_sd</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>scale_non_integers</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             mpg cyl        disp  hp        drat          wt        qsec vs am</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: -0.39184157   6  0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: -0.39184157   6  0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: -0.05835938   4 -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: -0.31773442   6  1.35743682 110 -1.76258247  0.81223954  0.56081807  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: -0.92911843   6  0.92427514 105 -2.46585727  1.18781505  0.93549737  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:  0.23806923   4 -0.10349939  62 -0.42196488  0.77391551  0.82981859  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: -0.05835938   4 -0.18094345  95  0.08351388  0.71259705  2.22285704  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: -0.72532376   6  0.17083634 123  0.08351388  1.15715583  0.01320985  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: -0.98469880   6  0.17083634 123  0.08351388  1.15715583  0.30142470  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:  1.72021229   4 -0.99607497  66  0.43515128 -0.74371617  0.57522881  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:  1.34967653   4 -1.03545331  52  2.30322498 -1.64049852  0.11888863  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:  1.99811411   4 -1.09583342  65  0.74283401 -1.30324704  0.78178279  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: -0.29920763   4 -0.45265396  97 -0.39998754 -0.33748143  0.83462217  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:  0.77534609   4 -0.99213714  66  0.43515128 -1.14995091  0.30142470  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:  0.53449784   4 -0.45002873  91  1.20435810 -0.83569385 -0.75536309  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:  1.34967653   4 -0.78080674 113 -0.24614618 -1.79686057 -0.65929147  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: -1.35523456   8  2.57816520 264  0.74283401  0.74325628 -1.81215088  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18: -0.63268982   6 -0.12581378 175 -0.57580624  0.13007177 -1.33179279  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19: -1.50344887   8  1.92185962 335 -0.75162494  1.35644079 -1.76411507  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20: -0.31773442   4 -0.44084046 109  0.50108330  0.14540138  0.15731727  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     gear carb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5:    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13:    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17:    5    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:    5    6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:    5    8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:    4    2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Without copying non-scaled</span></span>
+<span class='r-in'><span class='va'>DT</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='where-table.express.html'>where</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>am</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='mutate_sd.html'>mutate_sd</a></span><span class='op'>(</span><span class='va'>scale</span>, .SDcols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>DT</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>DT</span>, <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span><span class='op'>(</span><span class='va'>is.integer</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             mpg cyl         disp  hp        drat          wt        qsec vs am</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: -0.39184157   6   0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: -0.39184157   6   0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: -0.05835938   4  -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: -0.31773442   6   1.35743682 110 -1.76258247  0.81223954  0.56081807  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: 18.70000000   8 360.00000000 175  3.15000000  3.44000000 17.02000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: -0.92911843   6   0.92427514 105 -2.46585727  1.18781505  0.93549737  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: 14.30000000   8 360.00000000 245  3.21000000  3.57000000 15.84000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:  0.23806923   4  -0.10349939  62 -0.42196488  0.77391551  0.82981859  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: -0.05835938   4  -0.18094345  95  0.08351388  0.71259705  2.22285704  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10: -0.72532376   6   0.17083634 123  0.08351388  1.15715583  0.01320985  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11: -0.98469880   6   0.17083634 123  0.08351388  1.15715583  0.30142470  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12: 16.40000000   8 275.80000000 180  3.07000000  4.07000000 17.40000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: 17.30000000   8 275.80000000 180  3.07000000  3.73000000 17.60000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14: 15.20000000   8 275.80000000 180  3.07000000  3.78000000 18.00000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15: 10.40000000   8 472.00000000 205  2.93000000  5.25000000 17.98000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16: 10.40000000   8 460.00000000 215  3.00000000  5.42400000 17.82000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: 14.70000000   8 440.00000000 230  3.23000000  5.34500000 17.42000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:  1.72021229   4  -0.99607497  66  0.43515128 -0.74371617  0.57522881  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:  1.34967653   4  -1.03545331  52  2.30322498 -1.64049852  0.11888863  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:  1.99811411   4  -1.09583342  65  0.74283401 -1.30324704  0.78178279  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21: -0.29920763   4  -0.45265396  97 -0.39998754 -0.33748143  0.83462217  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22: 15.50000000   8 318.00000000 150  2.76000000  3.52000000 16.87000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23: 15.20000000   8 304.00000000 150  3.15000000  3.43500000 17.30000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24: 13.30000000   8 350.00000000 245  3.73000000  3.84000000 15.41000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25: 19.20000000   8 400.00000000 175  3.08000000  3.84500000 17.05000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26:  0.77534609   4  -0.99213714  66  0.43515128 -1.14995091  0.30142470  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27:  0.53449784   4  -0.45002873  91  1.20435810 -0.83569385 -0.75536309  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28:  1.34967653   4  -0.78080674 113 -0.24614618 -1.79686057 -0.65929147  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29: -1.35523456   8   2.57816520 264  0.74283401  0.74325628 -1.81215088  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30: -0.63268982   6  -0.12581378 175 -0.57580624  0.13007177 -1.33179279  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31: -1.50344887   8   1.92185962 335 -0.75162494  1.35644079 -1.76411507  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32: -0.31773442   4  -0.44084046 109  0.50108330  0.14540138  0.15731727  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             mpg cyl         disp  hp        drat          wt        qsec vs am</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     gear carb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5:    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13:    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21:    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22:    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23:    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25:    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27:    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28:    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29:    5    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30:    5    6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31:    5    8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     gear carb</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>DT</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             mpg cyl         disp  hp        drat          wt        qsec vs am</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: -0.39184157   6   0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2: -0.39184157   6   0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: -0.05835938   4  -0.61147991  93 -0.07032748 -0.55976081  0.16212085  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: -0.31773442   6   1.35743682 110 -1.76258247  0.81223954  0.56081807  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: 18.70000000   8 360.00000000 175  3.15000000  3.44000000 17.02000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: -0.92911843   6   0.92427514 105 -2.46585727  1.18781505  0.93549737  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: 14.30000000   8 360.00000000 245  3.21000000  3.57000000 15.84000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:  0.23806923   4  -0.10349939  62 -0.42196488  0.77391551  0.82981859  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: -0.05835938   4  -0.18094345  95  0.08351388  0.71259705  2.22285704  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10: -0.72532376   6   0.17083634 123  0.08351388  1.15715583  0.01320985  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11: -0.98469880   6   0.17083634 123  0.08351388  1.15715583  0.30142470  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12: 16.40000000   8 275.80000000 180  3.07000000  4.07000000 17.40000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13: 17.30000000   8 275.80000000 180  3.07000000  3.73000000 17.60000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14: 15.20000000   8 275.80000000 180  3.07000000  3.78000000 18.00000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15: 10.40000000   8 472.00000000 205  2.93000000  5.25000000 17.98000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16: 10.40000000   8 460.00000000 215  3.00000000  5.42400000 17.82000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17: 14.70000000   8 440.00000000 230  3.23000000  5.34500000 17.42000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:  1.72021229   4  -0.99607497  66  0.43515128 -0.74371617  0.57522881  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:  1.34967653   4  -1.03545331  52  2.30322498 -1.64049852  0.11888863  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:  1.99811411   4  -1.09583342  65  0.74283401 -1.30324704  0.78178279  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21: -0.29920763   4  -0.45265396  97 -0.39998754 -0.33748143  0.83462217  1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22: 15.50000000   8 318.00000000 150  2.76000000  3.52000000 16.87000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23: 15.20000000   8 304.00000000 150  3.15000000  3.43500000 17.30000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24: 13.30000000   8 350.00000000 245  3.73000000  3.84000000 15.41000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25: 19.20000000   8 400.00000000 175  3.08000000  3.84500000 17.05000000  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26:  0.77534609   4  -0.99213714  66  0.43515128 -1.14995091  0.30142470  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27:  0.53449784   4  -0.45002873  91  1.20435810 -0.83569385 -0.75536309  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28:  1.34967653   4  -0.78080674 113 -0.24614618 -1.79686057 -0.65929147  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29: -1.35523456   8   2.57816520 264  0.74283401  0.74325628 -1.81215088  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30: -0.63268982   6  -0.12581378 175 -0.57580624  0.13007177 -1.33179279  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31: -1.50344887   8   1.92185962 335 -0.75162494  1.35644079 -1.76411507  0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32: -0.31773442   4  -0.44084046 109  0.50108330  0.14540138  0.15731727  1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             mpg cyl         disp  hp        drat          wt        qsec vs am</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     gear carb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5:    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13:    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21:    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22:    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23:    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24:    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25:    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26:    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27:    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28:    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29:    5    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30:    5    6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31:    5    8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32:    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     gear carb</span>
+</pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#note">Note</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Alexis Sarda-Espinosa</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -694,7 +728,7 @@ has been associated with the author.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

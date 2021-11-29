@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -41,16 +45,15 @@ below to see their documentation.
 
   data.table:=
 
-  dplyranti_join, arrange, distinct, filter, full_join, group_by, inner_join, left_join, mutate, right_join, select, semi_join, summarize, summarise, transmute
+  dplyranti_join, arrange, distinct, filter, full_join, group_by, inner_join, left_join, mutate, right_join, select, semi_join, summarise, summarize, transmute
 
   magrittr%&amp;gt;%, %T&amp;gt;%
 
   rlang!!, !!!
 
-  tidyselectstarts_with, ends_with, contains, matches, num_range, one_of, everything, last_col
+  tidyselectcontains, ends_with, everything, last_col, matches, num_range, one_of, starts_with
 
 " />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -68,7 +71,7 @@ below to see their documentation.
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,7 +85,7 @@ below to see their documentation.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
       </span>
     </div>
 
@@ -90,12 +93,9 @@ below to see their documentation.
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/table.express.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -110,6 +110,9 @@ below to see their documentation.
     <li>
       <a href="../articles/joins.html">Joining verbs for data.table</a>
     </li>
+    <li>
+      <a href="../articles/table.express.html">Using table.express</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -118,8 +121,8 @@ below to see their documentation.
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/asardaes/table.express">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/asardaes/table.express/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -137,23 +140,23 @@ below to see their documentation.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Objects exported from other packages</h1>
-    <small class="dont-index">Source: <a href='https://github.com/asardaes/table.express/blob/master/R/UTILS-tidyselect.R'><code>R/UTILS-tidyselect.R</code></a>, <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-anti_join.R'><code>R/VERBS-anti_join.R</code></a>, <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-arrange.R'><code>R/VERBS-arrange.R</code></a>, and 14 more</small>
+    <small class="dont-index">Source: <a href='https://github.com/asardaes/table.express/blob/master/R/UTILS-tidyselect.R'><code>R/UTILS-tidyselect.R</code></a>, <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-anti_join.R'><code>R/VERBS-anti_join.R</code></a>, <a href='https://github.com/asardaes/table.express/blob/master/R/VERBS-arrange.R'><code>R/VERBS-arrange.R</code></a>, and 13 more</small>
     <div class="hidden name"><code>reexports.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>These objects are imported from other packages. Follow the links
 below to see their documentation.</p>
-<dl class='dl-horizontal'>
-  <dt>data.table</dt><dd><p><code><a href='https://rdrr.io/pkg/data.table/man/assign.html'>:=</a></code></p></dd>
+<dl>
+  <dt>data.table</dt><dd><p><code>:=</code></p></dd>
 
-  <dt>dplyr</dt><dd><p><code><a href='https://dplyr.tidyverse.org/reference/join.html'>anti_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>full_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>inner_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>right_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/join.html'>semi_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></code></p></dd>
+  <dt>dplyr</dt><dd><p><code><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>anti_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>right_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>semi_join</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></code></p></dd>
 
   <dt>magrittr</dt><dd><p><code>%&gt;%</code>, <code>%T&gt;%</code></p></dd>
 
-  <dt>rlang</dt><dd><p><code><a href='https://rlang.r-lib.org/reference/quasiquotation.html'>!!</a></code>, <code><a href='https://rlang.r-lib.org/reference/quasiquotation.html'>!!!</a></code></p></dd>
+  <dt>rlang</dt><dd><p><code><a href='https://rlang.r-lib.org/reference/nse-force.html'>!!</a></code>, <code><a href='https://rlang.r-lib.org/reference/nse-force.html'>!!!</a></code></p></dd>
 
-  <dt>tidyselect</dt><dd><p><code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>starts_with</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>ends_with</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>contains</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>matches</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>num_range</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>one_of</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>everything</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>last_col</a></code></p></dd>
+  <dt>tidyselect</dt><dd><p><code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>last_col</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>num_range</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></code></p></dd>
 
 </dl>
     </div>
@@ -162,11 +165,10 @@ below to see their documentation.</p>
 
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -177,7 +179,7 @@ below to see their documentation.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
