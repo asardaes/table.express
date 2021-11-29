@@ -9,12 +9,16 @@
 \usage{
 transmute_sd(.data, .SDcols = everything(), .how = identity, ...)
 
-\method{transmute_sd}{ExprBuilder}(.data, .SDcols = everything(),
-  .how = identity, ..., .parse = getOption("table.express.parse",
-  FALSE), .chain = getOption("table.express.chain", TRUE))
+\method{transmute_sd}{ExprBuilder}(
+  .data,
+  .SDcols = everything(),
+  .how = identity,
+  ...,
+  .parse = getOption("table.express.parse", FALSE),
+  .chain = getOption("table.express.chain", TRUE)
+)
 
-\method{transmute_sd}{EagerExprBuilder}(.data, ...,
-  .parent_env = rlang::caller_env())
+\method{transmute_sd}{EagerExprBuilder}(.data, ..., .parent_env = rlang::caller_env())
 
 \method{transmute_sd}{data.table}(.data, ...)
 }

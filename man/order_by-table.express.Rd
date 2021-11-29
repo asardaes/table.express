@@ -9,9 +9,13 @@
 \usage{
 order_by(.data, ...)
 
-\method{order_by}{ExprBuilder}(.data, ..., .collapse,
+\method{order_by}{ExprBuilder}(
+  .data,
+  ...,
+  .collapse,
   .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+  .chain = getOption("table.express.chain", TRUE)
+)
 
 \method{order_by}{data.table}(.data, ...)
 }

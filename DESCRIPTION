@@ -22,7 +22,7 @@ Suggests:
     rex,
     rmarkdown,
     testthat
-Date: 2019-09-15
+Date: 2021-11-29
 Authors@R: c(
         person("Alexis", "Sarda-Espinosa", role=c("cre", "aut"), email="alexis.sarda@gmail.com")
     )
@@ -31,8 +31,7 @@ License: MPL-2.0
 URL: https://asardaes.github.io/table.express, https://github.com/asardaes/table.express
 Language: en-US
 Encoding: UTF-8
-LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 

@@ -7,12 +7,15 @@
 \alias{transmute.data.table}
 \title{Compute new columns}
 \usage{
-\method{transmute}{ExprBuilder}(.data, ..., .enlist = TRUE,
+\method{transmute}{ExprBuilder}(
+  .data,
+  ...,
+  .enlist = TRUE,
   .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+  .chain = getOption("table.express.chain", TRUE)
+)
 
-\method{transmute}{EagerExprBuilder}(.data, ...,
-  .parent_env = rlang::caller_env())
+\method{transmute}{EagerExprBuilder}(.data, ..., .parent_env = rlang::caller_env())
 
 \method{transmute}{data.table}(.data, ...)
 }

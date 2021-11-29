@@ -4,8 +4,12 @@
 \alias{nest_expr}
 \title{Nest expressions as a functional chain}
 \usage{
-nest_expr(..., .start = TRUE, .end = .start,
-  .parse = getOption("table.express.parse", FALSE))
+nest_expr(
+  ...,
+  .start = TRUE,
+  .end = .start,
+  .parse = getOption("table.express.parse", FALSE)
+)
 }
 \arguments{
 \item{...}{Expressions that will be part of the functional chain.}

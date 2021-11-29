@@ -4,23 +4,10 @@
 \name{ExprBuilder}
 \alias{ExprBuilder}
 \title{Frame expression builder}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
-\usage{
-ExprBuilder
-}
 \description{
 Build an expression that will be used inside a \link[data.table:data.table-class]{data.table::data.table}'s frame. This
 shouldn't be used directly.
 }
-\section{Fields}{
-
-\describe{
-\item{\code{appends}}{Extra expressions that go at the end.}
-
-\item{\code{expr}}{The final expression that can be evaluated with \code{\link[base:eval]{base::eval()}} or
-\code{\link[rlang:eval_bare]{rlang::eval_bare()}}.}
-}}
-
 \section{Methods}{
 
 
@@ -44,4 +31,142 @@ table.}
 }
 }
 
-\keyword{datasets}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{appends}}{Extra expressions that go at the end.}
+
+\item{\code{expr}}{The final expression that can be evaluated with \code{\link[base:eval]{base::eval()}} or
+\code{\link[rlang:eval_bare]{rlang::eval_bare()}}.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{ExprBuilder$new()}}
+\item \href{#method-set_i}{\code{ExprBuilder$set_i()}}
+\item \href{#method-set_j}{\code{ExprBuilder$set_j()}}
+\item \href{#method-set_by}{\code{ExprBuilder$set_by()}}
+\item \href{#method-chain}{\code{ExprBuilder$chain()}}
+\item \href{#method-chain_if_set}{\code{ExprBuilder$chain_if_set()}}
+\item \href{#method-seek_and_nestroy}{\code{ExprBuilder$seek_and_nestroy()}}
+\item \href{#method-eval}{\code{ExprBuilder$eval()}}
+\item \href{#method-tidy_select}{\code{ExprBuilder$tidy_select()}}
+\item \href{#method-print}{\code{ExprBuilder$print()}}
+\item \href{#method-clone}{\code{ExprBuilder$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$new(
+  DT,
+  dt_pronouns = list(),
+  nested = list(),
+  verbose = getOption("table.express.verbose", FALSE)
+)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_i"></a>}}
+\if{latex}{\out{\hypertarget{method-set_i}{}}}
+\subsection{Method \code{set_i()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$set_i(value, chain_if_needed)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_j"></a>}}
+\if{latex}{\out{\hypertarget{method-set_j}{}}}
+\subsection{Method \code{set_j()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$set_j(value, chain_if_needed)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_by"></a>}}
+\if{latex}{\out{\hypertarget{method-set_by}{}}}
+\subsection{Method \code{set_by()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$set_by(value, chain_if_needed)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-chain"></a>}}
+\if{latex}{\out{\hypertarget{method-chain}{}}}
+\subsection{Method \code{chain()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$chain(type = "frame", next_dt, parent_env)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-chain_if_set"></a>}}
+\if{latex}{\out{\hypertarget{method-chain_if_set}{}}}
+\subsection{Method \code{chain_if_set()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$chain_if_set(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-seek_and_nestroy"></a>}}
+\if{latex}{\out{\hypertarget{method-seek_and_nestroy}{}}}
+\subsection{Method \code{seek_and_nestroy()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$seek_and_nestroy(.exprs)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-eval"></a>}}
+\if{latex}{\out{\hypertarget{method-eval}{}}}
+\subsection{Method \code{eval()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$eval(parent_env, by_ref, ...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-tidy_select"></a>}}
+\if{latex}{\out{\hypertarget{method-tidy_select}{}}}
+\subsection{Method \code{tidy_select()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$tidy_select(select_expr)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$print(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

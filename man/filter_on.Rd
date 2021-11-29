@@ -8,9 +8,15 @@
 \usage{
 filter_on(.data, ...)
 
-\method{filter_on}{ExprBuilder}(.data, ..., which = FALSE,
-  nomatch = getOption("datatable.nomatch"), mult = "all",
-  .negate = FALSE, .chain = getOption("table.express.chain", TRUE))
+\method{filter_on}{ExprBuilder}(
+  .data,
+  ...,
+  which = FALSE,
+  nomatch = getOption("datatable.nomatch"),
+  mult = "all",
+  .negate = FALSE,
+  .chain = getOption("table.express.chain", TRUE)
+)
 
 \method{filter_on}{data.table}(.data, ..., .expr = FALSE)
 }

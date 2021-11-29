@@ -9,9 +9,14 @@
 \usage{
 where(.data, ...)
 
-\method{where}{ExprBuilder}(.data, ..., which, .collapse = `&`,
+\method{where}{ExprBuilder}(
+  .data,
+  ...,
+  which,
+  .collapse = `&`,
   .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+  .chain = getOption("table.express.chain", TRUE)
+)
 
 \method{where}{data.table}(.data, ...)
 }

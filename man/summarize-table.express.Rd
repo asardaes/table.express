@@ -10,19 +10,23 @@
 \alias{summarise.data.table}
 \title{Summarize columns}
 \usage{
-\method{summarize}{ExprBuilder}(.data, ...,
+\method{summarize}{ExprBuilder}(
+  .data,
+  ...,
   .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+  .chain = getOption("table.express.chain", TRUE)
+)
 
-\method{summarise}{ExprBuilder}(.data, ...,
+\method{summarise}{ExprBuilder}(
+  .data,
+  ...,
   .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+  .chain = getOption("table.express.chain", TRUE)
+)
 
-\method{summarize}{EagerExprBuilder}(.data, ...,
-  .parent_env = rlang::caller_env())
+\method{summarize}{EagerExprBuilder}(.data, ..., .parent_env = rlang::caller_env())
 
-\method{summarise}{EagerExprBuilder}(.data, ...,
-  .parent_env = rlang::caller_env())
+\method{summarise}{EagerExprBuilder}(.data, ..., .parent_env = rlang::caller_env())
 
 \method{summarize}{data.table}(.data, ...)
 

@@ -7,8 +7,7 @@
 \usage{
 chain(.data, ...)
 
-\method{chain}{ExprBuilder}(.data, ...,
-  .parent_env = rlang::caller_env())
+\method{chain}{ExprBuilder}(.data, ..., .parent_env = rlang::caller_env())
 }
 \arguments{
 \item{.data}{Object to be chained.}

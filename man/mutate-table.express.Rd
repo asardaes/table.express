@@ -7,12 +7,16 @@
 \alias{mutate.data.table}
 \title{Add or update columns}
 \usage{
-\method{mutate}{ExprBuilder}(.data, ..., .sequential = FALSE,
-  .unquote_names = TRUE, .parse = getOption("table.express.parse",
-  FALSE), .chain = getOption("table.express.chain", TRUE))
+\method{mutate}{ExprBuilder}(
+  .data,
+  ...,
+  .sequential = FALSE,
+  .unquote_names = TRUE,
+  .parse = getOption("table.express.parse", FALSE),
+  .chain = getOption("table.express.chain", TRUE)
+)
 
-\method{mutate}{EagerExprBuilder}(.data, ...,
-  .parent_env = rlang::caller_env())
+\method{mutate}{EagerExprBuilder}(.data, ..., .parent_env = rlang::caller_env())
 
 \method{mutate}{data.table}(.data, ...)
 }
@@ -24,8 +28,8 @@
 \item{.sequential}{If \code{TRUE}, each expression in \code{...} is assigned to a separate frame in order
 to enable usage of newly created columns.}
 
-\item{.unquote_names}{Passed to \code{\link[rlang:enexprs]{rlang::enexprs()}}. Set to \code{FALSE} if you want to pass the single
-\code{\link[data.table:set]{:=}} expression.}
+\item{.unquote_names}{Passed to \code{\link[rlang:nse-defuse]{rlang::enexprs()}}. Set to \code{FALSE} if you want to pass the single
+\code{\link[data.table:assign]{:=}} expression.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 
@@ -36,7 +40,7 @@ clause being set already exists?}
 }
 \description{
 Add or update columns of a \link[data.table:data.table-class]{data.table::data.table}, possibly by reference using
-\code{\link[data.table:set]{:=}}.
+\code{\link[data.table:assign]{:=}}.
 }
 \details{
 To see more examples, check the

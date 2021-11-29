@@ -7,8 +7,7 @@
 \usage{
 start_expr(.data, ...)
 
-\method{start_expr}{data.table}(.data, ...,
-  .verbose = getOption("table.express.verbose", FALSE))
+\method{start_expr}{data.table}(.data, ..., .verbose = getOption("table.express.verbose", FALSE))
 }
 \arguments{
 \item{.data}{Optionally, something to capture for the expression.}

@@ -7,12 +7,15 @@
 \alias{select.data.table}
 \title{Select clause}
 \usage{
-\method{select}{ExprBuilder}(.data, ..., .negate = FALSE,
+\method{select}{ExprBuilder}(
+  .data,
+  ...,
+  .negate = FALSE,
   .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+  .chain = getOption("table.express.chain", TRUE)
+)
 
-\method{select}{EagerExprBuilder}(.data, ...,
-  .parent_env = rlang::caller_env())
+\method{select}{EagerExprBuilder}(.data, ..., .parent_env = rlang::caller_env())
 
 \method{select}{data.table}(.data, ...)
 }
@@ -35,7 +38,7 @@ clause being set already exists?}
 Select columns of a \link[data.table:data.table-class]{data.table::data.table}.
 }
 \details{
-The expressions in \code{...} support \link[tidyselect:select_helpers]{tidyselect::select_helpers}.
+The expressions in \code{...} support \link[tidyselect:language]{tidyselect::select_helpers}.
 
 To see more examples, check the
 \href{https://asardaes.github.io/table.express/articles/table.express.html}{vignette}, or the

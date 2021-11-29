@@ -6,9 +6,12 @@
 \alias{group_by.data.table}
 \title{Grouping clauses}
 \usage{
-\method{group_by}{ExprBuilder}(.data, ...,
+\method{group_by}{ExprBuilder}(
+  .data,
+  ...,
   .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+  .chain = getOption("table.express.chain", TRUE)
+)
 
 \method{group_by}{data.table}(.data, ...)
 }

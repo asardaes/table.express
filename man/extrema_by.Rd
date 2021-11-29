@@ -12,15 +12,25 @@
 \usage{
 max_by(.data, .col, ...)
 
-\method{max_by}{ExprBuilder}(.data, .col, ..., .some = FALSE,
-  .chain = getOption("table.express.chain", TRUE))
+\method{max_by}{ExprBuilder}(
+  .data,
+  .col,
+  ...,
+  .some = FALSE,
+  .chain = getOption("table.express.chain", TRUE)
+)
 
 \method{max_by}{data.table}(.data, .col, ..., .expr = FALSE)
 
 min_by(.data, .col, ...)
 
-\method{min_by}{ExprBuilder}(.data, .col, ..., .some = FALSE,
-  .chain = getOption("table.express.chain", TRUE))
+\method{min_by}{ExprBuilder}(
+  .data,
+  .col,
+  ...,
+  .some = FALSE,
+  .chain = getOption("table.express.chain", TRUE)
+)
 
 \method{min_by}{data.table}(.data, .col, ..., .expr = FALSE)
 }

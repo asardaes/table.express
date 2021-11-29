@@ -8,9 +8,12 @@
 \usage{
 key_by(.data, ...)
 
-\method{key_by}{ExprBuilder}(.data, ...,
+\method{key_by}{ExprBuilder}(
+  .data,
+  ...,
   .parse = getOption("table.express.parse", FALSE),
-  .chain = getOption("table.express.chain", TRUE))
+  .chain = getOption("table.express.chain", TRUE)
+)
 
 \method{key_by}{data.table}(.data, ...)
 }

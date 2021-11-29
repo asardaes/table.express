@@ -6,8 +6,13 @@
 \alias{distinct.data.table}
 \title{Rows with distinct combinations of columns}
 \usage{
-\method{distinct}{ExprBuilder}(.data, ..., .keep = TRUE, .n = 1L,
-  .parse = getOption("table.express.parse", FALSE))
+\method{distinct}{ExprBuilder}(
+  .data,
+  ...,
+  .keep = TRUE,
+  .n = 1L,
+  .parse = getOption("table.express.parse", FALSE)
+)
 
 \method{distinct}{data.table}(.data, ...)
 }

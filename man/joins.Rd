@@ -26,8 +26,7 @@
 
 \method{anti_join}{data.table}(x, ..., .expr = FALSE)
 
-\method{full_join}{ExprBuilder}(x, y, ..., sort = TRUE, allow = TRUE,
-  .parent_env)
+\method{full_join}{ExprBuilder}(x, y, ..., sort = TRUE, allow = TRUE, .parent_env)
 
 \method{full_join}{data.table}(x, ...)
 
@@ -35,31 +34,36 @@
 
 \method{inner_join}{data.table}(x, ..., .expr = FALSE)
 
-\method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends,
-  .parent_env)
+\method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends, .parent_env)
 
 \method{left_join}{data.table}(x, y, ..., allow = FALSE, .expr = FALSE)
 
 mutate_join(x, y, ...)
 
-\method{mutate_join}{ExprBuilder}(x, y, ..., .SDcols, mult, roll, rollends,
-  allow = FALSE, .by_each = NULL, .parent_env)
+\method{mutate_join}{ExprBuilder}(
+  x,
+  y,
+  ...,
+  .SDcols,
+  mult,
+  roll,
+  rollends,
+  allow = FALSE,
+  .by_each = NULL,
+  .parent_env
+)
 
-\method{mutate_join}{EagerExprBuilder}(x, ...,
-  .parent_env = rlang::caller_env())
+\method{mutate_join}{EagerExprBuilder}(x, ..., .parent_env = rlang::caller_env())
 
 \method{mutate_join}{data.table}(x, y, ...)
 
-\method{right_join}{ExprBuilder}(x, y, ..., which, nomatch, mult, roll,
-  rollends)
+\method{right_join}{ExprBuilder}(x, y, ..., which, nomatch, mult, roll, rollends)
 
 \method{right_join}{data.table}(x, ..., allow = FALSE, .expr = FALSE)
 
-\method{semi_join}{ExprBuilder}(x, y, ..., allow = FALSE,
-  .eager = FALSE)
+\method{semi_join}{ExprBuilder}(x, y, ..., allow = FALSE, .eager = FALSE)
 
-\method{semi_join}{data.table}(x, y, ..., allow = FALSE,
-  .eager = FALSE)
+\method{semi_join}{data.table}(x, y, ..., allow = FALSE, .eager = FALSE)
 }
 \arguments{
 \item{x}{An \link{ExprBuilder} instance.}
@@ -115,7 +119,7 @@ The expression in \code{x} gets evaluated, merged with \code{y}, and the result 
 The \link{ExprBuilder} method for \code{mutate_join} implements the idiom described in \href{https://stackoverflow.com/a/54313203/5793905}{this link}. The columns specified in \code{.SDcols} are
 those that will be added to \code{x} from \code{y}. The specification can be done by:
 \itemize{
-\item Using \link[tidyselect:select_helpers]{tidyselect::select_helpers}.
+\item Using \link[tidyselect:language]{tidyselect::select_helpers}.
 \item Passing a character vector. If the character is named, the names are taken as the new column
 names for the values added to \code{x}.
 \item A list, using \code{\link[base:list]{base::list()}} or \code{.()}, containing:
@@ -183,5 +187,5 @@ lhs \%>\%
 
 }
 \seealso{
-\link[data.table:data.table]{data.table::data.table}, \link[dplyr:join]{dplyr::join}
+\link[data.table:data.table]{data.table::data.table}, \link[dplyr:mutate-joins]{dplyr::join}
 }
