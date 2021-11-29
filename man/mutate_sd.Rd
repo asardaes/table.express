@@ -55,7 +55,7 @@ Like \link{mutate-table.express} but possibly recycling calls.
 \details{
 This function works similar to \code{\link[=transmute_sd]{transmute_sd()}} but keeps all columns and \emph{can} modify by
 reference, like \link{mutate-table.express}. It can serve like
-\link[dplyr:mutate_all]{\code{dplyr}'s scoped mutation variants} depending on what's given to \code{.SDcols}.
+\link[dplyr:mutate_all]{dplyr's scoped mutation variants} depending on what's given to \code{.SDcols}.
 
 Additionally, \code{.SDcols} supports:
 \itemize{

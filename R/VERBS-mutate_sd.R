@@ -31,7 +31,7 @@ mutate_sd <- function(.data, .SDcols, .how = identity, ...) {
 #'
 #' This function works similar to [transmute_sd()] but keeps all columns and *can* modify by
 #' reference, like [mutate-table.express]. It can serve like
-#' [`dplyr`'s scoped mutation variants][dplyr::mutate_all()] depending on what's given to `.SDcols`.
+#' [dplyr's scoped mutation variants][dplyr::mutate_all()] depending on what's given to `.SDcols`.
 #'
 #' @template tidyselect-sdcols
 #' @template docu-examples
