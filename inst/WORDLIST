@@ -4,7 +4,6 @@ Espinosa
 dplyr
 tidyselect
 
-AppVeyor
 codecov
 
 ExprBuilder
