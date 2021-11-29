@@ -1,10 +1,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/table.express)](https://cran.r-project.org/package=table.express)
-[![Travis-CI Build
-Status](https://travis-ci.org/asardaes/table.express.svg?branch=master)](https://travis-ci.org/asardaes/table.express)
-[![AppVeyor Build
-status](https://ci.appveyor.com/api/projects/status/bb9606tfe648gajn?svg=true)](https://ci.appveyor.com/project/asardaes/table-express)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/table.express)](https://cran.r-project.org/package=table.express)
+[![R-CMD-check](https://github.com/asardaes/table.express/workflows/R-CMD-check/badge.svg)](https://github.com/asardaes/table.express/actions)
 [![codecov](https://codecov.io/gh/asardaes/table.express/branch/master/graph/badge.svg)](https://codecov.io/gh/asardaes/table.express)
 
 # Table express
