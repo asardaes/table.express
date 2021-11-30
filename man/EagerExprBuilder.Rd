@@ -36,28 +36,52 @@ Like \link{ExprBuilder}, but eager in some regards. This shouldn't be used direc
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Constructor.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{EagerExprBuilder$new(DT)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{DT}}{A \link[data.table:data.table-class]{data.table::data.table}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-chain"></a>}}
 \if{latex}{\out{\hypertarget{method-chain}{}}}
 \subsection{Method \code{chain()}}{
+Override to abort if chaining is attempted.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{EagerExprBuilder$chain(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Ignored.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-chain_if_set"></a>}}
 \if{latex}{\out{\hypertarget{method-chain_if_set}{}}}
 \subsection{Method \code{chain_if_set()}}{
+Override to abort if chaining is attempted.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{EagerExprBuilder$chain_if_set(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Ignored.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

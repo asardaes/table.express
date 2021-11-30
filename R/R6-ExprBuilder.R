@@ -1,5 +1,6 @@
 #' Frame expression builder
 #'
+#' @description
 #' Build an expression that will be used inside a [data.table::data.table-class]'s frame. This
 #' shouldn't be used directly.
 #'
@@ -30,34 +31,20 @@
 #' @importFrom tidyselect scoped_vars
 #' @importFrom tidyselect vars_select_helpers
 #'
-#' @field appends Extra expressions that go at the end.
-#' @field expr The final expression that can be evaluated with [base::eval()] or
-#'   [rlang::eval_bare()].
+#' @param value A captured expression.
+#' @param chain_if_needed Whether chaining is allowed during this step.
 #'
-#' @section Methods:
-#'
-#' \describe{
-#'   \item{`initialize(DT, dt_pronouns = list(), .verbose)`}{Constructor that receives a
-#'     [data.table::data.table-class] in `DT`. The `dt_pronouns` parameter is used internally when
-#'     chaining for joins.}
-#'   \item{`set_j(value, chain_if_needed)`}{Set the `j` clause expression(s), starting a new frame
-#'     if the current one already has said expression set.}
-#'   \item{`set_i(value, chain_if_needed)`}{Like `set_j` but for the `i` clause.}
-#'   \item{`set_by(value, chain_if_needed)`}{Set the by clause expression.}
-#'   \item{`chain(type = "frame", dt)`}{By default, start a new expression with the current one as
-#'     its parent. If `type = "pronoun"`, `dt` is used to start a new expression that joins the
-#'     current one.}
-#'   \item{`eval(parent_env, by_ref, ...)`}{Evaluate the final expression with `parent_env` as the
-#'     enclosing environment. If `by_ref = FALSE`, [data.table::copy()] is called before. The
-#'     ellipsis' contents are assigned to the expression's evaluation environment.}
-#'   \item{`tidy_select(select_expr)`}{Evaluate a `tidyselect` call using the currently captured
-#'     table.}
-#'   \item{`print(...)`}{Prints the built `expr`.}
-#' }
+#' @return In general, a modified `self` with extended expression.
 #'
 ExprBuilder <- R6::R6Class(
     "ExprBuilder",
     public = list(
+        #' @description
+        #' Constructor.
+        #' @param DT A [data.table::data.table-class].
+        #' @param dt_pronouns,nested Internal parameters for joins.
+        #' @param verbose Print more information during the process of building expressions.
+        #'
         initialize = function(DT, dt_pronouns = list(), nested = list(),
                               verbose = getOption("table.express.verbose", FALSE))
         {
@@ -77,18 +64,37 @@ ExprBuilder <- R6::R6Class(
             invisible()
         },
 
+        #' @description
+        #' Set the `i` clause expression(s), starting a new frame if the current
+        #' one already has said expression set.
+        #'
         set_i = function(value, chain_if_needed) {
             private$.process_clause("i", value, chain_if_needed)
         },
 
+        #' @description
+        #' Like `set_i` but for the `j` clause.
+        #'
         set_j = function(value, chain_if_needed) {
             private$.process_clause("j", value, chain_if_needed)
         },
 
+        #' @description
+        #' Set the `by` clause expression.
+        #'
         set_by = function(value, chain_if_needed) {
             private$.process_clause("by", value, chain_if_needed)
         },
 
+        #' @description
+        #' By default, start a new expression with the current one as its
+        #' parent. If `type = "pronoun"`, `dt` is used to start a new expression
+        #' that joins the current one.
+        #' @param type One of "frame", "pronoun".
+        #' @param next_dt Next data table when chaining pronoun.
+        #' @param parent_env Where to evaluate current expression when chaining
+        #'   pronoun.
+        #'
         chain = function(type = "frame", next_dt, parent_env) {
             type <- match.arg(type, c("frame", "pronoun"))
             switch(
@@ -117,6 +123,10 @@ ExprBuilder <- R6::R6Class(
             )
         },
 
+        #' @description
+        #' Chain if any clause values are already set.
+        #' @param ... Clause values.
+        #'
         chain_if_set = function(...) {
             clause_values <- rlang::env_get_list(private, c(...))
             if (any(sapply(clause_values, Negate(is.null)))) {
@@ -127,6 +137,10 @@ ExprBuilder <- R6::R6Class(
             }
         },
 
+        #' @description
+        #' Helper for `nest_expr`.
+        #' @param .exprs List of expressions.
+        #'
         seek_and_nestroy = function(.exprs) {
             .DT_ <- private$.DT
             .env <- rlang::caller_env(2L)
@@ -156,6 +170,15 @@ ExprBuilder <- R6::R6Class(
             })
         },
 
+        #' @description
+        #' Evaluate the final expression with `parent_env` as the enclosing
+        #' environment. If `by_ref = FALSE`, [data.table::copy()] is called
+        #' before. The ellipsis' contents are assigned to the expression's
+        #' evaluation environment.
+        #' @param parent_env Enclosing environment.
+        #' @param by_ref Flag to control deep copies.
+        #' @param ... Additional variables for the evaluation environment.
+        #'
         eval = function(parent_env, by_ref, ...) {
             .DT_ <- if (by_ref) {
                 if (private$.verbose) { # nocov start
@@ -183,6 +206,10 @@ ExprBuilder <- R6::R6Class(
             private$.eval(parent_env, .DT_ = .DT_, ...)
         },
 
+        #' @description
+        #' Evaluate a `tidyselect` call using the currently captured table.
+        #' @param select_expr The selection expression.
+        #'
         tidy_select = function(select_expr) {
             if (private$.verbose) { # nocov start
                 cat("In {", EBCompanion$get_top_call(), "}, using captured data.table eagerly to evaluate:\n", sep = "")
@@ -204,13 +231,19 @@ ExprBuilder <- R6::R6Class(
             }
         },
 
+        #' @description
+        #' Prints the built `expr`.
+        #' @param ... Ignored.
+        #'
         print = function(...) {
             print(self$expr)
             invisible(self)
         }
     ),
     active = list(
+        #' @field appends Extra expressions that go at the end.
         # value should always be a list of 0 or more expressions
+        #
         appends = function(value) {
             if (missing(value)) return(private$.appends)
 
@@ -224,6 +257,9 @@ ExprBuilder <- R6::R6Class(
             invisible()
         },
 
+        #' @field expr The final expression that can be evaluated with [base::eval()] or
+        #'   [rlang::eval_bare()].
+        #'
         expr = function(.DT_) {
             if (!missing(.DT_)) rlang::abort("The 'expr' field is read-only.")
             private$.compute_expr(rlang::expr(.DT_))

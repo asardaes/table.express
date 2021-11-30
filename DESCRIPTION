@@ -28,7 +28,7 @@ Authors@R: c(
     )
 BugReports: https://github.com/asardaes/table.express/issues
 License: MPL-2.0
-URL: https://asardaes.github.io/table.express, https://github.com/asardaes/table.express
+URL: https://asardaes.github.io/table.express/, https://github.com/asardaes/table.express
 Language: en-US
 Encoding: UTF-8
 RoxygenNote: 7.1.2

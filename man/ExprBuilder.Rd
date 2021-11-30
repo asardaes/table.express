@@ -4,33 +4,13 @@
 \name{ExprBuilder}
 \alias{ExprBuilder}
 \title{Frame expression builder}
+\value{
+In general, a modified \code{self} with extended expression.
+}
 \description{
 Build an expression that will be used inside a \link[data.table:data.table-class]{data.table::data.table}'s frame. This
 shouldn't be used directly.
 }
-\section{Methods}{
-
-
-\describe{
-\item{\code{initialize(DT, dt_pronouns = list(), .verbose)}}{Constructor that receives a
-\link[data.table:data.table-class]{data.table::data.table} in \code{DT}. The \code{dt_pronouns} parameter is used internally when
-chaining for joins.}
-\item{\code{set_j(value, chain_if_needed)}}{Set the \code{j} clause expression(s), starting a new frame
-if the current one already has said expression set.}
-\item{\code{set_i(value, chain_if_needed)}}{Like \code{set_j} but for the \code{i} clause.}
-\item{\code{set_by(value, chain_if_needed)}}{Set the by clause expression.}
-\item{\code{chain(type = "frame", dt)}}{By default, start a new expression with the current one as
-its parent. If \code{type = "pronoun"}, \code{dt} is used to start a new expression that joins the
-current one.}
-\item{\code{eval(parent_env, by_ref, ...)}}{Evaluate the final expression with \code{parent_env} as the
-enclosing environment. If \code{by_ref = FALSE}, \code{\link[data.table:copy]{data.table::copy()}} is called before. The
-ellipsis' contents are assigned to the expression's evaluation environment.}
-\item{\code{tidy_select(select_expr)}}{Evaluate a \code{tidyselect} call using the currently captured
-table.}
-\item{\code{print(...)}}{Prints the built \code{expr}.}
-}
-}
-
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -61,6 +41,7 @@ table.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Constructor.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$new(
   DT,
@@ -70,87 +51,191 @@ table.}
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{DT}}{A \link[data.table:data.table-class]{data.table::data.table}.}
+
+\item{\code{dt_pronouns, nested}}{Internal parameters for joins.}
+
+\item{\code{verbose}}{Print more information during the process of building expressions.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set_i"></a>}}
 \if{latex}{\out{\hypertarget{method-set_i}{}}}
 \subsection{Method \code{set_i()}}{
+Set the \code{i} clause expression(s), starting a new frame if the current
+one already has said expression set.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$set_i(value, chain_if_needed)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{value}}{A captured expression.}
+
+\item{\code{chain_if_needed}}{Whether chaining is allowed during this step.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set_j"></a>}}
 \if{latex}{\out{\hypertarget{method-set_j}{}}}
 \subsection{Method \code{set_j()}}{
+Like \code{set_i} but for the \code{j} clause.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$set_j(value, chain_if_needed)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{value}}{A captured expression.}
+
+\item{\code{chain_if_needed}}{Whether chaining is allowed during this step.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set_by"></a>}}
 \if{latex}{\out{\hypertarget{method-set_by}{}}}
 \subsection{Method \code{set_by()}}{
+Set the \code{by} clause expression.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$set_by(value, chain_if_needed)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{value}}{A captured expression.}
+
+\item{\code{chain_if_needed}}{Whether chaining is allowed during this step.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-chain"></a>}}
 \if{latex}{\out{\hypertarget{method-chain}{}}}
 \subsection{Method \code{chain()}}{
+By default, start a new expression with the current one as its
+parent. If \code{type = "pronoun"}, \code{dt} is used to start a new expression
+that joins the current one.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$chain(type = "frame", next_dt, parent_env)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{One of "frame", "pronoun".}
+
+\item{\code{next_dt}}{Next data table when chaining pronoun.}
+
+\item{\code{parent_env}}{Where to evaluate current expression when chaining
+pronoun.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-chain_if_set"></a>}}
 \if{latex}{\out{\hypertarget{method-chain_if_set}{}}}
 \subsection{Method \code{chain_if_set()}}{
+Chain if any clause values are already set.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$chain_if_set(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Clause values.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-seek_and_nestroy"></a>}}
 \if{latex}{\out{\hypertarget{method-seek_and_nestroy}{}}}
 \subsection{Method \code{seek_and_nestroy()}}{
+Helper for \code{nest_expr}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$seek_and_nestroy(.exprs)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{.exprs}}{List of expressions.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-eval"></a>}}
 \if{latex}{\out{\hypertarget{method-eval}{}}}
 \subsection{Method \code{eval()}}{
+Evaluate the final expression with \code{parent_env} as the enclosing
+environment. If \code{by_ref = FALSE}, \code{\link[data.table:copy]{data.table::copy()}} is called
+before. The ellipsis' contents are assigned to the expression's
+evaluation environment.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$eval(parent_env, by_ref, ...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{parent_env}}{Enclosing environment.}
+
+\item{\code{by_ref}}{Flag to control deep copies.}
+
+\item{\code{...}}{Additional variables for the evaluation environment.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-tidy_select"></a>}}
 \if{latex}{\out{\hypertarget{method-tidy_select}{}}}
 \subsection{Method \code{tidy_select()}}{
+Evaluate a \code{tidyselect} call using the currently captured table.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$tidy_select(select_expr)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{select_expr}}{The selection expression.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
+Prints the built \code{expr}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Ignored.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

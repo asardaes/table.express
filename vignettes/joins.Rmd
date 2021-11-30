@@ -254,7 +254,7 @@ website[, session_id := .GRP, by = .(name, session_start_time)]
 paypal[, payment_id := .GRP, by = .(name, purchase_time)]
 ```
 
-A nice blog post describing rolling joins can be found at [R-bloggers](https://www.r-bloggers.com/understanding-data-table-rolling-joins/),
+A nice blog post describing rolling joins can be found at [R-bloggers](https://www.r-bloggers.com/2016/06/understanding-data-table-rolling-joins/),
 so almost the same `website` and `paypal` tables will be used for the examples below.
 Another short description with animated depictions can also be found [here](https://www.gormanalysis.com/blog/r-data-table-rolling-joins/).
 
