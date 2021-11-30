@@ -127,7 +127,7 @@ print(DT)
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://asardaes.github.io/table.express}
+  \item \url{https://asardaes.github.io/table.express/}
   \item \url{https://github.com/asardaes/table.express}
   \item Report bugs at \url{https://github.com/asardaes/table.express/issues}
 }

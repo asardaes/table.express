@@ -1,5 +1,5 @@
 
-## Update to version 0.3.1.9000
+## Update to version 0.3.2
 
 ## Test environments
 * Local GNU/Linux, R release
