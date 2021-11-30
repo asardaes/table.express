@@ -45,7 +45,7 @@ test_that("Namespace is well defined.", {
 
                 if (nrow(imports) == 0L) next
 
-                functions <- rex::re_matches(block[!grepl("^#", block)], global = TRUE, pattern = rex::rex(
+                functions <- rex::re_matches(block[!grepl("^ *#", block)], global = TRUE, pattern = rex::rex(
                     maybe(any_spaces),
                     capture(some_of(alnum, dot) %if_next_is% "::", name = "package"),
                     "::",
