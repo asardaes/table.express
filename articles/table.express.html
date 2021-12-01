@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -719,7 +719,7 @@
 <pre><code>#&gt; .DT_[, c(lapply(.SD, mean)), by = list(am, vs), .SDcols = c(c("mpg", 
 #&gt;     "disp")), verbose = TRUE]
 #&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns
-#&gt; 0.000s elapsed (0.000s cpu) 
+#&gt; 0.001s elapsed (0.000s cpu) 
 #&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) 
 #&gt; Getting back original order ... forder.c received a vector type 'integer' length 4
 #&gt; 0.000s elapsed (0.000s cpu) 
@@ -790,7 +790,7 @@
 <pre><code>#&gt; .DT_[, c(min = lapply(.SD, min), max = lapply(.SD, max)), by = list(am, 
 #&gt;     vs), .SDcols = c(c("mpg", "disp")), verbose = TRUE]
 #&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns
-#&gt; 0.000s elapsed (0.001s cpu) 
+#&gt; 0.001s elapsed (0.000s cpu) 
 #&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) 
 #&gt; Getting back original order ... forder.c received a vector type 'integer' length 4
 #&gt; 0.000s elapsed (0.000s cpu) 
@@ -799,7 +799,7 @@
 #&gt; Making each group and running j (GForce TRUE) ... gforce initial population of grp took 0.000
 #&gt; gforce assign high and low took 0.000
 #&gt; gforce eval took 0.000
-#&gt; 0.001s elapsed (0.001s cpu)</code></pre>
+#&gt; 0.000s elapsed (0.001s cpu)</code></pre>
 <pre><code>#&gt;    am vs  mpg  disp  mpg disp
 #&gt; 1:  1  0 15.0 120.3 26.0  351
 #&gt; 2:  1  1 21.4  71.1 33.9  121

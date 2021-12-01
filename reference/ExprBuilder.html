@@ -73,7 +73,7 @@ shouldn't be used directly." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -139,31 +139,9 @@ shouldn't be used directly.</p>
 
 
 
-    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
-<dl>
-<dt><code>initialize(DT, dt_pronouns = list(), .verbose)</code></dt><dd><p>Constructor that receives a
-<a href='https://Rdatatable.gitlab.io/data.table/reference/data.table-class.html'>data.table::data.table</a> in <code>DT</code>. The <code>dt_pronouns</code> parameter is used internally when
-chaining for joins.</p></dd>
-<dt><code>set_j(value, chain_if_needed)</code></dt><dd><p>Set the <code>j</code> clause expression(s), starting a new frame
-if the current one already has said expression set.</p></dd>
-<dt><code>set_i(value, chain_if_needed)</code></dt><dd><p>Like <code>set_j</code> but for the <code>i</code> clause.</p></dd>
-<dt><code>set_by(value, chain_if_needed)</code></dt><dd><p>Set the by clause expression.</p></dd>
-<dt><code>chain(type = "frame", dt)</code></dt><dd><p>By default, start a new expression with the current one as
-its parent. If <code>type = "pronoun"</code>, <code>dt</code> is used to start a new expression that joins the
-current one.</p></dd>
-<dt><code>eval(parent_env, by_ref, ...)</code></dt><dd><p>Evaluate the final expression with <code>parent_env</code> as the
-enclosing environment. If <code>by_ref = FALSE</code>, <code><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>data.table::copy()</a></code> is called before. The
-ellipsis' contents are assigned to the expression's evaluation environment.</p></dd>
-<dt><code>tidy_select(select_expr)</code></dt><dd><p>Evaluate a <code>tidyselect</code> call using the currently captured
-table.</p></dd>
-<dt><code>print(...)</code></dt><dd><p>Prints the built <code>expr</code>.</p></dd>
-
-</dl>
-
+    <p>In general, a modified <code>self</code> with extended expression.</p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl>
@@ -193,8 +171,7 @@ table.</p></dd>
 </ul>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Constructor.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   <span class='va'>DT</span>,
   dt_pronouns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
@@ -202,60 +179,126 @@ table.</p></dd>
   verbose <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"table.express.verbose"</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>DT</code></dt><dd><p>A <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table-class.html'>data.table::data.table</a>.</p></dd>
+
+<dt><code>dt_pronouns, nested</code></dt><dd><p>Internal parameters for joins.</p></dd>
+
+<dt><code>verbose</code></dt><dd><p>Print more information during the process of building expressions.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-set_i"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>set_i()</code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Set the <code>i</code> clause expression(s), starting a new frame if the current
+one already has said expression set.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>set_i</span><span class='op'>(</span><span class='va'>value</span>, <span class='va'>chain_if_needed</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>value</code></dt><dd><p>A captured expression.</p></dd>
+
+<dt><code>chain_if_needed</code></dt><dd><p>Whether chaining is allowed during this step.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-set_j"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>set_j()</code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Like <code>set_i</code> but for the <code>j</code> clause.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>set_j</span><span class='op'>(</span><span class='va'>value</span>, <span class='va'>chain_if_needed</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>value</code></dt><dd><p>A captured expression.</p></dd>
+
+<dt><code>chain_if_needed</code></dt><dd><p>Whether chaining is allowed during this step.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-set_by"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>set_by()</code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Set the <code>by</code> clause expression.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>set_by</span><span class='op'>(</span><span class='va'>value</span>, <span class='va'>chain_if_needed</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>value</code></dt><dd><p>A captured expression.</p></dd>
+
+<dt><code>chain_if_needed</code></dt><dd><p>Whether chaining is allowed during this step.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-chain"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='chain.html'>chain()</a></code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>By default, start a new expression with the current one as its
+parent. If <code>type = "pronoun"</code>, <code>dt</code> is used to start a new expression
+that joins the current one.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>chain</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"frame"</span>, <span class='va'>next_dt</span>, <span class='va'>parent_env</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>type</code></dt><dd><p>One of "frame", "pronoun".</p></dd>
+
+<dt><code>next_dt</code></dt><dd><p>Next data table when chaining pronoun.</p></dd>
+
+<dt><code>parent_env</code></dt><dd><p>Where to evaluate current expression when chaining
+pronoun.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-chain_if_set"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>chain_if_set()</code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Chain if any clause values are already set.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>chain_if_set</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Clause values.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-seek_and_nestroy"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>seek_and_nestroy()</code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Helper for <code>nest_expr</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>seek_and_nestroy</span><span class='op'>(</span><span class='va'>.exprs</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>.exprs</code></dt><dd><p>List of expressions.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-eval"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/eval.html'>eval()</a></code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Evaluate the final expression with <code>parent_env</code> as the enclosing
+environment. If <code>by_ref = FALSE</code>, <code><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>data.table::copy()</a></code> is called
+before. The ellipsis' contents are assigned to the expression's
+evaluation environment.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>eval</span><span class='op'>(</span><span class='va'>parent_env</span>, <span class='va'>by_ref</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>parent_env</code></dt><dd><p>Enclosing environment.</p></dd>
+
+<dt><code>by_ref</code></dt><dd><p>Flag to control deep copies.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Additional variables for the evaluation environment.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-tidy_select"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>tidy_select()</code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Evaluate a <code>tidyselect</code> call using the currently captured table.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>tidy_select</span><span class='op'>(</span><span class='va'>select_expr</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>select_expr</code></dt><dd><p>The selection expression.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Prints the built <code>expr</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ExprBuilder</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Ignored.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>

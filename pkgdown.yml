@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   joins: joins.html
   table.express: table.express.html
-last_built: 2021-11-29T18:44Z
+last_built: 2021-12-01T08:11Z
 urls:
   reference: https://asardaes.github.io/table.express//reference
   article: https://asardaes.github.io/table.express//articles
