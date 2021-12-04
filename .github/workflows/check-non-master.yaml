@@ -71,6 +71,10 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          # https://raw.githubusercontent.com/kalibera/cran-checks/master/rcnst/README.txt
+          R_COMPILE_PKGS: 1
+          R_JIT_STRATEGY: 4
+          R_CHECK_CONSTANTS: 5
         run: |
           options(crayon.enabled = TRUE)
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error", check_dir = "check")
