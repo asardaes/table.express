@@ -1,8 +1,6 @@
 
 ## Update to version 0.3.2
 
-Adjusted tests to avoid using data.table::setDT and the rcnst problem it triggers.
-
 ## Test environments
 * Local GNU/Linux, R release
 * Local Windows, R release
