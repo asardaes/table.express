@@ -42,11 +42,13 @@ test_that("group_by works with a single .EACHI", {
 })
 
 test_that("group_by can delegate to data.frame method when necessary.", {
-    .expr <- rlang::expr((function() {
-        local_lhs <- data.table::as.data.table(!!lhs)
-        group_by(local_lhs, x)
-    })())
+    .enclos <- rlang::env(asNamespace("rex"),
+                          lhs = data.table::copy(lhs))
 
-    expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
+    .fn <- rlang::set_env(new_env = .enclos, function() {
+        group_by(lhs, x)
+    })
+
+    expect_warning(ans <- .fn(), "table.express")
     expect_equal(ans, dplyr:::group_by.data.frame(lhs, x))
 })

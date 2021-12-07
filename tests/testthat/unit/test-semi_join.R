@@ -62,15 +62,18 @@ test_that("Eager semi_join works.", {
 })
 
 test_that("semi_join can delegate to data.frame method when necessary.", {
-    .expr <- rlang::expr((function() {
-        local_rhs <- data.table::as.data.table(!!rhs)
-        semi_join(data.table::as.data.table(!!lhs), local_rhs, by = "x")
-    })())
+    .enclos <- rlang::env(asNamespace("rex"),
+                          lhs = data.table::copy(lhs),
+                          rhs = data.table::copy(rhs))
 
-    expect_warning(ans <- eval(.expr, envir = asNamespace("rex")), "table.express")
+    .fn <- rlang::set_env(new_env = .enclos, function() {
+        semi_join(lhs, rhs, by = "x")
+    })
+
+    expect_warning(ans <- .fn(), "table.express")
     expect_equal(ans, dplyr:::semi_join.data.frame(lhs, rhs, "x"))
 
-    .expr <- rlang::expr(semi_join(data.table::as.data.table(!!lhs), data.table::as.data.table(!!rhs), x))
+    .expr <- substitute(semi_join(data.table::as.data.table(lhs), data.table::as.data.table(rhs), x), .enclos)
     ans_from_workaround <- eval(.expr, envir = asNamespace("rex"))
     expect_equal(ans_from_workaround, semi_join(lhs, rhs, x))
 })
