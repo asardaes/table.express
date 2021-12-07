@@ -319,7 +319,8 @@ try_delegate <- function(.fun_, .expr, .generic_env = rlang::caller_env()) {
             if (isTRUE(getOption("table.express.warn.cedta", TRUE))) {
                 rlang::warn(paste(err$message,
                                   "Trying to dispatch to data.frame method (allowing copies).",
-                                  "Use options(table.express.warn.cedta = FALSE) to avoid this warning."))
+                                  "Use options(table.express.warn.cedta = FALSE) to avoid this warning",
+                                  "and check the package documentation for more information."))
             }
 
             do.call(NextMethod, list(.fun_), envir = .generic_env)

@@ -17,9 +17,12 @@ evolving, breaking changes may be needed in the future.
 Note that since version 0.3.0, it is not possible to load \pkg{table.express} and \pkg{dtplyr} at
 the same time, since they define the same \code{data.table} methods for many \pkg{dplyr} generics.
 
-If a package uses \code{dplyr} without importing \code{data.table}, the methods in this package will try to
-delegate to the \code{data.frame} methods with a warning. To avoid the warning, use
-\code{options(table.express.warn.cedta = FALSE)}.
+Bearing in mind that \code{data.table}s are also \code{data.frame}s, we have to consider that other
+packages may uses \code{dplyr} internally without importing \code{data.table}. Since \code{dplyr}'s methods are
+generic, calls to these methods in such packages would fail. The functions in this package try to
+detect when this happens and delegate to the \code{data.frame} methods with a warning, which can be
+safely ignored if you know that the error originates from a package that is not meant to work
+with \code{data.table}. To avoid the warning, use \code{options(table.express.warn.cedta = FALSE)}.
 
 This software package was developed independently of any organization or institution that is or
 has been associated with the author.
