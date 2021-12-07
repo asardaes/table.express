@@ -1,4 +1,9 @@
+# table.express 0.3.3
+
+- More test adjustments to fix problems on CRAN for real.
+
 # table.express 0.3.2
+
 - Adjusted tests to avoid problems on CRAN.
 
 # table.express 0.3.1
