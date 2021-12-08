@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -67,7 +63,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/asardaes/table.express/">
+  <a href="https://github.com/asardaes/table.express/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,7 +84,7 @@
       <h1 data-toc-skip>Joining verbs for data.table</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/asardaes/table.express/blob/master/vignettes/joins.Rmd"><code>vignettes/joins.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/asardaes/table.express/blob/HEAD/vignettes/joins.Rmd" class="external-link"><code>vignettes/joins.Rmd</code></a></small>
       <div class="hidden name"><code>joins.Rmd</code></div>
 
     </div>
@@ -96,9 +92,9 @@
     
     
 <p>Almost all joins between 2 <code>data.table</code>s use a notation where one of them is used as <code>i</code> in a frame applied to the other, and the joining columns are specified with the <code>on</code> parameter. However, in addition to the “basic” joins, <code>data.table</code> allows for special cases like rolling joins, summarizing while joining, non-equi joins, etc. This vignette will describe the notation to apply these joins with verbs defined in <code>table.express</code>, which, like the <a href="https://asardaes.github.io/table.express/articles/table.express.html">single-table verbs</a>, build <code>data.table</code> expressions.</p>
-<div id="basic-joins" class="section level2">
-<h2 class="hasAnchor">
-<a href="#basic-joins" class="anchor"></a>Basic joins</h2>
+<div class="section level2">
+<h2 id="basic-joins">Basic joins<a class="anchor" aria-label="anchor" href="#basic-joins"></a>
+</h2>
 <p>We’ll consider most of the <code>dplyr</code> joining verbs in this section:</p>
 <ul>
 <li><code>inner_join</code></li>
@@ -109,258 +105,258 @@
 <li><code>full_join</code></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html">data.table</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"a"</span>, <span class="st">"c"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,
-                            y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"a"</span>, <span class="st">"c"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,
+                            y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>,
                             v <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>
 
-<span class="va">B</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html">data.table</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"b"</span><span class="op">)</span>,
+<span class="va">B</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"b"</span><span class="op">)</span>,
                             v2 <span class="op">=</span> <span class="fl">8</span><span class="op">:</span><span class="fl">7</span>,
-                            foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+                            foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">A</span></code></pre></div>
-<pre><code>#&gt;    x y v
-#&gt; 1: b 1 1
-#&gt; 2: b 3 2
-#&gt; 3: b 6 3
-#&gt; 4: a 1 4
-#&gt; 5: a 3 5
-#&gt; 6: a 6 6
-#&gt; 7: c 1 7
-#&gt; 8: c 3 8
-#&gt; 9: c 6 9</code></pre>
+<pre><code><span class="co">#&gt;    x y v</span>
+<span class="co">#&gt; 1: b 1 1</span>
+<span class="co">#&gt; 2: b 3 2</span>
+<span class="co">#&gt; 3: b 6 3</span>
+<span class="co">#&gt; 4: a 1 4</span>
+<span class="co">#&gt; 5: a 3 5</span>
+<span class="co">#&gt; 6: a 6 6</span>
+<span class="co">#&gt; 7: c 1 7</span>
+<span class="co">#&gt; 8: c 3 8</span>
+<span class="co">#&gt; 9: c 6 9</span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">B</span></code></pre></div>
-<pre><code>#&gt;    x v2 foo
-#&gt; 1: c  8   4
-#&gt; 2: b  7   2</code></pre>
+<pre><code><span class="co">#&gt;    x v2 foo</span>
+<span class="co">#&gt; 1: c  8   4</span>
+<span class="co">#&gt; 2: b  7   2</span></code></pre>
 <p>The methods defined in <code>table.express</code> accept the <code>on</code> part of the expression in their ellipsis:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x y v v2 foo
-#&gt; 1: c 1 7  8   4
-#&gt; 2: c 3 8  8   4
-#&gt; 3: c 6 9  8   4
-#&gt; 4: b 1 1  7   2
-#&gt; 5: b 3 2  7   2
-#&gt; 6: b 6 3  7   2</code></pre>
+<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x y v v2 foo</span>
+<span class="co">#&gt; 1: c 1 7  8   4</span>
+<span class="co">#&gt; 2: c 3 8  8   4</span>
+<span class="co">#&gt; 3: c 6 9  8   4</span>
+<span class="co">#&gt; 4: b 1 1  7   2</span>
+<span class="co">#&gt; 5: b 3 2  7   2</span>
+<span class="co">#&gt; 6: b 6 3  7   2</span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, v <span class="op">=</span> <span class="va">v2</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x y v foo
-#&gt; 1: c 3 8   4</code></pre>
+<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, v <span class="op">=</span> <span class="va">v2</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x y v foo</span>
+<span class="co">#&gt; 1: c 3 8   4</span></code></pre>
 <p>An important thing to note in the second example above is the order in which the columns are given, i.e. that <code>v</code> is written before <code>v2</code>, since the order is relevant for <code>data.table</code>. We can remember the correct order simply by looking at which <code>data.table</code> appears first in the expression, and knowing that said <code>data.table</code>’s columns must appear first in the <code>on</code> expressions. In this case, <code>A</code> appears before <code>B</code>, so writing <code>v2 = v</code> would not work.</p>
 <p>In order to maintain consistency in the ordering just described, <code>left_join</code> automatically swaps expression elements internally in order to build the expression:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, v <span class="op">=</span> <span class="va">v2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html">%T&gt;%</a></span>
-    <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, v <span class="op">=</span> <span class="va">v2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span>
+    <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="va">end_expr</span></code></pre></div>
-<pre><code>#&gt; .DT_[.DT_0_, on = list(x, v2 = v)]</code></pre>
-<pre><code>#&gt;    x v2 foo y
-#&gt; 1: b  1  NA 1
-#&gt; 2: b  2  NA 3
-#&gt; 3: b  3  NA 6
-#&gt; 4: a  4  NA 1
-#&gt; 5: a  5  NA 3
-#&gt; 6: a  6  NA 6
-#&gt; 7: c  7  NA 1
-#&gt; 8: c  8   4 3
-#&gt; 9: c  9  NA 6</code></pre>
+<pre><code><span class="co">#&gt; .DT_[.DT_0_, on = list(x, v2 = v)]</span></code></pre>
+<pre><code><span class="co">#&gt;    x v2 foo y</span>
+<span class="co">#&gt; 1: b  1  NA 1</span>
+<span class="co">#&gt; 2: b  2  NA 3</span>
+<span class="co">#&gt; 3: b  3  NA 6</span>
+<span class="co">#&gt; 4: a  4  NA 1</span>
+<span class="co">#&gt; 5: a  5  NA 3</span>
+<span class="co">#&gt; 6: a  6  NA 6</span>
+<span class="co">#&gt; 7: c  7  NA 1</span>
+<span class="co">#&gt; 8: c  8   4 3</span>
+<span class="co">#&gt; 9: c  9  NA 6</span></code></pre>
 <p>We can also see an extra <code>.DT_0_</code> pronoun in the expression. These special <code>.DT_*_</code> pronouns hold the different <code>data.table</code>s that have entered the expression so far, and are automatically assigned to the evaluation’s environment. In this case, <code>.DT_</code> holds <code>B</code> and <code>.DT_0_</code> holds <code>A</code>.</p>
 <p>No additional considerations are required to use <code>right_join</code> or <code>anti_join</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, v <span class="op">=</span> <span class="va">v2</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x  y v foo
-#&gt; 1: c  3 8   4
-#&gt; 2: b NA 7   2</code></pre>
+<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, v <span class="op">=</span> <span class="va">v2</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x  y v foo</span>
+<span class="co">#&gt; 1: c  3 8   4</span>
+<span class="co">#&gt; 2: b NA 7   2</span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, v <span class="op">=</span> <span class="va">v2</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x y v
-#&gt; 1: b 1 1
-#&gt; 2: b 3 2
-#&gt; 3: b 6 3
-#&gt; 4: a 1 4
-#&gt; 5: a 3 5
-#&gt; 6: a 6 6
-#&gt; 7: c 1 7
-#&gt; 8: c 6 9</code></pre>
+<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">anti_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, v <span class="op">=</span> <span class="va">v2</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x y v</span>
+<span class="co">#&gt; 1: b 1 1</span>
+<span class="co">#&gt; 2: b 3 2</span>
+<span class="co">#&gt; 3: b 6 3</span>
+<span class="co">#&gt; 4: a 1 4</span>
+<span class="co">#&gt; 5: a 3 5</span>
+<span class="co">#&gt; 6: a 6 6</span>
+<span class="co">#&gt; 7: c 1 7</span>
+<span class="co">#&gt; 8: c 6 9</span></code></pre>
 <p>A <code>semi_join</code> is essentially a <code>right_join</code> with <code>nomatch = NULL</code>, and where <code>j</code> is set to <code>unique(.SD)</code>:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setattr.html">setnames</a></span><span class="op">(</span><span class="va">B</span>, <span class="st">"v2"</span>, <span class="st">"v"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setattr.html" class="external-link">setnames</a></span><span class="op">(</span><span class="va">B</span>, <span class="st">"v2"</span>, <span class="st">"v"</span><span class="op">)</span>
 
-<span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x y v
-#&gt; 1: c 1 7
-#&gt; 2: c 3 8
-#&gt; 3: c 6 9
-#&gt; 4: b 1 1
-#&gt; 5: b 3 2
-#&gt; 6: b 6 3</code></pre>
+<span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">semi_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x y v</span>
+<span class="co">#&gt; 1: c 1 7</span>
+<span class="co">#&gt; 2: c 3 8</span>
+<span class="co">#&gt; 3: c 6 9</span>
+<span class="co">#&gt; 4: b 1 1</span>
+<span class="co">#&gt; 5: b 3 2</span>
+<span class="co">#&gt; 6: b 6 3</span></code></pre>
 <p>Finally, <code>full_join</code> is basically a wrapper for <code>merge</code> specifying <code>all = TRUE</code>:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x y v.x v.y foo
-#&gt; 1: a 1   4  NA  NA
-#&gt; 2: a 3   5  NA  NA
-#&gt; 3: a 6   6  NA  NA
-#&gt; 4: b 1   1   7   2
-#&gt; 5: b 3   2   7   2
-#&gt; 6: b 6   3   7   2
-#&gt; 7: c 1   7   8   4
-#&gt; 8: c 3   8   8   4
-#&gt; 9: c 6   9   8   4</code></pre>
-<div id="expression-chaining" class="section level3">
-<h3 class="hasAnchor">
-<a href="#expression-chaining" class="anchor"></a>Expression chaining</h3>
+<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x y v.x v.y foo</span>
+<span class="co">#&gt; 1: a 1   4  NA  NA</span>
+<span class="co">#&gt; 2: a 3   5  NA  NA</span>
+<span class="co">#&gt; 3: a 6   6  NA  NA</span>
+<span class="co">#&gt; 4: b 1   1   7   2</span>
+<span class="co">#&gt; 5: b 3   2   7   2</span>
+<span class="co">#&gt; 6: b 6   3   7   2</span>
+<span class="co">#&gt; 7: c 1   7   8   4</span>
+<span class="co">#&gt; 8: c 3   8   8   4</span>
+<span class="co">#&gt; 9: c 6   9   8   4</span></code></pre>
+<div class="section level3">
+<h3 id="expression-chaining">Expression chaining<a class="anchor" aria-label="anchor" href="#expression-chaining"></a>
+</h3>
 <p>Something to keep in mind is that most joins specify <code>i</code> and <code>on</code> inside the frame, so any subsequent verbs that specify <code>j</code>, <code>by</code>, or <code>keyby</code> would still be possible. In order to enable this, many joining verbs have an <code>.expr</code> parameter that indicates that the expression should be kept, delaying evaluation until a verb that sets <code>j</code> is used. This can be useful if only a subset of the joined columns is desired:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, .expr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">foo</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x y foo
-#&gt; 1: b 1   2
-#&gt; 2: b 3   2
-#&gt; 3: b 6   2
-#&gt; 4: a 1  NA
-#&gt; 5: a 3  NA
-#&gt; 6: a 6  NA
-#&gt; 7: c 1   4
-#&gt; 8: c 3   4
-#&gt; 9: c 6   4</code></pre>
+<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, .expr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">foo</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x y foo</span>
+<span class="co">#&gt; 1: b 1   2</span>
+<span class="co">#&gt; 2: b 3   2</span>
+<span class="co">#&gt; 3: b 6   2</span>
+<span class="co">#&gt; 4: a 1  NA</span>
+<span class="co">#&gt; 5: a 3  NA</span>
+<span class="co">#&gt; 6: a 6  NA</span>
+<span class="co">#&gt; 7: c 1   4</span>
+<span class="co">#&gt; 8: c 3   4</span>
+<span class="co">#&gt; 9: c 6   4</span></code></pre>
 <p>But, when working lazily, this would require explicit chaining for expressions that should be applied to the joined table:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="va">chain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="va">end_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="op">{</span>
-        <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="va">chain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="va">end_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
     <span class="op">}</span></code></pre></div>
-<pre><code>#&gt;    x  v foo  y i.v
-#&gt; 1: b  7   2  1   1
-#&gt; 2: b  7   2  4   2
-#&gt; 3: b  7   2 10   3
-#&gt; 4: a NA  NA  1   4
-#&gt; 5: a NA  NA  4   5
-#&gt; 6: a NA  NA 10   6
-#&gt; 7: c  8   4  1   7
-#&gt; 8: c  8   4  4   8
-#&gt; 9: c  8   4 10   9</code></pre>
+<pre><code><span class="co">#&gt;    x  v foo  y i.v</span>
+<span class="co">#&gt; 1: b  7   2  1   1</span>
+<span class="co">#&gt; 2: b  7   2  4   2</span>
+<span class="co">#&gt; 3: b  7   2 10   3</span>
+<span class="co">#&gt; 4: a NA  NA  1   4</span>
+<span class="co">#&gt; 5: a NA  NA  4   5</span>
+<span class="co">#&gt; 6: a NA  NA 10   6</span>
+<span class="co">#&gt; 7: c  8   4  1   7</span>
+<span class="co">#&gt; 8: c  8   4  4   8</span>
+<span class="co">#&gt; 9: c  8   4 10   9</span></code></pre>
 <p>This is particularly important if the selection expressions call any function, e.g. <code>tidyselect</code> helpers or even <code>:</code> with non-numerics, because <code>data.table</code> does not support that kind of syntax for <code>j</code> in the same frame as a join.</p>
 </div>
 </div>
-<div id="mutating-join" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mutating-join" class="anchor"></a>Mutating join</h2>
-<p>A special <code>data.table</code> idiom is described <a href="https://stackoverflow.com/a/54313203/5793905">here as an update join</a>. In order to highlight the fact that it modifies the left-hand side table by reference, the <code>mutate_join</code> verb is defined in <code>table.express</code>. Said verb accepts the columns to be added in its <code>.SDcols</code> parameter, possibly with new names:</p>
+<div class="section level2">
+<h2 id="mutating-join">Mutating join<a class="anchor" aria-label="anchor" href="#mutating-join"></a>
+</h2>
+<p>A special <code>data.table</code> idiom is described <a href="https://stackoverflow.com/a/54313203/5793905" class="external-link">here as an update join</a>. In order to highlight the fact that it modifies the left-hand side table by reference, the <code>mutate_join</code> verb is defined in <code>table.express</code>. Said verb accepts the columns to be added in its <code>.SDcols</code> parameter, possibly with new names:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="../reference/joins.html">mutate_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"foo"</span>, v_from_B <span class="op">=</span> <span class="st">"v"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">A</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="../reference/joins.html">mutate_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, v_from_B <span class="op">=</span> <span class="st">"v"</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x y v foo v_from_B
-#&gt; 1: b 1 1   2        7
-#&gt; 2: b 3 2   2        7
-#&gt; 3: b 6 3   2        7
-#&gt; 4: a 1 4  NA       NA
-#&gt; 5: a 3 5  NA       NA
-#&gt; 6: a 6 6  NA       NA
-#&gt; 7: c 1 7   4        8
-#&gt; 8: c 3 8   4        8
-#&gt; 9: c 6 9   4        8</code></pre>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x y v foo v_from_B</span>
+<span class="co">#&gt; 1: b 1 1   2        7</span>
+<span class="co">#&gt; 2: b 3 2   2        7</span>
+<span class="co">#&gt; 3: b 6 3   2        7</span>
+<span class="co">#&gt; 4: a 1 4  NA       NA</span>
+<span class="co">#&gt; 5: a 3 5  NA       NA</span>
+<span class="co">#&gt; 6: a 6 6  NA       NA</span>
+<span class="co">#&gt; 7: c 1 7   4        8</span>
+<span class="co">#&gt; 8: c 3 8   4        8</span>
+<span class="co">#&gt; 9: c 6 9   4        8</span></code></pre>
 <p>A particularity of this idiom is that the number of rows from the resulting join must match the left-hand side exactly or not at all, so this won’t work:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">B</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<code class="sourceCode R"><span class="va">B</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="fu"><a href="../reference/joins.html">mutate_join</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></code></pre></div>
 <p>In these cases, we must either use <code>mult</code> if appropriate, or specify a summarizing expression in <code>.SDcols</code>:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">B</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<code class="sourceCode R"><span class="va">B</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="fu"><a href="../reference/joins.html">mutate_join</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="st">"y"</span>, mult <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x v foo y
-#&gt; 1: c 8   4 1
-#&gt; 2: b 7   2 1</code></pre>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x v foo y</span>
+<span class="co">#&gt; 1: c 8   4 1</span>
+<span class="co">#&gt; 2: b 7   2 1</span></code></pre>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">B</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="../reference/joins.html">mutate_join</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="fu">.</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">B</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="../reference/joins.html">mutate_join</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="fu">.</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;    x v foo        y
-#&gt; 1: c 8   4 3.333333
-#&gt; 2: b 7   2 3.333333</code></pre>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    x v foo        y</span>
+<span class="co">#&gt; 1: c 8   4 3.333333</span>
+<span class="co">#&gt; 2: b 7   2 3.333333</span></code></pre>
 <p>The last example specifies <code>by = .EACHI</code> in the joining expression.</p>
 </div>
-<div id="rolling-joins" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rolling-joins" class="anchor"></a>Rolling joins</h2>
-<p>A nice blog post describing rolling joins can be found at <a href="https://www.r-bloggers.com/2016/06/understanding-data-table-rolling-joins/">R-bloggers</a>, so almost the same <code>website</code> and <code>paypal</code> tables will be used for the examples below. Another short description with animated depictions can also be found <a href="https://www.gormanalysis.com/blog/r-data-table-rolling-joins/">here</a>.</p>
+<div class="section level2">
+<h2 id="rolling-joins">Rolling joins<a class="anchor" aria-label="anchor" href="#rolling-joins"></a>
+</h2>
+<p>A nice blog post describing rolling joins can be found at <a href="https://www.r-bloggers.com/2016/06/understanding-data-table-rolling-joins/" class="external-link">R-bloggers</a>, so almost the same <code>website</code> and <code>paypal</code> tables will be used for the examples below. Another short description with animated depictions can also be found <a href="https://www.gormanalysis.com/blog/r-data-table-rolling-joins/" class="external-link">here</a>.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">website</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;        name  session_start_time session_id
-#&gt;  1:   Erica 2016-01-04 19:12:00          1
-#&gt;  2:   Erica 2016-01-04 21:05:00          2
-#&gt;  3: Francis 2016-01-02 13:09:00          3
-#&gt;  4: Francis 2016-01-03 19:22:00          4
-#&gt;  5: Francis 2016-01-08 08:44:00          5
-#&gt;  6: Francis 2016-01-08 20:22:00          6
-#&gt;  7: Francis 2016-01-10 17:36:00          7
-#&gt;  8: Francis 2016-01-15 16:56:00          8
-#&gt;  9:  Isabel 2016-01-01 11:01:00          9
-#&gt; 10:  Isabel 2016-01-02 08:59:00         10
-#&gt; 11:  Isabel 2016-01-05 18:18:00         11
-#&gt; 12:  Isabel 2016-01-07 19:03:00         12
-#&gt; 13:  Isabel 2016-01-08 19:01:00         13
-#&gt; 14:   Sally 2016-01-03 10:00:00         14
-#&gt; 15:  Vivian 2016-01-01 09:10:00         15
-#&gt; 16:  Vivian 2016-01-09 02:15:00         16</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">website</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;        name  session_start_time session_id</span>
+<span class="co">#&gt;  1:   Erica 2016-01-04 19:12:00          1</span>
+<span class="co">#&gt;  2:   Erica 2016-01-04 21:05:00          2</span>
+<span class="co">#&gt;  3: Francis 2016-01-02 13:09:00          3</span>
+<span class="co">#&gt;  4: Francis 2016-01-03 19:22:00          4</span>
+<span class="co">#&gt;  5: Francis 2016-01-08 08:44:00          5</span>
+<span class="co">#&gt;  6: Francis 2016-01-08 20:22:00          6</span>
+<span class="co">#&gt;  7: Francis 2016-01-10 17:36:00          7</span>
+<span class="co">#&gt;  8: Francis 2016-01-15 16:56:00          8</span>
+<span class="co">#&gt;  9:  Isabel 2016-01-01 11:01:00          9</span>
+<span class="co">#&gt; 10:  Isabel 2016-01-02 08:59:00         10</span>
+<span class="co">#&gt; 11:  Isabel 2016-01-05 18:18:00         11</span>
+<span class="co">#&gt; 12:  Isabel 2016-01-07 19:03:00         12</span>
+<span class="co">#&gt; 13:  Isabel 2016-01-08 19:01:00         13</span>
+<span class="co">#&gt; 14:   Sally 2016-01-03 10:00:00         14</span>
+<span class="co">#&gt; 15:  Vivian 2016-01-01 09:10:00         15</span>
+<span class="co">#&gt; 16:  Vivian 2016-01-09 02:15:00         16</span></code></pre>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">paypal</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;       name       purchase_time payment_id
-#&gt; 1:   Erica 2016-01-03 08:02:00          1
-#&gt; 2: Francis 2016-01-03 19:28:00          2
-#&gt; 3: Francis 2016-01-08 20:33:00          3
-#&gt; 4: Francis 2016-01-10 17:46:00          4
-#&gt; 5:  Isabel 2016-01-08 19:10:00          5
-#&gt; 6:     Mom 2015-12-02 17:58:00          6
-#&gt; 7:   Sally 2016-01-03 10:06:00          7
-#&gt; 8:   Sally 2016-01-03 10:15:00          8</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">paypal</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;       name       purchase_time payment_id</span>
+<span class="co">#&gt; 1:   Erica 2016-01-03 08:02:00          1</span>
+<span class="co">#&gt; 2: Francis 2016-01-03 19:28:00          2</span>
+<span class="co">#&gt; 3: Francis 2016-01-08 20:33:00          3</span>
+<span class="co">#&gt; 4: Francis 2016-01-10 17:46:00          4</span>
+<span class="co">#&gt; 5:  Isabel 2016-01-08 19:10:00          5</span>
+<span class="co">#&gt; 6:     Mom 2015-12-02 17:58:00          6</span>
+<span class="co">#&gt; 7:   Sally 2016-01-03 10:06:00          7</span>
+<span class="co">#&gt; 8:   Sally 2016-01-03 10:15:00          8</span></code></pre>
 <p>In contrast to the blog post, no <code>join_time</code> is added to the tables. This is done on purpose in order to show what happens with the columns that are rolled.</p>
 <p>Let’s use a left rolling join to obtain the <code>session_id</code> that immediately preceded a purchase, if any:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">paypal</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">website</span>, <span class="va">name</span>, purchase_time <span class="op">=</span> <span class="va">session_start_time</span>, roll <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;       name  session_start_time session_id payment_id
-#&gt; 1:   Erica 2016-01-03 08:02:00         NA          1
-#&gt; 2: Francis 2016-01-03 19:28:00          4          2
-#&gt; 3: Francis 2016-01-08 20:33:00          6          3
-#&gt; 4: Francis 2016-01-10 17:46:00          7          4
-#&gt; 5:  Isabel 2016-01-08 19:10:00         13          5
-#&gt; 6:     Mom 2015-12-02 17:58:00         NA          6
-#&gt; 7:   Sally 2016-01-03 10:06:00         14          7
-#&gt; 8:   Sally 2016-01-03 10:15:00         14          8</code></pre>
+<code class="sourceCode R"><span class="va">paypal</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">website</span>, <span class="va">name</span>, purchase_time <span class="op">=</span> <span class="va">session_start_time</span>, roll <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;       name  session_start_time session_id payment_id</span>
+<span class="co">#&gt; 1:   Erica 2016-01-03 08:02:00         NA          1</span>
+<span class="co">#&gt; 2: Francis 2016-01-03 19:28:00          4          2</span>
+<span class="co">#&gt; 3: Francis 2016-01-08 20:33:00          6          3</span>
+<span class="co">#&gt; 4: Francis 2016-01-10 17:46:00          7          4</span>
+<span class="co">#&gt; 5:  Isabel 2016-01-08 19:10:00         13          5</span>
+<span class="co">#&gt; 6:     Mom 2015-12-02 17:58:00         NA          6</span>
+<span class="co">#&gt; 7:   Sally 2016-01-03 10:06:00         14          7</span>
+<span class="co">#&gt; 8:   Sally 2016-01-03 10:15:00         14          8</span></code></pre>
 <p>We can see that the rows returned are from the left-hand side (<code>paypal</code>), and since neither Mom nor Erica visited the website before their purchases, their <code>session_id</code> ended as <code>NA</code>.</p>
 <p>The order of the columns in the <code>on</code> expressions is the same as <a href="#basic-joins">above</a>. The tricky part is that the rolled column ended up with the name from the right-hand side, but keeping the values from the left-hand side. If we “invert” the join, the result is the same, but the rolled column’s name is now from the expression’s left-hand side.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, session_start_time <span class="op">=</span> <span class="va">purchase_time</span>, roll <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;       name  session_start_time session_id payment_id
-#&gt; 1:   Erica 2016-01-03 08:02:00         NA          1
-#&gt; 2: Francis 2016-01-03 19:28:00          4          2
-#&gt; 3: Francis 2016-01-08 20:33:00          6          3
-#&gt; 4: Francis 2016-01-10 17:46:00          7          4
-#&gt; 5:  Isabel 2016-01-08 19:10:00         13          5
-#&gt; 6:     Mom 2015-12-02 17:58:00         NA          6
-#&gt; 7:   Sally 2016-01-03 10:06:00         14          7
-#&gt; 8:   Sally 2016-01-03 10:15:00         14          8</code></pre>
+<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, session_start_time <span class="op">=</span> <span class="va">purchase_time</span>, roll <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;       name  session_start_time session_id payment_id</span>
+<span class="co">#&gt; 1:   Erica 2016-01-03 08:02:00         NA          1</span>
+<span class="co">#&gt; 2: Francis 2016-01-03 19:28:00          4          2</span>
+<span class="co">#&gt; 3: Francis 2016-01-08 20:33:00          6          3</span>
+<span class="co">#&gt; 4: Francis 2016-01-10 17:46:00          7          4</span>
+<span class="co">#&gt; 5:  Isabel 2016-01-08 19:10:00         13          5</span>
+<span class="co">#&gt; 6:     Mom 2015-12-02 17:58:00         NA          6</span>
+<span class="co">#&gt; 7:   Sally 2016-01-03 10:06:00         14          7</span>
+<span class="co">#&gt; 8:   Sally 2016-01-03 10:15:00         14          8</span></code></pre>
 <p>Note, however, that <code>roll</code> stayed equal to <code>Inf</code>. This is because even though the column order in the expressions changed, we could understand the rolling expressions as follows:</p>
 <ul>
 <li>For <code>left_join</code>, the rolling column on the left is <code>purchase_time</code>, so with <code>roll = Inf</code>, the values from <code>session_start_time</code> are rolled forward onto <code>purchase_time</code> to find a match while joining.</li>
@@ -368,131 +364,131 @@
 </ul>
 <p>Now let’s say we want to keep all the rows from <code>website</code> and find the closest <code>payment_id</code> that occurred <em>after</em> the visit. This could be expressed as:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, session_start_time <span class="op">=</span> <span class="va">purchase_time</span>, roll <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;        name       purchase_time payment_id session_id
-#&gt;  1:   Erica 2016-01-04 19:12:00         NA          1
-#&gt;  2:   Erica 2016-01-04 21:05:00         NA          2
-#&gt;  3: Francis 2016-01-02 13:09:00          2          3
-#&gt;  4: Francis 2016-01-03 19:22:00          2          4
-#&gt;  5: Francis 2016-01-08 08:44:00          3          5
-#&gt;  6: Francis 2016-01-08 20:22:00          3          6
-#&gt;  7: Francis 2016-01-10 17:36:00          4          7
-#&gt;  8: Francis 2016-01-15 16:56:00         NA          8
-#&gt;  9:  Isabel 2016-01-01 11:01:00          5          9
-#&gt; 10:  Isabel 2016-01-02 08:59:00          5         10
-#&gt; 11:  Isabel 2016-01-05 18:18:00          5         11
-#&gt; 12:  Isabel 2016-01-07 19:03:00          5         12
-#&gt; 13:  Isabel 2016-01-08 19:01:00          5         13
-#&gt; 14:   Sally 2016-01-03 10:00:00          7         14
-#&gt; 15:  Vivian 2016-01-01 09:10:00         NA         15
-#&gt; 16:  Vivian 2016-01-09 02:15:00         NA         16</code></pre>
+<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, session_start_time <span class="op">=</span> <span class="va">purchase_time</span>, roll <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;        name       purchase_time payment_id session_id</span>
+<span class="co">#&gt;  1:   Erica 2016-01-04 19:12:00         NA          1</span>
+<span class="co">#&gt;  2:   Erica 2016-01-04 21:05:00         NA          2</span>
+<span class="co">#&gt;  3: Francis 2016-01-02 13:09:00          2          3</span>
+<span class="co">#&gt;  4: Francis 2016-01-03 19:22:00          2          4</span>
+<span class="co">#&gt;  5: Francis 2016-01-08 08:44:00          3          5</span>
+<span class="co">#&gt;  6: Francis 2016-01-08 20:22:00          3          6</span>
+<span class="co">#&gt;  7: Francis 2016-01-10 17:36:00          4          7</span>
+<span class="co">#&gt;  8: Francis 2016-01-15 16:56:00         NA          8</span>
+<span class="co">#&gt;  9:  Isabel 2016-01-01 11:01:00          5          9</span>
+<span class="co">#&gt; 10:  Isabel 2016-01-02 08:59:00          5         10</span>
+<span class="co">#&gt; 11:  Isabel 2016-01-05 18:18:00          5         11</span>
+<span class="co">#&gt; 12:  Isabel 2016-01-07 19:03:00          5         12</span>
+<span class="co">#&gt; 13:  Isabel 2016-01-08 19:01:00          5         13</span>
+<span class="co">#&gt; 14:   Sally 2016-01-03 10:00:00          7         14</span>
+<span class="co">#&gt; 15:  Vivian 2016-01-01 09:10:00         NA         15</span>
+<span class="co">#&gt; 16:  Vivian 2016-01-09 02:15:00         NA         16</span></code></pre>
 <p>In order to simplify the meaning of <code>rollends</code> a bit, we could think of it as missing or being a single <code>TRUE</code>/<code>FALSE</code>. If it’s missing, rolling works according to the value of <code>roll</code>, otherwise:</p>
 <ul>
 <li>When <code>rollends = TRUE</code>, the value of <code>roll</code> is inverted <em>only</em> for those rows that would have no match otherwise.</li>
 <li>When <code>rollends = FALSE</code>, a matching roll will only occur if the column’s value falls in a gap with values both before <em>and</em> after.</li>
 </ul>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, session_start_time <span class="op">=</span> <span class="va">purchase_time</span>, roll <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, rollends <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;        name       purchase_time payment_id session_id
-#&gt;  1:   Erica 2016-01-04 19:12:00          1          1
-#&gt;  2:   Erica 2016-01-04 21:05:00          1          2
-#&gt;  3: Francis 2016-01-02 13:09:00          2          3
-#&gt;  4: Francis 2016-01-03 19:22:00          2          4
-#&gt;  5: Francis 2016-01-08 08:44:00          3          5
-#&gt;  6: Francis 2016-01-08 20:22:00          3          6
-#&gt;  7: Francis 2016-01-10 17:36:00          4          7
-#&gt;  8: Francis 2016-01-15 16:56:00          4          8
-#&gt;  9:  Isabel 2016-01-01 11:01:00          5          9
-#&gt; 10:  Isabel 2016-01-02 08:59:00          5         10
-#&gt; 11:  Isabel 2016-01-05 18:18:00          5         11
-#&gt; 12:  Isabel 2016-01-07 19:03:00          5         12
-#&gt; 13:  Isabel 2016-01-08 19:01:00          5         13
-#&gt; 14:   Sally 2016-01-03 10:00:00          7         14
-#&gt; 15:  Vivian 2016-01-01 09:10:00         NA         15
-#&gt; 16:  Vivian 2016-01-09 02:15:00         NA         16</code></pre>
+<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, session_start_time <span class="op">=</span> <span class="va">purchase_time</span>, roll <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, rollends <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;        name       purchase_time payment_id session_id</span>
+<span class="co">#&gt;  1:   Erica 2016-01-04 19:12:00          1          1</span>
+<span class="co">#&gt;  2:   Erica 2016-01-04 21:05:00          1          2</span>
+<span class="co">#&gt;  3: Francis 2016-01-02 13:09:00          2          3</span>
+<span class="co">#&gt;  4: Francis 2016-01-03 19:22:00          2          4</span>
+<span class="co">#&gt;  5: Francis 2016-01-08 08:44:00          3          5</span>
+<span class="co">#&gt;  6: Francis 2016-01-08 20:22:00          3          6</span>
+<span class="co">#&gt;  7: Francis 2016-01-10 17:36:00          4          7</span>
+<span class="co">#&gt;  8: Francis 2016-01-15 16:56:00          4          8</span>
+<span class="co">#&gt;  9:  Isabel 2016-01-01 11:01:00          5          9</span>
+<span class="co">#&gt; 10:  Isabel 2016-01-02 08:59:00          5         10</span>
+<span class="co">#&gt; 11:  Isabel 2016-01-05 18:18:00          5         11</span>
+<span class="co">#&gt; 12:  Isabel 2016-01-07 19:03:00          5         12</span>
+<span class="co">#&gt; 13:  Isabel 2016-01-08 19:01:00          5         13</span>
+<span class="co">#&gt; 14:   Sally 2016-01-03 10:00:00          7         14</span>
+<span class="co">#&gt; 15:  Vivian 2016-01-01 09:10:00         NA         15</span>
+<span class="co">#&gt; 16:  Vivian 2016-01-09 02:15:00         NA         16</span></code></pre>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, session_start_time <span class="op">=</span> <span class="va">purchase_time</span>, roll <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, rollends <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;        name       purchase_time payment_id session_id
-#&gt;  1:   Erica 2016-01-04 19:12:00         NA          1
-#&gt;  2:   Erica 2016-01-04 21:05:00         NA          2
-#&gt;  3: Francis 2016-01-02 13:09:00         NA          3
-#&gt;  4: Francis 2016-01-03 19:22:00         NA          4
-#&gt;  5: Francis 2016-01-08 08:44:00          3          5
-#&gt;  6: Francis 2016-01-08 20:22:00          3          6
-#&gt;  7: Francis 2016-01-10 17:36:00          4          7
-#&gt;  8: Francis 2016-01-15 16:56:00         NA          8
-#&gt;  9:  Isabel 2016-01-01 11:01:00         NA          9
-#&gt; 10:  Isabel 2016-01-02 08:59:00         NA         10
-#&gt; 11:  Isabel 2016-01-05 18:18:00         NA         11
-#&gt; 12:  Isabel 2016-01-07 19:03:00         NA         12
-#&gt; 13:  Isabel 2016-01-08 19:01:00         NA         13
-#&gt; 14:   Sally 2016-01-03 10:00:00         NA         14
-#&gt; 15:  Vivian 2016-01-01 09:10:00         NA         15
-#&gt; 16:  Vivian 2016-01-09 02:15:00         NA         16</code></pre>
+<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, session_start_time <span class="op">=</span> <span class="va">purchase_time</span>, roll <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, rollends <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;        name       purchase_time payment_id session_id</span>
+<span class="co">#&gt;  1:   Erica 2016-01-04 19:12:00         NA          1</span>
+<span class="co">#&gt;  2:   Erica 2016-01-04 21:05:00         NA          2</span>
+<span class="co">#&gt;  3: Francis 2016-01-02 13:09:00         NA          3</span>
+<span class="co">#&gt;  4: Francis 2016-01-03 19:22:00         NA          4</span>
+<span class="co">#&gt;  5: Francis 2016-01-08 08:44:00          3          5</span>
+<span class="co">#&gt;  6: Francis 2016-01-08 20:22:00          3          6</span>
+<span class="co">#&gt;  7: Francis 2016-01-10 17:36:00          4          7</span>
+<span class="co">#&gt;  8: Francis 2016-01-15 16:56:00         NA          8</span>
+<span class="co">#&gt;  9:  Isabel 2016-01-01 11:01:00         NA          9</span>
+<span class="co">#&gt; 10:  Isabel 2016-01-02 08:59:00         NA         10</span>
+<span class="co">#&gt; 11:  Isabel 2016-01-05 18:18:00         NA         11</span>
+<span class="co">#&gt; 12:  Isabel 2016-01-07 19:03:00         NA         12</span>
+<span class="co">#&gt; 13:  Isabel 2016-01-08 19:01:00         NA         13</span>
+<span class="co">#&gt; 14:   Sally 2016-01-03 10:00:00         NA         14</span>
+<span class="co">#&gt; 15:  Vivian 2016-01-01 09:10:00         NA         15</span>
+<span class="co">#&gt; 16:  Vivian 2016-01-09 02:15:00         NA         16</span></code></pre>
 <p>Vivian’s <code>payment_id</code>s are always <code>NA</code> because she has never purchased anything. On the other hand, no one except Francis has visited the website both before and after a purchase.</p>
 </div>
-<div id="non-equi-joins" class="section level2">
-<h2 class="hasAnchor">
-<a href="#non-equi-joins" class="anchor"></a>Non-equi joins</h2>
+<div class="section level2">
+<h2 id="non-equi-joins">Non-equi joins<a class="anchor" aria-label="anchor" href="#non-equi-joins"></a>
+</h2>
 <p>Non-equi joins are similar to rolling joins, but instead of rolling a single row’s value, they can return several values per row.</p>
 <p>Using the same data as before, we could find <em>all</em> the <code>session_id</code>s that preceded a <code>payment_id</code>, giving “priority” to <code>paypal</code>’s rows:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">paypal</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">website</span>, <span class="va">name</span>, <span class="va">purchase_time</span> <span class="op">&gt;=</span> <span class="va">session_start_time</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;        name  session_start_time session_id payment_id
-#&gt;  1:   Erica 2016-01-03 08:02:00         NA          1
-#&gt;  2: Francis 2016-01-03 19:28:00          3          2
-#&gt;  3: Francis 2016-01-03 19:28:00          4          2
-#&gt;  4: Francis 2016-01-08 20:33:00          3          3
-#&gt;  5: Francis 2016-01-08 20:33:00          4          3
-#&gt;  6: Francis 2016-01-08 20:33:00          5          3
-#&gt;  7: Francis 2016-01-08 20:33:00          6          3
-#&gt;  8: Francis 2016-01-10 17:46:00          3          4
-#&gt;  9: Francis 2016-01-10 17:46:00          4          4
-#&gt; 10: Francis 2016-01-10 17:46:00          5          4
-#&gt; 11: Francis 2016-01-10 17:46:00          6          4
-#&gt; 12: Francis 2016-01-10 17:46:00          7          4
-#&gt; 13:  Isabel 2016-01-08 19:10:00          9          5
-#&gt; 14:  Isabel 2016-01-08 19:10:00         10          5
-#&gt; 15:  Isabel 2016-01-08 19:10:00         11          5
-#&gt; 16:  Isabel 2016-01-08 19:10:00         12          5
-#&gt; 17:  Isabel 2016-01-08 19:10:00         13          5
-#&gt; 18:     Mom 2015-12-02 17:58:00         NA          6
-#&gt; 19:   Sally 2016-01-03 10:06:00         14          7
-#&gt; 20:   Sally 2016-01-03 10:15:00         14          8</code></pre>
+<code class="sourceCode R"><span class="va">paypal</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">website</span>, <span class="va">name</span>, <span class="va">purchase_time</span> <span class="op">&gt;=</span> <span class="va">session_start_time</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;        name  session_start_time session_id payment_id</span>
+<span class="co">#&gt;  1:   Erica 2016-01-03 08:02:00         NA          1</span>
+<span class="co">#&gt;  2: Francis 2016-01-03 19:28:00          3          2</span>
+<span class="co">#&gt;  3: Francis 2016-01-03 19:28:00          4          2</span>
+<span class="co">#&gt;  4: Francis 2016-01-08 20:33:00          3          3</span>
+<span class="co">#&gt;  5: Francis 2016-01-08 20:33:00          4          3</span>
+<span class="co">#&gt;  6: Francis 2016-01-08 20:33:00          5          3</span>
+<span class="co">#&gt;  7: Francis 2016-01-08 20:33:00          6          3</span>
+<span class="co">#&gt;  8: Francis 2016-01-10 17:46:00          3          4</span>
+<span class="co">#&gt;  9: Francis 2016-01-10 17:46:00          4          4</span>
+<span class="co">#&gt; 10: Francis 2016-01-10 17:46:00          5          4</span>
+<span class="co">#&gt; 11: Francis 2016-01-10 17:46:00          6          4</span>
+<span class="co">#&gt; 12: Francis 2016-01-10 17:46:00          7          4</span>
+<span class="co">#&gt; 13:  Isabel 2016-01-08 19:10:00          9          5</span>
+<span class="co">#&gt; 14:  Isabel 2016-01-08 19:10:00         10          5</span>
+<span class="co">#&gt; 15:  Isabel 2016-01-08 19:10:00         11          5</span>
+<span class="co">#&gt; 16:  Isabel 2016-01-08 19:10:00         12          5</span>
+<span class="co">#&gt; 17:  Isabel 2016-01-08 19:10:00         13          5</span>
+<span class="co">#&gt; 18:     Mom 2015-12-02 17:58:00         NA          6</span>
+<span class="co">#&gt; 19:   Sally 2016-01-03 10:06:00         14          7</span>
+<span class="co">#&gt; 20:   Sally 2016-01-03 10:15:00         14          8</span></code></pre>
 <p>Priority above simply means that all rows from <code>paypal</code> are returned, even if they don’t have a match in <code>website</code>. Even though a column <code>session_start_time</code> appears in the result, the values contained therein are from <code>paypal</code>’s <code>purchase_time</code>.</p>
 <p>A corresponding right non-equi join would yield the same result, expecting only a different order in the columns that are part of the comparisons:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, <span class="va">session_start_time</span> <span class="op">&lt;=</span> <span class="va">purchase_time</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;        name  session_start_time session_id payment_id
-#&gt;  1:   Erica 2016-01-03 08:02:00         NA          1
-#&gt;  2: Francis 2016-01-03 19:28:00          3          2
-#&gt;  3: Francis 2016-01-03 19:28:00          4          2
-#&gt;  4: Francis 2016-01-08 20:33:00          3          3
-#&gt;  5: Francis 2016-01-08 20:33:00          4          3
-#&gt;  6: Francis 2016-01-08 20:33:00          5          3
-#&gt;  7: Francis 2016-01-08 20:33:00          6          3
-#&gt;  8: Francis 2016-01-10 17:46:00          3          4
-#&gt;  9: Francis 2016-01-10 17:46:00          4          4
-#&gt; 10: Francis 2016-01-10 17:46:00          5          4
-#&gt; 11: Francis 2016-01-10 17:46:00          6          4
-#&gt; 12: Francis 2016-01-10 17:46:00          7          4
-#&gt; 13:  Isabel 2016-01-08 19:10:00          9          5
-#&gt; 14:  Isabel 2016-01-08 19:10:00         10          5
-#&gt; 15:  Isabel 2016-01-08 19:10:00         11          5
-#&gt; 16:  Isabel 2016-01-08 19:10:00         12          5
-#&gt; 17:  Isabel 2016-01-08 19:10:00         13          5
-#&gt; 18:     Mom 2015-12-02 17:58:00         NA          6
-#&gt; 19:   Sally 2016-01-03 10:06:00         14          7
-#&gt; 20:   Sally 2016-01-03 10:15:00         14          8</code></pre>
+<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span><span class="va">paypal</span>, <span class="va">name</span>, <span class="va">session_start_time</span> <span class="op">&lt;=</span> <span class="va">purchase_time</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;        name  session_start_time session_id payment_id</span>
+<span class="co">#&gt;  1:   Erica 2016-01-03 08:02:00         NA          1</span>
+<span class="co">#&gt;  2: Francis 2016-01-03 19:28:00          3          2</span>
+<span class="co">#&gt;  3: Francis 2016-01-03 19:28:00          4          2</span>
+<span class="co">#&gt;  4: Francis 2016-01-08 20:33:00          3          3</span>
+<span class="co">#&gt;  5: Francis 2016-01-08 20:33:00          4          3</span>
+<span class="co">#&gt;  6: Francis 2016-01-08 20:33:00          5          3</span>
+<span class="co">#&gt;  7: Francis 2016-01-08 20:33:00          6          3</span>
+<span class="co">#&gt;  8: Francis 2016-01-10 17:46:00          3          4</span>
+<span class="co">#&gt;  9: Francis 2016-01-10 17:46:00          4          4</span>
+<span class="co">#&gt; 10: Francis 2016-01-10 17:46:00          5          4</span>
+<span class="co">#&gt; 11: Francis 2016-01-10 17:46:00          6          4</span>
+<span class="co">#&gt; 12: Francis 2016-01-10 17:46:00          7          4</span>
+<span class="co">#&gt; 13:  Isabel 2016-01-08 19:10:00          9          5</span>
+<span class="co">#&gt; 14:  Isabel 2016-01-08 19:10:00         10          5</span>
+<span class="co">#&gt; 15:  Isabel 2016-01-08 19:10:00         11          5</span>
+<span class="co">#&gt; 16:  Isabel 2016-01-08 19:10:00         12          5</span>
+<span class="co">#&gt; 17:  Isabel 2016-01-08 19:10:00         13          5</span>
+<span class="co">#&gt; 18:     Mom 2015-12-02 17:58:00         NA          6</span>
+<span class="co">#&gt; 19:   Sally 2016-01-03 10:06:00         14          7</span>
+<span class="co">#&gt; 20:   Sally 2016-01-03 10:15:00         14          8</span></code></pre>
 </div>
-<div id="self-joins" class="section level2">
-<h2 class="hasAnchor">
-<a href="#self-joins" class="anchor"></a>Self joins</h2>
+<div class="section level2">
+<h2 id="self-joins">Self joins<a class="anchor" aria-label="anchor" href="#self-joins"></a>
+</h2>
 <p>In case a self join were necessary, perhaps while using a rolling or non-equi join, the way <code>magrittr</code>’s pipe handles the <code>.</code> outside of nested calls wouldn’t allow calling a joining verb with <code>.</code> both in <code>x</code> and <code>y</code>. To work around this, the following verbs default to an eager self join when <code>y</code> is missing:</p>
 <ul>
 <li><code>full_join</code></li>
@@ -501,31 +497,31 @@
 </ul>
 <p>As a somewhat contrived example, we could add a rolling count of weekly visits per user to the <code>website</code> data introduced <a href="#rolling-joins">above</a>:</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>window_start <span class="op">=</span> <span class="va">session_start_time</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html">as.difftime</a></span><span class="op">(</span><span class="fl">7</span>, units <span class="op">=</span> <span class="st">"days"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<code class="sourceCode R"><span class="va">website</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>window_start <span class="op">=</span> <span class="va">session_start_time</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">7</span>, units <span class="op">=</span> <span class="st">"days"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="fu"><a href="../reference/joins.html">mutate_join</a></span><span class="op">(</span>, <span class="va">name</span>, <span class="va">window_start</span> <span class="op">&lt;=</span> <span class="va">session_start_time</span>, <span class="va">session_start_time</span> <span class="op">&gt;=</span> <span class="va">session_start_time</span>,
                 .SDcols <span class="op">=</span> <span class="fu">.</span><span class="op">(</span>weekly_visits <span class="op">=</span> <span class="va">.N</span><span class="op">)</span>,
-                .by_each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>window_start <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+                .by_each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>window_start <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">website</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;        name  session_start_time session_id weekly_visits
-#&gt;  1:   Erica 2016-01-04 19:12:00          1             1
-#&gt;  2:   Erica 2016-01-04 21:05:00          2             2
-#&gt;  3: Francis 2016-01-02 13:09:00          3             1
-#&gt;  4: Francis 2016-01-03 19:22:00          4             2
-#&gt;  5: Francis 2016-01-08 08:44:00          5             3
-#&gt;  6: Francis 2016-01-08 20:22:00          6             4
-#&gt;  7: Francis 2016-01-10 17:36:00          7             4
-#&gt;  8: Francis 2016-01-15 16:56:00          8             3
-#&gt;  9:  Isabel 2016-01-01 11:01:00          9             1
-#&gt; 10:  Isabel 2016-01-02 08:59:00         10             2
-#&gt; 11:  Isabel 2016-01-05 18:18:00         11             3
-#&gt; 12:  Isabel 2016-01-07 19:03:00         12             4
-#&gt; 13:  Isabel 2016-01-08 19:01:00         13             4
-#&gt; 14:   Sally 2016-01-03 10:00:00         14             1
-#&gt; 15:  Vivian 2016-01-01 09:10:00         15             1
-#&gt; 16:  Vivian 2016-01-09 02:15:00         16             1</code></pre>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">website</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;        name  session_start_time session_id weekly_visits</span>
+<span class="co">#&gt;  1:   Erica 2016-01-04 19:12:00          1             1</span>
+<span class="co">#&gt;  2:   Erica 2016-01-04 21:05:00          2             2</span>
+<span class="co">#&gt;  3: Francis 2016-01-02 13:09:00          3             1</span>
+<span class="co">#&gt;  4: Francis 2016-01-03 19:22:00          4             2</span>
+<span class="co">#&gt;  5: Francis 2016-01-08 08:44:00          5             3</span>
+<span class="co">#&gt;  6: Francis 2016-01-08 20:22:00          6             4</span>
+<span class="co">#&gt;  7: Francis 2016-01-10 17:36:00          7             4</span>
+<span class="co">#&gt;  8: Francis 2016-01-15 16:56:00          8             3</span>
+<span class="co">#&gt;  9:  Isabel 2016-01-01 11:01:00          9             1</span>
+<span class="co">#&gt; 10:  Isabel 2016-01-02 08:59:00         10             2</span>
+<span class="co">#&gt; 11:  Isabel 2016-01-05 18:18:00         11             3</span>
+<span class="co">#&gt; 12:  Isabel 2016-01-07 19:03:00         12             4</span>
+<span class="co">#&gt; 13:  Isabel 2016-01-08 19:01:00         13             4</span>
+<span class="co">#&gt; 14:   Sally 2016-01-03 10:00:00         14             1</span>
+<span class="co">#&gt; 15:  Vivian 2016-01-01 09:10:00         15             1</span>
+<span class="co">#&gt; 16:  Vivian 2016-01-09 02:15:00         16             1</span></code></pre>
 </div>
   </div>
 
@@ -540,11 +536,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Alexis Sarda-Espinosa.</p>
+  <p></p>
+<p>Developed by Alexis Sarda-Espinosa.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -552,6 +550,8 @@
 
   
 
+
+  
 
   </body>
 </html>

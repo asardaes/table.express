@@ -21,6 +21,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -33,18 +35,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -69,7 +65,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/asardaes/table.express/">
+  <a href="https://github.com/asardaes/table.express/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,28 +84,28 @@
   <div class="contents col-md-9">
 
 
-<div id="table-express" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#table-express" class="anchor"></a>Table express</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="table-express">Table express<a class="anchor" aria-label="anchor" href="#table-express"></a>
+</h1></div>
 <p>Use <code>dplyr</code> verbs, as well as custom ones, to build <code>data.table</code> expressions. Check the <a href="https://asardaes.github.io/table.express/articles/table.express.html">vignette</a> for more information.</p>
-<div id="essence" class="section level2">
-<h2 class="hasAnchor">
-<a href="#essence" class="anchor"></a>Essence</h2>
+<div class="section level2">
+<h2 id="essence">Essence<a class="anchor" aria-label="anchor" href="#essence"></a>
+</h2>
 <p>The basic idea is to parse the input from all the verbs and create a single expression that, after evaluation, simply delegates all the actual computations to <code>data.table</code>, letting it handle all optimizations as usual.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># the expression is what matters here, input is left empty</span>
-<span class="fu">data.table</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">col</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="reference/where-table.express.html">where</a></span><span class="op">(</span><span class="va">var</span> <span class="op">==</span> <span class="va">val</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<span class="fu">data.table</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">col</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="reference/where-table.express.html">where</a></span><span class="op">(</span><span class="va">var</span> <span class="op">==</span> <span class="va">val</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="fu"><a href="reference/order_by-table.express.html">order_by</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>
 <span class="co">#&gt; .DT_[var == val, list(col)][order(v)]</span></code></pre></div>
 <p>The input <code>data.table</code> is always assigned in the evaluation’s environment as the <code>.DT_</code> pronoun</p>
 <p>In many cases character input can also be supported, which could be useful for other packages that use <code>data.table</code>.</p>
 </div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
 <p><a href="LICENSE">Mozilla Public License Version 2.0</a></p>
 <p>This software package was developed independently of any organization or institution that is or has been associated with the author.</p>
 </div>
@@ -119,47 +115,57 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=table.express">https://​cloud.r-project.org/​package=table.express</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/asardaes/table.express/">https://​github.com/​asardaes/​table.express/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/asardaes/table.express/issues">https://​github.com/​asardaes/​table.express/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=table.express" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/asardaes/table.express/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/asardaes/table.express/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.mozilla.org/en-US/MPL/2.0/">MPL-2.0</a></li>
+<li><a href="https://www.mozilla.org/en-US/MPL/2.0/" class="external-link">MPL-2.0</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing table.express</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Alexis Sarda-Espinosa <br><small class="roles"> Maintainer, author </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=table.express"><img src="http://www.r-pkg.org/badges/version/table.express" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://github.com/asardaes/table.express/actions"><img src="https://github.com/asardaes/table.express/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/asardaes/table.express"><img src="https://codecov.io/gh/asardaes/table.express/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://cran.r-project.org/package=table.express" class="external-link"><img src="http://www.r-pkg.org/badges/version/table.express" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://github.com/asardaes/table.express/actions" class="external-link"><img src="https://github.com/asardaes/table.express/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://codecov.io/gh/asardaes/table.express" class="external-link"><img src="https://codecov.io/gh/asardaes/table.express/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Alexis Sarda-Espinosa.</p>
+  <p></p>
+<p>Developed by Alexis Sarda-Espinosa.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -167,6 +173,8 @@
 
   
 
+
+  
 
   </body>
 </html>
