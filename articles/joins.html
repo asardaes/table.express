@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -78,7 +78,7 @@
 
       
 
-      </header><script src="joins_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Joining verbs for data.table</h1>
@@ -153,7 +153,8 @@
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">x</span>, v <span class="op">=</span> <span class="va">v2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span>
     <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="va">end_expr</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[.DT_0_, on = list(x, v2 = v)]</span></code></pre>
+<pre><code><span class="co">#&gt; .DT_[.DT_0_, on = list(x, v2 = v), nomatch = , mult = , roll = , </span>
+<span class="co">#&gt;     rollends = ]</span></code></pre>
 <pre><code><span class="co">#&gt;    x v2 foo y</span>
 <span class="co">#&gt; 1: b  1  NA 1</span>
 <span class="co">#&gt; 2: b  2  NA 3</span>
@@ -542,7 +543,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

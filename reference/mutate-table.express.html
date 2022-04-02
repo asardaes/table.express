@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +79,7 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for EagerExprBuilder</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .parent_env <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/caller_env.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .parent_env <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># S3 method for data.table</span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
@@ -92,10 +92,9 @@
 <dt>...</dt>
 <dd><p>Mutation clauses.</p></dd>
 <dt>.sequential</dt>
-<dd><p>If <code>TRUE</code>, each expression in <code>...</code> is assigned to a separate frame in order
-to enable usage of newly created columns.</p></dd>
+<dd><p>If <code>TRUE</code>, each expression in <code>...</code> is assigned to a nested body within curly braces to allow them to use variables created by previous expressions. The default is <code>FALSE</code> because enabling this may turn off some <a href="https://Rdatatable.gitlab.io/data.table/reference/datatable-optimize.html" class="external-link">data.table optimizations</a>.</p></dd>
 <dt>.unquote_names</dt>
-<dd><p>Passed to <code><a href="https://rlang.r-lib.org/reference/nse-defuse.html" class="external-link">rlang::enexprs()</a></code>. Set to <code>FALSE</code> if you want to pass the single
+<dd><p>Passed to <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html" class="external-link">rlang::enexprs()</a></code>. Set to <code>FALSE</code> if you want to pass the single
 <code>:=</code> expression.</p></dd>
 <dt>.parse</dt>
 <dd><p>Logical. Whether to apply <code><a href="https://rlang.r-lib.org/reference/parse_expr.html" class="external-link">rlang::parse_expr()</a></code> to obtain the expressions.</p></dd>
@@ -135,7 +134,7 @@ clause being set already exists?</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

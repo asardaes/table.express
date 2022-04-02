@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -78,7 +78,7 @@
 
       
 
-      </header><script src="table.express_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using table.express</h1>
@@ -96,7 +96,7 @@
 <div class="section level3">
 <h3 id="preliminaries">Preliminaries<a class="anchor" aria-label="anchor" href="#preliminaries"></a>
 </h3>
-<p>All verbs defined in this package essentially parse the input given to them and build expressions that <code>data.table</code> understands. These expressions are used in a <code>data.table</code> <em>frame</em>, i.e. in a call similar to <code>DT[i, j, by, ...]</code> where <code>DT</code> is a <code>data.table</code>. The <a href="https://github.com/Rdatatable/data.table/wiki" class="external-link">frame’s main elements</a> are the 3 shown: <code>i</code>, <code>j</code>, and <code>by</code>. Let us first list the available single-table verbs and their effects in the frame (two-table joining verbs have <a href="https://asardaes.github.io/table.express/articles/joins.html">their own vignette</a>):</p>
+<p>All verbs defined in this package essentially parse the input given to them and build expressions that <code>data.table</code> understands. These expressions are used in a <code>data.table</code> <em>frame</em>, i.e. in a call similar to <code>DT[i, j, by, ...]</code> where <code>DT</code> is a <code>data.table</code>. The <a href="https://rdrr.io/github/Rdatatable/data.table/man/data.table.html" class="external-link">frame’s main elements</a> are the 3 shown: <code>i</code>, <code>j</code>, and <code>by</code>. Let us first list the available single-table verbs and their effects in the frame (two-table joining verbs have <a href="https://asardaes.github.io/table.express/articles/joins.html">their own vignette</a>):</p>
 <ul>
 <li>Verbs that set <code>i</code>:
 <ul>
@@ -564,7 +564,7 @@
 <span class="co">#&gt; .DT_ %&gt;% {</span>
 <span class="co">#&gt;     .[, .I[mpg == max(mpg)], by = vs]$V1</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; Expression after table.express:::where.ExprBuilder(...):</span>
+<span class="co">#&gt; Expression after where.ExprBuilder(...):</span>
 <span class="co">#&gt; .DT_[.NEST_0_]</span>
 <span class="co">#&gt; Using captured data.table for evaluation.</span>
 <span class="co">#&gt; Evaluating:</span>
@@ -715,7 +715,7 @@
 <pre><code><span class="co">#&gt; .DT_[, c(lapply(.SD, mean)), by = list(am, vs), .SDcols = c(c("mpg", </span>
 <span class="co">#&gt;     "disp")), verbose = TRUE]</span>
 <span class="co">#&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns</span>
-<span class="co">#&gt; 0.001s elapsed (0.000s cpu) </span>
+<span class="co">#&gt; 0.001s elapsed (0.001s cpu) </span>
 <span class="co">#&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) </span>
 <span class="co">#&gt; Getting back original order ... forder.c received a vector type 'integer' length 4</span>
 <span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span>
@@ -728,7 +728,7 @@
 <span class="co">#&gt; This gsum took (narm=FALSE) ... gather took ... 0.000s</span>
 <span class="co">#&gt; 0.000s</span>
 <span class="co">#&gt; gforce eval took 0.000</span>
-<span class="co">#&gt; 0.001s elapsed (0.000s cpu)</span></code></pre>
+<span class="co">#&gt; 0.000s elapsed (0.000s cpu)</span></code></pre>
 <pre><code><span class="co">#&gt;    am vs      mpg     disp</span>
 <span class="co">#&gt; 1:  1  0 19.75000 206.2167</span>
 <span class="co">#&gt; 2:  1  1 28.37143  89.8000</span>
@@ -747,7 +747,7 @@
 <span class="co">#&gt;     "disp")), .hows = rlang::quos(mean(x = .COL))), by = list(am, </span>
 <span class="co">#&gt;     vs), verbose = TRUE]</span>
 <span class="co">#&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns</span>
-<span class="co">#&gt; 0.001s elapsed (0.000s cpu) </span>
+<span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span>
 <span class="co">#&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) </span>
 <span class="co">#&gt; Getting back original order ... forder.c received a vector type 'integer' length 4</span>
 <span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span>
@@ -757,8 +757,8 @@
 <span class="co">#&gt; Making each group and running j (GForce FALSE) ... The result of j is a named list. It's very inefficient to create the same names over and over again for each group. When j=list(...), any names are detected, removed and put back after grouping has completed, for efficiency. Using j=transform(), for example, prevents that speedup (consider changing to :=). This message may be upgraded to warning in future.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   collecting discontiguous groups took 0.000s for 4 groups</span>
-<span class="co">#&gt;   eval(j) took 0.002s for 4 calls</span>
-<span class="co">#&gt; 0.002s elapsed (0.002s cpu)</span></code></pre>
+<span class="co">#&gt;   eval(j) took 0.001s for 4 calls</span>
+<span class="co">#&gt; 0.001s elapsed (0.001s cpu)</span></code></pre>
 <pre><code><span class="co">#&gt;    am vs      mpg     disp</span>
 <span class="co">#&gt; 1:  1  0 19.75000 206.2167</span>
 <span class="co">#&gt; 2:  1  1 28.37143  89.8000</span>
@@ -821,7 +821,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
