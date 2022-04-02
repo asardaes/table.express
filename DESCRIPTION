@@ -58,6 +58,7 @@ Collate:
     'VERBS-left_join.R'
     'VERBS-max_by.R'
     'VERBS-min_by.R'
+    'pkg.R'
     'VERBS-mutate.R'
     'VERBS-mutate_join.R'
     'VERBS-mutate_sd.R'
@@ -69,4 +70,3 @@ Collate:
     'VERBS-transmute.R'
     'VERBS-transmute_sd.R'
     'VERBS-where.R'
-    'pkg.R'

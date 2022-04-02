@@ -11,6 +11,7 @@ dplyr::mutate
 #' @rdname mutate-table.express
 #' @name mutate-table.express
 #' @export
+#' @include pkg.R
 #' @importFrom rlang call_args
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
@@ -19,10 +20,7 @@ dplyr::mutate
 #'
 #' @template data-arg
 #' @param ... Mutation clauses.
-#' @param .sequential If `TRUE`, each expression in `...` is assigned to a nested body within curly
-#'   braces to allow them to use variables created by previous expressions. The default is `FALSE`
-#'   because enabling this may turn off some
-#'   [data.table optimizations][data.table::datatable.optimize].
+#' @eval sequential_arg_doc()
 #' @param .unquote_names Passed to [rlang::enexprs()]. Set to `FALSE` if you want to pass the single
 #'   [`:=`][data.table::set] expression.
 #' @template parse-arg

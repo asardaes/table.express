@@ -10,12 +10,14 @@ dplyr::transmute
 #' @rdname transmute-table.express
 #' @name transmute-table.express
 #' @export
+#' @include pkg.R
 #' @importFrom rlang expr
 #' @importFrom rlang warn
 #'
 #' @template data-arg
 #' @param ... Clauses for transmuting columns. For `j` inside the `data.table`'s frame.
 #' @param .enlist See details.
+#' @eval sequential_arg_doc()
 #' @template parse-arg
 #' @template chain-arg
 #'
@@ -33,14 +35,19 @@ dplyr::transmute
 #' data.table::as.data.table(mtcars) %>%
 #'     transmute(ans = mpg * 2)
 #'
-transmute.ExprBuilder <- function(.data, ..., .enlist = TRUE,
+transmute.ExprBuilder <- function(.data, ..., .enlist = TRUE, .sequential = FALSE,
                                   .parse = getOption("table.express.parse", FALSE),
                                   .chain = getOption("table.express.chain", TRUE))
 {
     clauses <- parse_dots(.parse, ...)
     if (length(clauses) == 0L) return(.data)
 
-    if (.enlist) {
+    if (.sequential) {
+        named_clauses <- get_named_clauses(clauses)
+        j <- body_from_clauses(named_clauses$clauses)
+        .data$set_j(j, .chain)
+    }
+    else if (.enlist) {
         .data$set_j(rlang::expr(list(!!!clauses)), .chain)
     }
     else {

@@ -63,3 +63,13 @@ test_that("Preventing enlisting during transmutation works.", {
 
     expect_identical(ans, expected)
 })
+
+test_that("Expressions in sequential transmute can use variables from previous expressions and play nicely with group_by.", {
+    expected <- DT[, .(cum_sum = cumsum(mpg)), by = .(gear)][, foo := cum_sum / 10]
+
+    ans <- DT %>%
+        group_by(gear) %>%
+        transmute(cum_sum = cumsum(mpg), foo = cum_sum / 10, .sequential = TRUE)
+
+    expect_equal(ans, expected)
+})

@@ -25,10 +25,7 @@
 
 \item{...}{Mutation clauses.}
 
-\item{.sequential}{If \code{TRUE}, each expression in \code{...} is assigned to a nested body within curly
-braces to allow them to use variables created by previous expressions. The default is \code{FALSE}
-because enabling this may turn off some
-\link[data.table:datatable-optimize]{data.table optimizations}.}
+\item{.sequential}{If \code{TRUE}, each expression in \code{...} is assigned to a nested body within curly braces to allow them to use variables created by previous expressions. The default is \code{FALSE} because enabling this may turn off some \link[data.table:datatable-optimize]{data.table optimizations}.}
 
 \item{.unquote_names}{Passed to \code{\link[rlang:defusing-advanced]{rlang::enexprs()}}. Set to \code{FALSE} if you want to pass the single
 \code{\link[data.table:assign]{:=}} expression.}

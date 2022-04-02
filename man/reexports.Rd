@@ -2,9 +2,9 @@
 % Please edit documentation in R/UTILS-tidyselect.R, R/VERBS-anti_join.R,
 %   R/VERBS-arrange.R, R/VERBS-distinct.R, R/VERBS-filter.R,
 %   R/VERBS-full_join.R, R/VERBS-group_by.R, R/VERBS-inner_join.R,
-%   R/VERBS-left_join.R, R/VERBS-mutate.R, R/VERBS-right_join.R,
+%   R/VERBS-left_join.R, R/pkg.R, R/VERBS-mutate.R, R/VERBS-right_join.R,
 %   R/VERBS-select.R, R/VERBS-semi_join.R, R/VERBS-summarize.R,
-%   R/VERBS-transmute.R, R/pkg.R
+%   R/VERBS-transmute.R
 \docType{import}
 \name{reexports}
 \alias{reexports}
@@ -24,6 +24,11 @@
 \alias{group_by}
 \alias{inner_join}
 \alias{left_join}
+\alias{:=}
+\alias{\%>\%}
+\alias{\%T>\%}
+\alias{!!}
+\alias{!!!}
 \alias{mutate}
 \alias{right_join}
 \alias{select}
@@ -31,11 +36,6 @@
 \alias{summarize}
 \alias{summarise}
 \alias{transmute}
-\alias{:=}
-\alias{\%>\%}
-\alias{\%T>\%}
-\alias{!!}
-\alias{!!!}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
