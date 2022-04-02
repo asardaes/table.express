@@ -1,3 +1,13 @@
+# table.express 0.4.0
+
+- The logic of `mutate` with `.sequential = TRUE` has been changed to support scenarios where
+  `group_by` or `key_by were used as well.
+- `transmute` gained the same `.sequential` argument with the same underlying logic.
+- `summarize` and aliases gained parameter `.assume_optimized` in case `table.express` doesn't know
+  about a function that `data.table` can optimize.
+- `summarize` and aliases can support the sequential logic mentioned before if the summarizing
+  functions are not assumed to be optimized.
+
 # table.express 0.3.3
 
 - More test adjustments to fix problems on CRAN for real.

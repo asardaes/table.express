@@ -1,5 +1,6 @@
 
-## Update to version
+## Update to version 0.4.0
+* Improvements to support more dplyr idioms.
 
 ## Test environments
 * Local GNU/Linux, R release
