@@ -39,7 +39,8 @@ Even though using data manipulation verbs can improve expressiveness in some cas
 this is not always true,
 so using the traditional `data.table` syntax might still be preferable in many situations.
 Unfortunately, it is not entirely straightforward to use the verbs without considerable knowledge of the syntax understood by `data.table`,
-as well as its [optimizations](https://rdrr.io/github/Rdatatable/data.table/man/datatable-optimize.html) and [special symbols](https://rdrr.io/github/Rdatatable/data.table/man/special-symbols.html).
+as well as its [optimizations](https://rdrr.io/github/Rdatatable/data.table/man/datatable-optimize.html)
+and [special symbols](https://rdrr.io/github/Rdatatable/data.table/man/special-symbols.html).
 We will return to the importance of this at the [end](#as-simple-as-possible).
 
 ### Preliminaries
@@ -47,7 +48,7 @@ We will return to the importance of this at the [end](#as-simple-as-possible).
 All verbs defined in this package essentially parse the input given to them and build expressions that `data.table` understands.
 These expressions are used in a `data.table` *frame*,
 i.e. in a call similar to `DT[i, j, by, ...]` where `DT` is a `data.table`.
-The [frame's main elements](https://github.com/Rdatatable/data.table/wiki) are the 3 shown:
+The [frame's main elements](https://rdrr.io/github/Rdatatable/data.table/man/data.table.html) are the 3 shown:
 `i`, `j`, and `by`.
 Let us first list the available single-table verbs and their effects in the frame
 (two-table joining verbs have [their own vignette](https://asardaes.github.io/table.express/articles/joins.html)):

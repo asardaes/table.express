@@ -1,9 +1,5 @@
 
-## Update to version 0.3.3
-
-I have reproduced the rcnst issue locally and fixed the problematic tests.
-I also looked through the main package's code to see if the problem could arise there as well,
-but didn't find any issues.
+## Update to version
 
 ## Test environments
 * Local GNU/Linux, R release

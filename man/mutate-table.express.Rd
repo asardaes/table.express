@@ -28,7 +28,7 @@
 \item{.sequential}{If \code{TRUE}, each expression in \code{...} is assigned to a separate frame in order
 to enable usage of newly created columns.}
 
-\item{.unquote_names}{Passed to \code{\link[rlang:nse-defuse]{rlang::enexprs()}}. Set to \code{FALSE} if you want to pass the single
+\item{.unquote_names}{Passed to \code{\link[rlang:defusing-advanced]{rlang::enexprs()}}. Set to \code{FALSE} if you want to pass the single
 \code{\link[data.table:assign]{:=}} expression.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}

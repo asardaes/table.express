@@ -40,7 +40,7 @@ filter_sd(.data, .SDcols, .how = Negate(is.na), ...)
 \item{.chain}{Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?}
 
-\item{.caller_env_n}{Internal. Passed to \code{\link[rlang:caller_env]{rlang::caller_env()}} to find the function specified in
+\item{.caller_env_n}{Internal. Passed to \code{\link[rlang:stack]{rlang::caller_env()}} to find the function specified in
 \code{.how} and \link[rlang:call_standardise]{standardize} its call.}
 
 \item{.expr}{If the input is a \code{data.table} and \code{.expr} is \code{TRUE}, an instance of

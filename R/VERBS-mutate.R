@@ -11,7 +11,9 @@ dplyr::mutate
 #' @rdname mutate-table.express
 #' @name mutate-table.express
 #' @export
+#' @importFrom rlang call_args
 #' @importFrom rlang expr
+#' @importFrom rlang is_call
 #' @importFrom rlang quo_squash
 #' @importFrom rlang warn
 #'
@@ -42,7 +44,23 @@ mutate.ExprBuilder <- function(.data, ..., .sequential = FALSE, .unquote_names =
     if (length(clauses) == 0L) {
         return(.data)
     }
-    else if (.sequential && .unquote_names) {
+    else if (.sequential) {
+        if (!.unquote_names && length(clauses) > 1L) {
+            rlang::warn(paste("Only one expression can be provided in '...' for .unquote_names = FALSE,",
+                              "ignoring all but first."))
+
+            clauses <- clauses[1L]
+        }
+        if (rlang::is_call(clauses[[1L]], ":=")) {
+            clauses <- rlang::call_args(clauses[[1L]])
+        }
+        if (rlang::is_call(clauses[[1L]], "c") && length(clauses) == 2L) {
+            # c(...) = list(...) form
+            clause_names <- unlist(rlang::call_args(clauses[[1L]]))
+            clauses <- rlang::call_args(clauses[[2L]])
+            names(clauses) <- clause_names
+        }
+
         for (i in seq_along(clauses)) {
             # keep as list with name
             clause <- clauses[i]

@@ -4,7 +4,7 @@ Title: Build 'data.table' Expressions with Data Manipulation Verbs
 Description: A specialization of 'dplyr' data manipulation verbs that parse and build expressions
     which are ultimately evaluated by 'data.table', letting it handle all optimizations. A set of
     additional verbs is also provided to facilitate some common operations on a subset of the data.
-Version: 0.3.3
+Version: 0.3.3.9000
 Depends:
     R (>= 3.1.0)
 Imports:
@@ -22,7 +22,7 @@ Suggests:
     rex,
     rmarkdown,
     testthat
-Date: 2021-12-07
+Date: 2022-04-02
 Authors@R: c(
         person("Alexis", "Sarda-Espinosa", role=c("cre", "aut"), email="alexis.sarda@gmail.com")
     )
