@@ -32,3 +32,13 @@ test_that("Summarize works for functions *not* optimized with GForce.", {
 
     expect_error(summarize(DT, mpg = cumsum(mpg)), "length 1")
 })
+
+test_that("Expressions in summarize can use variables from previous expressions and play nicely with group_by.", {
+    expected <- DT[, .(ans = Reduce("+", mpg)), by = .(gear)][, foo := ans / 10]
+
+    ans <- DT %>%
+        group_by(gear) %>%
+        summarize(ans = Reduce("+", mpg), foo = ans / 10)
+
+    expect_equal(ans, expected)
+})

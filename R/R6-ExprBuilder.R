@@ -598,14 +598,13 @@ EBCompanion$helper_functions <- list(
         })
     },
 
-    .validating_summarize = function(...) {
-        ans <- list(...)
-        if (length(ans) > 0L && any(lengths(ans) > 1L)) {
+    .validate_summaries = function(summaries_list) {
+        if (length(summaries_list) > 0L && any(lengths(summaries_list) > 1L)) {
             stop("All summary values must have length 1, got: [",
-                 paste(names(ans), lengths(ans), sep = " of length ", collapse = ", "),
+                 paste(names(summaries_list), lengths(summaries_list), sep = " of length ", collapse = ", "),
                  "]")
         }
-        ans
+        summaries_list
     }
 )
 

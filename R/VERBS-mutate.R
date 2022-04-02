@@ -11,12 +11,10 @@ dplyr::mutate
 #' @rdname mutate-table.express
 #' @name mutate-table.express
 #' @export
-#' @importFrom rlang call2
 #' @importFrom rlang call_args
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang quo_squash
-#' @importFrom rlang sym
 #' @importFrom rlang warn
 #'
 #' @template data-arg
@@ -63,29 +61,9 @@ mutate.ExprBuilder <- function(.data, ..., .sequential = FALSE, .unquote_names =
             names(clauses) <- clause_names
         }
 
-        clause_names <- names(clauses)
-        named_clauses <- nzchar(clause_names)
-        if (any(!named_clauses)) {
-            rlang::warn("Some expressions in '...' are missing '=' (i.e. a left-hand side), ignoring them.")
-            clauses <- clauses[named_clauses]
-            clause_names <- names(clauses)
-        }
-
-        clause_names_symbols <- lapply(clause_names, rlang::sym)
-
-        body_expressions <- Map(clause_names_symbols, clauses, f = function(name_symbol, clause) {
-            rlang::expr(`=`(!!name_symbol, !!clause))
-        })
-
-        list_call <- rlang::call2("list", !!!clause_names_symbols)
-
-        clause_rhs <- as.call(c(
-            list(rlang::expr(`{`)),
-            body_expressions,
-            list_call
-        ))
-
-        clause <- rlang::expr(`:=`(!!clause_names, !!clause_rhs))
+        named_clauses <- get_named_clauses(clauses)
+        clause_rhs <- body_from_clauses(named_clauses$clauses, FALSE)
+        clause <- rlang::expr(`:=`(!!named_clauses$clause_names, !!clause_rhs))
     }
     else if (.unquote_names) {
         clause <- rlang::quo_squash(rlang::expr(

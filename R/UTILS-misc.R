@@ -327,3 +327,45 @@ try_delegate <- function(.fun_, .expr, .generic_env = rlang::caller_env()) {
         }
     )
 }
+
+#' @importFrom rlang warn
+#'
+get_named_clauses <- function(clauses) {
+    clause_names <- names(clauses)
+
+    named_clauses <- nzchar(clause_names)
+    if (any(!named_clauses)) {
+        rlang::warn("Some expressions in '...' are missing '=' (i.e. a left-hand side), ignoring them.")
+        clauses <- clauses[named_clauses]
+        clause_names <- names(clauses)
+    }
+
+    list(clause_names = clause_names, clauses = clauses)
+}
+
+# This function assumes clauses only has named elements.
+#
+#' @importFrom rlang call2
+#' @importFrom rlang expr
+#' @importFrom rlang sym
+#'
+body_from_clauses <- function(clauses, named_list = TRUE) {
+    clause_names <- names(clauses)
+    clause_names_symbols <- lapply(clause_names, rlang::sym)
+
+    body_expressions <- Map(clause_names_symbols, clauses, f = function(name_symbol, clause) {
+        rlang::expr(`=`(!!name_symbol, !!clause))
+    })
+
+    if (named_list) {
+        names(clause_names_symbols) <- clause_names
+    }
+
+    list_call <- rlang::call2("list", !!!clause_names_symbols)
+
+    as.call(c(
+        list(rlang::expr(`{`)),
+        body_expressions,
+        list_call
+    ))
+}

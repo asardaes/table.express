@@ -13,6 +13,7 @@
 \method{summarize}{ExprBuilder}(
   .data,
   ...,
+  .assume_optimized = NULL,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE)
 )
@@ -20,6 +21,7 @@
 \method{summarise}{ExprBuilder}(
   .data,
   ...,
+  .assume_optimized = NULL,
   .parse = getOption("table.express.parse", FALSE),
   .chain = getOption("table.express.chain", TRUE)
 )
@@ -36,6 +38,12 @@
 \item{.data}{An instance of \link{ExprBuilder}.}
 
 \item{...}{Clauses for transmuting columns. For \code{j} inside the \code{data.table}'s frame.}
+
+\item{.assume_optimized}{An optional character vector with function names that you know
+\code{data.table} can optimize. This will be added to this set of known names:
+min, max, mean, median, var, sd, sum, prod, first, last. Note that using those functions (and only those in
+a given call to this function) will prevent the expressions from using variables created by
+previous expressions.}
 
 \item{.parse}{Logical. Whether to apply \code{\link[rlang:parse_expr]{rlang::parse_expr()}} to obtain the expressions.}
 

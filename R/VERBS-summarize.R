@@ -33,6 +33,11 @@ gforce_optimized <- c(
 #'
 #' @template data-arg
 #' @param ... Clauses for transmuting columns. For `j` inside the `data.table`'s frame.
+#' @param .assume_optimized An optional character vector with function names that you know
+#' `data.table` can optimize. This will be added to this set of known names:
+#' `r paste0(gforce_optimized, collapse = ", ")`. Note that using those functions (and only those in
+#' a given call to this function) will prevent the expressions from using variables created by
+#' previous expressions.
 #' @template parse-arg
 #' @template chain-arg
 #'
@@ -43,22 +48,24 @@ gforce_optimized <- c(
 #'
 #' @template docu-examples
 #'
-summarize.ExprBuilder <- function(.data, ...,
+summarize.ExprBuilder <- function(.data, ..., .assume_optimized = NULL,
                                   .parse = getOption("table.express.parse", FALSE),
                                   .chain = getOption("table.express.chain", TRUE))
 {
     clauses <- parse_dots(.parse, ...)
     if (length(clauses) == 0L) return(.data)
 
-    gforce_optimizable <- sapply(clauses, rlang::is_call, name = gforce_optimized)
+    gforce_optimizable <- sapply(clauses, rlang::is_call, name = c(gforce_optimized, .assume_optimized))
 
     if (all(gforce_optimizable)) {
         .data$set_j(rlang::expr(list(!!!clauses)), .chain)
     }
     else {
+        named_clauses <- get_named_clauses(clauses)
+        call_args <- body_from_clauses(named_clauses$clauses)
         # avoid NOTE
-        .validating_summarize <- EBCompanion$helper_functions$.validating_summarize
-        .data$set_j(rlang::expr(.validating_summarize(!!!clauses)), .chain)
+        .validate_summaries <- EBCompanion$helper_functions$.validate_summaries
+        .data$set_j(rlang::expr(.validate_summaries(!!call_args)), .chain)
     }
 }
 
