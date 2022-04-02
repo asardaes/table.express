@@ -1,7 +1,7 @@
 # table.express 0.4.0
 
 - The logic of `mutate` with `.sequential = TRUE` has been changed to support scenarios where
-  `group_by` or `key_by were used as well.
+  `group_by` or `key_by` were used as well.
 - `transmute` gained the same `.sequential` argument with the same underlying logic.
 - `summarize` and aliases gained parameter `.assume_optimized` in case `table.express` doesn't know
   about a function that `data.table` can optimize.
