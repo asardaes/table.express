@@ -11,10 +11,12 @@ dplyr::mutate
 #' @rdname mutate-table.express
 #' @name mutate-table.express
 #' @export
+#' @importFrom rlang call2
 #' @importFrom rlang call_args
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang quo_squash
+#' @importFrom rlang sym
 #' @importFrom rlang warn
 #'
 #' @template data-arg
@@ -39,7 +41,7 @@ mutate.ExprBuilder <- function(.data, ..., .sequential = FALSE, .unquote_names =
                                .parse = getOption("table.express.parse", FALSE),
                                .chain = getOption("table.express.chain", TRUE))
 {
-    clauses <- parse_dots(.parse, ..., .named = TRUE, .unquote_names = .unquote_names)
+    clauses <- parse_dots(.parse, ..., .named = !.sequential, .unquote_names = .unquote_names)
 
     if (length(clauses) == 0L) {
         return(.data)
@@ -61,16 +63,31 @@ mutate.ExprBuilder <- function(.data, ..., .sequential = FALSE, .unquote_names =
             names(clauses) <- clause_names
         }
 
-        for (i in seq_along(clauses)) {
-            # keep as list with name
-            clause <- clauses[i]
-            .data <- mutate.ExprBuilder(.data, !!!clause, .sequential = FALSE, .parse = FALSE, .chain = TRUE)
+        clause_names <- names(clauses)
+        named_clauses <- nzchar(clause_names)
+        if (any(!named_clauses)) {
+            rlang::warn("Some expressions in '...' are missing '=' (i.e. a left-hand side), ignoring them.")
+            clauses <- clauses[named_clauses]
+            clause_names <- names(clauses)
         }
 
-        return(.data)
-    }
+        clause_names_symbols <- lapply(clause_names, rlang::sym)
 
-    if (.unquote_names) {
+        body_expressions <- Map(clause_names_symbols, clauses, f = function(name_symbol, clause) {
+            rlang::expr(`=`(!!name_symbol, !!clause))
+        })
+
+        list_call <- rlang::call2("list", !!!clause_names_symbols)
+
+        clause_rhs <- as.call(c(
+            list(rlang::expr(`{`)),
+            body_expressions,
+            list_call
+        ))
+
+        clause <- rlang::expr(`:=`(!!clause_names, !!clause_rhs))
+    }
+    else if (.unquote_names) {
         clause <- rlang::quo_squash(rlang::expr(
             `:=`(!!!clauses)
         ))
