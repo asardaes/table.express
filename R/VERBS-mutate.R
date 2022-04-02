@@ -19,8 +19,10 @@ dplyr::mutate
 #'
 #' @template data-arg
 #' @param ... Mutation clauses.
-#' @param .sequential If `TRUE`, each expression in `...` is assigned to a separate frame in order
-#'   to enable usage of newly created columns.
+#' @param .sequential If `TRUE`, each expression in `...` is assigned to a nested body within curly
+#'   braces to allow them to use variables created by previous expressions. The default is `FALSE`
+#'   because enabling this may turn off some
+#'   [data.table optimizations][data.table::datatable.optimize].
 #' @param .unquote_names Passed to [rlang::enexprs()]. Set to `FALSE` if you want to pass the single
 #'   [`:=`][data.table::set] expression.
 #' @template parse-arg
