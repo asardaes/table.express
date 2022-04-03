@@ -18,8 +18,8 @@ EagerExprBuilder <- R6::R6Class(
         #' @description
         #' Constructor.
         #' @param DT A [data.table::data.table-class].
-        initialize = function(DT) {
-            super$initialize(DT)
+        initialize = function(DT, ...) {
+            super$initialize(DT, ...)
         },
 
         #' @description

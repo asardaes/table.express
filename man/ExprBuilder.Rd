@@ -129,7 +129,7 @@ By default, start a new expression with the current one as its
 parent. If \code{type = "pronoun"}, \code{dt} is used to start a new expression
 that joins the current one.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$chain(type = "frame", next_dt, parent_env)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ExprBuilder$chain(type = "frame", next_dt, parent_env, to_eager = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -141,6 +141,9 @@ that joins the current one.
 
 \item{\code{parent_env}}{Where to evaluate current expression when chaining
 pronoun.}
+
+\item{\code{to_eager}}{Whether or not to use an \link{EagerExprBuilder} in the
+new chain}
 }
 \if{html}{\out{</div>}}
 }

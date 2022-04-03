@@ -94,8 +94,10 @@ ExprBuilder <- R6::R6Class(
         #' @param next_dt Next data table when chaining pronoun.
         #' @param parent_env Where to evaluate current expression when chaining
         #'   pronoun.
+        #' @param to_eager Whether or not to use an [EagerExprBuilder] in the
+        #'   new chain
         #'
-        chain = function(type = "frame", next_dt, parent_env) {
+        chain = function(type = "frame", next_dt, parent_env, to_eager = FALSE) {
             type <- match.arg(type, c("frame", "pronoun"))
             switch(
                 type,
@@ -117,7 +119,13 @@ ExprBuilder <- R6::R6Class(
                         cat("Starting new expression, nesting previous .DT_ pronoun.\n")
                     } # nocov end
 
-                    eb <- ExprBuilder$new(next_dt, next_pronouns, private$.nested, private$.verbose)
+                    eb <- if (to_eager) {
+                        EagerExprBuilder$new(next_dt, next_pronouns, private$.nested, private$.verbose)
+                    }
+                    else {
+                        ExprBuilder$new(next_dt, next_pronouns, private$.nested, private$.verbose)
+                    }
+
                     eb$set_i(rlang::sym(dt_pronoun), FALSE)
                 }
             )

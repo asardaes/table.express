@@ -15,7 +15,7 @@ dplyr::left_join
 #' lhs %>%
 #'     left_join(rhs, x)
 #'
-left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .parent_env) {
+left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .parent_env, .to_eager = FALSE) {
     if (missing(y)) {
         y <- end_expr.ExprBuilder(x, .parent_env = rlang::maybe_missing(.parent_env))
     }
@@ -24,7 +24,7 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .par
         .parent_env <- rlang::caller_env()
     }
 
-    x <- x$chain("pronoun", y, .parent_env)
+    x <- x$chain("pronoun", y, .parent_env, .to_eager)
 
     on <- parse_dots(TRUE, ...)
     on <- name_comp_switcheroo(on)
@@ -41,24 +41,13 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .par
 
 #' @rdname joins
 #' @export
-#' @importFrom rlang call_args
 #' @importFrom rlang caller_env
-#' @importFrom rlang enexpr
 #' @importFrom rlang expr
+#' @importFrom rlang maybe_missing
 #'
 left_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
-    x_expr <- rlang::enexpr(x)
-
-    if (missing(y)) {
-        y <- x
-    }
-
-    eb <- if (.expr) EagerExprBuilder$new(y) else ExprBuilder$new(y)
-    lazy_ans <- right_join.ExprBuilder(eb, y = !!x_expr, ...)
-    if (!is.null(lazy_ans$appends$on)) {
-        switched_on <- rlang::expr(list(!!!name_comp_switcheroo(rlang::call_args(lazy_ans$appends$on))))
-        lazy_ans$.__enclos_env__$private$.appends$on <- switched_on
-    }
+    eb <- start_expr.data.table(x)
+    lazy_ans <- eval(rlang::expr(left_join(eb, !!rlang::maybe_missing(y), ..., .to_eager = TRUE)))
 
     if (allow) {
         frame_append(lazy_ans, allow.cartesian = TRUE)

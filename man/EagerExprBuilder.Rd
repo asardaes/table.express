@@ -38,13 +38,15 @@ Like \link{ExprBuilder}, but eager in some regards. This shouldn't be used direc
 \subsection{Method \code{new()}}{
 Constructor.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EagerExprBuilder$new(DT)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{EagerExprBuilder$new(DT, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{DT}}{A \link[data.table:data.table-class]{data.table::data.table}.}
+
+\item{\code{...}}{Ignored.}
 }
 \if{html}{\out{</div>}}
 }

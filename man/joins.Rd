@@ -34,7 +34,17 @@
 
 \method{inner_join}{data.table}(x, ..., .expr = FALSE)
 
-\method{left_join}{ExprBuilder}(x, y, ..., nomatch, mult, roll, rollends, .parent_env)
+\method{left_join}{ExprBuilder}(
+  x,
+  y,
+  ...,
+  nomatch,
+  mult,
+  roll,
+  rollends,
+  .parent_env,
+  .to_eager = FALSE
+)
 
 \method{left_join}{data.table}(x, y, ..., allow = FALSE, .expr = FALSE)
 
@@ -84,6 +94,8 @@ mutate_join(x, y, ...)
 \item{.parent_env}{See \code{\link[=end_expr]{end_expr()}}.}
 
 \item{nomatch, mult, roll, rollends}{See \link[data.table:data.table]{data.table::data.table}.}
+
+\item{.to_eager}{Internal, should be left as \code{FALSE} in all external calls.}
 
 \item{.SDcols}{For \code{mutate_join}. See the details below.}
 
