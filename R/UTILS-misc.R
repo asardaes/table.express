@@ -117,7 +117,8 @@ process_sdcols <- function(.data, .sdcols_quo) {
 #' @importFrom tidyselect vars_select_helpers
 #'
 is_tidyselect_call <- function(expression) {
-    rlang::is_call(expression, names(tidyselect::vars_select_helpers))
+    rlang::is_call(expression, names(tidyselect::vars_select_helpers)) ||
+        rlang::is_call(expression, names(tidyselect::vars_select_helpers), ns = "tidyselect")
 }
 
 #' @importFrom rlang as_label

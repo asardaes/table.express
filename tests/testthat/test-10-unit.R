@@ -1,6 +1,7 @@
 context("Unit tests")
 
 source("unit/test-ExprBuilder.R", TRUE)
+source("unit/test-misc.R", TRUE)
 
 source("unit/test-chain.R", TRUE)
 source("unit/test-end_expr.R", TRUE)
