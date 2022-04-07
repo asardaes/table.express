@@ -123,3 +123,38 @@ leftright_join <- function(eb, on, join_extras) {
 
     frame_append(eb, !!!join_extras, .ignore_empty = "all")
 }
+
+#' @importFrom rlang enquos
+#' @importFrom rlang is_call
+#' @importFrom rlang is_character
+#'
+assume_dplyr_join <- function(...) {
+    dots <- parse_dots(FALSE, ...)
+    quoted_dots <- rlang::enquos(...)
+    named_by <- "by" %in% names(dots)
+    if ( named_by && ( rlang::is_character(dots$by) || ( rlang::is_call(dots$by, "c") && evaled_is(quoted_dots$by, "character") ) ) ) {
+        TRUE
+    }
+    else if (!named_by && length(dots) > 0L && rlang::is_call(dots[[1L]], "c") && evaled_is(quoted_dots[[1L]], "character")) {
+        TRUE
+    }
+    else {
+        FALSE
+    }
+}
+
+#' @importFrom rlang enquos
+#' @importFrom rlang eval_tidy
+#' @importFrom rlang sym
+#'
+dplyr_by_to_dots <- function(...) {
+    quoted_dots <- rlang::enquos(...)
+    if ("by" %in% names(quoted_dots)) {
+        bys <- rlang::eval_tidy(quoted_dots$by)
+    } else {
+        bys <- rlang::eval_tidy(quoted_dots[[1L]])
+    }
+    lapply(bys, rlang::sym)
+}
+
+# TODO keep and suffix for dplyr joins?

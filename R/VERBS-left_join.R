@@ -3,7 +3,7 @@
 #'
 dplyr::left_join
 
-#' @include VERBS-joins.R
+#' @include UTILS-joins.R
 #' @rdname joins
 #' @export
 #' @importFrom rlang caller_env

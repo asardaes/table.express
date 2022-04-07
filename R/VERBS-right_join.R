@@ -3,7 +3,7 @@
 #'
 dplyr::right_join
 
-#' @include VERBS-joins.R
+#' @include UTILS-joins.R
 #' @rdname joins
 #' @export
 #' @importFrom rlang enexpr
@@ -36,11 +36,24 @@ right_join.ExprBuilder <- function(x, y, ..., which, nomatch, mult, roll, rollen
 
 #' @rdname joins
 #' @export
+#' @importFrom rlang call2
 #' @importFrom rlang caller_env
+#' @importFrom rlang enexpr
+#' @importFrom rlang sym
 #'
-right_join.data.table <- function(x, ..., allow = FALSE, .expr = FALSE) {
+right_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
     eb <- if (.expr) EagerExprBuilder$new(x) else ExprBuilder$new(x)
-    lazy_ans <- right_join.ExprBuilder(eb, ...)
+    y_expr <- rlang::enexpr(y)
+    assume_dplyr <- assume_dplyr_join(...)
+
+    lazy_ans <- if (assume_dplyr) {
+        y_expr <- list(y_expr)
+        expr <- rlang::call2("right_join.ExprBuilder", rlang::sym("eb"), !!!y_expr, !!!dplyr_by_to_dots(...))
+        base::eval(expr)
+    }
+    else {
+        right_join.ExprBuilder(eb, !!y_expr, ...)
+    }
 
     if (allow) {
         frame_append(lazy_ans, allow.cartesian = TRUE)

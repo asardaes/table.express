@@ -1,4 +1,4 @@
-#' @include VERBS-joins.R
+#' @include UTILS-joins.R
 #' @rdname joins
 #' @export
 #'
@@ -6,7 +6,7 @@ mutate_join <- function(x, y, ...) {
     UseMethod("mutate_join")
 }
 
-#' @include VERBS-joins.R
+#' @include UTILS-joins.R
 #' @rdname joins
 #' @export
 #' @importFrom rlang as_string
@@ -103,7 +103,7 @@ mutate_join.ExprBuilder <- function(x, y, ..., .SDcols, mult, roll, rollends,
             if (evaled_is(sd_quo, "character")) {
                 ans <- rlang::eval_tidy(sd_quo)
                 if (!grepl("^\\.", ans)) {
-                    ans <- paste("x",ans, sep = ".")
+                    ans <- paste("x", ans, sep = ".")
                 }
                 rlang::sym(ans)
             }
