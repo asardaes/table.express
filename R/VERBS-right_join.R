@@ -39,9 +39,10 @@ right_join.ExprBuilder <- function(x, y, ..., which, nomatch, mult, roll, rollen
 #' @importFrom rlang call2
 #' @importFrom rlang caller_env
 #' @importFrom rlang enexpr
+#' @importFrom rlang is_missing
 #' @importFrom rlang sym
 #'
-right_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
+right_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE, .selecting, .framing) {
     eb <- if (.expr) EagerExprBuilder$new(x) else ExprBuilder$new(x)
     y_expr <- rlang::enexpr(y)
     assume_dplyr <- assume_dplyr_join(...)
@@ -57,6 +58,16 @@ right_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
 
     if (allow) {
         frame_append(lazy_ans, allow.cartesian = TRUE)
+    }
+
+    j <- extract_expressions(rlang::enexpr(.selecting), FALSE)
+    if (!rlang::is_missing(j)) {
+        lazy_ans$set_j(j, FALSE)
+    }
+
+    appends <- extract_expressions(rlang::enexpr(.framing), TRUE)
+    if (!rlang::is_missing(appends)) {
+        frame_append(lazy_ans, !!!appends)
     }
 
     if (.expr) {

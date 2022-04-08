@@ -176,6 +176,22 @@ test_that("right_join works when which=TRUE.", {
                      c(7:9, 1:3))
 })
 
+test_that("right_join can use .selecting and .framing.", {
+    expected <- rhs[lhs, .(foo), on = "x", by = .EACHI]
+    ans <- right_join(rhs, lhs, x, .selecting = foo, .framing = list(by = .EACHI))
+    expect_identical(ans, expected)
+
+    expected <- rhs[lhs, .(foo, i_v = i.v), on = "x", by = .EACHI]
+
+    ans <- right_join(rhs, lhs, x, .selecting = .(foo, i_v = i.v), .framing = list(by = .EACHI))
+    expect_identical(ans, expected)
+
+    ans <- right_join(rhs, lhs, x, .framing = list(by = .EACHI), .selecting = {
+        list(foo = foo, i_v = i.v)
+    })
+    expect_identical(ans, expected)
+})
+
 test_that("right_join has limited support for dplyr syntax.", {
     expected <- rhs[lhs, on = "x"]
 

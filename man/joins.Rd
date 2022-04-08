@@ -69,7 +69,7 @@ mutate_join(x, y, ...)
 
 \method{right_join}{ExprBuilder}(x, y, ..., which, nomatch, mult, roll, rollends)
 
-\method{right_join}{data.table}(x, y, ..., allow = FALSE, .expr = FALSE)
+\method{right_join}{data.table}(x, y, ..., allow = FALSE, .expr = FALSE, .selecting, .framing)
 
 \method{semi_join}{ExprBuilder}(x, y, ..., allow = FALSE, .eager = FALSE)
 
@@ -103,6 +103,11 @@ mutate_join(x, y, ...)
 
 \item{which}{If \code{TRUE}, return the row numbers that matched in \code{x} instead of the result of the
 join.}
+
+\item{.selecting}{One or more expressions, possibly contained in a call to \code{list} or \code{.}, that
+will be added to \code{j} in the same frame as the join.}
+
+\item{.framing}{Similar to \code{.selecting}, but added to the frame with \code{\link[=frame_append]{frame_append()}}.}
 
 \item{.eager}{For \code{semi_join}. If \code{TRUE}, it uses \code{\link[=nest_expr]{nest_expr()}} to build an expression like
 \href{https://stackoverflow.com/a/18971223/5793905}{this} instead of the default one. This uses the

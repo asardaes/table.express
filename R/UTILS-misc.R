@@ -367,3 +367,25 @@ body_from_clauses <- function(clauses, named_list = TRUE) {
         list_call
     ))
 }
+
+#' @importFrom rlang call_args
+#' @importFrom rlang is_call
+#' @importFrom rlang is_missing
+#' @importFrom rlang maybe_missing
+#'
+extract_expressions <- function(.expr, unlist = TRUE) {
+    if (rlang::is_missing(.expr) || rlang::is_call(.expr, "{")) {
+        rlang::maybe_missing(.expr)
+    }
+    else if (rlang::is_call(.expr, ".") || rlang::is_call(.expr, "list")) {
+        if (unlist) {
+            rlang::call_args(.expr)
+        }
+        else {
+            .expr
+        }
+    }
+    else {
+        .expr
+    }
+}
