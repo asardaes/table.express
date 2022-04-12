@@ -42,12 +42,10 @@ left_join.ExprBuilder <- function(x, y, ..., nomatch, mult, roll, rollends, .par
 #' @rdname joins
 #' @export
 #' @importFrom rlang caller_env
-#' @importFrom rlang expr
-#' @importFrom rlang maybe_missing
 #'
 left_join.data.table <- function(x, y, ..., allow = FALSE, .expr = FALSE) {
     eb <- start_expr.data.table(x)
-    lazy_ans <- eval(rlang::expr(left_join(eb, !!rlang::maybe_missing(y), ..., .to_eager = TRUE)))
+    lazy_ans <- left_join.ExprBuilder(eb, y, ..., .to_eager = TRUE)
 
     if (allow) {
         frame_append(lazy_ans, allow.cartesian = TRUE)
