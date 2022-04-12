@@ -67,7 +67,19 @@ mutate_join(x, y, ...)
 
 \method{mutate_join}{data.table}(x, y, ...)
 
-\method{right_join}{ExprBuilder}(x, y, ..., which, nomatch, mult, roll, rollends)
+\method{right_join}{ExprBuilder}(
+  x,
+  y,
+  ...,
+  allow = FALSE,
+  which,
+  nomatch,
+  mult,
+  roll,
+  rollends,
+  .selecting,
+  .framing
+)
 
 \method{right_join}{data.table}(x, y, ..., allow = FALSE, .expr = FALSE, .selecting, .framing)
 
