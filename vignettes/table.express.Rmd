@@ -30,7 +30,7 @@ package.
 The [`rlang`](https://cran.r-project.org/package=rlang)
 package powers most of this package's functionality,
 which means that
-[tidy evaluation](https://tidyeval.tidyverse.org/)
+[tidy evaluation](https://dplyr.tidyverse.org/articles/programming.html)
 can also be supported.
 There are other resources that provide comprehensive descriptions of these packages,
 so they will not be explained here.
