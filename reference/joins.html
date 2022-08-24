@@ -19,7 +19,7 @@ information.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -59,7 +59,7 @@ information.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Joining verbs</h1>
-    <small class="dont-index">Source: <a href="https://github.com/asardaes/table.express/blob/HEAD/R/VERBS-joins.R" class="external-link"><code>R/VERBS-joins.R</code></a>, <a href="https://github.com/asardaes/table.express/blob/HEAD/R/VERBS-anti_join.R" class="external-link"><code>R/VERBS-anti_join.R</code></a>, <a href="https://github.com/asardaes/table.express/blob/HEAD/R/VERBS-full_join.R" class="external-link"><code>R/VERBS-full_join.R</code></a>, and 5 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/asardaes/table.express/blob/HEAD/R/UTILS-joins.R" class="external-link"><code>R/UTILS-joins.R</code></a>, <a href="https://github.com/asardaes/table.express/blob/HEAD/R/VERBS-anti_join.R" class="external-link"><code>R/VERBS-anti_join.R</code></a>, <a href="https://github.com/asardaes/table.express/blob/HEAD/R/VERBS-full_join.R" class="external-link"><code>R/VERBS-full_join.R</code></a>, and 5 more</small>
     <div class="hidden name"><code>joins.Rd</code></div>
     </div>
 
@@ -70,97 +70,155 @@ information.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for ExprBuilder</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">anti_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for data.table</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">anti_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S3 method for ExprBuilder</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, allow <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">.parent_env</span><span class="op">)</span>
-
-<span class="co"># S3 method for data.table</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for ExprBuilder</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for data.table</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S3 method for ExprBuilder</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, <span class="va">nomatch</span>, <span class="va">mult</span>, <span class="va">roll</span>, <span class="va">rollends</span>, <span class="va">.parent_env</span><span class="op">)</span>
-
-<span class="co"># S3 method for data.table</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, allow <span class="op">=</span> <span class="cn">FALSE</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu">mutate_join</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for ExprBuilder</span>
-<span class="fu">mutate_join</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">y</span>,
-  <span class="va">...</span>,
-  <span class="va">.SDcols</span>,
-  <span class="va">mult</span>,
-  <span class="va">roll</span>,
-  <span class="va">rollends</span>,
-  allow <span class="op">=</span> <span class="cn">FALSE</span>,
-  .by_each <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">.parent_env</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for EagerExprBuilder</span>
-<span class="fu">mutate_join</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, .parent_env <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># S3 method for data.table</span>
-<span class="fu">mutate_join</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for ExprBuilder</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, <span class="va">which</span>, <span class="va">nomatch</span>, <span class="va">mult</span>, <span class="va">roll</span>, <span class="va">rollends</span><span class="op">)</span>
-
-<span class="co"># S3 method for data.table</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, allow <span class="op">=</span> <span class="cn">FALSE</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S3 method for ExprBuilder</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">semi_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, allow <span class="op">=</span> <span class="cn">FALSE</span>, .eager <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S3 method for data.table</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">semi_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, allow <span class="op">=</span> <span class="cn">FALSE</span>, .eager <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for ExprBuilder</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">anti_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.table</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">anti_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ExprBuilder</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, allow <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">.parent_env</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.table</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ExprBuilder</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.table</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ExprBuilder</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  <span class="va">nomatch</span>,</span>
+<span>  <span class="va">mult</span>,</span>
+<span>  <span class="va">roll</span>,</span>
+<span>  <span class="va">rollends</span>,</span>
+<span>  <span class="va">.parent_env</span>,</span>
+<span>  .to_eager <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.table</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, allow <span class="op">=</span> <span class="cn">FALSE</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mutate_join</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ExprBuilder</span></span>
+<span><span class="fu">mutate_join</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  <span class="va">.SDcols</span>,</span>
+<span>  <span class="va">mult</span>,</span>
+<span>  <span class="va">roll</span>,</span>
+<span>  <span class="va">rollends</span>,</span>
+<span>  allow <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  .by_each <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">.parent_env</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for EagerExprBuilder</span></span>
+<span><span class="fu">mutate_join</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, .parent_env <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.table</span></span>
+<span><span class="fu">mutate_join</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ExprBuilder</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  allow <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">which</span>,</span>
+<span>  <span class="va">nomatch</span>,</span>
+<span>  <span class="va">mult</span>,</span>
+<span>  <span class="va">roll</span>,</span>
+<span>  <span class="va">rollends</span>,</span>
+<span>  <span class="va">.selecting</span>,</span>
+<span>  <span class="va">.framing</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.table</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, allow <span class="op">=</span> <span class="cn">FALSE</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">.selecting</span>, <span class="va">.framing</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ExprBuilder</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">semi_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, allow <span class="op">=</span> <span class="cn">FALSE</span>, .eager <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.table</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">semi_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, allow <span class="op">=</span> <span class="cn">FALSE</span>, .eager <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>An <a href="ExprBuilder.html">ExprBuilder</a> instance.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A <a href="https://Rdatatable.gitlab.io/data.table/reference/data.table-class.html" class="external-link">data.table::data.table</a> or, for some verbs (see details), a call to
 <code><a href="nest_expr.html">nest_expr()</a></code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Expressions for the <code>on</code> part of the join.</p></dd>
+
+
 <dt>.expr</dt>
 <dd><p>If the input is a <code>data.table</code> and <code>.expr</code> is <code>TRUE</code>, an instance of
 <a href="EagerExprBuilder.html">EagerExprBuilder</a> will be returned. Useful if you want to add clauses to <code>j</code>, e.g. with
 <a href="mutate-table.express.html">mutate-table.express</a>.</p></dd>
+
+
 <dt>sort</dt>
 <dd><p>Passed to <a href="https://Rdatatable.gitlab.io/data.table/reference/merge.html" class="external-link">data.table::merge</a>.</p></dd>
+
+
 <dt>allow</dt>
 <dd><p>Passed as <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></code>'s <code>allow.cartesian</code>.</p></dd>
+
+
 <dt>.parent_env</dt>
 <dd><p>See <code><a href="end_expr.html">end_expr()</a></code>.</p></dd>
+
+
 <dt>nomatch, mult, roll, rollends</dt>
 <dd><p>See <a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>.</p></dd>
+
+
+<dt>.to_eager</dt>
+<dd><p>Internal, should be left as <code>FALSE</code> in all external calls.</p></dd>
+
+
 <dt>.SDcols</dt>
 <dd><p>For <code>mutate_join</code>. See the details below.</p></dd>
+
+
 <dt>.by_each</dt>
 <dd><p>For <code>mutate_join</code>. See the details below.</p></dd>
+
+
 <dt>which</dt>
 <dd><p>If <code>TRUE</code>, return the row numbers that matched in <code>x</code> instead of the result of the
 join.</p></dd>
+
+
+<dt>.selecting</dt>
+<dd><p>One or more expressions, possibly contained in a call to <code>list</code> or <code>.</code>, that
+will be added to <code>j</code> in the same frame as the join.</p></dd>
+
+
+<dt>.framing</dt>
+<dd><p>Similar to <code>.selecting</code>, but added to the frame with <code><a href="frame_append.html">frame_append()</a></code>.</p></dd>
+
+
 <dt>.eager</dt>
 <dd><p>For <code>semi_join</code>. If <code>TRUE</code>, it uses <code><a href="nest_expr.html">nest_expr()</a></code> to build an expression like
 <a href="https://stackoverflow.com/a/18971223/5793905" class="external-link">this</a> instead of the default one. This uses the
 captured <code>data.table</code> eagerly, so use <code><a href="chain.html">chain()</a></code> when needed. The default is lazy.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -198,24 +256,24 @@ expressions from the list in <code>.SDcols</code></p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">lhs</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"a"</span>, <span class="st">"c"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span class="r-in">                              y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span class="r-in">                              v <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">rhs</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"b"</span><span class="op">)</span>,</span>
-<span class="r-in">                              v <span class="op">=</span> <span class="fl">8</span><span class="op">:</span><span class="fl">7</span>,</span>
-<span class="r-in">                              foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">rhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">anti_join</a></span><span class="op">(</span><span class="va">lhs</span>, <span class="va">x</span>, <span class="va">v</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lhs</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"a"</span>, <span class="st">"c"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                              y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                              v <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">rhs</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"b"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                              v <span class="op">=</span> <span class="fl">8</span><span class="op">:</span><span class="fl">7</span>,</span></span>
+<span class="r-in"><span>                              foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">rhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">anti_join</a></span><span class="op">(</span><span class="va">lhs</span>, <span class="va">x</span>, <span class="va">v</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x v foo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: b 7   2</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x y v i.v foo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: c 1 7   8   4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: c 3 8   8   4</span>
@@ -223,11 +281,11 @@ expressions from the list in <code>.SDcols</code></p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4: b 1 1   7   2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5: b 3 2   7   2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6: b 6 3   7   2</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># creates new data.table</span></span>
-<span class="r-in"><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># creates new data.table</span></span></span>
+<span class="r-in"><span><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x  v foo y i.v</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: b  7   2 1   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: b  7   2 3   2</span>
@@ -238,26 +296,26 @@ expressions from the list in <code>.SDcols</code></p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7: c  8   4 1   7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8: c  8   4 3   8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9: c  8   4 6   9</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># would modify lhs by reference</span></span>
-<span class="r-in"><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">mutate_join</span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, rhs.v <span class="op">=</span> <span class="st">"v"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># would modify lhs by reference</span></span></span>
+<span class="r-in"><span><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">mutate_join</span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, rhs.v <span class="op">=</span> <span class="st">"v"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> .DT_[, `:=`(c("foo", "rhs.v"), rhs[.SD, list(foo = x.foo, rhs.v = x.v), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     on = list(x)])]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># would modify rhs by reference, summarizing 'y' before adding it.</span></span>
-<span class="r-in"><span class="va">rhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">mutate_join</span><span class="op">(</span><span class="va">lhs</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="fu">.</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># would modify rhs by reference, summarizing 'y' before adding it.</span></span></span>
+<span class="r-in"><span><span class="va">rhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">mutate_join</span><span class="op">(</span><span class="va">lhs</span>, <span class="va">x</span>, .SDcols <span class="op">=</span> <span class="fu">.</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> .DT_[, `:=`("y", lhs[.SD, list(y = mean(y)), by = .EACHI, on = list(x)][, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     list(y)])]</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># creates new data.table</span></span>
-<span class="r-in"><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># creates new data.table</span></span></span>
+<span class="r-in"><span><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x y v i.v foo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: c 1 7   8   4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: c 3 8   8   4</span>
@@ -265,11 +323,11 @@ expressions from the list in <code>.SDcols</code></p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4: b 1 1   7   2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5: b 3 2   7   2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6: b 6 3   7   2</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># keep only columns from lhs</span></span>
-<span class="r-in"><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">semi_join</a></span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># keep only columns from lhs</span></span></span>
+<span class="r-in"><span><span class="va">lhs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">semi_join</a></span><span class="op">(</span><span class="va">rhs</span>, <span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x y v</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: c 1 7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: c 3 8</span>
@@ -277,7 +335,7 @@ expressions from the list in <code>.SDcols</code></p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4: b 1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5: b 3 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6: b 6 3</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -292,7 +350,7 @@ expressions from the list in <code>.SDcols</code></p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

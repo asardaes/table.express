@@ -19,7 +19,7 @@ frame."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -97,43 +97,43 @@ has been associated with the author.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: data.table</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># ====================================================================================</span></span>
-<span class="r-in"><span class="co"># Simple dplyr-like transformations</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">0</span>, <span class="va">am</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mean_mpg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">cyl</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># ====================================================================================</span></span></span>
+<span class="r-in"><span><span class="co"># Simple dplyr-like transformations</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">0</span>, <span class="va">am</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mean_mpg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">cyl</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    cyl mean_mpg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:   8 15.40000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:   6 20.56667</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3:   4 26.00000</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Equivalent to previous</span></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mean_mpg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="where-table.express.html">where</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">0</span>, <span class="va">am</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="order_by-table.express.html">order_by</a></span><span class="op">(</span><span class="op">-</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="va">end_expr</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Equivalent to previous</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mean_mpg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="where-table.express.html">where</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">0</span>, <span class="va">am</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="order_by-table.express.html">order_by</a></span><span class="op">(</span><span class="op">-</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="va">end_expr</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    cyl mean_mpg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:   8 15.40000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:   6 20.56667</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3:   4 26.00000</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Modification by reference</span></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="where-table.express.html">where</a></span><span class="op">(</span><span class="va">gear</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">2</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="va">carb</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">2</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>wt_squared <span class="op">=</span> <span class="va">wt</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Modification by reference</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="where-table.express.html">where</a></span><span class="op">(</span><span class="va">gear</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">2</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="va">carb</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">2</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>wt_squared <span class="op">=</span> <span class="va">wt</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4         NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4         NA</span>
@@ -168,8 +168,8 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8  12.744900</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2         NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4         NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4         NA</span>
@@ -204,11 +204,11 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8  12.744900</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2         NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb wt_squared</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Deletion by reference</span></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>wt_squared <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="va">print</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Deletion by reference</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>wt_squared <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="va">print</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</span>
@@ -243,11 +243,11 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Support for tidyslect helpers</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"t"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Support for tidyslect helpers</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"t"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     drat    wt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: 3.90 2.620</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: 3.90 2.875</span>
@@ -282,14 +282,14 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 31: 3.54 3.570</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32: 4.11 2.780</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     drat    wt</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># ====================================================================================</span></span>
-<span class="r-in"><span class="co"># Helpers to transform a subset of data</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Like DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole]</span></span>
-<span class="r-in"><span class="va">whole</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">DT</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">]</span></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="va">as.integer</span>, .SDcols <span class="op">=</span> <span class="va">whole</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># ====================================================================================</span></span></span>
+<span class="r-in"><span><span class="co"># Helpers to transform a subset of data</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Like DT[, (whole) := lapply(.SD, as.integer), .SDcols = whole]</span></span></span>
+<span class="r-in"><span><span class="va">whole</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">DT</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="va">as.integer</span>, .SDcols <span class="op">=</span> <span class="va">whole</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</span>
@@ -324,17 +324,17 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">DT</span>, <span class="va">class</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">DT</span>, <span class="va">class</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mpg       cyl      disp        hp      drat        wt      qsec        vs </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "numeric" "integer" "numeric" "integer" "numeric" "numeric" "numeric" "integer" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        am      gear      carb </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "integer" "integer" "integer" </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Like DT[, lapply(.SD, fun), .SDcols = ...]</span></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="op">(</span><span class="va">.COL</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span>,</span>
-<span class="r-in">                 .SDcols <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span>, <span class="va">whole</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Like DT[, lapply(.SD, fun), .SDcols = ...]</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="op">(</span><span class="va">.COL</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span>, <span class="va">whole</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             mpg        disp        drat           wt        qsec</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:  0.15088482 -0.57061982  0.56751369 -0.610399567 -0.77716515</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:  0.15088482 -0.57061982  0.56751369 -0.349785269 -0.46378082</span>
@@ -369,10 +369,10 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 31: -0.84464392  0.56703942 -0.10578782  0.360516446 -1.81804880</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32:  0.21725341 -0.88529152  0.96027290 -0.446876870  0.42041067</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             mpg        disp        drat           wt        qsec</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Filter several with the same condition</span></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="va">.COL</span> <span class="op">==</span> <span class="fl">1</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vs"</span>, <span class="st">"am"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Filter several with the same condition</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="va">.COL</span> <span class="op">==</span> <span class="fl">1</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vs"</span>, <span class="st">"am"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span>
@@ -381,26 +381,26 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using secondary indices, i.e. DT[.(4, 5), on = .(cyl, gear)]</span></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="filter_on.html">filter_on</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">4</span>, gear <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># note we don't use ==</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using secondary indices, i.e. DT[.(4, 5), on = .(cyl, gear)]</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="filter_on.html">filter_on</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">4</span>, gear <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># note we don't use ==</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mpg cyl  disp  hp drat    wt qsec vs am gear carb</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: 30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">scale_undim</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span> <span class="co"># remove dimensions</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Chaining</span></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="va">as.integer</span>, .SDcols <span class="op">=</span> <span class="va">whole</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="va">chain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="va">.COL</span> <span class="op">==</span> <span class="fl">1</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vs"</span>, <span class="st">"am"</span><span class="op">)</span>, .collapse <span class="op">=</span> <span class="va">`|`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="va">scale_undim</span>, .SDcols <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">is.integer</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="va">end_expr</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">scale_undim</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span> <span class="co"># remove dimensions</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Chaining</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="va">as.integer</span>, .SDcols <span class="op">=</span> <span class="va">whole</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="va">chain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="va">.COL</span> <span class="op">==</span> <span class="fl">1</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vs"</span>, <span class="st">"am"</span><span class="op">)</span>, .collapse <span class="op">=</span> <span class="va">`|`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="va">scale_undim</span>, .SDcols <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">is.integer</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="va">end_expr</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             mpg        disp        drat          wt        qsec</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.39184157  0.07107789  0.03955921 -0.09987243 -0.87064903</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.39184157  0.07107789  0.03955921  0.29103270 -0.60164850</span>
@@ -422,12 +422,12 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18: -0.63268982 -0.12581378 -0.57580624  0.13007177 -1.33179279</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19: -1.50344887  1.92185962 -0.75162494  1.35644079 -1.76411507</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20: -0.31773442 -0.44084046  0.50108330  0.14540138  0.15731727</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The previous is quivalent to</span></span>
-<span class="r-in"><span class="va">DT</span><span class="op">[</span>, <span class="op">(</span><span class="va">whole</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="va">as.integer</span><span class="op">)</span>, .SDcols <span class="op">=</span> <span class="va">whole</span></span>
-<span class="r-in">   <span class="op">]</span><span class="op">[</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">am</span> <span class="op">==</span> <span class="fl">1</span>,</span>
-<span class="r-in">     <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="va">scale_undim</span><span class="op">)</span>,</span>
-<span class="r-in">     .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">DT</span>, <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.integer</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The previous is quivalent to</span></span></span>
+<span class="r-in"><span><span class="va">DT</span><span class="op">[</span>, <span class="op">(</span><span class="va">whole</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="va">as.integer</span><span class="op">)</span>, .SDcols <span class="op">=</span> <span class="va">whole</span></span></span>
+<span class="r-in"><span>   <span class="op">]</span><span class="op">[</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">am</span> <span class="op">==</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>     <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="va">scale_undim</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>     .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">DT</span>, <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.integer</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             mpg        disp        drat          wt        qsec</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.39184157  0.07107789  0.03955921 -0.09987243 -0.87064903</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.39184157  0.07107789  0.03955921  0.29103270 -0.60164850</span>
@@ -449,15 +449,15 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18: -0.63268982 -0.12581378 -0.57580624  0.13007177 -1.33179279</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19: -1.50344887  1.92185962 -0.75162494  1.35644079 -1.76411507</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20: -0.31773442 -0.44084046  0.50108330  0.14540138  0.15731727</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Alternative to keep all columns (*copying* non-scaled ones)</span></span>
-<span class="r-in"><span class="va">scale_non_integers</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">is.integer</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="va">x</span> <span class="kw">else</span> <span class="fu">scale_undim</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="va">.COL</span> <span class="op">==</span> <span class="fl">1</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vs"</span>, <span class="st">"am"</span><span class="op">)</span>, .collapse <span class="op">=</span> <span class="va">`|`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">scale_non_integers</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Alternative to keep all columns (*copying* non-scaled ones)</span></span></span>
+<span class="r-in"><span><span class="va">scale_non_integers</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">is.integer</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="va">x</span> <span class="kw">else</span> <span class="fu">scale_undim</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="va">.COL</span> <span class="op">==</span> <span class="fl">1</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vs"</span>, <span class="st">"am"</span><span class="op">)</span>, .collapse <span class="op">=</span> <span class="va">`|`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">scale_non_integers</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             mpg cyl        disp  hp        drat          wt        qsec vs am</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.39184157   6  0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.39184157   6  0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1</span>
@@ -500,11 +500,11 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18:    5    6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19:    5    8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20:    4    2</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Without copying non-scaled</span></span>
-<span class="r-in"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="where-table.express.html">where</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">am</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="va">scale</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">DT</span>, <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.integer</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Without copying non-scaled</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="where-table.express.html">where</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">am</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="va">scale</span>, .SDcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">DT</span>, <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.integer</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             mpg cyl         disp  hp        drat          wt        qsec vs am</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.39184157   6   0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.39184157   6   0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1</span>
@@ -573,8 +573,8 @@ has been associated with the author.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 31:    5    8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32:    4    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     gear carb</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             mpg cyl         disp  hp        drat          wt        qsec vs am</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.39184157   6   0.07107789 110  0.03955921 -0.09987243 -0.87064903  0  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.39184157   6   0.07107789 110  0.03955921  0.29103270 -0.60164850  0  1</span>
@@ -657,7 +657,7 @@ has been associated with the author.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

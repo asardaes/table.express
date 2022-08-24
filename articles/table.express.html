@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
 
     
     
-<p>The goal of this package is to offer an alternative way of <strong>expressing</strong> common operations with <a href="https://cran.r-project.org/package=data.table" class="external-link"><code>data.table</code></a> without sacrificing the performance optimizations that it offers. The foundation for the data manipulation verbs is the <a href="https://cran.r-project.org/package=dplyr" class="external-link"><code>dplyr</code></a> package, which also advocates the piping operator from the <a href="https://cran.r-project.org/package=magrittr" class="external-link"><code>magrittr</code></a> package. The <a href="https://cran.r-project.org/package=rlang" class="external-link"><code>rlang</code></a> package powers most of this package’s functionality, which means that <a href="https://tidyeval.tidyverse.org/" class="external-link">tidy evaluation</a> can also be supported. There are other resources that provide comprehensive descriptions of these packages, so they will not be explained here.</p>
+<p>The goal of this package is to offer an alternative way of <strong>expressing</strong> common operations with <a href="https://cran.r-project.org/package=data.table" class="external-link"><code>data.table</code></a> without sacrificing the performance optimizations that it offers. The foundation for the data manipulation verbs is the <a href="https://cran.r-project.org/package=dplyr" class="external-link"><code>dplyr</code></a> package, which also advocates the piping operator from the <a href="https://cran.r-project.org/package=magrittr" class="external-link"><code>magrittr</code></a> package. The <a href="https://cran.r-project.org/package=rlang" class="external-link"><code>rlang</code></a> package powers most of this package’s functionality, which means that <a href="https://dplyr.tidyverse.org/articles/programming.html" class="external-link">tidy evaluation</a> can also be supported. There are other resources that provide comprehensive descriptions of these packages, so they will not be explained here.</p>
 <p>Even though using data manipulation verbs can improve expressiveness in some cases, this is not always true, so using the traditional <code>data.table</code> syntax might still be preferable in many situations. Unfortunately, it is not entirely straightforward to use the verbs without considerable knowledge of the syntax understood by <code>data.table</code>, as well as its <a href="https://rdrr.io/github/Rdatatable/data.table/man/datatable-optimize.html" class="external-link">optimizations</a> and <a href="https://rdrr.io/github/Rdatatable/data.table/man/special-symbols.html" class="external-link">special symbols</a>. We will return to the importance of this at the <a href="#as-simple-as-possible">end</a>.</p>
 <div class="section level3">
 <h3 id="preliminaries">Preliminaries<a class="anchor" aria-label="anchor" href="#preliminaries"></a>
@@ -147,17 +147,17 @@
 </ul>
 <p>The examples here explain this in more detail with the <code>mtcars</code> data:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span>
-
-<span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">as.data.table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span>
-  <span class="va">print</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4</span>
-<span class="co">#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4</span>
-<span class="co">#&gt; ---                                                   </span>
-<span class="co">#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8</span>
-<span class="co">#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">as.data.table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span></span>
+<span>  <span class="va">print</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4</span></span>
+<span><span class="co">#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4</span></span>
+<span><span class="co">#&gt; ---                                                   </span></span>
+<span><span class="co">#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8</span></span>
+<span><span class="co">#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="expression-delimiters">Expression delimiters<a class="anchor" aria-label="anchor" href="#expression-delimiters"></a>
@@ -176,92 +176,92 @@
 </h2>
 <p>Let’s start with a lazy example to get an idea of how the built expressions look like. The <code>arrange</code>/<code>order_by</code> verbs add an expression with <code>order</code> to the frame, and let <code>data.table</code> handle it as usual:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/order_by-table.express.html">order_by</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="op">-</span><span class="va">cyl</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[order(mpg, -cyl)]</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/order_by-table.express.html">order_by</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="op">-</span><span class="va">cyl</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[order(mpg, -cyl)]</span></span></code></pre>
 <p>We see here that the built expression includes a <code>.DT_</code> pronoun. When the expression is evaluated, the captured <code>data.table</code> is assigned to the evaluation environment as said pronoun. When evaluating eagerly, this whole process happens in the background:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/order_by-table.express.html">order_by</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="op">-</span><span class="va">cyl</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt;  1: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4</span>
-<span class="co">#&gt;  2: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4</span>
-<span class="co">#&gt; ---                                                    </span>
-<span class="co">#&gt; 31: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span>
-<span class="co">#&gt; 32: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/order_by-table.express.html">order_by</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="op">-</span><span class="va">cyl</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt;  1: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4</span></span>
+<span><span class="co">#&gt;  2: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4</span></span>
+<span><span class="co">#&gt; ---                                                    </span></span>
+<span><span class="co">#&gt; 31: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span></span>
+<span><span class="co">#&gt; 32: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="selecting-columns">Selecting columns<a class="anchor" aria-label="anchor" href="#selecting-columns"></a>
 </h2>
 <p>Even though selecting a subset of columns is a common operation, it may be undesirable to do so when working with <code>data.table</code>s because it <em>always</em> leads to <strong>deep</strong> data copies. Given that <code>data.table</code> supports modification by reference, these copies are necessary. For example, the following would require copying all columns between <code>mpg</code> and <code>disp</code>, since any of them could be modified by reference afterwards.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span><span class="op">[</span>, <span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">]</span><span class="op">[</span>, <span class="va">cyl</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">DT</span><span class="op">[</span>, <span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">]</span><span class="op">[</span>, <span class="va">cyl</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>Therefore, it might be preferable to use mutation verbs to remove columns that are not of interest.</p>
 <p>With that said, the <code>select</code> verb can be used as usual:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">am</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg am</span>
-<span class="co">#&gt;  1: 21.0  1</span>
-<span class="co">#&gt;  2: 21.0  1</span>
-<span class="co">#&gt; ---        </span>
-<span class="co">#&gt; 31: 15.0  1</span>
-<span class="co">#&gt; 32: 21.4  1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">am</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg am</span></span>
+<span><span class="co">#&gt;  1: 21.0  1</span></span>
+<span><span class="co">#&gt;  2: 21.0  1</span></span>
+<span><span class="co">#&gt; ---        </span></span>
+<span><span class="co">#&gt; 31: 15.0  1</span></span>
+<span><span class="co">#&gt; 32: 21.4  1</span></span></code></pre>
 <p>To maintain consistency, even single columns are kept as <code>data.table</code>s:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg</span>
-<span class="co">#&gt;  1: 21.0</span>
-<span class="co">#&gt;  2: 21.0</span>
-<span class="co">#&gt; ---     </span>
-<span class="co">#&gt; 31: 15.0</span>
-<span class="co">#&gt; 32: 21.4</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg</span></span>
+<span><span class="co">#&gt;  1: 21.0</span></span>
+<span><span class="co">#&gt;  2: 21.0</span></span>
+<span><span class="co">#&gt; ---     </span></span>
+<span><span class="co">#&gt; 31: 15.0</span></span>
+<span><span class="co">#&gt; 32: 21.4</span></span></code></pre>
 <p>Calls to <code>tidyselect</code>’s helpers or to <code>:</code> are handled specially internally:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">disp</span>, <span class="va">gear</span><span class="op">:</span><span class="va">carb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg cyl disp gear carb</span>
-<span class="co">#&gt;  1: 21.0   6  160    4    4</span>
-<span class="co">#&gt;  2: 21.0   6  160    4    4</span>
-<span class="co">#&gt; ---                        </span>
-<span class="co">#&gt; 31: 15.0   8  301    5    8</span>
-<span class="co">#&gt; 32: 21.4   4  121    4    2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">disp</span>, <span class="va">gear</span><span class="op">:</span><span class="va">carb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg cyl disp gear carb</span></span>
+<span><span class="co">#&gt;  1: 21.0   6  160    4    4</span></span>
+<span><span class="co">#&gt;  2: 21.0   6  160    4    4</span></span>
+<span><span class="co">#&gt; ---                        </span></span>
+<span><span class="co">#&gt; 31: 15.0   8  301    5    8</span></span>
+<span><span class="co">#&gt; 32: 21.4   4  121    4    2</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"M"</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg am</span>
-<span class="co">#&gt;  1: 21.0  1</span>
-<span class="co">#&gt;  2: 21.0  1</span>
-<span class="co">#&gt; ---        </span>
-<span class="co">#&gt; 31: 15.0  1</span>
-<span class="co">#&gt; 32: 21.4  1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"M"</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg am</span></span>
+<span><span class="co">#&gt;  1: 21.0  1</span></span>
+<span><span class="co">#&gt;  2: 21.0  1</span></span>
+<span><span class="co">#&gt; ---        </span></span>
+<span><span class="co">#&gt; 31: 15.0  1</span></span>
+<span><span class="co">#&gt; 32: 21.4  1</span></span></code></pre>
 <p>Tidy evaluation and the <code>.parse</code> argument can also aid in cases where certain parts of the frame were computed programmatically:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">selected</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"am"</span><span class="op">)</span>
-<span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">selected</span>, .parse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg am</span>
-<span class="co">#&gt;  1: 21.0  1</span>
-<span class="co">#&gt;  2: 21.0  1</span>
-<span class="co">#&gt; ---        </span>
-<span class="co">#&gt; 31: 15.0  1</span>
-<span class="co">#&gt; 32: 21.4  1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">selected</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"am"</span><span class="op">)</span></span>
+<span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">selected</span>, .parse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg am</span></span>
+<span><span class="co">#&gt;  1: 21.0  1</span></span>
+<span><span class="co">#&gt;  2: 21.0  1</span></span>
+<span><span class="co">#&gt; ---        </span></span>
+<span><span class="co">#&gt; 31: 15.0  1</span></span>
+<span><span class="co">#&gt; 32: 21.4  1</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="transmuting-columns">Transmuting columns<a class="anchor" aria-label="anchor" href="#transmuting-columns"></a>
 </h2>
 <p>The <code>transmute</code> verb simply wraps everything in its ellipsis in a call to <code>list</code> and assigns the expression to the frame’s <code>j</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span>, bar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;      foo        bar</span>
-<span class="co">#&gt;  1: 42.0  403.42879</span>
-<span class="co">#&gt;  2: 42.0  403.42879</span>
-<span class="co">#&gt; ---                </span>
-<span class="co">#&gt; 31: 30.0 2980.95799</span>
-<span class="co">#&gt; 32: 42.8   54.59815</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span>, bar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      foo        bar</span></span>
+<span><span class="co">#&gt;  1: 42.0  403.42879</span></span>
+<span><span class="co">#&gt;  2: 42.0  403.42879</span></span>
+<span><span class="co">#&gt; ---                </span></span>
+<span><span class="co">#&gt; 31: 30.0 2980.95799</span></span>
+<span><span class="co">#&gt; 32: 42.8   54.59815</span></span></code></pre>
 <p>Even though <code>select</code> can be used for the same (given the way <code>data.table</code> handles <code>j</code>), the simplicity of <code>transmute</code>’s internals makes it preferable when no <code>tidyselect</code> helpers are needed, since it avoids extra function calls and can reduce overhead significantly in special circumstances.</p>
 <div class="section level3">
 <h3 id="summarizing-columns">Summarizing columns<a class="anchor" aria-label="anchor" href="#summarizing-columns"></a>
@@ -274,115 +274,115 @@
 </h2>
 <p>The <code>mutate</code> verb builds an expression with <code>:=</code> in order to perform assignment by reference by default.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">/</span> <span class="fl">2</span>, hp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">hp</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[, `:=`(mpg = mpg/2, hp = log(hp))]</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">/</span> <span class="fl">2</span>, hp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">hp</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[, `:=`(mpg = mpg/2, hp = log(hp))]</span></span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">/</span> <span class="fl">2</span>, hp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">hp</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg cyl disp       hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt;  1: 10.5   6  160 4.700480 3.90 2.620 16.46  0  1    4    4</span>
-<span class="co">#&gt;  2: 10.5   6  160 4.700480 3.90 2.875 17.02  0  1    4    4</span>
-<span class="co">#&gt; ---                                                        </span>
-<span class="co">#&gt; 31:  7.5   8  301 5.814131 3.54 3.570 14.60  0  1    5    8</span>
-<span class="co">#&gt; 32: 10.7   4  121 4.691348 4.11 2.780 18.60  1  1    4    2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">/</span> <span class="fl">2</span>, hp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">hp</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg cyl disp       hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt;  1: 10.5   6  160 4.700480 3.90 2.620 16.46  0  1    4    4</span></span>
+<span><span class="co">#&gt;  2: 10.5   6  160 4.700480 3.90 2.875 17.02  0  1    4    4</span></span>
+<span><span class="co">#&gt; ---                                                        </span></span>
+<span><span class="co">#&gt; 31:  7.5   8  301 5.814131 3.54 3.570 14.60  0  1    5    8</span></span>
+<span><span class="co">#&gt; 32: 10.7   4  121 4.691348 4.11 2.780 18.60  1  1    4    2</span></span></code></pre>
 <p>It can also support expressions that already contain <code>:=</code>:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">new_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>
-
-<span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">new_vars</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, .unquote_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb x y</span>
-<span class="co">#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 1 2</span>
-<span class="co">#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 1 2</span>
-<span class="co">#&gt; ---                                                       </span>
-<span class="co">#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8 1 2</span>
-<span class="co">#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2 1 2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">new_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">new_vars</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, .unquote_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb x y</span></span>
+<span><span class="co">#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 1 2</span></span>
+<span><span class="co">#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 1 2</span></span>
+<span><span class="co">#&gt; ---                                                       </span></span>
+<span><span class="co">#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8 1 2</span></span>
+<span><span class="co">#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2 1 2</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="filtering-rows">Filtering rows<a class="anchor" aria-label="anchor" href="#filtering-rows"></a>
 </h2>
 <p>The <code>where</code>/<code>filter</code> verbs work with the <code>i</code> part of the frame:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">1L</span>, <span class="va">carb</span> <span class="op">&gt;</span> <span class="fl">2L</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;     mpg cyl  disp  hp drat   wt qsec vs am gear carb</span>
-<span class="co">#&gt; 1: 19.2   6 167.6 123 3.92 3.44 18.3  1  0    4    4</span>
-<span class="co">#&gt; 2: 17.8   6 167.6 123 3.92 3.44 18.9  1  0    4    4</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">1L</span>, <span class="va">carb</span> <span class="op">&gt;</span> <span class="fl">2L</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;     mpg cyl  disp  hp drat   wt qsec vs am gear carb</span></span>
+<span><span class="co">#&gt; 1: 19.2   6 167.6 123 3.92 3.44 18.3  1  0    4    4</span></span>
+<span><span class="co">#&gt; 2: 17.8   6 167.6 123 3.92 3.44 18.9  1  0    4    4</span></span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/where-table.express.html">where</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">1L</span>, <span class="va">carb</span> <span class="op">&gt;</span> <span class="fl">2L</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mean_mpg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;    mean_mpg</span>
-<span class="co">#&gt; 1:     18.5</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/where-table.express.html">where</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">==</span> <span class="fl">1L</span>, <span class="va">carb</span> <span class="op">&gt;</span> <span class="fl">2L</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mean_mpg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;    mean_mpg</span></span>
+<span><span class="co">#&gt; 1:     18.5</span></span></code></pre>
 <p>As mentioned in the beginning, <code>where</code> can be used as a lazy version of <code>filter</code>, letting us add other clauses to the same frame.</p>
 <p>The helper verb <code>filter_sd</code> can be used to apply the same conditions to many columns, and it can use a special pronoun <code>.COL</code> while specifying the expression, lambdas as formulas, as well as <code>tidyselect</code> helpers to choose <code>.SDcols</code>:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"qsec"</span><span class="op">)</span>, <span class="va">`&gt;`</span>, <span class="fl">20</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;     mpg cyl  disp hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt; 1: 22.8   4 140.8 95 3.92 3.150 22.90  1  0    4    2</span>
-<span class="co">#&gt; 2: 21.5   4 120.1 97 3.70 2.465 20.01  1  0    3    1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"qsec"</span><span class="op">)</span>, <span class="va">`&gt;`</span>, <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;     mpg cyl  disp hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt; 1: 22.8   4 140.8 95 3.92 3.150 22.90  1  0    4    2</span></span>
+<span><span class="co">#&gt; 2: 21.5   4 120.1 97 3.70 2.465 20.01  1  0    3    1</span></span></code></pre>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"qsec"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">&gt;</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;     mpg cyl  disp hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt; 1: 22.8   4 140.8 95 3.92 3.150 22.90  1  0    4    2</span>
-<span class="co">#&gt; 2: 21.5   4 120.1 97 3.70 2.465 20.01  1  0    3    1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"qsec"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">&gt;</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;     mpg cyl  disp hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt; 1: 22.8   4 140.8 95 3.92 3.150 22.90  1  0    4    2</span></span>
+<span><span class="co">#&gt; 2: 21.5   4 120.1 97 3.70 2.465 20.01  1  0    3    1</span></span></code></pre>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[mpg &gt; 0 &amp; am &gt; 0]</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[mpg &gt; 0 &amp; am &gt; 0]</span></span></code></pre>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># like dplyr's filter_if</span>
-<span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, <span class="va">.x</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[mpg &gt; 0 &amp; cyl &gt; 0 &amp; disp &gt; 0 &amp; hp &gt; 0 &amp; drat &gt; 0 &amp; wt &gt; </span>
-<span class="co">#&gt;     0 &amp; qsec &gt; 0 &amp; vs &gt; 0 &amp; am &gt; 0 &amp; gear &gt; 0 &amp; carb &gt; 0]</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># like dplyr's filter_if</span></span>
+<span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, <span class="va">.x</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[mpg &gt; 0 &amp; cyl &gt; 0 &amp; disp &gt; 0 &amp; hp &gt; 0 &amp; drat &gt; 0 &amp; wt &gt; </span></span>
+<span><span class="co">#&gt;     0 &amp; qsec &gt; 0 &amp; vs &gt; 0 &amp; am &gt; 0 &amp; gear &gt; 0 &amp; carb &gt; 0]</span></span></code></pre>
 <p>In order to enable combination of filtering helpers with other verbs, the <code>.expr</code> parameter can be used to indicate that the expression should be kept, delaying evaluation until a verb that sets <code>j</code> is used:</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vs"</span>, <span class="st">"am"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">&gt;</span> <span class="fl">0</span>, .expr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>some_flag <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb some_flag</span>
-<span class="co">#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4        NA</span>
-<span class="co">#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4        NA</span>
-<span class="co">#&gt; ---                                                             </span>
-<span class="co">#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8        NA</span>
-<span class="co">#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2      TRUE</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vs"</span>, <span class="st">"am"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">&gt;</span> <span class="fl">0</span>, .expr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>some_flag <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb some_flag</span></span>
+<span><span class="co">#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4        NA</span></span>
+<span><span class="co">#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4        NA</span></span>
+<span><span class="co">#&gt; ---                                                             </span></span>
+<span><span class="co">#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8        NA</span></span>
+<span><span class="co">#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2      TRUE</span></span></code></pre>
 <div class="section level3">
 <h3 id="using-keys-or-secondary-indices">Using keys or secondary indices<a class="anchor" aria-label="anchor" href="#using-keys-or-secondary-indices"></a>
 </h3>
 <p>The <code>filter_on</code> verb can be used to build an expression that specifies the <code>on</code> argument of the frame. It accepts key-value pairs where each key is a column in the data, and each value is the corresponding value that the column should have to match:</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_on.html">filter_on</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">6</span>, am <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span>
-  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">end_expr</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[list(6, 0), on = c("cyl", "am")]</span></code></pre>
-<pre><code><span class="co">#&gt;     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt; 1: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1</span>
-<span class="co">#&gt; 2: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1</span>
-<span class="co">#&gt; 3: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4</span>
-<span class="co">#&gt; 4: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_on.html">filter_on</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">6</span>, am <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span></span>
+<span>  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">end_expr</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[list(6, 0), on = c("cyl", "am")]</span></span></code></pre>
+<pre><code><span><span class="co">#&gt;     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt; 1: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1</span></span>
+<span><span class="co">#&gt; 2: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1</span></span>
+<span><span class="co">#&gt; 3: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4</span></span>
+<span><span class="co">#&gt; 4: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4</span></span></code></pre>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_on.html">filter_on</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">6</span>, am <span class="op">=</span> <span class="fl">0</span>, mult <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;     mpg cyl disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt; 1: 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_on.html">filter_on</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">6</span>, am <span class="op">=</span> <span class="fl">0</span>, mult <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;     mpg cyl disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt; 1: 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -391,122 +391,122 @@
 <p>In order to support functionality similar to <code>data.table</code>’s <code>DT[, lapply(.SD, fun), .SDcols = c("...")]</code> syntax, 2 verbs are provided: <code>mutate_sd</code> and <code>transmute_sd</code>.</p>
 <p>Starting with <code>mutate_sd</code>, it modifies columns in <code>.SDcols</code> by reference, and columns that are not part of <code>.SDcols</code> are kept:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"cyl"</span><span class="op">)</span>, <span class="va">exp</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;            mpg        cyl disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt;  1: 1318815734  403.42879  160 110 3.90 2.620 16.46  0  1    4    4</span>
-<span class="co">#&gt;  2: 1318815734  403.42879  160 110 3.90 2.875 17.02  0  1    4    4</span>
-<span class="co">#&gt; ---                                                                </span>
-<span class="co">#&gt; 31:    3269017 2980.95799  301 335 3.54 3.570 14.60  0  1    5    8</span>
-<span class="co">#&gt; 32: 1967441884   54.59815  121 109 4.11 2.780 18.60  1  1    4    2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"cyl"</span><span class="op">)</span>, <span class="va">exp</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;            mpg        cyl disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt;  1: 1318815734  403.42879  160 110 3.90 2.620 16.46  0  1    4    4</span></span>
+<span><span class="co">#&gt;  2: 1318815734  403.42879  160 110 3.90 2.875 17.02  0  1    4    4</span></span>
+<span><span class="co">#&gt; ---                                                                </span></span>
+<span><span class="co">#&gt; 31:    3269017 2980.95799  301 335 3.54 3.570 14.60  0  1    5    8</span></span>
+<span><span class="co">#&gt; 32: 1967441884   54.59815  121 109 4.11 2.780 18.60  1  1    4    2</span></span></code></pre>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"cyl"</span><span class="op">)</span>, <span class="va">log</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4</span>
-<span class="co">#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4</span>
-<span class="co">#&gt; ---                                                   </span>
-<span class="co">#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8</span>
-<span class="co">#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"cyl"</span><span class="op">)</span>, <span class="va">log</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg cyl disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt;  1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4</span></span>
+<span><span class="co">#&gt;  2: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4</span></span>
+<span><span class="co">#&gt; ---                                                   </span></span>
+<span><span class="co">#&gt; 31: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8</span></span>
+<span><span class="co">#&gt; 32: 21.4   4  121 109 4.11 2.780 18.60  1  1    4    2</span></span></code></pre>
 <p>It would also be possible to remove several columns with <code>mutate_sd</code>:</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"cyl"</span><span class="op">)</span>, <span class="cn">NULL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span></code></pre></div>
-<pre><code><span class="co">#&gt;     disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt;  1:  160 110 3.90 2.620 16.46  0  1    4    4</span>
-<span class="co">#&gt;  2:  160 110 3.90 2.875 17.02  0  1    4    4</span>
-<span class="co">#&gt; ---                                          </span>
-<span class="co">#&gt; 31:  301 335 3.54 3.570 14.60  0  1    5    8</span>
-<span class="co">#&gt; 32:  121 109 4.11 2.780 18.60  1  1    4    2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"cyl"</span><span class="op">)</span>, <span class="cn">NULL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;     disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt;  1:  160 110 3.90 2.620 16.46  0  1    4    4</span></span>
+<span><span class="co">#&gt;  2:  160 110 3.90 2.875 17.02  0  1    4    4</span></span>
+<span><span class="co">#&gt; ---                                          </span></span>
+<span><span class="co">#&gt; 31:  301 335 3.54 3.570 14.60  0  1    5    8</span></span>
+<span><span class="co">#&gt; 32:  121 109 4.11 2.780 18.60  1  1    4    2</span></span></code></pre>
 <p>Additionally, <code>mutate_sd</code> supports the special <code>.COL</code> pronoun that symbolizes the column that should be modified, as well as lambdas as formulas:</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># like dplyr's mutate_if</span>
-<span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">.COL</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>, <span class="va">as.integer</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[, `:=`(c("cyl", "hp", "vs", "am", "gear", "carb"), lapply(.SD, </span>
-<span class="co">#&gt;     as.integer)), .SDcols = c("cyl", "hp", "vs", "am", "gear", </span>
-<span class="co">#&gt; "carb")]</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># like dplyr's mutate_if</span></span>
+<span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">.COL</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>, <span class="va">as.integer</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[, `:=`(c("cyl", "hp", "vs", "am", "gear", "carb"), lapply(.SD, </span></span>
+<span><span class="co">#&gt;     as.integer)), .SDcols = c("cyl", "hp", "vs", "am", "gear", </span></span>
+<span><span class="co">#&gt; "carb")]</span></span></code></pre>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">.x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>, <span class="va">as.integer</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[, `:=`(c("cyl", "hp", "vs", "am", "gear", "carb"), lapply(.SD, </span>
-<span class="co">#&gt;     as.integer)), .SDcols = c("cyl", "hp", "vs", "am", "gear", </span>
-<span class="co">#&gt; "carb")]</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">.x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>, <span class="va">as.integer</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[, `:=`(c("cyl", "hp", "vs", "am", "gear", "carb"), lapply(.SD, </span></span>
+<span><span class="co">#&gt;     as.integer)), .SDcols = c("cyl", "hp", "vs", "am", "gear", </span></span>
+<span><span class="co">#&gt; "carb")]</span></span></code></pre>
 <p>On the other hand, <code>transmute_sd</code> never modifies by reference, and supports special expressions to “build” what is chosen as <code>.SDcols</code>. These expressions can use <code>tidyselect</code> helpers, as well as another special pronoun: <code>.COLNAME</code>:</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"d"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;     disp drat</span>
-<span class="co">#&gt;  1:  320 7.80</span>
-<span class="co">#&gt;  2:  320 7.80</span>
-<span class="co">#&gt; ---          </span>
-<span class="co">#&gt; 31:  602 7.08</span>
-<span class="co">#&gt; 32:  242 8.22</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"d"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;     disp drat</span></span>
+<span><span class="co">#&gt;  1:  320 7.80</span></span>
+<span><span class="co">#&gt;  2:  320 7.80</span></span>
+<span><span class="co">#&gt; ---          </span></span>
+<span><span class="co">#&gt; 31:  602 7.08</span></span>
+<span><span class="co">#&gt; 32:  242 8.22</span></span></code></pre>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^d"</span>, <span class="va">.COLNAME</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;     disp drat</span>
-<span class="co">#&gt;  1:  320 7.80</span>
-<span class="co">#&gt;  2:  320 7.80</span>
-<span class="co">#&gt; ---          </span>
-<span class="co">#&gt; 31:  602 7.08</span>
-<span class="co">#&gt; 32:  242 8.22</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^d"</span>, <span class="va">.COLNAME</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;     disp drat</span></span>
+<span><span class="co">#&gt;  1:  320 7.80</span></span>
+<span><span class="co">#&gt;  2:  320 7.80</span></span>
+<span><span class="co">#&gt; ---          </span></span>
+<span><span class="co">#&gt; 31:  602 7.08</span></span>
+<span><span class="co">#&gt; 32:  242 8.22</span></span></code></pre>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># like dplyr's transmute_if</span>
-<span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(~is.numeric(.x)), </span>
-<span class="co">#&gt;     .hows = rlang::quos(~.x * 2))]</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># like dplyr's transmute_if</span></span>
+<span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(~is.numeric(.x)), </span></span>
+<span><span class="co">#&gt;     .hows = rlang::quos(~.x * 2))]</span></span></code></pre>
 <p>Both verbs also support a list of functions for multiple transformations, but <code>mutate_sd</code> performs pairwise transformations by default, whereas <code>transmute_sd</code> performs all combinations:</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="fu">.</span><span class="op">(</span><span class="va">round</span>, <span class="op">-</span><span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span></code></pre></div>
-<pre><code><span class="co">#&gt;     mpg cyl disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="co">#&gt;  1:  21   6  160 110 3.90 2.620 16.46  0 -1    4    4</span>
-<span class="co">#&gt;  2:  21   6  160 110 3.90 2.875 17.02  0 -1    4    4</span>
-<span class="co">#&gt; ---                                                  </span>
-<span class="co">#&gt; 31:  15   8  301 335 3.54 3.570 14.60  0 -1    5    8</span>
-<span class="co">#&gt; 32:  21   4  121 109 4.11 2.780 18.60  1 -1    4    2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">copy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/mutate_sd.html">mutate_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="fu">.</span><span class="op">(</span><span class="va">round</span>, <span class="op">-</span><span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;     mpg cyl disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt;  1:  21   6  160 110 3.90 2.620 16.46  0 -1    4    4</span></span>
+<span><span class="co">#&gt;  2:  21   6  160 110 3.90 2.875 17.02  0 -1    4    4</span></span>
+<span><span class="co">#&gt; ---                                                  </span></span>
+<span><span class="co">#&gt; 31:  15   8  301 335 3.54 3.570 14.60  0 -1    5    8</span></span>
+<span><span class="co">#&gt; 32:  21   4  121 109 4.11 2.780 18.60  1 -1    4    2</span></span></code></pre>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="fu">.</span><span class="op">(</span><span class="va">min</span>, <span class="va">max</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;    min.mpg min.am max.mpg max.am mean.mpg mean.am</span>
-<span class="co">#&gt; 1:    10.4      0    33.9      1 20.09062 0.40625</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="fu">.</span><span class="op">(</span><span class="va">min</span>, <span class="va">max</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;    min.mpg min.am max.mpg max.am mean.mpg mean.am</span></span>
+<span><span class="co">#&gt; 1:    10.4      0    33.9      1 20.09062 0.40625</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="data-manipulation-by-group">Data manipulation by group<a class="anchor" aria-label="anchor" href="#data-manipulation-by-group"></a>
 </h2>
 <p>Since <code>data.table</code> already supports this by means of its <code>by</code> parameter, the <code>group_by</code> verb simply parses its input and assigns it accordingly:</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">.N</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;    gear  N</span>
-<span class="co">#&gt; 1:    4 12</span>
-<span class="co">#&gt; 2:    3 15</span>
-<span class="co">#&gt; 3:    5  5</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">.N</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;    gear  N</span></span>
+<span><span class="co">#&gt; 1:    4 12</span></span>
+<span><span class="co">#&gt; 2:    3 15</span></span>
+<span><span class="co">#&gt; 3:    5  5</span></span></code></pre>
 <p>The <code>key_by</code> verb does the same but sets the key of the input in order to sort:</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/key_by.html">key_by</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">.N</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;    gear  N</span>
-<span class="co">#&gt; 1:    3 15</span>
-<span class="co">#&gt; 2:    4 12</span>
-<span class="co">#&gt; 3:    5  5</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/key_by.html">key_by</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">.N</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;    gear  N</span></span>
+<span><span class="co">#&gt; 1:    3 15</span></span>
+<span><span class="co">#&gt; 2:    4 12</span></span>
+<span><span class="co">#&gt; 3:    5  5</span></span></code></pre>
 <p>Using <code>group_by</code> or <code>key_by</code> by itself would not be useful. Therefore, they are entirely lazy, and simply return the expression builder that is used in the background. Using other verbs will normally lead to the evaluation of the expression, though some verbs can delay evaluation, e.g. <code>where</code> and other verbs that set <code>i</code> when their respective <code>.expr</code> parameters are set to <code>TRUE</code>.</p>
 </div>
 <div class="section level2">
@@ -521,28 +521,28 @@
 <code>unique(.SD)</code> with specific <code>.SDcols</code> if <code>.keep = FALSE</code>.</li>
 </ul>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;    vs am  mpg cyl disp  hp drat    wt  qsec gear carb</span>
-<span class="co">#&gt; 1:  0  1 21.0   6  160 110 3.90 2.620 16.46    4    4</span>
-<span class="co">#&gt; 2:  1  1 22.8   4  108  93 3.85 2.320 18.61    4    1</span>
-<span class="co">#&gt; 3:  1  0 21.4   6  258 110 3.08 3.215 19.44    3    1</span>
-<span class="co">#&gt; 4:  0  0 18.7   8  360 175 3.15 3.440 17.02    3    2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;    vs am  mpg cyl disp  hp drat    wt  qsec gear carb</span></span>
+<span><span class="co">#&gt; 1:  0  1 21.0   6  160 110 3.90 2.620 16.46    4    4</span></span>
+<span><span class="co">#&gt; 2:  1  1 22.8   4  108  93 3.85 2.320 18.61    4    1</span></span>
+<span><span class="co">#&gt; 3:  1  0 21.4   6  258 110 3.08 3.215 19.44    3    1</span></span>
+<span><span class="co">#&gt; 4:  0  0 18.7   8  360 175 3.15 3.440 17.02    3    2</span></span></code></pre>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span>vsam <span class="op">=</span> <span class="va">vs</span> <span class="op">+</span> <span class="va">am</span>, .keep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;    vsam  mpg cyl disp  hp drat   wt  qsec vs am gear carb</span>
-<span class="co">#&gt; 1:    1 21.0   6  160 110 3.90 2.62 16.46  0  1    4    4</span>
-<span class="co">#&gt; 2:    2 22.8   4  108  93 3.85 2.32 18.61  1  1    4    1</span>
-<span class="co">#&gt; 3:    0 18.7   8  360 175 3.15 3.44 17.02  0  0    3    2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span>vsam <span class="op">=</span> <span class="va">vs</span> <span class="op">+</span> <span class="va">am</span>, .keep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;    vsam  mpg cyl disp  hp drat   wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt; 1:    1 21.0   6  160 110 3.90 2.62 16.46  0  1    4    4</span></span>
+<span><span class="co">#&gt; 2:    2 22.8   4  108  93 3.85 2.32 18.61  1  1    4    1</span></span>
+<span><span class="co">#&gt; 3:    0 18.7   8  360 175 3.15 3.44 17.02  0  0    3    2</span></span></code></pre>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span>, .keep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;    vs am</span>
-<span class="co">#&gt; 1:  0  1</span>
-<span class="co">#&gt; 2:  1  1</span>
-<span class="co">#&gt; 3:  1  0</span>
-<span class="co">#&gt; 4:  0  0</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span>, .keep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;    vs am</span></span>
+<span><span class="co">#&gt; 1:  0  1</span></span>
+<span><span class="co">#&gt; 2:  1  1</span></span>
+<span><span class="co">#&gt; 3:  1  0</span></span>
+<span><span class="co">#&gt; 4:  0  0</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="lazy-considerations">Lazy considerations<a class="anchor" aria-label="anchor" href="#lazy-considerations"></a>
@@ -554,24 +554,24 @@
 <p>Some <code>data.table</code> idioms benefit from nesting expressions, for instance <a href="https://stackoverflow.com/a/16574176/5793905" class="external-link">this idiom</a> to find, by groups, rows where a column has its extrema. The helper function <code>nest_expr</code> can help in these cases. When used inside a supported verb, it <a href="#eager-verbs">eagerly</a> builds a functional chain with <code>%&gt;%</code>, where the currently captured <code>data.table</code> enters as <code>.</code></p>
 <p>For example, the linked idiom could be expressed as:</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/start_expr.html">start_expr</a></span><span class="op">(</span>.verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/where-table.express.html">where</a></span><span class="op">(</span><span class="fu"><a href="../reference/nest_expr.html">nest_expr</a></span><span class="op">(</span>.start <span class="op">=</span> <span class="cn">FALSE</span>, <span class="op">{</span>
-    <span class="va">.</span><span class="op">[</span>, <span class="va">.I</span><span class="op">[</span><span class="va">mpg</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">]</span>, by <span class="op">=</span> <span class="va">vs</span><span class="op">]</span><span class="op">$</span><span class="va">V1</span>
-  <span class="op">}</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">end_expr</span></code></pre></div>
-<pre><code><span class="co">#&gt; Nesting the result of evaluating the following functional chain:</span>
-<span class="co">#&gt; .DT_ %&gt;% {</span>
-<span class="co">#&gt;     .[, .I[mpg == max(mpg)], by = vs]$V1</span>
-<span class="co">#&gt; }</span>
-<span class="co">#&gt; Expression after where.ExprBuilder(...):</span>
-<span class="co">#&gt; .DT_[.NEST_0_]</span>
-<span class="co">#&gt; Using captured data.table for evaluation.</span>
-<span class="co">#&gt; Evaluating:</span>
-<span class="co">#&gt; .DT_[.NEST_0_]</span></code></pre>
-<pre><code><span class="co">#&gt;     mpg cyl  disp hp drat    wt qsec vs am gear carb</span>
-<span class="co">#&gt; 1: 26.0   4 120.3 91 4.43 2.140 16.7  0  1    5    2</span>
-<span class="co">#&gt; 2: 33.9   4  71.1 65 4.22 1.835 19.9  1  1    4    1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/start_expr.html">start_expr</a></span><span class="op">(</span>.verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/where-table.express.html">where</a></span><span class="op">(</span><span class="fu"><a href="../reference/nest_expr.html">nest_expr</a></span><span class="op">(</span>.start <span class="op">=</span> <span class="cn">FALSE</span>, <span class="op">{</span></span>
+<span>    <span class="va">.</span><span class="op">[</span>, <span class="va">.I</span><span class="op">[</span><span class="va">mpg</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">]</span>, by <span class="op">=</span> <span class="va">vs</span><span class="op">]</span><span class="op">$</span><span class="va">V1</span></span>
+<span>  <span class="op">}</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">end_expr</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Nesting the result of evaluating the following functional chain:</span></span>
+<span><span class="co">#&gt; .DT_ %&gt;% {</span></span>
+<span><span class="co">#&gt;     .[, .I[mpg == max(mpg)], by = vs]$V1</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; Expression after where.ExprBuilder(...):</span></span>
+<span><span class="co">#&gt; .DT_[.NEST_0_]</span></span>
+<span><span class="co">#&gt; Using captured data.table for evaluation.</span></span>
+<span><span class="co">#&gt; Evaluating:</span></span>
+<span><span class="co">#&gt; .DT_[.NEST_0_]</span></span></code></pre>
+<pre><code><span><span class="co">#&gt;     mpg cyl  disp hp drat    wt qsec vs am gear carb</span></span>
+<span><span class="co">#&gt; 1: 26.0   4 120.3 91 4.43 2.140 16.7  0  1    5    2</span></span>
+<span><span class="co">#&gt; 2: 33.9   4  71.1 65 4.22 1.835 19.9  1  1    4    1</span></span></code></pre>
 <p>Nevertheless, this specific logic has been encapsulated in the <code>max_by</code>/<code>min_by</code> verbs.</p>
 </div>
 <div class="section level3">
@@ -579,26 +579,26 @@
 </h3>
 <p>By default, the verbs defined in this package automatically start a new frame whenever they want to define one of <code>i</code>/<code>j</code>/<code>by</code>, but the current expression’s frame has already specified it; otherwise they add to the current frame. More complex expressions are thus supported by automatically chaining <code>data.table</code> frames:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>mean_mpg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/where-table.express.html">where</a></span><span class="op">(</span><span class="va">hp</span> <span class="op">&gt;</span> <span class="fl">50L</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span>, <span class="va">gear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/order_by-table.express.html">order_by</a></span><span class="op">(</span><span class="va">gear</span>, <span class="op">-</span><span class="va">vs</span>, <span class="va">am</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">mean_mpg</span> <span class="op">&gt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span>
-  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">end_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span>, nrows <span class="op">=</span> <span class="fl">10L</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[hp &gt; 50L, .select_matching(, mean_mpg = mean(mpg), .negate = FALSE), </span>
-<span class="co">#&gt;     by = list(vs, am, gear)][order(gear, -vs, am)][mean_mpg &gt; </span>
-<span class="co">#&gt;     20]</span>
-<span class="co">#&gt;    vs am gear mean_mpg</span>
-<span class="co">#&gt; 1:  1  0    3 20.33333</span>
-<span class="co">#&gt; 2:  1  0    4 21.05000</span>
-<span class="co">#&gt; 3:  1  1    4 28.03333</span>
-<span class="co">#&gt; 4:  0  1    4 21.00000</span>
-<span class="co">#&gt; 5:  1  1    5 30.40000</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>mean_mpg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/where-table.express.html">where</a></span><span class="op">(</span><span class="va">hp</span> <span class="op">&gt;</span> <span class="fl">50L</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span>, <span class="va">gear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/order_by-table.express.html">order_by</a></span><span class="op">(</span><span class="va">gear</span>, <span class="op">-</span><span class="va">vs</span>, <span class="va">am</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">mean_mpg</span> <span class="op">&gt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span></span>
+<span>  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">end_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">.</span>, nrows <span class="op">=</span> <span class="fl">10L</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[hp &gt; 50L, .select_matching(, mean_mpg = mean(mpg), .negate = FALSE), </span></span>
+<span><span class="co">#&gt;     by = list(vs, am, gear)][order(gear, -vs, am)][mean_mpg &gt; </span></span>
+<span><span class="co">#&gt;     20]</span></span>
+<span><span class="co">#&gt;    vs am gear mean_mpg</span></span>
+<span><span class="co">#&gt; 1:  1  0    3 20.33333</span></span>
+<span><span class="co">#&gt; 2:  1  0    4 21.05000</span></span>
+<span><span class="co">#&gt; 3:  1  1    4 28.03333</span></span>
+<span><span class="co">#&gt; 4:  0  1    4 21.00000</span></span>
+<span><span class="co">#&gt; 5:  1  1    5 30.40000</span></span></code></pre>
 <p>If we wanted to be explicit about chaining whenever possible (see <a href="#explicit-chaining">below</a>), we could set <code>options(table.express.chain = FALSE)</code>, which would lead to a warning being shown whenever a part of the query is replaced.</p>
 </div>
 <div class="section level3">
@@ -606,46 +606,46 @@
 </h3>
 <p>The automatic chaining mentioned above is enough in most situations. For example the following chains lead to the same result, and therefore have the same semantics:</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span><span class="op">[</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">20</span>, <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">]</span></code></pre></div>
-<pre><code><span class="co">#&gt;  [1] 42.0 42.0 45.6 42.8 48.8 45.6 64.8 60.8 67.8 43.0 54.6 52.0 60.8 42.8</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span><span class="op">[</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">20</span>, <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;  [1] 42.0 42.0 45.6 42.8 48.8 45.6 64.8 60.8 67.8 43.0 54.6 52.0 60.8 42.8</span></span></code></pre>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span><span class="op">[</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">20</span><span class="op">]</span><span class="op">[</span>, <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">]</span></code></pre></div>
-<pre><code><span class="co">#&gt;  [1] 42.0 42.0 45.6 42.8 48.8 45.6 64.8 60.8 67.8 43.0 54.6 52.0 60.8 42.8</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span><span class="op">[</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">20</span><span class="op">]</span><span class="op">[</span>, <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;  [1] 42.0 42.0 45.6 42.8 48.8 45.6 64.8 60.8 67.8 43.0 54.6 52.0 60.8 42.8</span></span></code></pre>
 <p>However, these two chains have different semantics:</p>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">[</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">]</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg</span>
-<span class="co">#&gt;  1: 42.0</span>
-<span class="co">#&gt;  2: 42.0</span>
-<span class="co">#&gt; ---     </span>
-<span class="co">#&gt; 13: 60.8</span>
-<span class="co">#&gt; 14: 42.8</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">[</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg</span></span>
+<span><span class="co">#&gt;  1: 42.0</span></span>
+<span><span class="co">#&gt;  2: 42.0</span></span>
+<span><span class="co">#&gt; ---     </span></span>
+<span><span class="co">#&gt; 13: 60.8</span></span>
+<span><span class="co">#&gt; 14: 42.8</span></span></code></pre>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span><span class="op">[</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">40</span>, <span class="fu">.</span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span><span class="op">]</span></code></pre></div>
-<pre><code><span class="co">#&gt; Empty data.table (0 rows and 1 cols): mpg</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span><span class="op">[</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">40</span>, <span class="fu">.</span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Empty data.table (0 rows and 1 cols): mpg</span></span></code></pre>
 <p>As mentioned <a href="#expression-delimiters">above</a>, <code>chain</code> can be used to chain expressions by evaluating the current one with <code>end_expr</code>, and immediately capturing the resulting <code>data.table</code> to start building a new expression. This can be helpful in situations where automatic chaining (or lack thereof) can lead to a change in the expression’s semantics:</p>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span>
-  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">end_expr</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[mpg &gt; 40, list(mpg = mpg * 2)]</span></code></pre>
-<pre><code><span class="co">#&gt; Empty data.table (0 rows and 1 cols): mpg</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span></span>
+<span>  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">end_expr</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[mpg &gt; 40, list(mpg = mpg * 2)]</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Empty data.table (0 rows and 1 cols): mpg</span></span></code></pre>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">chain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">end_expr</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg</span>
-<span class="co">#&gt;  1: 42.0</span>
-<span class="co">#&gt;  2: 42.0</span>
-<span class="co">#&gt; ---     </span>
-<span class="co">#&gt; 13: 60.8</span>
-<span class="co">#&gt; 14: 42.8</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="va">mpg</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">chain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">end_expr</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg</span></span>
+<span><span class="co">#&gt;  1: 42.0</span></span>
+<span><span class="co">#&gt;  2: 42.0</span></span>
+<span><span class="co">#&gt; ---     </span></span>
+<span><span class="co">#&gt; 13: 60.8</span></span>
+<span><span class="co">#&gt; 14: 42.8</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="eager-verbs">Eager verbs<a class="anchor" aria-label="anchor" href="#eager-verbs"></a>
@@ -673,30 +673,30 @@
 </ul>
 <p>This can lead to unexpected results if we don’t keep in mind the expression that is built:</p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span><span class="op">[</span>, <span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">]</span></code></pre></div>
-<pre><code><span class="co">#&gt;      mpg cyl disp</span>
-<span class="co">#&gt;  1: 21.0   6  160</span>
-<span class="co">#&gt;  2: 21.0   6  160</span>
-<span class="co">#&gt; ---              </span>
-<span class="co">#&gt; 31: 15.0   8  301</span>
-<span class="co">#&gt; 32: 21.4   4  121</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span><span class="op">[</span>, <span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;      mpg cyl disp</span></span>
+<span><span class="co">#&gt;  1: 21.0   6  160</span></span>
+<span><span class="co">#&gt;  2: 21.0   6  160</span></span>
+<span><span class="co">#&gt; ---              </span></span>
+<span><span class="co">#&gt; 31: 15.0   8  301</span></span>
+<span><span class="co">#&gt; 32: 21.4   4  121</span></span></code></pre>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>ans <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[, .select_matching(.SD, mpg:disp, .negate = FALSE)][mpg &gt; </span>
-<span class="co">#&gt;     0 &amp; am &gt; 0, list(ans = sqrt(mpg))]</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>ans <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[, .select_matching(.SD, mpg:disp, .negate = FALSE)][mpg &gt; </span></span>
+<span><span class="co">#&gt;     0 &amp; am &gt; 0, list(ans = sqrt(mpg))]</span></span></code></pre>
 <p>The <code>select</code> gets rid of <code>am</code>, but <code>filter_sd</code> sees the columns of <code>DT</code> before any expression has been evaluated. Explicit chaining can help in these cases, capturing intermediate results:</p>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">chain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>ans <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[mpg &gt; 0, list(ans = sqrt(mpg))]</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">chain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">transmute</a></span><span class="op">(</span>ans <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_sd.html">filter_sd</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>, <span class="va">.COL</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[mpg &gt; 0, list(ans = sqrt(mpg))]</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -705,102 +705,102 @@
 <p>Many of the verbs in this package try to help make code more concise whenever possible. However, some of the added convenience requires helper functions that aid with non-standard evaluation, which doesn’t always play nicely with the <code>data.table</code> optimizations mentioned in the beginning. Therefore, it is worth keeping the built expressions as close to traditional <code>data.table</code> syntax as possible. The verbs try to stick to this principle, but in order to build a simple output expression, they also require a simple input.</p>
 <p>Let us illustrate this point with <code>transmute_sd</code>, which can be used to compute summaries:</p>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">am</span>, <span class="va">vs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"disp"</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/frame_append.html">frame_append</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span>
-  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">end_expr</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[, c(lapply(.SD, mean)), by = list(am, vs), .SDcols = c(c("mpg", </span>
-<span class="co">#&gt;     "disp")), verbose = TRUE]</span>
-<span class="co">#&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns</span>
-<span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span>
-<span class="co">#&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) </span>
-<span class="co">#&gt; Getting back original order ... forder.c received a vector type 'integer' length 4</span>
-<span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span>
-<span class="co">#&gt; lapply optimization changed j from 'c(lapply(.SD, mean))' to 'list(mean(mpg), mean(disp))'</span>
-<span class="co">#&gt; GForce optimized j to 'list(gmean(mpg), gmean(disp))'</span>
-<span class="co">#&gt; Making each group and running j (GForce TRUE) ... gforce initial population of grp took 0.000</span>
-<span class="co">#&gt; gforce assign high and low took 0.000</span>
-<span class="co">#&gt; This gsum took (narm=FALSE) ... gather took ... 0.000s</span>
-<span class="co">#&gt; 0.000s</span>
-<span class="co">#&gt; This gsum took (narm=FALSE) ... gather took ... 0.000s</span>
-<span class="co">#&gt; 0.000s</span>
-<span class="co">#&gt; gforce eval took 0.000</span>
-<span class="co">#&gt; 0.000s elapsed (0.000s cpu)</span></code></pre>
-<pre><code><span class="co">#&gt;    am vs      mpg     disp</span>
-<span class="co">#&gt; 1:  1  0 19.75000 206.2167</span>
-<span class="co">#&gt; 2:  1  1 28.37143  89.8000</span>
-<span class="co">#&gt; 3:  0  1 20.74286 175.1143</span>
-<span class="co">#&gt; 4:  0  0 15.05000 357.6167</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">am</span>, <span class="va">vs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"disp"</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/frame_append.html">frame_append</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span></span>
+<span>  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">end_expr</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[, c(lapply(.SD, mean)), by = list(am, vs), .SDcols = c(c("mpg", </span></span>
+<span><span class="co">#&gt;     "disp")), verbose = TRUE]</span></span>
+<span><span class="co">#&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns</span></span>
+<span><span class="co">#&gt; 0.000s elapsed (0.001s cpu) </span></span>
+<span><span class="co">#&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.001s elapsed (0.000s cpu) </span></span>
+<span><span class="co">#&gt; Getting back original order ... forder.c received a vector type 'integer' length 4</span></span>
+<span><span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span></span>
+<span><span class="co">#&gt; lapply optimization changed j from 'c(lapply(.SD, mean))' to 'list(mean(mpg), mean(disp))'</span></span>
+<span><span class="co">#&gt; GForce optimized j to 'list(gmean(mpg), gmean(disp))'</span></span>
+<span><span class="co">#&gt; Making each group and running j (GForce TRUE) ... gforce initial population of grp took 0.000</span></span>
+<span><span class="co">#&gt; gforce assign high and low took 0.000</span></span>
+<span><span class="co">#&gt; This gsum took (narm=FALSE) ... gather took ... 0.000s</span></span>
+<span><span class="co">#&gt; 0.000s</span></span>
+<span><span class="co">#&gt; This gsum took (narm=FALSE) ... gather took ... 0.000s</span></span>
+<span><span class="co">#&gt; 0.000s</span></span>
+<span><span class="co">#&gt; gforce eval took 0.000</span></span>
+<span><span class="co">#&gt; 0.000s elapsed (0.000s cpu)</span></span></code></pre>
+<pre><code><span><span class="co">#&gt;    am vs      mpg     disp</span></span>
+<span><span class="co">#&gt; 1:  1  0 19.75000 206.2167</span></span>
+<span><span class="co">#&gt; 2:  1  1 28.37143  89.8000</span></span>
+<span><span class="co">#&gt; 3:  0  1 20.74286 175.1143</span></span>
+<span><span class="co">#&gt; 4:  0  0 15.05000 357.6167</span></span></code></pre>
 <p>We can see, for example, <code>lapply optimization changed j ...</code>. Changing the expressions just a bit, without affecting its semantics, still hinders <code>data.table</code>’s ability to recognize cases it can optimize:</p>
 <div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">am</span>, <span class="va">vs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"disp"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/frame_append.html">frame_append</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span>
-  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">end_expr</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(c("mpg", </span>
-<span class="co">#&gt;     "disp")), .hows = rlang::quos(mean(x = .COL))), by = list(am, </span>
-<span class="co">#&gt;     vs), verbose = TRUE]</span>
-<span class="co">#&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns</span>
-<span class="co">#&gt; 0.001s elapsed (0.000s cpu) </span>
-<span class="co">#&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) </span>
-<span class="co">#&gt; Getting back original order ... forder.c received a vector type 'integer' length 4</span>
-<span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span>
-<span class="co">#&gt; lapply optimization is on, j unchanged as '.transmute_matching(.SD, .which = rlang::quo(c("mpg", "disp")), .hows = rlang::quos(mean(x = .COL)))'</span>
-<span class="co">#&gt; GForce is on, left j unchanged</span>
-<span class="co">#&gt; Old mean optimization is on, left j unchanged.</span>
-<span class="co">#&gt; Making each group and running j (GForce FALSE) ... The result of j is a named list. It's very inefficient to create the same names over and over again for each group. When j=list(...), any names are detected, removed and put back after grouping has completed, for efficiency. Using j=transform(), for example, prevents that speedup (consider changing to :=). This message may be upgraded to warning in future.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   collecting discontiguous groups took 0.000s for 4 groups</span>
-<span class="co">#&gt;   eval(j) took 0.002s for 4 calls</span>
-<span class="co">#&gt; 0.002s elapsed (0.002s cpu)</span></code></pre>
-<pre><code><span class="co">#&gt;    am vs      mpg     disp</span>
-<span class="co">#&gt; 1:  1  0 19.75000 206.2167</span>
-<span class="co">#&gt; 2:  1  1 28.37143  89.8000</span>
-<span class="co">#&gt; 3:  0  1 20.74286 175.1143</span>
-<span class="co">#&gt; 4:  0  0 15.05000 357.6167</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">am</span>, <span class="va">vs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"disp"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/frame_append.html">frame_append</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span></span>
+<span>  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">end_expr</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[, .transmute_matching(.SD, .which = rlang::quo(c("mpg", </span></span>
+<span><span class="co">#&gt;     "disp")), .hows = rlang::quos(mean(x = .COL))), by = list(am, </span></span>
+<span><span class="co">#&gt;     vs), verbose = TRUE]</span></span>
+<span><span class="co">#&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns</span></span>
+<span><span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span></span>
+<span><span class="co">#&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) </span></span>
+<span><span class="co">#&gt; Getting back original order ... forder.c received a vector type 'integer' length 4</span></span>
+<span><span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span></span>
+<span><span class="co">#&gt; lapply optimization is on, j unchanged as '.transmute_matching(.SD, .which = rlang::quo(c("mpg", "disp")), .hows = rlang::quos(mean(x = .COL)))'</span></span>
+<span><span class="co">#&gt; GForce is on, left j unchanged</span></span>
+<span><span class="co">#&gt; Old mean optimization is on, left j unchanged.</span></span>
+<span><span class="co">#&gt; Making each group and running j (GForce FALSE) ... The result of j is a named list. It's very inefficient to create the same names over and over again for each group. When j=list(...), any names are detected, removed and put back after grouping has completed, for efficiency. Using j=transform(), for example, prevents that speedup (consider changing to :=). This message may be upgraded to warning in future.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   collecting discontiguous groups took 0.000s for 4 groups</span></span>
+<span><span class="co">#&gt;   eval(j) took 0.001s for 4 calls</span></span>
+<span><span class="co">#&gt; 0.002s elapsed (0.002s cpu)</span></span></code></pre>
+<pre><code><span><span class="co">#&gt;    am vs      mpg     disp</span></span>
+<span><span class="co">#&gt; 1:  1  0 19.75000 206.2167</span></span>
+<span><span class="co">#&gt; 2:  1  1 28.37143  89.8000</span></span>
+<span><span class="co">#&gt; 3:  0  1 20.74286 175.1143</span></span>
+<span><span class="co">#&gt; 4:  0  0 15.05000 357.6167</span></span></code></pre>
 <p>Corroborated by the statements <code>j unchanged</code>, <code>GForce FALSE</code>, etc. Nevertheless, a different syntax can enable additional functionality, for instance column renaming:</p>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">am</span>, <span class="va">vs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"disp"</span><span class="op">)</span>, <span class="fu">.</span><span class="op">(</span>avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span>, min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;    am vs  avg.mpg avg.disp min.mpg min.disp</span>
-<span class="co">#&gt; 1:  1  0 19.75000 206.2167    15.0    120.3</span>
-<span class="co">#&gt; 2:  1  1 28.37143  89.8000    21.4     71.1</span>
-<span class="co">#&gt; 3:  0  1 20.74286 175.1143    17.8    120.1</span>
-<span class="co">#&gt; 4:  0  0 15.05000 357.6167    10.4    275.8</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">am</span>, <span class="va">vs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"disp"</span><span class="op">)</span>, <span class="fu">.</span><span class="op">(</span>avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span>, min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.COL</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;    am vs  avg.mpg avg.disp min.mpg min.disp</span></span>
+<span><span class="co">#&gt; 1:  1  0 19.75000 206.2167    15.0    120.3</span></span>
+<span><span class="co">#&gt; 2:  1  1 28.37143  89.8000    21.4     71.1</span></span>
+<span><span class="co">#&gt; 3:  0  1 20.74286 175.1143    17.8    120.1</span></span>
+<span><span class="co">#&gt; 4:  0  0 15.05000 357.6167    10.4    275.8</span></span></code></pre>
 <p>Thus, in order to decide which syntax to use, we must be aware of what can be optimized by <code>data.table</code>, but as a general rule of thumb, the simpler the better.</p>
 <div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">am</span>, <span class="va">vs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"disp"</span><span class="op">)</span>, <span class="fu">.</span><span class="op">(</span><span class="va">min</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/frame_append.html">frame_append</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span>
-  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="va">end_expr</span></code></pre></div>
-<pre><code><span class="co">#&gt; .DT_[, c(min = lapply(.SD, min), max = lapply(.SD, max)), by = list(am, </span>
-<span class="co">#&gt;     vs), .SDcols = c(c("mpg", "disp")), verbose = TRUE]</span>
-<span class="co">#&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns</span>
-<span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span>
-<span class="co">#&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) </span>
-<span class="co">#&gt; Getting back original order ... forder.c received a vector type 'integer' length 4</span>
-<span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span>
-<span class="co">#&gt; lapply optimization changed j from 'c(min = lapply(.SD, min), max = lapply(.SD, max))' to 'list(min(mpg), min(disp), max(mpg), max(disp))'</span>
-<span class="co">#&gt; GForce optimized j to 'list(gmin(mpg), gmin(disp), gmax(mpg), gmax(disp))'</span>
-<span class="co">#&gt; Making each group and running j (GForce TRUE) ... gforce initial population of grp took 0.000</span>
-<span class="co">#&gt; gforce assign high and low took 0.000</span>
-<span class="co">#&gt; gforce eval took 0.000</span>
-<span class="co">#&gt; 0.000s elapsed (0.000s cpu)</span></code></pre>
-<pre><code><span class="co">#&gt;    am vs  mpg  disp  mpg disp</span>
-<span class="co">#&gt; 1:  1  0 15.0 120.3 26.0  351</span>
-<span class="co">#&gt; 2:  1  1 21.4  71.1 33.9  121</span>
-<span class="co">#&gt; 3:  0  1 17.8 120.1 24.4  258</span>
-<span class="co">#&gt; 4:  0  0 10.4 275.8 19.2  472</span></code></pre>
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">start_expr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">am</span>, <span class="va">vs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/transmute_sd.html">transmute_sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"disp"</span><span class="op">)</span>, <span class="fu">.</span><span class="op">(</span><span class="va">min</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/frame_append.html">frame_append</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html" class="external-link">%T&gt;%</a></span></span>
+<span>  <span class="va">print</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">end_expr</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; .DT_[, c(min = lapply(.SD, min), max = lapply(.SD, max)), by = list(am, </span></span>
+<span><span class="co">#&gt;     vs), .SDcols = c(c("mpg", "disp")), verbose = TRUE]</span></span>
+<span><span class="co">#&gt; Finding groups using forderv ... forder.c received 32 rows and 2 columns</span></span>
+<span><span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span></span>
+<span><span class="co">#&gt; Finding group sizes from the positions (can be avoided to save RAM) ... 0.000s elapsed (0.000s cpu) </span></span>
+<span><span class="co">#&gt; Getting back original order ... forder.c received a vector type 'integer' length 4</span></span>
+<span><span class="co">#&gt; 0.000s elapsed (0.000s cpu) </span></span>
+<span><span class="co">#&gt; lapply optimization changed j from 'c(min = lapply(.SD, min), max = lapply(.SD, max))' to 'list(min(mpg), min(disp), max(mpg), max(disp))'</span></span>
+<span><span class="co">#&gt; GForce optimized j to 'list(gmin(mpg), gmin(disp), gmax(mpg), gmax(disp))'</span></span>
+<span><span class="co">#&gt; Making each group and running j (GForce TRUE) ... gforce initial population of grp took 0.000</span></span>
+<span><span class="co">#&gt; gforce assign high and low took 0.000</span></span>
+<span><span class="co">#&gt; gforce eval took 0.000</span></span>
+<span><span class="co">#&gt; 0.000s elapsed (0.001s cpu)</span></span></code></pre>
+<pre><code><span><span class="co">#&gt;    am vs  mpg  disp  mpg disp</span></span>
+<span><span class="co">#&gt; 1:  1  0 15.0 120.3 26.0  351</span></span>
+<span><span class="co">#&gt; 2:  1  1 21.4  71.1 33.9  121</span></span>
+<span><span class="co">#&gt; 3:  0  1 17.8 120.1 24.4  258</span></span>
+<span><span class="co">#&gt; 4:  0  0 10.4 275.8 19.2  472</span></span></code></pre>
 </div>
   </div>
 
@@ -821,7 +821,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

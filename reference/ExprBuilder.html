@@ -18,7 +18,7 @@ shouldn't be used directly."><!-- mathjax --><script src="https://cdnjs.cloudfla
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -70,7 +70,9 @@ shouldn't be used directly.</p>
 
     <div id="value">
     <h2>Value</h2>
-    <p>In general, a modified <code>self</code> with extended expression.</p>
+    
+
+<p>In general, a modified <code>self</code> with extended expression.</p>
     </div>
     <div id="active-bindings">
     <h2>Active bindings</h2>
@@ -91,27 +93,27 @@ shouldn't be used directly.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>ExprBuilder$new()</code></a></p></li>
-<li><p><a href="#method-set_i"><code>ExprBuilder$set_i()</code></a></p></li>
-<li><p><a href="#method-set_j"><code>ExprBuilder$set_j()</code></a></p></li>
-<li><p><a href="#method-set_by"><code>ExprBuilder$set_by()</code></a></p></li>
-<li><p><a href="#method-chain"><code>ExprBuilder$chain()</code></a></p></li>
-<li><p><a href="#method-chain_if_set"><code>ExprBuilder$chain_if_set()</code></a></p></li>
-<li><p><a href="#method-seek_and_nestroy"><code>ExprBuilder$seek_and_nestroy()</code></a></p></li>
-<li><p><a href="#method-eval"><code>ExprBuilder$eval()</code></a></p></li>
-<li><p><a href="#method-tidy_select"><code>ExprBuilder$tidy_select()</code></a></p></li>
-<li><p><a href="#method-print"><code>ExprBuilder$print()</code></a></p></li>
-<li><p><a href="#method-clone"><code>ExprBuilder$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-ExprBuilder-new"><code>ExprBuilder$new()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-set_i"><code>ExprBuilder$set_i()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-set_j"><code>ExprBuilder$set_j()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-set_by"><code>ExprBuilder$set_by()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-chain"><code>ExprBuilder$chain()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-chain_if_set"><code>ExprBuilder$chain_if_set()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-seek_and_nestroy"><code>ExprBuilder$seek_and_nestroy()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-eval"><code>ExprBuilder$eval()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-tidy_select"><code>ExprBuilder$tidy_select()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-print"><code>ExprBuilder$print()</code></a></p></li>
+<li><p><a href="#method-ExprBuilder-clone"><code>ExprBuilder$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-ExprBuilder-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Constructor.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/ExprBuilder.html">ExprBuilder</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  <span class="va">DT</span>,
-  dt_pronouns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  nested <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  verbose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"table.express.verbose"</span>, <span class="cn">FALSE</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/ExprBuilder.html">ExprBuilder</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  <span class="va">DT</span>,</span>
+<span>  dt_pronouns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  nested <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"table.express.verbose"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -131,12 +133,12 @@ shouldn't be used directly.</p>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-set_i"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-set_i"></a><div class="section">
 <h3 id="method-set-i-">Method <code>set_i()</code><a class="anchor" aria-label="anchor" href="#method-set-i-"></a></h3>
 <p>Set the <code>i</code> clause expression(s), starting a new frame if the current
 one already has said expression set.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">set_i</span><span class="op">(</span><span class="va">value</span>, <span class="va">chain_if_needed</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">set_i</span><span class="op">(</span><span class="va">value</span>, <span class="va">chain_if_needed</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -152,11 +154,11 @@ one already has said expression set.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-set_j"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-set_j"></a><div class="section">
 <h3 id="method-set-j-">Method <code>set_j()</code><a class="anchor" aria-label="anchor" href="#method-set-j-"></a></h3>
 <p>Like <code>set_i</code> but for the <code>j</code> clause.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">set_j</span><span class="op">(</span><span class="va">value</span>, <span class="va">chain_if_needed</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">set_j</span><span class="op">(</span><span class="va">value</span>, <span class="va">chain_if_needed</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -172,11 +174,11 @@ one already has said expression set.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-set_by"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-set_by"></a><div class="section">
 <h3 id="method-set-by-">Method <code>set_by()</code><a class="anchor" aria-label="anchor" href="#method-set-by-"></a></h3>
 <p>Set the <code>by</code> clause expression.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">set_by</span><span class="op">(</span><span class="va">value</span>, <span class="va">chain_if_needed</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">set_by</span><span class="op">(</span><span class="va">value</span>, <span class="va">chain_if_needed</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -192,13 +194,13 @@ one already has said expression set.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-chain"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-chain"></a><div class="section">
 <h3 id="method-chain-">Method <code><a href="chain.html">chain()</a></code><a class="anchor" aria-label="anchor" href="#method-chain-"></a></h3>
 <p>By default, start a new expression with the current one as its
 parent. If <code>type = "pronoun"</code>, <code>dt</code> is used to start a new expression
 that joins the current one.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">chain</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"frame"</span>, <span class="va">next_dt</span>, <span class="va">parent_env</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">chain</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"frame"</span>, <span class="va">next_dt</span>, <span class="va">parent_env</span>, to_eager <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -216,14 +218,19 @@ that joins the current one.</p><div class="section">
 pronoun.</p></dd>
 
 
+<dt><code>to_eager</code></dt>
+<dd><p>Whether or not to use an <a href="EagerExprBuilder.html">EagerExprBuilder</a> in the
+new chain</p></dd>
+
+
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-chain_if_set"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-chain_if_set"></a><div class="section">
 <h3 id="method-chain-if-set-">Method <code>chain_if_set()</code><a class="anchor" aria-label="anchor" href="#method-chain-if-set-"></a></h3>
 <p>Chain if any clause values are already set.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">chain_if_set</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">chain_if_set</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -235,11 +242,11 @@ pronoun.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-seek_and_nestroy"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-seek_and_nestroy"></a><div class="section">
 <h3 id="method-seek-and-nestroy-">Method <code>seek_and_nestroy()</code><a class="anchor" aria-label="anchor" href="#method-seek-and-nestroy-"></a></h3>
 <p>Helper for <code>nest_expr</code>.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">seek_and_nestroy</span><span class="op">(</span><span class="va">.exprs</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">seek_and_nestroy</span><span class="op">(</span><span class="va">.exprs</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -251,14 +258,14 @@ pronoun.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-eval"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-eval"></a><div class="section">
 <h3 id="method-eval-">Method <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval()</a></code><a class="anchor" aria-label="anchor" href="#method-eval-"></a></h3>
 <p>Evaluate the final expression with <code>parent_env</code> as the enclosing
 environment. If <code>by_ref = FALSE</code>, <code><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">data.table::copy()</a></code> is called
 before. The ellipsis' contents are assigned to the expression's
 evaluation environment.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">eval</span><span class="op">(</span><span class="va">parent_env</span>, <span class="va">by_ref</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">eval</span><span class="op">(</span><span class="va">parent_env</span>, <span class="va">by_ref</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -278,11 +285,11 @@ evaluation environment.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-tidy_select"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-tidy_select"></a><div class="section">
 <h3 id="method-tidy-select-">Method <code>tidy_select()</code><a class="anchor" aria-label="anchor" href="#method-tidy-select-"></a></h3>
 <p>Evaluate a <code>tidyselect</code> call using the currently captured table.</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">tidy_select</span><span class="op">(</span><span class="va">select_expr</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">tidy_select</span><span class="op">(</span><span class="va">select_expr</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -294,11 +301,11 @@ evaluation environment.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Prints the built <code>expr</code>.</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -310,11 +317,11 @@ evaluation environment.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-ExprBuilder-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExprBuilder</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -342,7 +349,7 @@ evaluation environment.</p><div class="section">
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

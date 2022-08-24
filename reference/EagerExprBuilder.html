@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -76,22 +76,22 @@
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>EagerExprBuilder$new()</code></a></p></li>
-<li><p><a href="#method-chain"><code>EagerExprBuilder$chain()</code></a></p></li>
-<li><p><a href="#method-chain_if_set"><code>EagerExprBuilder$chain_if_set()</code></a></p></li>
-<li><p><a href="#method-clone"><code>EagerExprBuilder$clone()</code></a></p></li>
-</ul></div><p><details><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="eval"><a href="ExprBuilder.html#method-eval"><code>table.express::ExprBuilder$eval()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="print"><a href="ExprBuilder.html#method-print"><code>table.express::ExprBuilder$print()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="seek_and_nestroy"><a href="ExprBuilder.html#method-seek_and_nestroy"><code>table.express::ExprBuilder$seek_and_nestroy()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_by"><a href="ExprBuilder.html#method-set_by"><code>table.express::ExprBuilder$set_by()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_i"><a href="ExprBuilder.html#method-set_i"><code>table.express::ExprBuilder$set_i()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_j"><a href="ExprBuilder.html#method-set_j"><code>table.express::ExprBuilder$set_j()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="tidy_select"><a href="ExprBuilder.html#method-tidy_select"><code>table.express::ExprBuilder$tidy_select()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-EagerExprBuilder-new"><code>EagerExprBuilder$new()</code></a></p></li>
+<li><p><a href="#method-EagerExprBuilder-chain"><code>EagerExprBuilder$chain()</code></a></p></li>
+<li><p><a href="#method-EagerExprBuilder-chain_if_set"><code>EagerExprBuilder$chain_if_set()</code></a></p></li>
+<li><p><a href="#method-EagerExprBuilder-clone"><code>EagerExprBuilder$clone()</code></a></p></li>
+</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="eval"><a href="ExprBuilder.html#method-eval"><code>table.express::ExprBuilder$eval()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="print"><a href="ExprBuilder.html#method-print"><code>table.express::ExprBuilder$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="seek_and_nestroy"><a href="ExprBuilder.html#method-seek_and_nestroy"><code>table.express::ExprBuilder$seek_and_nestroy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_by"><a href="ExprBuilder.html#method-set_by"><code>table.express::ExprBuilder$set_by()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_i"><a href="ExprBuilder.html#method-set_i"><code>table.express::ExprBuilder$set_i()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_j"><a href="ExprBuilder.html#method-set_j"><code>table.express::ExprBuilder$set_j()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="tidy_select"><a href="ExprBuilder.html#method-tidy_select"><code>table.express::ExprBuilder$tidy_select()</code></a></span></li>
+</ul></details></p><hr><a id="method-EagerExprBuilder-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Constructor.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/EagerExprBuilder.html">EagerExprBuilder</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/EagerExprBuilder.html">EagerExprBuilder</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">DT</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -100,14 +100,18 @@
 <dd><p>A <a href="https://Rdatatable.gitlab.io/data.table/reference/data.table-class.html" class="external-link">data.table::data.table</a>.</p></dd>
 
 
+<dt><code>...</code></dt>
+<dd><p>Ignored.</p></dd>
+
+
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-chain"></a><div class="section">
+</div><p></p><hr><a id="method-EagerExprBuilder-chain"></a><div class="section">
 <h3 id="method-chain-">Method <code><a href="chain.html">chain()</a></code><a class="anchor" aria-label="anchor" href="#method-chain-"></a></h3>
 <p>Override to abort if chaining is attempted.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">EagerExprBuilder</span><span class="op">$</span><span class="fu">chain</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EagerExprBuilder</span><span class="op">$</span><span class="fu">chain</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -119,11 +123,11 @@
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-chain_if_set"></a><div class="section">
+</div><p></p><hr><a id="method-EagerExprBuilder-chain_if_set"></a><div class="section">
 <h3 id="method-chain-if-set-">Method <code>chain_if_set()</code><a class="anchor" aria-label="anchor" href="#method-chain-if-set-"></a></h3>
 <p>Override to abort if chaining is attempted.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">EagerExprBuilder</span><span class="op">$</span><span class="fu">chain_if_set</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EagerExprBuilder</span><span class="op">$</span><span class="fu">chain_if_set</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -135,11 +139,11 @@
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-EagerExprBuilder-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">EagerExprBuilder</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EagerExprBuilder</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -167,7 +171,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

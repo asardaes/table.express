@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">table.express</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -66,53 +66,64 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">max_by</span><span class="op">(</span><span class="va">.data</span>, <span class="va">.col</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for ExprBuilder</span>
-<span class="fu">max_by</span><span class="op">(</span>
-  <span class="va">.data</span>,
-  <span class="va">.col</span>,
-  <span class="va">...</span>,
-  .some <span class="op">=</span> <span class="cn">FALSE</span>,
-  .chain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"table.express.chain"</span>, <span class="cn">TRUE</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for data.table</span>
-<span class="fu">max_by</span><span class="op">(</span><span class="va">.data</span>, <span class="va">.col</span>, <span class="va">...</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu">min_by</span><span class="op">(</span><span class="va">.data</span>, <span class="va">.col</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for ExprBuilder</span>
-<span class="fu">min_by</span><span class="op">(</span>
-  <span class="va">.data</span>,
-  <span class="va">.col</span>,
-  <span class="va">...</span>,
-  .some <span class="op">=</span> <span class="cn">FALSE</span>,
-  .chain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"table.express.chain"</span>, <span class="cn">TRUE</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for data.table</span>
-<span class="fu">min_by</span><span class="op">(</span><span class="va">.data</span>, <span class="va">.col</span>, <span class="va">...</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">max_by</span><span class="op">(</span><span class="va">.data</span>, <span class="va">.col</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ExprBuilder</span></span>
+<span><span class="fu">max_by</span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  <span class="va">.col</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .some <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  .chain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"table.express.chain"</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.table</span></span>
+<span><span class="fu">max_by</span><span class="op">(</span><span class="va">.data</span>, <span class="va">.col</span>, <span class="va">...</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">min_by</span><span class="op">(</span><span class="va">.data</span>, <span class="va">.col</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ExprBuilder</span></span>
+<span><span class="fu">min_by</span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  <span class="va">.col</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .some <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  .chain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"table.express.chain"</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.table</span></span>
+<span><span class="fu">min_by</span><span class="op">(</span><span class="va">.data</span>, <span class="va">.col</span>, <span class="va">...</span>, .expr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.data</dt>
 <dd><p>An instance of <a href="ExprBuilder.html">ExprBuilder</a>.</p></dd>
+
+
 <dt>.col</dt>
 <dd><p>A character vector indicating the columns that will be searched for extrema.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Optionally, columns to group by, either as characters or symbols.</p></dd>
+
+
 <dt>.some</dt>
 <dd><p>If <code>TRUE</code> the rows where <em>any</em> of the columns specified in <code>.col</code> have extrema are
 returned.</p></dd>
+
+
 <dt>.chain</dt>
 <dd><p>Logical. Should a new frame be automatically chained to the expression if the
 clause being set already exists?</p></dd>
+
+
 <dt>.expr</dt>
 <dd><p>If the input is a <code>data.table</code> and <code>.expr</code> is <code>TRUE</code>, an instance of
 <a href="EagerExprBuilder.html">EagerExprBuilder</a> will be returned. Useful if you want to add clauses to <code>j</code>, e.g. with
 <a href="mutate-table.express.html">mutate-table.express</a>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -128,15 +139,15 @@ more than one column might not make sense, resulting in an empty <code>data.tabl
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">max_by</span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"vs"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">max_by</span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"vs"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mpg cyl  disp hp drat    wt qsec vs am gear carb</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 26.0   4 120.3 91 4.43 2.140 16.7  0  1    5    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: 33.9   4  71.1 65 4.22 1.835 19.9  1  1    4    1</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -151,7 +162,7 @@ more than one column might not make sense, resulting in an empty <code>data.tabl
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
