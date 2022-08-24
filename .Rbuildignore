@@ -12,3 +12,4 @@
 ^README.*
 ^codecov\.R
 ^docs$
+^CRAN-SUBMISSION$
