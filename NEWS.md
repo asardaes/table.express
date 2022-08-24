@@ -1,6 +1,7 @@
 # table.express 0.4.1
 
 - Avoid potential deep copies in `left_join` with `data.table` as input (#22).
+- Fix HTML documentation.
 
 # table.express 0.4.0
 

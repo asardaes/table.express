@@ -1,6 +1,6 @@
 
-## Update to version 0.4.0
-* Improvements to support more dplyr idioms.
+## Update to version 0.4.1
+* Fix documentation for HTML Tidy and fix a bug.
 
 ## Test environments
 * Local GNU/Linux, R release

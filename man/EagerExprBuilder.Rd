@@ -13,28 +13,28 @@ Like \link{ExprBuilder}, but eager in some regards. This shouldn't be used direc
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{EagerExprBuilder$new()}}
-\item \href{#method-chain}{\code{EagerExprBuilder$chain()}}
-\item \href{#method-chain_if_set}{\code{EagerExprBuilder$chain_if_set()}}
-\item \href{#method-clone}{\code{EagerExprBuilder$clone()}}
+\item \href{#method-EagerExprBuilder-new}{\code{EagerExprBuilder$new()}}
+\item \href{#method-EagerExprBuilder-chain}{\code{EagerExprBuilder$chain()}}
+\item \href{#method-EagerExprBuilder-chain_if_set}{\code{EagerExprBuilder$chain_if_set()}}
+\item \href{#method-EagerExprBuilder-clone}{\code{EagerExprBuilder$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="eval">}\href{../../table.express/html/ExprBuilder.html#method-eval}{\code{table.express::ExprBuilder$eval()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="print">}\href{../../table.express/html/ExprBuilder.html#method-print}{\code{table.express::ExprBuilder$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="seek_and_nestroy">}\href{../../table.express/html/ExprBuilder.html#method-seek_and_nestroy}{\code{table.express::ExprBuilder$seek_and_nestroy()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_by">}\href{../../table.express/html/ExprBuilder.html#method-set_by}{\code{table.express::ExprBuilder$set_by()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_i">}\href{../../table.express/html/ExprBuilder.html#method-set_i}{\code{table.express::ExprBuilder$set_i()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_j">}\href{../../table.express/html/ExprBuilder.html#method-set_j}{\code{table.express::ExprBuilder$set_j()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="tidy_select">}\href{../../table.express/html/ExprBuilder.html#method-tidy_select}{\code{table.express::ExprBuilder$tidy_select()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="eval"><a href='../../table.express/html/ExprBuilder.html#method-ExprBuilder-eval'><code>table.express::ExprBuilder$eval()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="print"><a href='../../table.express/html/ExprBuilder.html#method-ExprBuilder-print'><code>table.express::ExprBuilder$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="seek_and_nestroy"><a href='../../table.express/html/ExprBuilder.html#method-ExprBuilder-seek_and_nestroy'><code>table.express::ExprBuilder$seek_and_nestroy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_by"><a href='../../table.express/html/ExprBuilder.html#method-ExprBuilder-set_by'><code>table.express::ExprBuilder$set_by()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_i"><a href='../../table.express/html/ExprBuilder.html#method-ExprBuilder-set_i'><code>table.express::ExprBuilder$set_i()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="set_j"><a href='../../table.express/html/ExprBuilder.html#method-ExprBuilder-set_j'><code>table.express::ExprBuilder$set_j()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="table.express" data-topic="ExprBuilder" data-id="tidy_select"><a href='../../table.express/html/ExprBuilder.html#method-ExprBuilder-tidy_select'><code>table.express::ExprBuilder$tidy_select()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-EagerExprBuilder-new"></a>}}
+\if{latex}{\out{\hypertarget{method-EagerExprBuilder-new}{}}}
 \subsection{Method \code{new()}}{
 Constructor.
 \subsection{Usage}{
@@ -52,8 +52,8 @@ Constructor.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-chain"></a>}}
-\if{latex}{\out{\hypertarget{method-chain}{}}}
+\if{html}{\out{<a id="method-EagerExprBuilder-chain"></a>}}
+\if{latex}{\out{\hypertarget{method-EagerExprBuilder-chain}{}}}
 \subsection{Method \code{chain()}}{
 Override to abort if chaining is attempted.
 \subsection{Usage}{
@@ -69,8 +69,8 @@ Override to abort if chaining is attempted.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-chain_if_set"></a>}}
-\if{latex}{\out{\hypertarget{method-chain_if_set}{}}}
+\if{html}{\out{<a id="method-EagerExprBuilder-chain_if_set"></a>}}
+\if{latex}{\out{\hypertarget{method-EagerExprBuilder-chain_if_set}{}}}
 \subsection{Method \code{chain_if_set()}}{
 Override to abort if chaining is attempted.
 \subsection{Usage}{
@@ -86,8 +86,8 @@ Override to abort if chaining is attempted.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-EagerExprBuilder-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-EagerExprBuilder-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

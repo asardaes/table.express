@@ -24,22 +24,22 @@ shouldn't be used directly.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ExprBuilder$new()}}
-\item \href{#method-set_i}{\code{ExprBuilder$set_i()}}
-\item \href{#method-set_j}{\code{ExprBuilder$set_j()}}
-\item \href{#method-set_by}{\code{ExprBuilder$set_by()}}
-\item \href{#method-chain}{\code{ExprBuilder$chain()}}
-\item \href{#method-chain_if_set}{\code{ExprBuilder$chain_if_set()}}
-\item \href{#method-seek_and_nestroy}{\code{ExprBuilder$seek_and_nestroy()}}
-\item \href{#method-eval}{\code{ExprBuilder$eval()}}
-\item \href{#method-tidy_select}{\code{ExprBuilder$tidy_select()}}
-\item \href{#method-print}{\code{ExprBuilder$print()}}
-\item \href{#method-clone}{\code{ExprBuilder$clone()}}
+\item \href{#method-ExprBuilder-new}{\code{ExprBuilder$new()}}
+\item \href{#method-ExprBuilder-set_i}{\code{ExprBuilder$set_i()}}
+\item \href{#method-ExprBuilder-set_j}{\code{ExprBuilder$set_j()}}
+\item \href{#method-ExprBuilder-set_by}{\code{ExprBuilder$set_by()}}
+\item \href{#method-ExprBuilder-chain}{\code{ExprBuilder$chain()}}
+\item \href{#method-ExprBuilder-chain_if_set}{\code{ExprBuilder$chain_if_set()}}
+\item \href{#method-ExprBuilder-seek_and_nestroy}{\code{ExprBuilder$seek_and_nestroy()}}
+\item \href{#method-ExprBuilder-eval}{\code{ExprBuilder$eval()}}
+\item \href{#method-ExprBuilder-tidy_select}{\code{ExprBuilder$tidy_select()}}
+\item \href{#method-ExprBuilder-print}{\code{ExprBuilder$print()}}
+\item \href{#method-ExprBuilder-clone}{\code{ExprBuilder$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-new}{}}}
 \subsection{Method \code{new()}}{
 Constructor.
 \subsection{Usage}{
@@ -64,8 +64,8 @@ Constructor.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_i"></a>}}
-\if{latex}{\out{\hypertarget{method-set_i}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-set_i"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-set_i}{}}}
 \subsection{Method \code{set_i()}}{
 Set the \code{i} clause expression(s), starting a new frame if the current
 one already has said expression set.
@@ -84,8 +84,8 @@ one already has said expression set.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_j"></a>}}
-\if{latex}{\out{\hypertarget{method-set_j}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-set_j"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-set_j}{}}}
 \subsection{Method \code{set_j()}}{
 Like \code{set_i} but for the \code{j} clause.
 \subsection{Usage}{
@@ -103,8 +103,8 @@ Like \code{set_i} but for the \code{j} clause.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_by"></a>}}
-\if{latex}{\out{\hypertarget{method-set_by}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-set_by"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-set_by}{}}}
 \subsection{Method \code{set_by()}}{
 Set the \code{by} clause expression.
 \subsection{Usage}{
@@ -122,8 +122,8 @@ Set the \code{by} clause expression.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-chain"></a>}}
-\if{latex}{\out{\hypertarget{method-chain}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-chain"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-chain}{}}}
 \subsection{Method \code{chain()}}{
 By default, start a new expression with the current one as its
 parent. If \code{type = "pronoun"}, \code{dt} is used to start a new expression
@@ -149,8 +149,8 @@ new chain}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-chain_if_set"></a>}}
-\if{latex}{\out{\hypertarget{method-chain_if_set}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-chain_if_set"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-chain_if_set}{}}}
 \subsection{Method \code{chain_if_set()}}{
 Chain if any clause values are already set.
 \subsection{Usage}{
@@ -166,8 +166,8 @@ Chain if any clause values are already set.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-seek_and_nestroy"></a>}}
-\if{latex}{\out{\hypertarget{method-seek_and_nestroy}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-seek_and_nestroy"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-seek_and_nestroy}{}}}
 \subsection{Method \code{seek_and_nestroy()}}{
 Helper for \code{nest_expr}.
 \subsection{Usage}{
@@ -183,8 +183,8 @@ Helper for \code{nest_expr}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval"></a>}}
-\if{latex}{\out{\hypertarget{method-eval}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-eval"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-eval}{}}}
 \subsection{Method \code{eval()}}{
 Evaluate the final expression with \code{parent_env} as the enclosing
 environment. If \code{by_ref = FALSE}, \code{\link[data.table:copy]{data.table::copy()}} is called
@@ -207,8 +207,8 @@ evaluation environment.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-tidy_select"></a>}}
-\if{latex}{\out{\hypertarget{method-tidy_select}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-tidy_select"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-tidy_select}{}}}
 \subsection{Method \code{tidy_select()}}{
 Evaluate a \code{tidyselect} call using the currently captured table.
 \subsection{Usage}{
@@ -224,8 +224,8 @@ Evaluate a \code{tidyselect} call using the currently captured table.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-print"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the built \code{expr}.
 \subsection{Usage}{
@@ -241,8 +241,8 @@ Prints the built \code{expr}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ExprBuilder-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ExprBuilder-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
