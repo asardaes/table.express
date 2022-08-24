@@ -1,3 +1,7 @@
+# table.express 0.4.1
+
+- Avoid potential deep copies in `left_join` with `data.table` as input (#22).
+
 # table.express 0.4.0
 
 - The logic of `mutate` with `.sequential = TRUE` has been changed to support scenarios where
