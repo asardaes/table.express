@@ -225,7 +225,6 @@ standardize_lapplys <- function(.exprs, ..., .parse) {
 #' @importFrom rlang call2
 #' @importFrom rlang call_args
 #' @importFrom rlang call_modify
-#' @importFrom rlang call_standardise
 #' @importFrom rlang expr
 #' @importFrom rlang is_call
 #' @importFrom rlang is_formula
@@ -248,7 +247,6 @@ standardize_calls <- function(.exprs, .env, ..., .parse) {
         }
 
         if (!rlang::is_formula(.expr) && rlang::is_call(.expr)) {
-            .expr <- rlang::call_standardise(.expr, .env)
             .expr <- rlang::call_modify(.expr, ... = rlang::zap(), !!!.dots)
         }
 

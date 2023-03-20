@@ -12,8 +12,6 @@ filter_sd <- function(.data, .SDcols, .how = Negate(is.na), ...) {
 #' @export
 #' @importFrom rlang call2
 #' @importFrom rlang call_modify
-#' @importFrom rlang call_standardise
-#' @importFrom rlang caller_env
 #' @importFrom rlang enexpr
 #' @importFrom rlang enquo
 #' @importFrom rlang expr
@@ -70,7 +68,6 @@ filter_sd.ExprBuilder <- function(.data, .SDcols, .how = Negate(is.na), ..., whi
         }
     }
 
-    .how <- rlang::call_standardise(.how, rlang::caller_env(.caller_env_n))
     .how <- rlang::call_modify(.how, ... = rlang::zap(), !!!dots)
 
     clauses <- Map(substitue_col_pronoun, list(.how), rlang::syms(.SDcols))
