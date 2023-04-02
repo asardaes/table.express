@@ -1,6 +1,6 @@
 
-## Update to version 0.4.1
-* Fix documentation for HTML Tidy and fix a bug.
+## Update to version 0.4.2
+* Remove call to deprecated function.
 
 ## Test environments
 * Local GNU/Linux, R release
